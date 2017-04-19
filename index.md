@@ -10,7 +10,7 @@
 
 5. Tang, G., Wu, W.-M., Watson, D. B., Parker, J. C., Schadt, C. W., Shi, X., and Brooks, S. C. U(VI) bioreduction with emulsified vegetable oil as the electron donor: microcosm tests and model development. Environmental Science & Technology, 47(7):3209-3217, 2013. [doi:10.1021/es304641b](http://doi.org/10.1021/es304641b) [supporting information](https://github.com/t6g/evomicrocosmmodel)
 
-6. Tang, G., DAzevedo, E. F., Zhang, F., Parker, J. C., Watson, D. B., and Jardine, P. M. Application of a hybrid MPI/OpenMP approach for parallel groundwater model calibration using multi-core computers. Computers & Geosciences, 36(11):1451-1460, 2010. http://doi.org/10.1111/j.1745-6584.2011.00841.x) supporting information
+6. Tang, G., Watson, D. B., Parker, J. C., and Brooks, S. C. A spreadsheet program for two-well tracer test data analysis. Ground Water, 50(4):612-620, 2012. http://doi.org/10.1111/j.1745-6584.2011.00841.x) supporting information
 
 7. Tang, G., DAzevedo, E. F., Zhang, F., Parker, J. C., Watson, D. B., and Jardine, P. M. Application of a hybrid MPI/OpenMP approach for parallel groundwater model calibration using multi-core computers. Computers & Geosciences, 36(11):1451-1460, 2010. [doi:10.1016/j.cageo.2010.04.013](http://doi.org/10.1016/j.cageo.2010.04.013) supporting information
 
