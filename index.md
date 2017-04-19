@@ -10,6 +10,11 @@
 
 5. Tang, G., Wu, W.-M., Watson, D. B., Parker, J. C., Schadt, C. W., Shi, X., and Brooks, S. C. U(VI) bioreduction with emulsified vegetable oil as the electron donor: microcosm tests and model development. Environmental Science & Technology, 47(7):3209-3217, 2013. [doi:10.1021/es304641b](http://doi.org/10.1021/es304641b) [supporting information](https://github.com/t6g/evomicrocosmmodel)
 
-6. Tang, G., DAzevedo, E. F., Zhang, F., Parker, J. C., Watson, D. B., and Jardine, P. M. Application of a hybrid MPI/OpenMP approach for parallel groundwater model calibration using multi-core computers. Computers & Geosciences, 36(11):1451-1460, 2010. [doi:10.1016/j.cageo.2010.04.013](http://doi.org/10.1016/j.cageo.2010.04.013) supporting information
+6. Tang, G., DAzevedo, E. F., Zhang, F., Parker, J. C., Watson, D. B., and Jardine, P. M. Application of a hybrid MPI/OpenMP approach for parallel groundwater model calibration using multi-core computers. Computers & Geosciences, 36(11):1451-1460, 2010. http://doi.org/10.1111/j.1745-6584.2011.00841.x) supporting information
 
-7. Tang, G.,  Mayes, M. A., Parker, J. C., and Jardine, P. M. CXTFIT/Excel --a modular adaptable code for parameter estimation, sensitivity analysis and uncertainty analysis for laboratory or field tracer experiments. Computers & Geosciences, 36(9):1200-1209, 2010. [doi:10.1016/j.cageo.2010.01.013](http://doi.org/10.1016/j.cageo.2010.01.013) [supporting information](https://github.com/t6g/cxtfitexcel)
+7. Tang, G., DAzevedo, E. F., Zhang, F., Parker, J. C., Watson, D. B., and Jardine, P. M. Application of a hybrid MPI/OpenMP approach for parallel groundwater model calibration using multi-core computers. Computers & Geosciences, 36(11):1451-1460, 2010. [doi:10.1016/j.cageo.2010.04.013](http://doi.org/10.1016/j.cageo.2010.04.013) supporting information
+
+8. Tang, G.,  Mayes, M. A., Parker, J. C., Yin, X. L., Watson, D. B., and Jardine, P. M. CXTFIT/Excel --a modular adaptable code for parameter estimation, sensitivity analysis and uncertainty analysis for laboratory or field tracer experiments. Computers & Geosciences, 36(9):1200-1209, 2010. [doi:10.1016/j.cageo.2010.01.013](http://doi.org/10.1016/j.cageo.2010.01.013) [supporting information](https://github.com/t6g/cxtfitexcel)
+
+9. Tang, G.,  Mayes, M. A., Parker, J. C., and Jardine, P. M. Improving parameter estimation for column experiments by multi-model evaluation and comparison. Journal of Hydrology, 36(9):1200-1209, 2010. [doi:10.1016/j.jhydrol.2009.07.063](http://doi.org/10.1016/j.jhydrol.2009.07.063) [supporting information](https://github.com/t6g/cxtfitexcel)
+
