@@ -1,4 +1,4 @@
-layout: page
+layout: default
 title: "About Guoping Tang"
 permalink: /URL-PATH/
 
