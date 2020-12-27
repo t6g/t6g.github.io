@@ -1,5 +1,11 @@
 <style type="text/css">
 
+@import "{{ site.theme }}";
+
+header {
+  display: none;
+}
+
 body {
   font-family: verdana, arial, helvetica, serif;
 }
