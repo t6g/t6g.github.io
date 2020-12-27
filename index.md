@@ -1,5 +1,7 @@
 ## Publications
-
+---
+layout: default
+---
 1. Tang, G. Zheng, J., Xu, X., Yang, Z., Graham, D. E., Gu, B., Painter, S. L. and Thornton, P. E. Biogeochemical modeling of CO<sub>2</sub> and CH<sub>4</sub> production in anoxic arctic soil microcosms. Biogeosciences, 13(17):5021-5041, 2016. [doi:10.5194/bg-13-5021-2016](http://doi.org/10.5194/bg-13-5021-2016) [supporting information](https://github.com/t6g/bgcs)
 
 2. Tang, G., Yuan, F., Bisht, G., Hammond, G. E., Lichtner, P. C., Kumar, J., Mills, R. T., Xu, X., Andre, B., Hoffman, F. M., Painter, S. L., and Thornton, P. E. Addressing numerical challenges in introducing a reactive transport code into a land surface model: a biogeochemical modeling proof-of-concept with CLM-PFLOTRAN 1.0. Geoscientific Model Development, 9(3):927-946, 2016. [doi:10.5194/gmd-9-927-2016](http://doi.org/10.5194/gmd-9-927-2016) [supporting information](https://github.com/t6g/GMD2016)
