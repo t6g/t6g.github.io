@@ -1,11 +1,10 @@
-## Welcome to Guoping Tang (GT) Home Page 
+## Welcome to Guoping Tang (GT)'s Home Page 
 
-### Profile
 #### Engineer 
-* review construction plans for subdivisions and commercial sites, in the areas of storm water management, erosion and sediment control, pollution prevention, and floodplain management 
-* conducted flood hazard review for existing nuclear reactors and hydrology confirmatory analysis for new nuclear reactor license applications for Nuclear Regulatory Commission
-* conducted structural tests: concrete and metal, columns, beams, trusses, slabs, floors, roofs, in laboratory and in situ 
-* consulted and monitored mass concrete construction projects and braced excavation projects for deep foundations in soft soils
+* Review construction plans for subdivisions and commercial sites, in the areas of storm water management, erosion and sediment control, pollution prevention, and floodplain management 
+* Conducted flood hazard review for existing nuclear reactors and hydrology confirmatory analysis for new nuclear reactors for Nuclear Regulatory Commission
+* Conducted structural tests: concrete and metal, in laboratory and in situ, columns, beams, trusses, slabs, floors, etc.,  
+* Consulted and monitored mass concrete construction projects and braced excavation projects for deep foundations in soft soils
 
 #### Programmer
 * [Hydraulic calculator](https://github.com/t6g/HydraulicCalculator) (in progress) 
