@@ -1,5 +1,3 @@
-## Resume 
-
 ### Educations
 * Ph.D., Civil Engineering (geotechical and geoenvironmental engineering), Northeastern University, Boston, MA, 2006
 * M.S., Civil Engineering (structural engineering), Center Research Institute of Building and Construction Ministry of Metallurgical Industry (1 year in Zhejiang University), Beijing, 1995 
