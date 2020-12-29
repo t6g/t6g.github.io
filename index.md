@@ -1,4 +1,4 @@
-## Welcome to Guoping Tang (GT)'s Home Page 
+## Guoping Tang (GT)
 
 #### Engineer 
 * Review construction plans for subdivisions and commercial sites, in the areas of storm water management, erosion and sediment control, pollution prevention, and floodplain management 
