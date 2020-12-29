@@ -1,25 +1,20 @@
-## GT's (Guoping Tang) Journey
+## Welcome to Guoping Tang (GT) Home Page 
 
-### Senior Engineer, since 2016
-[Environmental Engineering Department, Chesterfield VA](https://www.chesterfield.gov/272/Environmental-Engineering)
+### Profile
+#### Engineer 
+* review construction plans for subdivisions and commercial sites, in the areas of storm water management, erosion and sediment control, pollution prevention, and floodplain management 
+* conducted flood hazard review for existing nuclear reactors and hydrology confirmatory analysis for new nuclear reactor license applications for Nuclear Regulatory Commission
+* conducted structural tests: concrete and metal, columns, beams, trusses, slabs, floors, roofs, in laboratory and in situ 
+* consulted and monitored mass concrete construction projects and braced excavation projects for deep foundations in soft soils
 
-* Review many construction plans, mostly subdivisions, some commericial and other site plans
-* Obtained VA DEQ Dual (ESC + SWM) Combined (Inspector + Plan Reviewer + Administrator) certificate 
+#### Programmer
+* [Hydraulic calculator](https://github.com/t6g/HydraulicCalculator) (in progress) 
+* [CXTFIT/Excel](https://cxtfit.github.io)
+* [Parallelize Hydrogeochem](http://doi.org/10.1016/j.cageo.2010.04.013) 
+* Contributed to [PFLOTRAN](https://bitbucket.org/pflotran/) and [CLM-PFLOTRAN](https://doi.org/10.5194/gmd-9-927-2016) 
+* developed professional computer aided design and analysis software  
+* developed a data logging software to collect data from various sensors in structural tests in laboratory and in the field 
 
-
-### Research and Development Associate, 2006-2016
-[Environmental Sciences Division, ORNL](https://www.ornl.gov/division/environmental-sciences)
-
-* Registered as a professional engineer in VA
-
-## Research/Teaching Assistant, 2002-2006
-Civil Engineering Department, Northeastern University
-
-
-
-### System Analyst, 2000-2002
-[Beijing Lizheng Software Research Institute](https://www.lizheng.com.cn)
-
-
-### Civil Engineer, 1992-2000
-[Central Research Institute of Building and Construction, Ministry of Metallurgical Industry](www.cjyc.cn)
+#### Scientist
+* [Demonstration of CLM-PFLOTRAN Coupling Lays a Foundation for Biogeochemistry Simulation Across Scales](https://ngee-arctic.ornl.gov/highlights/demonstration-clm-pflotran-coupling-lays-foundation-biogeochemistry-simulation-across)
+* [Biogeochemical Modeling of CO2 and CH4 Production in Anoxic Arctic Soil Microcosms](https://ngee-arctic.ornl.gov/results/biogeochemical-modeling-co2-and-ch4-production-anoxic-arctic-soil-microcosms)
