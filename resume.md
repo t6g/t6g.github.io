@@ -1,4 +1,4 @@
-## Guoping Tang (GT)'s Resume 
+## Resume 
 
 ### Educations
 * Ph.D., Civil Engineering (geotechical and geoenvironmental engineering), Northeastern University, Boston, MA, 2006

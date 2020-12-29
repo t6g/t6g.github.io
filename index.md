@@ -11,9 +11,9 @@
 * [CXTFIT/Excel](https://cxtfit.github.io)
 * [Parallelize Hydrogeochem](http://doi.org/10.1016/j.cageo.2010.04.013) 
 * Contributed to [PFLOTRAN](https://bitbucket.org/pflotran/) and [CLM-PFLOTRAN](https://doi.org/10.5194/gmd-9-927-2016) 
-* developed professional computer aided design and analysis software  
-* developed a data logging software to collect data from various sensors in structural tests in laboratory and in the field 
+* Developed professional computer aided design and analysis software  
+* Developed a data logging software to collect data from various sensors in structural tests in laboratory and in the field 
 
 #### Scientist
 * [Demonstration of CLM-PFLOTRAN Coupling Lays a Foundation for Biogeochemistry Simulation Across Scales](https://ngee-arctic.ornl.gov/highlights/demonstration-clm-pflotran-coupling-lays-foundation-biogeochemistry-simulation-across)
-* [Biogeochemical Modeling of CO2 and CH4 Production in Anoxic Arctic Soil Microcosms](https://ngee-arctic.ornl.gov/results/biogeochemical-modeling-co2-and-ch4-production-anoxic-arctic-soil-microcosms)
+* [Biogeochemical Modeling of CO<code><sub>2</sub><code> and CH<code><sub>4</sub></code> Production in Anoxic Arctic Soil Microcosms](https://ngee-arctic.ornl.gov/results/biogeochemical-modeling-co2-and-ch4-production-anoxic-arctic-soil-microcosms)
