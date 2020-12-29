@@ -28,5 +28,5 @@ Civil Engineering Department, Northeastern University
 * Designed commercial engineering analysis and design software: soil nailing wall design, rock slope stability analysis, foundation soil improvement toolbox, hydraulic tunnel lining analysis, and seepage analysis
 
 ### Civil Engineer, 1992-2000
-[Central Research Institute of Building and Construction, Ministry of Metallurgical Industry](www.cjyc.cn)
+[Central Research Institute of Building and Construction, Ministry of Metallurgical Industry](http://www.cjyc.cn)
 * Designed a data acquisition and processing software and applied it in over a dozen of large scale laboratory and in situ structure tests, consulted and monitored mass concrete construction projects and braced excavation projects for deep foundations
