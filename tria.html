@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - Triangular</title>
+    <style>
+        input {
+            text-align: right;
+            width: 60px;
+            border: none;
+        }
+
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" />
+
+    <link rel="stylesheet" href="../css/menu-style.css" type="text/css" />
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="triangularchannel.js"></script>
+</head>
+<body>
+    <div>
+        <img src="../images/cx-banner.jpg" alt="banner" />
+    </div>
+    <div>
+        <ul class="sf-menu">
+
+            <li>
+                <a href="triangularchannel.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="m0 0 L50 100 L100 0 h-10 L65 50 h-30 L10 0 z" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="rect.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="m0 0 v100 h100 v-100 h-10 v50 h-80 v-50 Z" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="trap.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="M0 0 L30 100 h40 L100 0 h-10 L75 50 h-50 L10 0 z" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="para.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="M 0 0 Q 50 200 100 0 h-10 L 74 50 h-45 L 10 0 Z" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="circ.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="M0 50 a 50, 50 0 1, 0  100 0 a 50, 50 0 1, 0 -100 0 Z
+                            M90  50 a 40, 40 0 1, 0 -80 0Z" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="elli.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="M 0 50 a 50,30 0 1, 0  100 0 a 50,30 0 1, 0 -100 0Z
+                             M90 50 a 40 22 0 1, 0  -80 0Z" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+
+            <li>
+                <a href="arch.html">
+                    <svg width="20" height="20">
+                        <g transform="scale(0.2)">
+                            <path d="M 89.96 76.01 A 162.50, 162.50  28.47 0 1 10.40, 76.01
+                                                  A  14.50,  14.50  89.72 0 1  0.00, 58.46
+                                                  A  52.00,  52.00 152.09 0 1 100.0, 58.46
+                                                  A  14.50,  14.50  89.72 0 1 89.96, 76.01
+                                    M 94.00 58.46 L   6.00   58.46
+                                                  A  47.00,  47.00  60.00 0 1 95.00, 58.46" />
+                        </g>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <div id="chart_div">
+    </div>
+    <div>
+        <table border="1">
+            <tbody>
+                <tr>
+                    <td><label for="leftSideSlope">Left Side Slope (z<sub>1</sub>)</label></td>
+                    <td><input type="number" name="leftSideSlope" id="leftSideSlope" min="1" value="3" size="30"></td>
+                    <td>(H:V)</td>
+                    <td>Flow Area</td>
+                    <td id="area"></td>
+                    <td>ft<sup>2</sup></td>
+                </tr>
+                <tr>
+                    <td><label for="rightSideSlope">Right Side Slope (z<sub>2</sub>)</label></td>
+                    <td><input type="number" name="rightSideSlope" id="rightSideSlope" min="1" value="3" size="30"></td>
+                    <td>(H:V)</td>
+                    <td>Wet Perimeter</td>
+                    <td><label id="perimeter" /></td>
+                    <td>ft</td>
+                </tr>
+                <tr>
+                    <td><label for="channelSlope">Channel Slope (s)</label></td>
+                    <td><input type="number" name="channelSlope" id="channelSlope" min="0.001" value="0.01" step="0.001" size="30"></td>
+                    <td>ft/ft</td>
+                    <td>Velocity</td>
+                    <td><label id="velocity" /></td>
+                    <td>ft/s</td>
+                </tr>
+                <tr>
+                    <td><label for="manningsN">Manning's N</label></td>
+                    <td><input type="number" name="manningsN" id="manningsN" min="0.001" value="0.013" step="0.001" size="30"></td>
+                    <td></td>
+                    <td>Critical Depth</td>
+                    <td><label id="criticalDepth" /></td>
+                    <td>ft</td>
+                </tr>
+                <tr>
+                    <td><label for="normalDepth">Normal Depth</label></td>
+                    <td><input type="number" name="normalDepth" id="normalDepth" min="0.001" value="0.5" step="0.1" size="30"></td>
+                    <td>ft</td>
+                    <td>Critical Velocity</td>
+                    <td><label id="criticalVelocity" /></td>
+                    <td>ft/s</td>
+                </tr>
+                <tr>
+                    <td><label for="discharge">Discharge</label></td>
+                    <td><input type="number" name="discharge" id="discharge" min="0.001" size="30" step="0.1"></td>
+                    <td></td>
+                    <td>Critical Slope</td>
+                    <td><label id="criticalSlope" /></td>
+                    <td>ft/ft</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Froude Number</td>
+                    <td><label id="froudeNumber" /></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
