@@ -1,38 +1,23 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Open Channel Calculator - Triangular</title>
-    <style>
-        input {
-            text-align: right;
-            width: 60px;
-            border: none;
-        }
 
-        table {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
-        td {
-            padding: 5px;
-        }
-    </style>
-    <link rel="stylesheet" href="../css/main.css" type="text/css" />
+    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 
-    <link rel="stylesheet" href="../css/menu-style.css" type="text/css" />
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-    <script src="tria.js"></script>
+    <script src="js/tria.js"></script>
 </head>
 <body>
-    <div>
-        <img src="../images/cx-banner.jpg" alt="banner" />
-    </div>
+    <header>
+        <img src="../images/cx-banner.jpg" alt="Open Channel Calculator" />
+    </header>
     <nav>
         <a href="tria.html">
             <svg width="20" height="20">
@@ -86,78 +71,122 @@
                                             A  14.50,  14.50  89.72 0 1  0.00, 58.46
                                             A  52.00,  52.00 152.09 0 1 100.0, 58.46
                                             A  14.50,  14.50  89.72 0 1 89.96, 76.01
-                            M 94.00 58.46 L   6.00   58.46
+                             M 94.00 58.46  L   6.00   58.46
                                             A  47.00,  47.00  60.00 0 1 95.00, 58.46" />
                 </g>
             </svg>
         </a>
     </nav>
-    <br/>
-    <br/>
-    <br/>
-    <div id="chart_div">
-    </div>
-    <div>
-        <table border="1">
-            <tbody>
-                <tr>
-                    <td><label for="leftSideSlope">Left Side Slope (z<sub>1</sub>)</label></td>
-                    <td><input type="number" name="leftSideSlope" id="leftSideSlope" min="1" value="3" size="30"></td>
-                    <td>(H:V)</td>
-                    <td>Flow Area</td>
-                    <td id="area"></td>
-                    <td>ft<sup>2</sup></td>
-                </tr>
-                <tr>
-                    <td><label for="rightSideSlope">Right Side Slope (z<sub>2</sub>)</label></td>
-                    <td><input type="number" name="rightSideSlope" id="rightSideSlope" min="1" value="3" size="30"></td>
-                    <td>(H:V)</td>
-                    <td>Wet Perimeter</td>
-                    <td><label id="perimeter" /></td>
-                    <td>ft</td>
-                </tr>
-                <tr>
-                    <td><label for="channelSlope">Channel Slope (s)</label></td>
-                    <td><input type="number" name="channelSlope" id="channelSlope" min="0.001" value="0.01" step="0.001" size="30"></td>
-                    <td>ft/ft</td>
-                    <td>Velocity</td>
-                    <td><label id="velocity" /></td>
-                    <td>ft/s</td>
-                </tr>
-                <tr>
-                    <td><label for="manningsN">Manning's N</label></td>
-                    <td><input type="number" name="manningsN" id="manningsN" min="0.001" value="0.013" step="0.001" size="30"></td>
-                    <td></td>
-                    <td>Critical Depth</td>
-                    <td><label id="criticalDepth" /></td>
-                    <td>ft</td>
-                </tr>
-                <tr>
-                    <td><label for="normalDepth">Normal Depth</label></td>
-                    <td><input type="number" name="normalDepth" id="normalDepth" min="0.001" value="0.5" step="0.1" size="30"></td>
-                    <td>ft</td>
-                    <td>Critical Velocity</td>
-                    <td><label id="criticalVelocity" /></td>
-                    <td>ft/s</td>
-                </tr>
-                <tr>
-                    <td><label for="discharge">Discharge</label></td>
-                    <td><input type="number" name="discharge" id="discharge" min="0.001" size="30" step="0.1"></td>
-                    <td></td>
-                    <td>Critical Slope</td>
-                    <td><label id="criticalSlope" /></td>
-                    <td>ft/ft</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Froude Number</td>
-                    <td><label id="froudeNumber" /></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+    <main>
+        <div id="graph">
+            <svg id="svg">
+                <!-- <rect id="svgBorderRect" fill="none" stroke="black"/> -->
+
+                <rect id="axesRect" x="50" y="50" width="500" height="300" fill="none" stroke="black"/>
+                
+                <path id="pathGridX" d="M50 100 H550 M50 150 H550 M50 200 H550 M50 250 H550 M50 300 H550" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+
+                <path id="pathGridY" d="M100 50 V350 M150 50 V350 M200 50 V350 M250 50 V350 M300 50 V350 M350 50 V350  M400 50 V350  M450 50 V350 M500 50 V350" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+
+                <text id="xLabel" x="250" y="290" text-anchor="middle" >Station (ft)</text>
+
+                <text id="yLabel" text-anchor="middle" transform='translate(15, 150) rotate(-90)'>Depth (ft)</text>
+
+                <text id="xTick1" x="50"  y="270" text-anchor="middle"> </text>
+                <text id="xTick2" x="100" y="270" text-anchor="middle"> </text>
+                <text id="xTick3" x="150" y="270" text-anchor="middle"> </text>
+                <text id="xTick4" x="200" y="270" text-anchor="middle"> </text>
+                <text id="xTick5" x="250" y="270" text-anchor="middle"> </text>
+                <text id="xTick6" x="300" y="270" text-anchor="middle"> </text>
+                <text id="xTick6" x="350" y="270" text-anchor="middle"> </text>
+                <text id="xTick7" x="400" y="270" text-anchor="middle"> </text>
+                <text id="xTick8" x="450" y="270" text-anchor="middle"> </text>
+                <text id="xTick9" x="500" y="270" text-anchor="middle"> </text>
+                
+                <text id="yTick1" x="30" y="50" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick2" x="30" y="100" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick3" x="30" y="150" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick4" x="30" y="200" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick5" x="30" y="250" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick6" x="30" y="300" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick7" x="30" y="50" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick8" x="30" y="100" text-anchor="middle" alignment-baseline="middle"> </text>
+                <text id="yTick9" x="30" y="150" text-anchor="middle" alignment-baseline="middle"> </text>
+
+                
+                <!-- triangular channel-->
+                <path id="pathChan" d="M50 50 L300 350 L550 50" stroke="black" stroke-width="3" fill="none"/>
+                <!-- normal water surface-->
+                <path id="pathNorm" d="M175 200 L425 200" stroke="blue" stroke-width="1" fill="none"/>
+                <!-- critical water surface-->
+                <path id="pathCrit" d="M220 250 L380 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+                <!--axis-->
+            </svg>            
+
+        </div>
+        
+        <div id="calculationTable">
+            <fieldset id="left">
+                <legend>Input</legend>
+                <span>
+                    <label class="label" for="leftSideSlope" >Left Side Slope (h:v)</label>
+                    <input class="value" id="leftSideSlope" name="leftSideSlope" type="number" min="1" value="3">
+                </span>
+                <span>
+                    <label class="label" for="rightSideSlope">Right Side Slope (h:v)</label>
+                    <input class="value" id="rightSideSlope" name="rightSideSlope" type="number" min="1" value="3">
+                </span>
+                <span>
+                    <label class="label" for="channelSlope">Channel Slope (v:h)</label>
+                    <input class="value" id="channelSlope" name="channelSlope" type="number" min="0.001" value="0.01" step="0.001">
+                </span>
+                <span>
+                    <label class="label" for="manningsN">Manning's N</label>
+                    <input class="value" id="manningsN" name="manningsN" type="number"  min="0.001" value="0.013" step="0.001">
+                </span>
+                <span>
+                    <label class="label" for="normalDepth" class="label">Normal Depth (ft)</label>
+                    <input class="value" id="normalDepth" name="normalDepth" type="number" min="0.01" value="0.5">
+                </span>
+                <span>
+                    <label class="label" for="chdischargeannelSlope" class="label">Discharge (cfs)</label>
+                    <input class="value" id="discharge" name="discharge" type="number" min="0.001" value="0.01" step="0.1">
+                </span>
+            </fieldset>
+
+            <fieldset id="right">
+                <legend>Output</legend>
+                <span>
+                    <label class="label">Flow Area (ft<sup>2</sup>)</label>
+                    <label class="text" id="area">1</label>
+                </span>
+                <span>
+                    <label class="label">Wet Perimeter (ft)</label>
+                    <label class="text" id="perimeter">1</label>
+                </span>
+                <span>
+                    <label class="label">Velocity (fps)</label>
+                    <label class="text" id="velocity">1</label>
+                </span>
+                <span>
+                    <label class="label">Critical Depth (ft)</label>
+                    <label class="text" id="criticalDepth">1</label>
+                </span>
+                <span>
+                    <label class="label">Critical Velocity (fps)</label>
+                    <label class="text" id="criticalVelocity">1</label>
+                </span>
+                <span>
+                    <label class="label">Critical Slope (v:h)</label>
+                    <label class="text" id="criticalSlope">1</label>
+                </span>
+                <span>
+                    <label class="label">Froude Number</label>
+                    <label class="text" id="froudeNumber">1</label>
+                </span>
+            </fieldset>
+        </div>
+    </main>
 </body>
 </html>

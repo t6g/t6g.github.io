@@ -1,0 +1,104 @@
+body {
+    font-family: arial, verdana, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+header {
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    height: 40px;
+}
+
+nav a {
+    padding-left:10px;
+    padding-right:10px;
+    text-decoration: none;
+}
+
+nav a.hover {
+    background-color: aquamarine;
+}
+
+#graph{
+    text-align: center;
+}
+
+svg{
+    min-height: 350px;
+    font-size: 1rem;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    border-radius: 1rem;
+    margin: 0.5rem;
+}
+
+.label{
+    text-align: left;
+}
+.value{
+    text-align: right;
+}
+.text{
+    text-align: right;
+    float: right;
+}
+
+fieldset span{
+    margin: 0.1rem;
+}
+
+fieldset span input[type="number"]{
+    width: 5rem;
+    min-width: 5rem;
+    max-width: 10rem;
+    border: none;
+    float: right;
+    font-size: inherit;
+    font-family: inherit;
+    padding: none;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 5vw;
+    }
+    #graph{
+        display: none;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    body {
+        font-size: 2.5vw;
+    }
+    h3{
+        text-align: center;
+    }
+    #calculationTable {
+        display: flex;
+    }
+
+    div fieldset{
+        flex-basis: 0;
+        flex-grow: 1;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    body {
+        font-size: 20px;
+        max-width: 700px;
+    }
+}
