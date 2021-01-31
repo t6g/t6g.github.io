@@ -7,29 +7,46 @@ body {
 
 header {
     text-align: center;
+    margin: 5px;
 }
 
 nav {
     text-align: center;
-    height: 40px;
+    /*background-color: #333;*/
 }
 
 nav a {
-    padding-left:10px;
-    padding-right:10px;
+    padding-top:16px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin: 5px;
     text-decoration: none;
+    /*vertical-align: bottom;*/
+    /*border: 1px solid black;*/
 }
 
-nav a.hover {
-    background-color: aquamarine;
+nav a:hover {
+    background-color: #ddd;
+}
+
+nav a.current{
+    background-color: #ddd; /*#4CAF50;*/
+}
+
+nav a svg{
+    width: 30px;
+    height: 30px;
+}
+
+.spansvg {
+    display: inline-block;
 }
 
 #graph{
     text-align: center;
 }
 
-svg{
-    min-height: 350px;
+.svg{
     font-size: 1rem;
 }
 
@@ -37,8 +54,9 @@ fieldset{
     display: flex;
     flex-direction: column;
     line-height: 1.5;
-    border-radius: 1rem;
+    /*border-radius: 1rem;*/
     margin: 0.5rem;
+    border: 0;
 }
 
 .label{
@@ -60,7 +78,7 @@ fieldset span input[type="number"]{
     width: 5rem;
     min-width: 5rem;
     max-width: 10rem;
-    border: none;
+    /*border: none;*/
     float: right;
     font-size: inherit;
     font-family: inherit;

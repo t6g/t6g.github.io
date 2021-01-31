@@ -433,7 +433,7 @@ function updateGraph(){
     
     while (xDraw <= svg.clientWidth - offsetRight){
         xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
-        yPos = svg.clientHeight - 0.75 * offsetBottom;
+        yPos = svg.clientHeight - 0.65 * offsetBottom;
         idLabel = 'xTick' + i;
         document.getElementById(idLabel).setAttribute('x', xDraw);
         document.getElementById(idLabel).setAttribute('y', yPos);
@@ -460,7 +460,7 @@ function updateGraph(){
     i = 1;
     while (yDraw > offsetTop){
         yGrid += 'M' + offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
-        xPos = 0.75*offsetLeft;
+        xPos = 0.70*offsetLeft;
         idLabel = 'yTick' + i;
         text = y.toString();
         if(text.length > 10) {
