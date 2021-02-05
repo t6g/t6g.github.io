@@ -4,6 +4,15 @@ body {
     margin-right: auto;
 }
 
+@media (prefers-color-scheme: dark) {
+    background: black;
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    background-color: white;
+  }
+}
 
 header {
     text-align: center;
@@ -74,8 +83,15 @@ fieldset span{
     margin: 0.1rem;
 }
 
-fieldset span input[type="number"]{
-    width: 5rem;
+.unit{
+    text-align: left;
+    float: right;
+    width: 2rem;
+    margin-left: 1rem;
+}
+
+fieldset span input[type="number"], select {
+    width: 6rem;
     min-width: 5rem;
     max-width: 10rem;
     /*border: none;*/
@@ -83,6 +99,8 @@ fieldset span input[type="number"]{
     font-size: inherit;
     font-family: inherit;
     padding: none;
+    box-sizing:border-box;
+    text-align-last: right; 
 }
 
 /* Extra small devices (phones, 600px and down) */

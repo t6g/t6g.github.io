@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Open Channel Calculator - Triangular</title>
+    <title>Open Channel Calculator - Trapezoidal</title>
 
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
@@ -14,7 +14,7 @@
 
     <script src="js/util.js"></script>
     <script src="js/openchannel.js"></script>
-    <script src="js/tria.js"></script>
+    <script src="js/trap.js"></script>
 </head>
 <body>
     <header>
@@ -22,9 +22,9 @@
         Open Channel Calculator
     </header>
     <nav>
-        <a href="tria.html" class="current"><svg><path d="m0 0 L15 30 L30 0 h-3 L19.5 15 h-9 L3 0 z" /></svg></a>
+        <a href="tria.html"><svg><path d="m0 0 L15 30 L30 0 h-3 L19.5 15 h-9 L3 0 z" /></svg></a>
         <a href="rect.html"><svg><path d="m0 0 v30 h30 v-30 h-3 v15 h-24 v-15 Z" /></svg></a>
-        <a href="trap.html"><svg><path d="M0 0 L10 30 h10 L30 0 h-3 L22 15 h-14 L3 0 z" /></svg></a>
+        <a href="trap.html" class="current"><svg><path d="M0 0 L10 30 h10 L30 0 h-3 L22 15 h-14 L3 0 z" /></svg></a>
         <a href="para.html"><svg><path d="M 0 0 Q 15 60 30 0 h-3 L 21 15 h-12 L 3 0 Z" /></svg></a>
         <a href="circ.html"><svg><path d="M 0 15 a 15, 15 0 1, 1  30 0 a 15, 15 0 1, 1 -30 0 Z M27 15 a 12, 12 0 1, 0 -24 0Z" /></svg></a>
         <a href="elli.html"><svg><path d="M 0 15 a 15,12 0 1, 1  30 0 a 15,12 0 1, 1 -30 0ZM27 15 a 12  9 0 1, 0  -24 0Z" /></svg></a>
@@ -47,11 +47,11 @@
             <svg id="svg" height="300">
                 <!-- <rect id="svgBorderRect" fill="none" stroke="black"/> -->
 
-                <rect id="axesRect" x="50" y="50" width="400" height="250" fill="none" stroke="black"/>
+                <rect id="axesRect" x="50" y="50" width="500" height="300" fill="none" stroke="black"/>
                 
-                <path id="pathGridX" d="M50 100 H350 M50 150 H350 M50 200 H350 M50 250 H350" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+                <path id="pathGridX" d="M50 100 H550 M50 150 H550 M50 200 H550 M50 250 H550 M50 300 H550" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
-                <path id="pathGridY" d="M100 50 V250 M150 50 V250 M200 50 V250 M250 50 V250" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+                <path id="pathGridY" d="M100 50 V350 M150 50 V350 M200 50 V350 M250 50 V350 M300 50 V350 M350 50 V350  M400 50 V350  M450 50 V350 M500 50 V350" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
                 <text id="xLabel" x="250" y="290" text-anchor="middle" >Station (ft)</text>
 
@@ -80,11 +80,11 @@
 
                 
                 <!-- triangular channel-->
-                <path id="pathChan" d="M50 50 L100 150" stroke="black" stroke-width="3" fill="none"/>
+                <path id="pathChan" d="M50 50 L300 350 L550 50" stroke="black" stroke-width="3" fill="none"/>
                 <!-- normal water surface-->
-                <path id="pathNorm" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none"/>
+                <path id="pathNorm" d="M175 200 L425 200" stroke="blue" stroke-width="1" fill="none"/>
                 <!-- critical water surface-->
-                <path id="pathCrit" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+                <path id="pathCrit" d="M220 250 L380 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
                 <!--axis-->
             </svg>            
 
@@ -98,6 +98,14 @@
                     <label class="unit">h:v</label>
                     <input class="value" id="leftSideSlope" name="leftSideSlope" type="number" min="1" value="3">
                 </span>
+
+                <span>
+                    <label class="label" for="bottomWidth" >Bottom Width</label>
+                    <label class="unit">ft</label>
+                    <input class="value" id="bottomWidth" name="bottomWidth" type="number" min="0.01" value="1">
+                </span>
+
+
                 <span>
                     <label class="label" for="rightSideSlope">Right Side Slope</label>
                     <label class="unit">h:v</label>

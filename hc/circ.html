@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Open Channel Calculator - Triangular</title>
+    <title>Open Channel Calculator - Circular</title>
 
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
@@ -14,7 +14,7 @@
 
     <script src="js/util.js"></script>
     <script src="js/openchannel.js"></script>
-    <script src="js/tria.js"></script>
+    <script src="js/circ.js"></script>
 </head>
 <body>
     <header>
@@ -22,11 +22,11 @@
         Open Channel Calculator
     </header>
     <nav>
-        <a href="tria.html" class="current"><svg><path d="m0 0 L15 30 L30 0 h-3 L19.5 15 h-9 L3 0 z" /></svg></a>
+        <a href="tria.html"><svg><path d="m0 0 L15 30 L30 0 h-3 L19.5 15 h-9 L3 0 z" /></svg></a>
         <a href="rect.html"><svg><path d="m0 0 v30 h30 v-30 h-3 v15 h-24 v-15 Z" /></svg></a>
         <a href="trap.html"><svg><path d="M0 0 L10 30 h10 L30 0 h-3 L22 15 h-14 L3 0 z" /></svg></a>
         <a href="para.html"><svg><path d="M 0 0 Q 15 60 30 0 h-3 L 21 15 h-12 L 3 0 Z" /></svg></a>
-        <a href="circ.html"><svg><path d="M 0 15 a 15, 15 0 1, 1  30 0 a 15, 15 0 1, 1 -30 0 Z M27 15 a 12, 12 0 1, 0 -24 0Z" /></svg></a>
+        <a href="circ.html" class="current"><svg><path d="M 0 15 a 15, 15 0 1, 1  30 0 a 15, 15 0 1, 1 -30 0 Z M27 15 a 12, 12 0 1, 0 -24 0Z" /></svg></a>
         <a href="elli.html"><svg><path d="M 0 15 a 15,12 0 1, 1  30 0 a 15,12 0 1, 1 -30 0ZM27 15 a 12  9 0 1, 0  -24 0Z" /></svg></a>
         <a href="arch.html"><svg>
                 <g transform="scale(0.3)">
@@ -47,11 +47,11 @@
             <svg id="svg" height="300">
                 <!-- <rect id="svgBorderRect" fill="none" stroke="black"/> -->
 
-                <rect id="axesRect" x="50" y="50" width="400" height="250" fill="none" stroke="black"/>
+                <rect id="axesRect" x="50" y="50" width="450" height="300" fill="none" stroke="black"/>
                 
-                <path id="pathGridX" d="M50 100 H350 M50 150 H350 M50 200 H350 M50 250 H350" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+                <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450 M50 300 H450" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
-                <path id="pathGridY" d="M100 50 V250 M150 50 V250 M200 50 V250 M250 50 V250" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+                <path id="pathGridY" d="M100 50 V300 M150 50 V300 M200 50 V300 M250 50 V300 M300 50 V300 M350 50 V350  M400 50 V350  M450 50 V350 M500 50 V350" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
                 <text id="xLabel" x="250" y="290" text-anchor="middle" >Station (ft)</text>
 
@@ -80,11 +80,11 @@
 
                 
                 <!-- triangular channel-->
-                <path id="pathChan" d="M50 50 L100 150" stroke="black" stroke-width="3" fill="none"/>
+                <path id="pathChan" d="M50 50 L300 350 L550 50" stroke="black" stroke-width="3" fill="none"/>
                 <!-- normal water surface-->
-                <path id="pathNorm" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none"/>
+                <path id="pathNorm" d="M175 200 L425 200" stroke="blue" stroke-width="1" fill="none"/>
                 <!-- critical water surface-->
-                <path id="pathCrit" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+                <path id="pathCrit" d="M220 250 L380 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
                 <!--axis-->
             </svg>            
 
@@ -94,15 +94,47 @@
             <fieldset id="left">
                 <!--<legend>Input</legend> -->
                 <span>
-                    <label class="label" for="leftSideSlope" >Left Side Slope</label>
-                    <label class="unit">h:v</label>
-                    <input class="value" id="leftSideSlope" name="leftSideSlope" type="number" min="1" value="3">
+                    <label class="label" for="select" >Select</label>
+                    <label class="unit">&nbsp;</label>
+                    <select class="value" id="select" name="select">
+                        <option style="display:none;" selected></option>     
+                        <option value="8">8&rdquo;</option>
+                        <option value="10">10&rdquo;</option>
+                        <option value="12">12&rdquo;</option>
+                        <option value="15">15&rdquo;</option>
+                        <option value="18">18&rdquo;</option>
+                        <option value="21">21&rdquo;</option>
+                        <option value="24">24&rdquo;</option>
+                        <option value="30">30&rdquo;</option>
+                        <option value="33">33&rdquo;</option>
+                        <option value="36">36&rdquo;</option>
+                        <option value="42">42&rdquo;</option>
+                        <option value="48">48&rdquo;</option>
+                        <option value="54">54&rdquo;</option>
+                        <option value="60">60&rdquo;</option>
+                        <option value="66">66&rdquo;</option>
+                        <option value="72">72&rdquo;</option>
+                        <option value="78">78&rdquo;</option>
+                        <option value="84">84&rdquo;</option>
+                        <option value="90">90&rdquo;</option>
+                        <option value="96">96&rdquo;</option>
+                        <option value="102">102&rdquo;</option>
+                        <option value="108">108&rdquo;</option>
+                        <option value="114">114&rdquo;</option>
+                        <option value="120">120&rdquo;</option>
+                        <option value="126">126&rdquo;</option>
+                        <option value="132">132&rdquo;</option>
+                        <option value="138">138&rdquo;</option>
+                        <option value="144">144&rdquo;</option>
+                    </select>
                 </span>
+
                 <span>
-                    <label class="label" for="rightSideSlope">Right Side Slope</label>
-                    <label class="unit">h:v</label>
-                    <input class="value" id="rightSideSlope" name="rightSideSlope" type="number" min="1" value="3">
+                    <label class="label" for="diameter" >Diameter</label>
+                    <label class="unit">in</label>
+                    <input class="value" id="diameter" name="diameter" type="number" min="1" step="1" value="12">
                 </span>
+
                 <span>
                     <label class="label" for="channelSlope">Channel Slope</label>
                     <label class="unit">v:h</label>
@@ -138,7 +170,7 @@
                     <label class="text" id="perimeter">1</label>
                 </span>
                 <span>
-                    <label class="label">Velocity (fps)</label>
+                    <label class="label">Velocity</label>
                     <label class="unit">ft/s</label>
                     <label class="text" id="velocity">1</label>
                 </span>
@@ -149,18 +181,28 @@
                 </span>
                 <span>
                     <label class="label">Critical Velocity</label>
-                    <label class="unit">ft/s </label>
+                    <label class="unit">ft/s</label>
                     <label class="text" id="criticalVelocity">1</label>
                 </span>
                 <span>
                     <label class="label">Critical Slope</label>
-                    <label class="unit">v:h </label>
+                    <label class="unit">v:h</label>
                     <label class="text" id="criticalSlope">1</label>
                 </span>
                 <span>
                     <label class="label">Froude Number</label>
                     <label class="unit">&nbsp;</label>
                     <label class="text" id="froudeNumber">1</label>
+                </span>
+                <span>
+                    <label class="label">Capacity</label>
+                    <label class="unit">ft<sup>3</sup>/s</label>
+                    <label class="text" id="capacity">1</label>
+                </span>
+                <span>
+                    <label class="label">Depth at Capacity (ft)</label>
+                    <label class="unit">ft</label>
+                    <label class="text" id="ymax">1</label>
                 </span>
             </fieldset>
         </div>
