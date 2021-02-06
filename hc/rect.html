@@ -12,6 +12,8 @@
 
     <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
 
+    <!-- for including nav.html --> 
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script src="js/util.js"></script>
     <script src="js/openchannel.js"></script>
     <script src="js/rect.js"></script>
@@ -21,26 +23,7 @@
         <!--<img src="../images/cx-banner.jpg" alt="Open Channel Calculator" />-->
         Open Channel Calculator
     </header>
-    <nav>
-        <a href="tria.html"><svg><path d="m0 0 L15 30 L30 0 h-3 L19.5 15 h-9 L3 0 z" /></svg></a>
-        <a href="rect.html" class="current"><svg><path d="m0 0 v30 h30 v-30 h-3 v15 h-24 v-15 Z" /></svg></a>
-        <a href="trap.html"><svg><path d="M0 0 L10 30 h10 L30 0 h-3 L22 15 h-14 L3 0 z" /></svg></a>
-        <a href="para.html"><svg><path d="M 0 0 Q 15 60 30 0 h-3 L 21 15 h-12 L 3 0 Z" /></svg></a>
-        <a href="circ.html"><svg><path d="M 0 15 a 15, 15 0 1, 1  30 0 a 15, 15 0 1, 1 -30 0 Z M27 15 a 12, 12 0 1, 0 -24 0Z" /></svg></a>
-        <a href="elli.html"><svg><path d="M 0 15 a 15,12 0 1, 1  30 0 a 15,12 0 1, 1 -30 0ZM27 15 a 12  9 0 1, 0  -24 0Z" /></svg></a>
-        <a href="arch.html"><svg>
-                <g transform="scale(0.3)">
-                    <path d="M 89.96 76.01 A 162.50, 162.50  28.47 0 1 10.40, 76.01
-                                           A  14.50,  14.50  89.72 0 1  0.00, 58.46
-                                           A  52.00,  52.00 152.09 0 1 100.0, 58.46
-                                           A  14.50,  14.50  89.72 0 1 89.96, 76.01
-                             M 94.00 58.46 L   6.00   58.46
-                                           A  47.00,  47.00  60.00 0 1 95.00, 58.46" 
-                          fill-rule="evenodd"/>
-                </g>
-            </svg>
-        </a>
-    </nav>
+    <nav w3-include-html="nav.html"></nav>
 
     <main>
         <div id="graph">
@@ -162,5 +145,8 @@
             </fieldset>
         </div>
     </main>
+    <script>
+        w3.includeHTML();
+    </script>
 </body>
 </html>
