@@ -10,18 +10,15 @@
 
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
-    <!-- for including nav.html --> 
     <script src="js/w3.js"></script>
     <script src="js/util.js"></script>
-    <script src="js/openchannel.js"></script>
+    <script src="js/model/openchannel.js"></script>
     <script src="js/model/arch.js"></script>
     <script src="js/view/arch.js"></script>
 </head>
 <body>
-    <header>
-        <!--<img src="../images/cx-banner.jpg" alt="Open Channel Calculator" />-->
-        Open Channel Calculator
-    </header>
+    <header>Open Channel Calculator</header>
+
     <nav w3-include-html="nav.html"></nav>
 
     <main>
@@ -29,7 +26,6 @@
         
         <div id="calculationTable">
             <fieldset id="left">
-                <!--<legend>Input</legend> -->
                 <span>
                     <label class="label" for="select" >Select</label>
                     <label class="unit">&nbsp;</label>
@@ -71,7 +67,6 @@
                     <input class="value" id="rc" name="rc" type="number" min="1" step="1" value="18">
                 </span>
 
-                
                 <span>
                     <label class="label" for="rise" >Rise</label>
                     <label class="unit">in</label>
@@ -91,12 +86,12 @@
                 <span>
                     <label class="label" for="normalDepth" class="label">Normal Depth</label>
                     <label class="unit">ft</label>
-                    <input class="value" id="normalDepth" name="normalDepth" type="number" min="0.01" value="0.5">
+                    <input class="value" id="normalDepth" name="normalDepth" type="number" min="0.01" value="0.5" step="0.1">
                 </span>
                 <span>
                     <label class="label" for="discharge" class="label">Discharge</label>
                     <label class="unit">ft<sup>3</sup>/s</label>
-                    <input class="value" id="discharge" name="discharge" type="number" min="0.001" value="0.01" step="0.1">
+                    <input class="value" id="discharge" name="discharge" type="number" min="0.01" value="0.1" step="0.1">
                 </span>
             </fieldset>
 

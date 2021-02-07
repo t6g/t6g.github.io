@@ -35,13 +35,13 @@
 
     <path id="pathCrit" d="M200 200 h 100" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
 
-    <path id="pathRb" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
-    <path id="pathRt" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
-    <path id="pathRc" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+    <path id="pathRb" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+    <path id="pathRt" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+    <path id="pathRc" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
 
-    <text id="rbLabel" x="50"  y="270" text-anchor="middle">&nbsp;</text>
-    <text id="rtLabel" x="100" y="270" text-anchor="middle">&nbsp;</text>
-    <text id="rcLabel" x="150" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="rbLabel" x="50"  y="270" text-anchor="middle">Rb</text>
+    <text id="rtLabel" x="100" y="270" text-anchor="middle">Rt</text>
+    <text id="rcLabel" x="150" y="270" text-anchor="middle">Rc</text>
                 
 
 </svg>

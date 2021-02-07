@@ -1,142 +1,118 @@
 // JavaScript source code
 'use strict'
-class RectangularChannel extends OpenChannel {
-    constructor(b, cs, mN, dn) {
-        super(cs, mN, dn);
-        this.b = b;
-    }
 
-    //getters
-    get an() {
-        return this.b * this.dn;
-    }
-    get pn() {
-        return this.b + 2.0 * this.dn;
-    }
-    get ac() {
-        return this.b * this.dc;
-    }
-    get pc() {
-        return this.b + 2.0 * this.dc;
-    }
-    get vc() {
-        return Math.sqrt(gUS * this.dc);
-    }
-    get dc() {
-        return Math.pow(this.Qn * this.Qn / gUS / this.b / this.b, 1.0 / 3.0);
-    }
-    Q2Dn(Q) {
-        var A, P, dAdy, dPdy, f = 10.0, df;
-        var deltay = 10.0;
-        var yi = 0.5;
-        if (Q <= 0){
-            return 0;
-        }
-        var count = 0;
-
-        dPdy = 2.0;
-        dAdy = this.b;
-
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolQ)
-        {
-                A = this.b * yi;
-                P = this.b + 2.0 * yi;
-                f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-                df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dAdy - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dPdy);
-                deltay = f / df;
-                yi -= deltay;
-                count++;
-                if (count > MaxCount) break;
-            }
-        return yi;
-    }
-}
-
-const rect = new RectangularChannel(1, 0.01, 0.05, 0.5);
+const para = new ParabolicChannel(10, 1, 0.01, 0.05, 0.5);
 
 window.onload = function () {
-
-    //check localstorage
     checkLocalStorage();
 
-    document.getElementById('bottomWidth').setAttribute('value', rect.b);
-    document.getElementById('channelSlope').setAttribute('value', rect.cs);
-    document.getElementById('manningsN').setAttribute('value', rect.mN);
-    document.getElementById('normalDepth').setAttribute('value', rect.dn);
-    document.getElementById('discharge').setAttribute('value', rect.Qn.toFixed(2));
+    document.getElementById('topWidth').setAttribute('value', para.tw);
+    document.getElementById('channelDepth').setAttribute('value', para.cd);
+    document.getElementById('channelSlope').setAttribute('value', para.cs);
+    document.getElementById('manningsN').setAttribute('value', para.mN);
+    document.getElementById('normalDepth').setAttribute('value', para.dn);
+    document.getElementById('discharge').setAttribute('value', para.Qn.toFixed(2));
 
-    setValues();
-
-    document.getElementById('bottomWidth').addEventListener("change", respondBottomWidth);
+    document.getElementById('topWidth').addEventListener("change", respondTopWidth);
+    document.getElementById('channelDepth').addEventListener("change", respondChannelDepth);
     document.getElementById('channelSlope').addEventListener("change", respondChannelSlope);
     document.getElementById('manningsN').addEventListener("change", respondManningsN);
     document.getElementById('normalDepth').addEventListener("change", respondNormalDepth);
     document.getElementById('discharge').addEventListener("change", respondDischarge);
 
-    updateGraph();
+    update();
 }
 
 function checkLocalStorage() {
-    var tmp = localStorage.getItem("rect.b");
+    var tmp = localStorage.getItem("para.tw");
     if (tmp !== null) {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.b = tmp;
+                para.tw = tmp;
             }
         }
     }
 
-    tmp = localStorage.getItem("rect.cs");
+    tmp = localStorage.getItem("para.cd");
     if (tmp !== null) {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.cs = tmp;
+                paraa.cd = tmp;
             }
         }
     }
 
-    tmp = localStorage.getItem("rect.mN");
+    tmp = localStorage.getItem("para.cs");
     if (tmp !== null) {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.mN = tmp;
+                para.cs = tmp;
             }
         }
     }
 
-    tmp = localStorage.getItem("rect.dn");
+    tmp = localStorage.getItem("para.mN");
     if (tmp !== null) {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.dn = tmp;
+                para.mN = tmp;
+            }
+        }
+    }
+
+    tmp = localStorage.getItem("para.dn");
+    if (tmp !== null) {
+        tmp = parseFloat(tmp);
+        if (!(isNaN(tmp))) {
+            if (tmp > 0) {
+                para.dn = tmp;
             }
         }
     }
 }
 
-function respondBottomWidth(e) {
-    var tmp = parseFloat(document.getElementById('bottomWidth').value);
+
+function respondTopWidth(e) {
+    var tmp = parseFloat(document.getElementById('topWidth').value);
     if (isNaN(tmp)) {
-        alert("Please input a valid number for bottom width!");
-        document.getElementById('bottomWidth').value = rect.b;
+        alert("Please input a valid number for top width!");
+        document.getElementById('topWidth').value = para.tw;
         return;
     }
     else if (tmp <= 0) {
-        alert("Please input a positive number for bottom width!");
-        document.getElementById('bottomWidth').value = rect.b;
+        alert("Please input a positive number for top width!");
+        document.getElementById('topWidth').value = tria.tw;
         return;
     }
-
     else {
-        rect.b = tmp;
-        localStorage.setItem("rect.b", tmp)
-        setValues();
-        document.getElementById('discharge').value =  rect.Qn.toFixed(2);
-        updateGraph();
+        para.tw = tmp;
+        localStorage.setItem("para.tw", tmp)
+        document.getElementById('discharge').value =  para.Qn.toFixed(2);
+        update();
+    }
+}
+
+function respondChannelDepth(e) {
+    var tmp = parseFloat(document.getElementById('channelDepth').value);
+    if (isNaN(tmp)) {
+        alert("Please input a valid number for channel depth!");
+        document.getElementById('channelDepth').value = para.cd;
+        return;
+    }
+    else if (tmp <= 0) {
+        alert("Please input a positive number for channel depth!");
+        document.getElementById('channeldepth').value = para.cd;
+        return;
+    }
+    else {
+        para.cd = tmp;
+        localStorage.setItem("para.cd", tmp)
+        document.getElementById('discharge').value = para.Qn.toFixed(2);
+        update();
     }
 }
 
@@ -144,95 +120,101 @@ function respondChannelSlope(e) {
     var tmp = parseFloat(document.getElementById('channelSlope').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for channel slope!");
-        document.getElementById('channelSlope').value = rect.cs;
+        document.getElementById('channelSlope').value = para.cs;
         return;
     }
     else if (tmp <= 0) {
         alert("Please input a positive number for channel slope!");
-        document.getElementById('channelSlope').value = rect.cs;
+        document.getElementById('channelSlope').value = para.cs;
         return;
     }
     else {
-        rect.cs = tmp;
-        localStorage.setItem("rect.cs", tmp)
-        setValues();
-        document.getElementById('discharge').value = rect.Qn.toFixed(2);
-        updateGraph();
+        para.cs = tmp;
+        localStorage.setItem("para.cs", tmp)
+        document.getElementById('discharge').value = para.Qn.toFixed(2);
+        update();
     }
 }
 function respondManningsN(e) {
     var tmp = parseFloat(document.getElementById('manningsN').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for manningsN!");
-        document.getElementById('manningsN').value = rect.mN;
+        document.getElementById('manningsN').value = para.mN;
         return;
     }
     else if (tmp <= 0) {
         alert("Please input a positive number for Manning's N!");
-        document.getElementById('manningsN').value = rect.mN;
+        document.getElementById('manningsN').value = para.mN;
         return;
     }
     else {
-        rect.mN = tmp;
-        localStorage.setItem("rect.mN", tmp)
-        setValues();
-        document.getElementById('discharge').value = rect.Qn.toFixed(2);
-        updateGraph();
+        para.mN = tmp;
+        localStorage.setItem("para.mN", tmp)
+        document.getElementById('discharge').value = para.Qn.toFixed(2);
+        update();
     }
 }
 function respondNormalDepth(e) {
     var tmp = parseFloat(document.getElementById('normalDepth').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for normal depth!");
-        document.getElementById('normalDepth').value = rect.dn;
+        document.getElementById('normalDepth').value = para.dn;
         return;
     }
     else if (tmp <= 0) {
-        alert("Please input a positive number for Manning's N!");
-        document.getElementById('normalDepth').value = rect.dn;
+        alert("Please input a positive number for normal depth!");
+        document.getElementById('normalDepth').value = para.dn;
         return;
     }
     else {
-        rect.dn = tmp;
-        localStorage.setItem("rect.dn", tmp)
-        setValues();
-        document.getElementById('discharge').value = rect.Qn.toFixed(2);
-        updateGraph();
+        para.dn = tmp;
+        localStorage.setItem("para.dn", tmp)
+        document.getElementById('discharge').value = para.Qn.toFixed(2);
+        update();
     }
 }
 function respondDischarge(e) {
     var tmp = parseFloat(document.getElementById('discharge').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for discharge!");
-        document.getElementById('discharge').value = rect.Qn.toFixed(2);
+        document.getElementById('discharge').value = para.Qn.toFixed(2);
     }
     else if (tmp <= 0) {
         alert("Please input a positive number for discharge!");
-        document.getElementById('discharge').value = rect.Qn.toFixed(2);
+        document.getElementById('discharge').value = para.Qn.toFixed(2);
         return;
     }
     else {
-        rect.dn = rect.Q2Dn(tmp);
-        localStorage.setItem("rect.dn", tmp)
-        setValues();
-        document.getElementById('normalDepth').value = rect.dn.toFixed(2);
-        updateGraph();
+        para.dn = para.Q2Dn(tmp);
+        localStorage.setItem("para.dn", tmp)
+        document.getElementById('normalDepth').value = para.dn.toFixed(2);
+        update();
     }
 }
 
 function setValues() {
-    document.getElementById('area').innerHTML = rect.an.toFixed(3);
-    document.getElementById('perimeter').innerHTML = rect.pn.toFixed(3);
-    document.getElementById('velocity').innerHTML = rect.vn.toFixed(3);
-    document.getElementById('criticalDepth').innerHTML = rect.dc.toFixed(3);
-    document.getElementById('criticalVelocity').innerHTML = rect.vc.toFixed(3);
-    document.getElementById('criticalSlope').innerHTML = rect.sc.toFixed(3);
-    document.getElementById('froudeNumber').innerHTML = rect.fr.toFixed(3);
+    if(!(document.getElementById('area'))){
+        return;
+    }
+    document.getElementById('area').innerHTML = para.an.toFixed(3);
+    document.getElementById('perimeter').innerHTML = para.pn.toFixed(3);
+    document.getElementById('velocity').innerHTML = para.vn.toFixed(3);
+    document.getElementById('criticalDepth').innerHTML = para.dc.toFixed(3);
+    document.getElementById('criticalVelocity').innerHTML = para.vc.toFixed(3);
+    document.getElementById('criticalSlope').innerHTML = para.sc.toFixed(3);
+    document.getElementById('froudeNumber').innerHTML = para.fr.toFixed(3);
+
+    w3.hide('#spanCapacity');
+    w3.hide('#spanYmax');
+
+    hideRbRtRc();
 }
 
-function updateGraph(){
+function update(){
     'use strict';
 
+    setValues();
+    
     var chart = document.getElementById('chart');
     if(chart == null){
         return;
@@ -245,33 +227,45 @@ function updateGraph(){
     
     //drawing 
     var xMin = 0;
-    var xMax = rect.b
+    var xMax = para.tw;
     var yMin = 0;
-    var yMax = rect.depth;
+    var yMax = para.cd;
 
     var scaleX = (chart.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
     var scaleY = (chart.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
 
-    var x0 = 0.0;
-    var y0 = rect.depth;
+    var x0 = 0;
+    var y0 = para.cd;
     var x0s = offsetLeft + (x0 - xMin) * scaleX;
     var y0s = chart.clientHeight - offsetBottom - (y0 - yMin) * scaleY;
 
-    var x1 = rect.b;
-    var y1 = 0;
+    var x1 = 0.5 * para.tw;
+    var y1 = -para.cd;
     var x1s = offsetLeft + (x1 - xMin) * scaleX;
     var y1s = chart.clientHeight - offsetBottom - (y1 - yMin) * scaleY;
 
-    var yns = chart.clientHeight - offsetBottom -(rect.dn - yMin) * scaleY;
+    var x2 = para.tw;
+    var x2s = offsetLeft + (x2 - xMin) * scaleX;
+    
+    var xnl = 0.5 * para.tw - 0.5 * para.tw * Math.sqrt(para.dn / para.cd);
+    var xnr = 0.5 * para.tw + 0.5 * para.tw * Math.sqrt(para.dn / para.cd);;
+    var xnls = offsetLeft + (xnl - xMin) * scaleX;
+    var xnrs = offsetLeft + (xnr - xMin) * scaleX;
+    var yns = chart.clientHeight - offsetBottom -(para.dn - yMin) * scaleY;
 
-    var ycs = chart.clientHeight - offsetBottom - (rect.dc - yMin) * scaleY;
+
+    var xcl = 0.5 * para.tw - 0.5 * para.tw * Math.sqrt(para.dc / para.cd);
+    var xcr = 0.5 * para.tw + 0.5 * para.tw * Math.sqrt(para.dc / para.cd);;
+    var xcls = offsetLeft + (xcl - xMin) * scaleX;
+    var xcrs = offsetLeft + (xcr - xMin) * scaleX;
+    var ycs = chart.clientHeight - offsetBottom - (para.dc - yMin) * scaleY;
 
     
-    document.getElementById('pathChan').setAttribute('d', 'M ' + x0s + ' ' + y0s + ' V ' + y1s + ' H' + x1s + ' V' + y0s);
+    document.getElementById('pathChan').setAttribute('d', 'M' + x0s + ' ' + y0s + ' Q ' + x1s + ' ' + y1s + ' ' + x2s + ' ' + y0s);
 
-    document.getElementById('pathNorm').setAttribute('d', 'M ' + x0s + ' ' + yns + ' L ' + x1s + ' ' + yns);
+    document.getElementById('pathNorm').setAttribute('d', 'M' + xnls + ' ' + yns + 'L' + xnrs + ' ' + yns);
     
-    document.getElementById('pathCrit').setAttribute('d', 'M ' + x0s + ' ' + ycs + ' L ' + x1s + ' ' + ycs);
+    document.getElementById('pathCrit').setAttribute('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
 
     //draw grid lines;
     var xInc = niceIncrement(xMin, xMax);
@@ -294,11 +288,7 @@ function updateGraph(){
         idLabel = 'xTick' + i;
         document.getElementById(idLabel).setAttribute('x', xDraw);
         document.getElementById(idLabel).setAttribute('y', yPos);
-        text = x.toString();
-        if (text.length > 10) {
-            text = x.toFixed(xInc.countDecimals());
-        }
-        document.getElementById(idLabel).childNodes[0].textContent = text;
+        document.getElementById(idLabel).childNodes[0].textContent = x.toString();
         xDraw += xIncDraw;
         x += xInc;
         i += 1;
@@ -348,3 +338,4 @@ function updateGraph(){
     document.getElementById('xLabel').setAttribute("y", yPos);
     
 }
+

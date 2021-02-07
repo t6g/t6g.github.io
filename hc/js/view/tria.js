@@ -1,40 +1,6 @@
 // JavaScript source code
 'use strict'
 
-class TriangularChannel extends OpenChannel {
-    constructor(z1, z2, cs, mN, dn) {
-        super(cs, mN, dn);
-        this.z1 = z1;
-        this.z2 = z2;
-    }
-
-    //getters
-    get an() {
-        return 0.5 * (this.z1 + this.z2) * this.dn * this.dn;
-    }
-    get pn() {
-        return (Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)) * this.dn;
-    }
-    get ac() {
-        return 0.5 * (this.z1 + this.z2) * this.dc * this.dc;
-    }
-    get pc() {
-        return (Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)) * this.dc;
-    }
-
-    get vc() {
-        return Math.sqrt(0.5 * gUS * this.dc);
-    }
-    get dc() {
-        return Math.pow(8.0 * this.Qn * this.Qn / gUS / (this.z1 + this.z2) / (this.z1 + this.z2), 1.0 / 5.0);
-    }
-    Q2Dn(Q) {
-        return Math.pow(Q * this.mN / KuUS / Math.sqrt(this.cs) * Math.pow(0.5 * (this.z1 + this.z2), -5.0 / 3.0) *
-            Math.pow((Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)), 2.0 / 3.0), 3.0 / 8.0);
-    }
-    
-}
-
 const tria = new TriangularChannel(3, 3, 0.01, 0.05, 0.5);
 
 window.onload = function () {
@@ -49,8 +15,6 @@ window.onload = function () {
     document.getElementById('normalDepth').setAttribute('value', tria.dn);
     document.getElementById('discharge').setAttribute('value', tria.Qn.toFixed(2));
 
-    setValues();
-
     document.getElementById('leftSideSlope').addEventListener("change", respondLeftSideSlope);
     document.getElementById('rightSideSlope').addEventListener("change", respondRightSideSlope);
     document.getElementById('channelSlope').addEventListener("change", respondChannelSlope);
@@ -61,7 +25,7 @@ window.onload = function () {
     //document.getElementById('myCanvas').addEventListener("re")
     
     //drawCanvas();
-    updateGraph();
+    update();
 }
 
 function checkLocalStorage() {
@@ -131,9 +95,8 @@ function respondLeftSideSlope(e) {
     else {
         tria.z1 = tmp;
         localStorage.setItem("tria.z1", tmp)
-        setValues();
         document.getElementById('discharge').value =  tria.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 
@@ -152,9 +115,8 @@ function respondRightSideSlope(e) {
     else {
         tria.z2 = tmp;
         localStorage.setItem("tria.z2", tmp)
-        setValues();
         document.getElementById('discharge').value = tria.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondChannelSlope(e) {
@@ -172,9 +134,8 @@ function respondChannelSlope(e) {
     else {
         tria.cs = tmp;
         localStorage.setItem("tria.cs", tmp)
-        setValues();
         document.getElementById('discharge').value = tria.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondManningsN(e) {
@@ -192,9 +153,8 @@ function respondManningsN(e) {
     else {
         tria.mN = tmp;
         localStorage.setItem("tria.mN", tmp)
-        setValues();
         document.getElementById('discharge').value = tria.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondNormalDepth(e) {
@@ -212,9 +172,8 @@ function respondNormalDepth(e) {
     else {
         tria.dn = tmp;
         localStorage.setItem("tria.dn", tmp)
-        setValues();
         document.getElementById('discharge').value = tria.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondDischarge(e) {
@@ -231,13 +190,15 @@ function respondDischarge(e) {
     else {
         tria.dn = tria.Q2Dn(tmp);
         localStorage.setItem("tria.dn", tmp)
-        setValues();
         document.getElementById('normalDepth').value = tria.dn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 
 function setValues() {
+    if(!(document.getElementById('area'))){
+        return;
+    }
     document.getElementById('area').innerHTML = tria.an.toFixed(3);
     document.getElementById('perimeter').innerHTML = tria.pn.toFixed(3);
     document.getElementById('velocity').innerHTML = tria.vn.toFixed(3);
@@ -245,10 +206,17 @@ function setValues() {
     document.getElementById('criticalVelocity').innerHTML = tria.vc.toFixed(3);
     document.getElementById('criticalSlope').innerHTML = tria.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = tria.fr.toFixed(3);
+    
+    w3.hide('#spanCapacity');
+    w3.hide('#spanYmax');
+
+    hideRbRtRc();
 }
 
-function updateGraph(){
+function update(){
     'use strict';
+    
+    setValues();
 
     var chart = document.getElementById('chart');
     if(chart == null){

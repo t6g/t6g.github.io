@@ -1,4 +1,6 @@
-// JavaScript source code
+// Hydraulic Calculator arch.js 1.0 2021-02-07 by GT
+// arch pipe cross-section
+
 'use strict'
 
 class ArchChannel extends OpenChannel {
@@ -10,7 +12,6 @@ class ArchChannel extends OpenChannel {
         this.rise = rise;
     }
 
-    //getters
     get an() {
         return this.y2A(this.dn, this.rb, this.rt, this.rc, this.rise);
     }
@@ -24,7 +25,7 @@ class ArchChannel extends OpenChannel {
         return this.y2P(this.dc, this.rb, this.rt, this.rc, this.rise);
     }
     get vc() {
-        return Math.sqrt(gUS * this.ac / this.y2T(this.dc, this.rb, this.rt, this.rc, this.rise));
+        return Math.sqrt(gUS * this.ac / this.y2x(this.dc, this.rb, this.rt, this.rc, this.rise) / 2.0);
     }
     get dc() {
         return this.Q2Dc(this.Qn, this.rb, this.rt, this.rc, this.rise);
@@ -38,7 +39,6 @@ class ArchChannel extends OpenChannel {
     get XD() {
         return (this.rb - this.rc) * Math.sin(this.Theta);
     }
-
     get YD() {
         return this.rb - (this.rb - this.rc) * Math.cos(this.Theta);
     }
@@ -48,50 +48,39 @@ class ArchChannel extends OpenChannel {
     get YE() {
         return this.rb * (1.0 - Math.cos(this.Theta));
     }
-
-    get XG() {
-        return this.rt * Math.sin(this.Phi);
-    }
-
-    get YG() {
-        return this.rise - this.rt + this.rt * Math.cos(this.Phi);
-    }
     get AE() {
         return this.rb * this.rb * (this.Theta - Math.sin(this.Theta) * Math.cos(this.Theta));
     }
-
-    get XG() {
-        return this.rt * Math.sin(this.Phi);
-    }
-
     get XF() {
         return this.XD + this.rc;
     }
     get AF() {
         return this.AE + this.rc * this.rc * (Math.PI / 2.0 - this.Theta) + (this.XD + this.XE) * (this.YD - this.YE);
     }
-
+    get XG() {
+        return this.rt * Math.sin(this.Phi);
+    }
+    get YG() {
+        return this.rise - this.rt + this.rt * Math.cos(this.Phi);
+    }
     get AG() {
         return this.AF + this.rc * this.rc * (Math.PI / 2.0 - this.Phi) + (this.XD + this.XG) * (this.YG - this.YD);
     }
-
     get ATotal() {
         return this.AG + this.rt * this.rt * (this.Phi - Math.sin(this.Phi) * Math.cos(this.Phi));
     }
     get PTotal() {
         return 2.0 * this.rb * this.Theta + 2.0 * this.rc * (Math.PI - this.Theta - this.Phi) + 2.0 * this.rt * this.Phi;
     }
+    // calculate area given y
     y2A(y, rb, rt, rc, rise) {
-        var Area = 0;
-
         if (y <= 0) return 0.0;
 
         let Theta = Math.acos(((rb - rc) * (rb - rc) + (rb + rt - rise) * (rb + rt - rise) - (rt - rc) * (rt - rc)) / 2.0 / (rb - rc) / (rb + rt - rise));
         let YE = rb * (1.0 - Math.cos(Theta));
         if (y <= YE) {
             let t = Math.acos(1.0 - y / rb);
-            Area = rb * rb * (t - Math.sin(t) * Math.cos(t));
-            return Area;
+            return rb * rb * (t - Math.sin(t) * Math.cos(t));
         }
 
         let XD = (rb - rc) * Math.sin(Theta);
@@ -101,10 +90,9 @@ class ArchChannel extends OpenChannel {
 
         if (y <= YD)  //YD = YF
         {
-            let omega = Math.acos((YD - y) / rc) - Theta;
-            let xl = XD + rc * Math.cos(Theta + omega) * Math.tan(Theta);
-            Area = AE + rc * rc * omega - rc * rc * (Math.sin(omega + Theta) - Math.cos(omega + Theta) * Math.tan(Theta)) * Math.cos(omega + Theta) + (XE + xl) * (y - YE);
-            return Area;
+            let t = Math.acos((YD - y) / rc);
+            let xl = XD + rc * Math.cos(t) * Math.tan(Theta);
+            return AE + rc * rc * (t - Theta) - rc * rc * (Math.sin(t) - Math.cos(t) * Math.tan(Theta)) * Math.cos(t) + (XE + xl) * (y - YE);
         }
 
         let Phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
@@ -112,38 +100,28 @@ class ArchChannel extends OpenChannel {
         let AF = AE + rc * rc * (Math.PI / 2.0 - Theta) + (XD + XE) * (YD - YE);
         if (y <= YG) {
             let eta = Math.asin((y - YD) / rc);
-            Area = AF + rc * rc * eta + (2.0 * XD + rc * Math.cos(eta)) * rc * Math.sin(eta);
-            return Area;
+            return AF + rc * rc * eta + (2.0 * XD + rc * Math.cos(eta)) * rc * Math.sin(eta);
         }
 
         let XG = rt * Math.sin(Phi);
         let AG = AF + rc * rc * (Math.PI / 2.0 - Phi) + (XD + XG) * (YG - YD);
-        if (y >= rise) {
-            Area = AG + rt * rt * (Phi - Math.sin(Phi) * Math.cos(Phi));
-            return Area;
-        }
+        if (y >= rise) return AG + rt * rt * (Phi - Math.sin(Phi) * Math.cos(Phi));
 
         let yc = rise - rt;
         let tt = Math.acos((y - yc) / rt);
-        Area = AG + rt * rt * (Phi - Math.sin(Phi) * Math.cos(Phi)) - rt * rt * (tt - Math.sin(tt) * Math.cos(tt));
-        return Area;
+        return AG + rt * rt * (Phi - Math.sin(Phi) * Math.cos(Phi)) - rt * rt * (tt - Math.sin(tt) * Math.cos(tt));
     }
+
+    // calculate wet perimeter given y
     y2P(y, rb, rt, rc, rise) {
         if (y <= 0) return 0.0;
 
         let Theta = Math.acos(((rb - rc) * (rb - rc) + (rb + rt - rise) * (rb + rt - rise) - (rt - rc) * (rt - rc)) / 2.0 / (rb - rc) / (rb + rt - rise));
         let YE = rb * (1.0 - Math.cos(Theta));
-        if (y <= YE) {
-            let t = Math.acos(1.0 - y / rb);
-            return 2.0 * rb * t;
-        }
+        if (y <= YE) return 2.0 * rb * Math.acos(1.0 - y / rb);
 
-        let YD = rb - (rb - rc) * Math.cos(Theta);
-        if (y <= YD)  //YD = YF
-        {
-            let omega = Math.acos((YD - y) / rc) - Theta;
-            return 2.0 * rb * Theta + 2.0 * rc * omega;;
-        }
+        let YD = rb - (rb - rc) * Math.cos(Theta); //YD = YF
+        if (y <= YD) return 2.0 * rb * Theta + 2.0 * rc * (Math.acos((YD - y) / rc) - Theta);
 
         let Phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
         let YG = rise - rt + rt * Math.cos(Phi);
@@ -152,59 +130,48 @@ class ArchChannel extends OpenChannel {
             return 2.0 * rb * Theta + 2.0 * rc * (Math.PI / 2.0 - Theta + eta);
         }
 
-        if (y >= rise) {
-            return 2.0 * rb * Theta + 2.0 * rc * (Math.PI - Theta - Phi) + 2.0 * rt * Phi;
-        }
+        if (y >= rise) return 2.0 * rb * Theta + 2.0 * rc * (Math.PI - Theta - Phi) + 2.0 * rt * Phi;
 
-        let yc = rise - rt;
-        let tt = Math.acos((y - yc) / rt);
+        let tt = Math.acos((y - rise + rt) / rt);
         return 2.0 * rb * Theta + 2.0 * rc * (Math.PI - Theta - Phi) + 2.0 * rt * (Phi - tt);
     }
 
-    y2T(y, rb, rt, rc, rise) {
-        //top width
+    // calculate x (0 at center) given y
+    y2x(y, rb, rt, rc, rise) {
         if (y <= 0) return 0.0;
 
         let Theta = Math.acos(((rb - rc) * (rb - rc) + (rb + rt - rise) * (rb + rt - rise) - (rt - rc) * (rt - rc)) / 2.0 / (rb - rc) / (rb + rt - rise));
         let YE = rb * (1.0 - Math.cos(Theta));
-        if (y <= YE) {
-            return 2.0 * rb * Math.sin(Math.acos(1.0 - y / rb));
-        }
+        if (y <= YE) return rb * Math.sin(Math.acos(1.0 - y / rb));
 
         let XD = (rb - rc) * Math.sin(Theta);
         let YD = rb - (rb - rc) * Math.cos(Theta);
-        if (y <= YD)  //YD = YF
-        {
-            return 2.0 * XD + 2.0 * rc * Math.sin(Math.acos((YD - y) / rc));
-        }
+        if (y <= YD)  XD + rc * Math.sin(Math.acos((YD - y) / rc));
 
         let Phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
         let YG = rise - rt + rt * Math.cos(Phi);
-        if (y <= YG) {
-            return 2.0 * XD + 2.0 * rc * Math.cos(Math.asin((y - YD) / rc));
-        }
+        if (y <= YG) return XD + rc * Math.cos(Math.asin((y - YD) / rc));
 
-        if (y >= rise) {
-            0.0;
-        }
+        if (y >= rise) return 0.0;
 
-        return 2.0 * rt * Math.sin(Math.acos((y - (rise - rt)) / rt));
+        return rt * Math.sin(Math.acos((y - (rise - rt)) / rt));
     }
 
+    // for capacity calculation (assume that capacity occurs at the top arch, zeta is the angle)
     zetamax(rb, rt, rc, rise) {
-        var A, P, dA, ddA, dP = -2.0 * rt, f = 100.0, df; //ddP = 0
-        var dzeta = 10.0;
-        var phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
-        var zetai = 0.5 * phi, zetamin = 0.0, zetamax = phi;
-        var Atotal = this.ATotal;
-        var Ptotal = this.PTotal;
-        var count = 0;
+        let A, P, dA, ddA, dP = -2.0 * rt, f = 100.0, df; //ddP = 0
+        let dzeta = 10.0;
+        let phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
+        let zeta = 0.5 * phi, zetamin = 0.0, zetamax = phi;
+        let Atotal = this.ATotal;
+        let Ptotal = this.PTotal;
+        let count = 0;
 
         while (Math.abs(dzeta) > TolAngle && Math.abs(f) > TolD) {
-            A = Atotal - rt * rt * (zetai - Math.sin(zetai) * Math.cos(zetai));
-            dA = -1.0 * rt * rt * (1.0 - Math.cos(2.0 * zetai));
-            ddA = -2.0 * rt * rt * Math.sin(2.0 * zetai);
-            P = Ptotal - 2.0 * rt * zetai;
+            A = Atotal - rt * rt * (zeta - Math.sin(zeta) * Math.cos(zeta));
+            dA = -1.0 * rt * rt * (1.0 - Math.cos(2.0 * zeta));
+            ddA = -2.0 * rt * rt * Math.sin(2.0 * zeta);
+            P = Ptotal - 2.0 * rt * zeta;
             f = 5.0 * dA * P - 2.0 * A * dP;
 
             if (Math.abs(f) < TolD) break;
@@ -212,241 +179,215 @@ class ArchChannel extends OpenChannel {
             df = 3.0 * dA * dP + 5.0 * ddA * P;
             dzeta = f / df;
 
-            if (zetai - dzeta <= zetamin) {
-                zetai = 0.5 * (zetai + zetamin);
+            if (zeta - dzeta <= zetamin) {
+                zeta = 0.5 * (zeta + zetamin);
                 continue;
             }
 
-            if (zetai - dzeta >= zetamax) {
-                zetai = 0.5 * (zetai + zetamax);
+            if (zeta - dzeta >= zetamax) {
+                zeta = 0.5 * (zeta + zetamax);
             }
 
             if (f <= 0)
-                zetamax = zetai;
+                zetamax = zeta;
             else
-                zetamin = zetai;
+                zetamin = zeta;
 
-            zetai -= dzeta;
+            zeta -= dzeta;
 
             count++;
             if (count > MaxCount) break;
         }
 
-        return zetai;
+        return zeta;
     } 
     
+    //capacity
     get Qmax(){
-        var zeta = this.zetamax(this.rb, this.rt, this.rc, this.rise);
-        var A = this.ATotal - this.rt * this.rt * (zeta - Math.sin(zeta) * Math.cos(zeta));
-        var P = this.PTotal - 2.0 * this.rt * zeta;
-        var v = KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.sqrt(this.cs);
+        let zeta = this.zetamax(this.rb, this.rt, this.rc, this.rise);
+        let A = this.ATotal - this.rt * this.rt * (zeta - Math.sin(zeta) * Math.cos(zeta));
+        let P = this.PTotal - 2.0 * this.rt * zeta;
+        let v = KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.sqrt(this.cs);
         return v * A;
     }
 
     get ymax(){
-        var zeta = this.zetamax(this.rb, this.rt, this.rc, this.rise);
+        let zeta = this.zetamax(this.rb, this.rt, this.rc, this.rise);
         return this.rise - this.rt + this.rt * Math.cos(zeta);
     }
     
+    
+    // calculate normal depth given discharge given
     Q2Dn(Q, rb, rt, rc, rise) {
-        if (Q <= 0.0) {
-            return 0.0;
-        }
+        if (Q <= 0.0) return 0.0;
 
-        if (Q >= this.Qmax) {
-            return this.yamx;
-        }
+        if (Q >= this.Qmax) return this.yamx;
 
-        var A, P, dA, dP, f = 100.0, df;
-        var dd = 10.0, xmin, xmax;
-        var count = 0;
+        let A, P, dA, dP, f = 100.0, df;
+        let dt = 10.0, tmin, tmax;
+        let count = 0;
 
-        var theta = Math.acos(((rb - rc) * (rb - rc) + (rb + rt - rise) * (rb + rt - rise) - (rt - rc) * (rt - rc)) / 2.0 / (rb - rc) / (rb + rt - rise));
-        var ye = rb * (1.0 - Math.cos(theta));
-        var Ae = rb * rb * (theta - Math.sin(theta) * Math.cos(theta));
-        var Pe = 2.0 * rb * theta;
-        var Qe = Ae * KuUS / this.mN * Math.pow(Ae / Pe, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
+        let Theta = Math.acos(((rb - rc) * (rb - rc) + (rb + rt - rise) * (rb + rt - rise) - (rt - rc) * (rt - rc)) / 2.0 / (rb - rc) / (rb + rt - rise));
+        let ye = rb * (1.0 - Math.cos(Theta));
+        let AE = rb * rb * (Theta - Math.sin(Theta) * Math.cos(Theta));
+        let PE = 2.0 * rb * Theta;
+        let QE = AE * KuUS / this.mN * Math.pow(AE / PE, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
 
-        if (Math.abs(Q - Qe) < TolQ) return ye;
+        if (Math.abs(Q - QE) < TolQ) return ye;
 
-        if (Q <= Qe) {
-            xmin = 0.0;
-            xmax = theta;
-            let xtheta = 0.5 * (xmin + xmax);
+        if (Q <= QE) {
+            tmin = 0.0;
+            tmax = Theta;
+            let t = 0.5 * (tmin + tmax);
             dP = 2.0 * rb;
 
-            while (Math.abs(dd) > TolAngle && Math.abs(f) > TolQ) {
-                A = rb * rb * (xtheta - Math.sin(xtheta) * Math.cos(xtheta));
-                dA = rb * rb * (1.0 - Math.cos(2.0 * xtheta));
-                P = 2.0 * rb * xtheta;
+            while (Math.abs(dt) > TolAngle && Math.abs(f) > TolQ) {
+                A = rb * rb * (t - Math.sin(t) * Math.cos(t));
+                dA = rb * rb * (1.0 - Math.cos(2.0 * t));
+                P = 2.0 * rb * t;
                 f = A * KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
 
-                if (f <= 0)
-                    xmin = xtheta;
-                else
-                    xmax = xtheta;
+                if (f <= 0) tmin = t;
+                else tmax = t;
 
                 if (Math.abs(f) < TolQ) break;
 
                 df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0 / 3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0 / 2.0);
 
-                dd = f / df;
+                dt = f / df;
 
-                if (xtheta - dd <= xmin || xtheta - dd >= xmax) {
-                    if (f > 0) {
-                        xtheta = 0.5 * (xtheta + xmin);
-                    }
-                    else {
-                        xtheta = 0.5 * (xtheta + xmax);
-                    }
+                if (t - dt <= tmin || t - dt >= tmax) {
+                    if (f > 0) t = 0.5 * (t + tmin);
+                    else t = 0.5 * (t + tmax);
                     continue;
                 }
 
-                xtheta -= dd;
+                t -= dt;
 
                 count++;
                 if (count > MaxCount) break;
             }
 
-            return rb * (1.0 - Math.cos(xtheta));
+            return rb * (1.0 - Math.cos(t));
         }
 
-        var xl, y;
-        var yd = rb - (rb - rc) * Math.cos(theta);
-        var xe = rb * Math.sin(theta);
-        var xd = (rb - rc) * Math.sin(theta);
-        var Af = Ae + rc * rc * (Math.PI / 2.0 - theta) + (xd + xe) * (yd - ye);
-        var Pf = Pe + 2.0 * rc * (Math.PI / 2.0 - theta);
-        var Qf = Af * KuUS / this.mN * Math.pow(Af / Pf, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
+        let xl, y;
+        let yd = rb - (rb - rc) * Math.cos(Theta);
+        let xe = rb * Math.sin(Theta);
+        let xd = (rb - rc) * Math.sin(Theta);
+        let AF = AE + rc * rc * (Math.PI / 2.0 - Theta) + (xd + xe) * (yd - ye);
+        let PF = PE + 2.0 * rc * (Math.PI / 2.0 - Theta);
+        let QF = AF * KuUS / this.mN * Math.pow(AF / PF, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
 
-        if (Math.abs(Q - Qf) < TolQ) return yd;
+        if (Math.abs(Q - QF) < TolQ) return yd;
 
-        if (Q <= Qf) {
+        if (Q <= QF) {
             f = 100.0;
-            xmin = 0.0;
-            xmax = Math.PI / 2.0 - theta;
-            var omega = 0.5 * (xmin + xmax);
+            tmin = 0.0;
+            tmax = Math.PI / 2.0 - Theta;
             dP = 2.0 * rc;
+            let t = 0.5 * (tmin + tmax);
 
-            while (Math.abs(dd) > TolAngle && Math.abs(f) > TolD) {
+            while (Math.abs(dt) > TolAngle && Math.abs(f) > TolD) {
 
-                xl = xd + rc * Math.cos(theta + omega) * Math.tan(theta);
-                y = yd - rc * Math.cos(theta + omega);
-                A = Ae + rc * rc * omega - rc * rc * (Math.sin(omega + theta) - Math.cos(omega + theta) * Math.tan(theta)) * Math.cos(omega + theta) + (xe + xl) * (y - ye);
-                P = Pe + 2.0 * rc * omega;
-                dA = rc * rc * (1.0 - Math.cos(2.0 * (omega + theta)) - Math.cos(2.0 * (omega + theta)) * Math.tan(theta))
-                    + rc * (xe + xl) * Math.sin(omega + theta) + rc * (y - ye) * Math.cos(omega + theta);
+                xl = xd + rc * Math.cos(Theta + t) * Math.tan(Theta);
+                y = yd - rc * Math.cos(Theta + t);
+                A = AE + rc * rc * t - rc * rc * (Math.sin(t + Theta) - Math.cos(t + Theta) * Math.tan(Theta)) * Math.cos(t + Theta) + (xe + xl) * (y - ye);
+                P = PE + 2.0 * rc * t;
+                dA = rc * rc * (1.0 - Math.cos(2.0 * (t + Theta)) - Math.cos(2.0 * (t + Theta)) * Math.tan(Theta))
+                    + rc * (xe + xl) * Math.sin(t + Theta) + rc * (y - ye) * Math.cos(t + Theta);
                 f = A * KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
 
-                if (f <= 0)
-                    xmin = omega;
-                else
-                    xmax = omega;
+                if (f <= 0) tmin = t;
+                else tmax = t;
 
                 if (Math.abs(f) < TolQ) break;
 
                 df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0 / 3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0 / 2.0);
 
-                dd = f / df;
+                dt = f / df;
 
-                if (omega - dd <= xmin || omega - dd >= xmax) {
-                    if (f > 0) {
-                        omega = 0.5 * (omega + xmin);
-                    }
-                    else {
-                        omega = 0.5 * (omega + xmax);
-                    }
-                    //dd = 0.5 * (omega - xmin);
+                if (t - dt <= tmin || t - dt >= tmax) {
+                    if (f > 0) t = 0.5 * (t + tmin);
+                    else t = 0.5 * (t + tmax);
                     continue;
                 }
 
-                omega -= dd;
+                t -= dt;
 
                 count++;
                 if (count > MaxCount) break;
             }
 
-            return yd - rc * Math.cos(omega + theta);
+            return yd - rc * Math.cos(t + Theta);
         }
 
-        var yc = rise - rt;
-        var phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
-        var XG = rt * Math.sin(phi);
-        var yg = yc + rt * Math.cos(phi);
-        var Ag = Af + rc * rc * (Math.PI / 2.0 - phi) + (xd + XG) * (yg - yd);
-        var Pg = Pf + 2.0 * rc * (Math.PI / 2.0 - phi);
-        var Qg = Ag * KuUS / this.mN * Math.pow(Ag / Pg, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0);
+        let yc = rise - rt;
+        let phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
+        let XG = rt * Math.sin(phi);
+        let yG = yc + rt * Math.cos(phi);
+        let AG = AF + rc * rc * (Math.PI / 2.0 - phi) + (xd + XG) * (yG - yd);
+        let PG = PF + 2.0 * rc * (Math.PI / 2.0 - phi);
+        let QG = AG * KuUS / this.mN * Math.pow(AG / PG, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0);
 
-        if (Math.abs(Q - Qg) < TolQ) return yg;
-        var eta;
+        if (Math.abs(Q - QG) < TolQ) return yG;
 
-        if (Q <= Qg) {
-            dd = 100.0;
+        if (Q <= QG) {
+            dt = 100.0;
             f = 100.0;
-            xmin = 0.0;
-            xmax = Math.PI / 2.0 - phi;
-            eta = 0.5 * (xmin + xmax);
+            tmin = 0.0;
+            tmax = Math.PI / 2.0 - phi;
+            let eta = 0.5 * (tmin + tmax);
             dP = 2.0 * rc;
 
-            while (Math.abs(dd) > TolAngle && Math.abs(f) > TolQ) {
+            while (Math.abs(dt) > TolAngle && Math.abs(f) > TolQ) {
 
-                //x = xd + rc * Math.cos(eta);
-                //y = yd - rc * Math.sin(eta);
-                A = Af + rc * rc * eta + (2.0 * xd + rc * Math.cos(eta)) * rc * Math.sin(eta);
-                P = Pf + 2.0 * rc * eta;
+                A = AF + rc * rc * eta + (2.0 * xd + rc * Math.cos(eta)) * rc * Math.sin(eta);
+                P = PF + 2.0 * rc * eta;
                 dA = rc * rc + 2.0 * xd * rc * Math.cos(eta) + rc * rc * Math.cos(2.0 * eta);
                 f = A * KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
 
-                if (f <= 0)
-                    xmin = eta;
-                else
-                    xmax = eta;
+                if (f <= 0) tmin = eta;
+                else tmax = eta;
 
                 if (Math.abs(f) < TolQ) break;
 
                 df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0/3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0/2.0);
-                dd = f / df;
+                dt = f / df;
 
-                if (eta - dd <= xmin || eta - dd >= xmax) {
-                    //eta = 0.5 * (eta - xmin);
-                    if (f > 0) {
-                        eta = 0.5 * (eta + xmin);
-                    }
-                    else {
-                        eta = 0.5 * (eta + xmax);
-                    }
-
+                if (eta - dt <= tmin || eta - dt >= tmax) {
+                    if (f > 0) eta = 0.5 * (eta + tmin);
+                    else eta = 0.5 * (eta + tmax);
                     continue;
                 }
 
-                eta -= dd;
+                eta -= dt;
 
                 count++;
                 if (count > MaxCount) break;
             }
 
-            console.log('dn = ', yd + rc * Math.sin(eta));
             return yd + rc * Math.sin(eta);
         }
 
-        var At = Ag + rt * rt * (phi - Math.sin(phi) * Math.cos(phi));
-        var Pt = Pg + 2.0 * rt * phi;
-        var delta = 10.0;
-        xmin = this.zetamax(this.rb, this.rt, this.rc, this.rise);
-        xmax = phi;
-        eta = 0.5 * (xmin + xmax);
+        let AT = AG + rt * rt * (phi - Math.sin(phi) * Math.cos(phi));
+        let PT = PG + 2.0 * rt * phi;
+        let delta = 10.0;
+        tmin = this.zetamax(this.rb, this.rt, this.rc, this.rise);
+        tmax = phi;
+        let t = 0.5 * (tmin + tmax);
         dP = -2.0 * rt;
 
         while (Math.abs(delta) > TolAngle && Math.abs(f) > TolQ) {
-            A = At - rt * rt * (eta - Math.sin(eta) * Math.cos(eta));
-            P = Pt - 2.0 * rt * eta;
-            dA = -rt * rt * (1.0 - Math.cos(2.0 * eta));
+            A = AT - rt * rt * (t - Math.sin(t) * Math.cos(t));
+            P = PT - 2.0 * rt * t;
+            dA = -rt * rt * (1.0 - Math.cos(2.0 * t));
             f = A * KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
 
             if (f >= 0)
-                xmin = eta;
+                tmin = t;
             else
-                xmax = eta;
+                tmax = t;
 
             if (Math.abs(f) < TolQ) break;
 
@@ -454,24 +395,24 @@ class ArchChannel extends OpenChannel {
 
             delta = f / df;
 
-            if (eta - delta <= xmin) {
-                delta = 0.5 * (eta - xmin);
+            if (t - delta <= tmin) {
+                delta = 0.5 * (t - tmin);
                 continue;
             }
 
-            if (eta - delta >= xmax) {
-                delta = 0.5 * (eta - xmax);
+            if (t - delta >= tmax) {
+                delta = 0.5 * (t - tmax);
             }
 
-            eta -= delta;
+            t -= delta;
 
             count++;
             if (count > MaxCount) break;
         }
 
-        console.log('dn = ', yc + rt * Math.cos(eta));
-        return yc + rt * Math.cos(eta);
+        return yc + rt * Math.cos(t);
     }
+    // calculate critical depth
     Q2Dc(Q, rb, rt, rc, rise) {
         if (Q <= 0.0) return 0.0;
 
@@ -479,7 +420,6 @@ class ArchChannel extends OpenChannel {
         var XE = rb * Math.sin(Theta);
         var YE = rb * (1.0 - Math.cos(Theta));
         var AE = rb * rb * (Theta - Math.sin(Theta) * Math.cos(Theta));
-        var EE = YE + Q * Q / AE / AE / 2.0 / gUS;
         var dAdy = 2.0 * rb * Math.sin(Theta);
         var QcE = Math.sqrt(gUS * AE * AE * AE / dAdy);
         var ti, tmin, tmax, delta = 10.0;
@@ -529,7 +469,6 @@ class ArchChannel extends OpenChannel {
         var XD = (rb - rc) * Math.sin(Theta);
         var YF = rb - (rb - rc) * Math.cos(Theta);
         var AF = AE + rc * rc * (Math.PI / 2.0 - Theta) + (XD + XE) * (YF - YE);
-        var EF = YF + Q * Q / AF / AF / 2.0 / gUS;
         // at F, theta + omega = PI/2
 
         dydt = rc;
@@ -589,7 +528,6 @@ class ArchChannel extends OpenChannel {
         var XG = rt * Math.sin(Phi);
         var YG = rise - rt + rt * Math.cos(Phi);
         var AG = AF + rc * rc * (Math.PI / 2.0 - Phi) + (XD + XG) * (YG - YF);
-        var EG = YG + Q * Q / AG / AG / 2.0 / gUS;
         var eta = Math.PI / 2.0 - Phi;
         dydt = rc * Math.cos(eta);
         dAdt = rc * rc + 2.0 * XD * rc * Math.cos(eta) + rc * rc * Math.cos(2.0 * eta);
@@ -643,7 +581,6 @@ class ArchChannel extends OpenChannel {
 
 
         var AT = AG + rt * rt * (Phi - Math.sin(Phi) * Math.cos(Phi));
-        var ET = rise + Q * Q / AT / AT / 2.0 / gUS;
 
         tmin = 0.0;
         tmax = Phi;

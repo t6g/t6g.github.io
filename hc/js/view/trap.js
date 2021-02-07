@@ -1,95 +1,6 @@
 // JavaScript source code
 'use strict'
 
-class TrapezoidalChannel extends OpenChannel {
-    constructor(z1, b, z2, cs, mN, dn) {
-        super(cs, mN, dn);
-        this.z1 = z1;
-        this.b = b;
-        this.z2 = z2;
-    }
-
-    //getters
-    get an() {
-        return this.b * this.dn  + 0.5 * (this.z1 + this.z2) * this.dn * this.dn;
-    }
-    get pn() {
-        return this.b + (Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)) * this.dn;
-    }
-    get ac() {
-        return this.b * this.dc + 0.5 * (this.z1 + this.z2) * this.dc * this.dc;
-    }
-    get pc() {
-        return this.b + (Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)) * this.dc;
-    }
-
-    get vc() {
-        var dclocal = this.dc;
-        var dAdy = (this.z1 + this.z2) * dclocal + this.b;
-        var Dh = this.ac / dAdy;
-        return Math.sqrt(gUS * Dh);
-    }
-    get dc() {
-        var A, dAdy, d2Ady2, f = 10.0, df;
-        var deltay = 10.0;
-        var count = 0;
-        var yi;
-        var Q = this.Qn;
-
-        d2Ady2 = this.z1 + this.z2;
-
-        //use Equations in Table 2.1 French 1985 to estimate yi
-        if (Q / Math.pow(this.b, 2.5) < 0.1){
-            yi = Math.pow(Q * Q / gUS / this.b / this.b, 1.0 / 3.0);
-        }
-        else {
-            yi = 0.81 * Math.pow((Q * Q / gUS * Math.pow(0.5 * (this.z1 + this.z2), -0.75) * Math.pow(this.b, -1.25)), 0.27) - this.b / 15.0 / (this.z1 + this.z2);
-        }
-
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolD)
-        {
-            A = this.b * yi + 1.0 / 2.0 * yi * yi * (this.z1 + this.z2);
-            dAdy = this.b + (this.z1 + this.z2) * yi;
-            f = gUS * A * A * A - Q * Q * dAdy;
-            df = 3.0 * gUS * A * A * dAdy - Q * Q * d2Ady2;
-            deltay = f / df;
-            yi -= deltay;
-            count++;
-            if (count > MaxCount) break;
-        }
-        return yi;
-    }
-    Q2Dn(Q) {
-        var A, P, dAdy, dPdy, f = 10.0, df;
-        var deltay = 10.0;
-        var yi = 0.5;
-        var count = 0;
-
-        if (Q <= 0) {
-            this.dn = 0.0;
-            return;
-        }
-                
-        
-        dPdy = Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2);
-
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolD) {
-            A = this.b * yi + 1.0 / 2.0 * yi * yi * (this.z1 + this.z2);
-            dAdy = this.b + (this.z1 + this.z2) * yi;
-            //P = b + (Math.Sqrt(1.0 + z1 * z1) + Math.Sqrt(1.0 + z2 * z2)) * yi;
-            P = this.b + dPdy * yi;
-            f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-            df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dAdy - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dPdy);
-            deltay = f / df;
-            yi -= deltay;
-            count++;
-            if (count > MaxCount) break;
-        }
-
-        return yi;
-    }
-}
-
 const trap = new TrapezoidalChannel(3, 1, 3, 0.01, 0.05, 0.5);
 
 window.onload = function () {
@@ -103,8 +14,6 @@ window.onload = function () {
     document.getElementById('normalDepth').setAttribute('value', trap.dn);
     document.getElementById('discharge').setAttribute('value', trap.Qn.toFixed(2));
 
-    setValues();
-
     document.getElementById('leftSideSlope').addEventListener("change", respondLeftSideSlope);
     document.getElementById('bottomWidth').addEventListener("change", respondBottomWidth);
     document.getElementById('rightSideSlope').addEventListener("change", respondRightSideSlope);
@@ -113,7 +22,7 @@ window.onload = function () {
     document.getElementById('normalDepth').addEventListener("change", respondNormalDepth);
     document.getElementById('discharge').addEventListener("change", respondDischarge);
 
-    updateGraph();
+    update();
 }
 
 function checkLocalStorage() {
@@ -194,9 +103,8 @@ function respondLeftSideSlope(e) {
     else {
         trap.z1 = tmp;
         localStorage.setItem("trap.z1", tmp)
-        setValues();
         document.getElementById('discharge').value =  trap.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 
@@ -215,9 +123,8 @@ function respondBottomWidth(e) {
     else {
         trap.b = tmp;
         localStorage.setItem("trap.b", tmp)
-        setValues();
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 
@@ -236,9 +143,8 @@ function respondRightSideSlope(e) {
     else {
         trap.z2 = tmp;
         localStorage.setItem("trap.z2", tmp)
-        setValues();
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
-        updateGraph();
+        update();
    }
 }
 function respondChannelSlope(e) {
@@ -256,9 +162,8 @@ function respondChannelSlope(e) {
     else {
         trap.cs = tmp;
         localStorage.setItem("trap.cs", tmp)
-        setValues();
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondManningsN(e) {
@@ -276,9 +181,8 @@ function respondManningsN(e) {
     else {
         trap.mN = tmp;
         localStorage.setItem("trap.mN", tmp)
-        setValues();
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondNormalDepth(e) {
@@ -296,9 +200,8 @@ function respondNormalDepth(e) {
     else {
         trap.dn = tmp;
         localStorage.setItem("trap.dn", tmp)
-        setValues();
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 function respondDischarge(e) {
@@ -315,13 +218,15 @@ function respondDischarge(e) {
     else {
         trap.dn = trap.Q2Dn(tmp);
         localStorage.setItem("trap.dn", tmp)
-        setValues();
         document.getElementById('normalDepth').value = trap.dn.toFixed(2);
-        updateGraph();
+        update();
     }
 }
 
 function setValues() {
+    if(!(document.getElementById('area'))){
+        return;
+    }
     document.getElementById('area').innerHTML = trap.an.toFixed(3);
     document.getElementById('perimeter').innerHTML = trap.pn.toFixed(3);
     document.getElementById('velocity').innerHTML = trap.vn.toFixed(3);
@@ -329,11 +234,18 @@ function setValues() {
     document.getElementById('criticalVelocity').innerHTML = trap.vc.toFixed(3);
     document.getElementById('criticalSlope').innerHTML = trap.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = trap.fr.toFixed(3);
+
+    w3.hide('#spanCapacity');
+    w3.hide('#spanYmax');
+
+    hideRbRtRc();
 }
 
-function updateGraph(){
+function update(){
     'use strict';
 
+    setValues();
+    
     var chart = document.getElementById('chart');
     if(chart == null){
         return;

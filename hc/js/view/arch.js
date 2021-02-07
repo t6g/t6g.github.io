@@ -340,9 +340,8 @@ function respondDischarge(e) {
 
 function setValues() {
 
-    if(!(document.getElementById('area'))){       
-       return;
-    }
+    if(!(document.getElementById('area'))) return;
+
     document.getElementById('area').innerHTML = arch.an.toFixed(3);
     document.getElementById('perimeter').innerHTML = arch.pn.toFixed(3);
     document.getElementById('velocity').innerHTML = arch.vn.toFixed(3);
@@ -414,14 +413,14 @@ function update(){
     var rtys = arch.rt * scaleY;
     
     //normal water surface
-    var xnr = arch.y2T(arch.dn, arch.rb, arch.rt, arch.rc, arch.rise) / 2.0;
+    var xnr = arch.y2x(arch.dn, arch.rb, arch.rt, arch.rc, arch.rise);
     var xnl = -xnr;
     var xnls = offsetLeft + (xnl - xMin) * scaleX + dxs;
     var xnrs = offsetLeft + (xnr - xMin) * scaleX + dxs;
     var yns = chart.clientHeight - offsetBottom -(arch.dn - yMin) * scaleY;
 
     //critical water surface
-    var xcr = arch.y2T(arch.dc, arch.rb, arch.rt, arch.rc, arch.rise) / 2.0;;
+    var xcr = arch.y2x(arch.dc, arch.rb, arch.rt, arch.rc, arch.rise);
     var xcl = -xcr;
     var xcls = offsetLeft + (xcl - xMin) * scaleX + dxs;
     var xcrs = offsetLeft + (xcr - xMin) * scaleX + dxs;
@@ -590,14 +589,5 @@ function update(){
     var RcTop = chart.clientHeight - offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
     document.getElementById('rcLabel').setAttribute("x", RcLeft);
     document.getElementById('rcLabel').setAttribute("y", RcTop);
-
-    document.getElementById('rbLabel').childNodes[0].textContent = "Rb";
-    document.getElementById('rtLabel').childNodes[0].textContent = "Rt";
-    document.getElementById('rcLabel').childNodes[0].textContent = "Rc";
-
-    document.getElementById('pathRb').setAttribute('stroke', 'black');
-    document.getElementById('pathRt').setAttribute('stroke', 'black');
-    document.getElementById('pathRc').setAttribute('stroke', 'black');
-
 }
 
