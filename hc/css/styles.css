@@ -38,10 +38,6 @@ nav a:hover {
     background-color: #ddd;
 }
 
-nav a.current{
-    background-color: #ddd; /*#4CAF50;*/
-}
-
 nav a svg{
     width: 30px;
     height: 30px;
