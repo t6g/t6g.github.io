@@ -51,10 +51,6 @@ nav a svg{
     text-align: center;
 }
 
-.svg{
-    font-size: 1rem;
-}
-
 fieldset{
     display: flex;
     flex-direction: column;

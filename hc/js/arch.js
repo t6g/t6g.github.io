@@ -1007,17 +1007,15 @@ function setValues() {
 function updateGraph(){
     'use strict';
 
-    var svg = document.getElementById('svg');
-    if(svg == null){
+    var chart = document.getElementById('chart');
+    if(chart == null){
         return;
     }
       
-    svg.setAttribute('width', svg.clientHeight * 1.5);
-
     document.getElementById('axesRect').setAttribute('x', offsetLeft);
     document.getElementById('axesRect').setAttribute('y', offsetTop);
-    document.getElementById('axesRect').setAttribute('width', svg.clientWidth- offsetLeft - offsetRight);
-    document.getElementById('axesRect').setAttribute('height', svg.clientHeight - offsetTop - offsetBottom);
+    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- offsetLeft - offsetRight);
+    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - offsetTop - offsetBottom);
     
     //drawing 
     var xMin = 0;
@@ -1026,8 +1024,8 @@ function updateGraph(){
     var yMin = 0;
     var yMax = arch.rise;
 
-    var scaleX = (svg.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
-    var scaleY = (svg.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
+    var scaleX = (chart.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
+    var scaleY = (chart.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
 
     if(scaleX >= scaleY){
         scaleX = scaleY;
@@ -1037,7 +1035,7 @@ function updateGraph(){
     }
     
     var dxFs = xF * scaleX;
-    var dxs = 0.5 * (-offsetLeft + svg.clientWidth - offsetRight); // - dxFs; //displacement for x to move circle to the middle
+    var dxs = 0.5 * (-offsetLeft + chart.clientWidth - offsetRight); // - dxFs; //displacement for x to move circle to the middle
     var Theta = arch.Theta;
     var Phi = arch.Phi;
     var th = Theta / Math.PI * 180.0;
@@ -1047,7 +1045,7 @@ function updateGraph(){
     var yE = arch.YE;
     var xEs = offsetLeft + (xE - xMin) * scaleX + dxs;
     var xEns = offsetLeft + (-xE - xMin) * scaleX + dxs;
-    var yEs = svg.clientHeight - offsetBottom - (yE - yMin) * scaleY;
+    var yEs = chart.clientHeight - offsetBottom - (yE - yMin) * scaleY;
     var rbxs = arch.rb * scaleX;
     var rbys = arch.rb * scaleY;
     
@@ -1055,7 +1053,7 @@ function updateGraph(){
     var yG = arch.YG;
     var xGs = offsetLeft + (xG - xMin) * scaleX + dxs;
     var xGns = offsetLeft + (-xG - xMin) * scaleX + dxs;
-    var yGs = svg.clientHeight - offsetBottom - (yG - yMin) * scaleY;
+    var yGs = chart.clientHeight - offsetBottom - (yG - yMin) * scaleY;
     var rcxs = arch.rc * scaleX;
     var rcys = arch.rc * scaleY;
     
@@ -1066,14 +1064,14 @@ function updateGraph(){
     var xnl = -xnr;
     var xnls = offsetLeft + (xnl - xMin) * scaleX + dxs;
     var xnrs = offsetLeft + (xnr - xMin) * scaleX + dxs;
-    var yns = svg.clientHeight - offsetBottom -(arch.dn - yMin) * scaleY;
+    var yns = chart.clientHeight - offsetBottom -(arch.dn - yMin) * scaleY;
 
 
     var xcr = arch.y2T(arch.dc, arch.rb, arch.rt, arch.rc, arch.rise) / 2.0;;
     var xcl = -xcr;
     var xcls = offsetLeft + (xcl - xMin) * scaleX + dxs;
     var xcrs = offsetLeft + (xcr - xMin) * scaleX + dxs;
-    var ycs = svg.clientHeight - offsetBottom - (arch.dc - yMin) * scaleY;
+    var ycs = chart.clientHeight - offsetBottom - (arch.dc - yMin) * scaleY;
 
     
     document.getElementById('pathChan').setAttribute('d', 'M ' + xEs + ' ' + yEs + 
@@ -1099,17 +1097,17 @@ function updateGraph(){
 
     //draw grid lines;
     let x = 0;
-    let y = svg.clientHeight - offsetBottom;
-    let xmid = 0.5 * (offsetLeft + svg.clientWidth - offsetRight);
+    let y = chart.clientHeight - offsetBottom;
+    let xmid = 0.5 * (offsetLeft + chart.clientWidth - offsetRight);
     let xDraw = xmid;
     var xGrid = '';
     var text;
     var xPos;
-    var yPos = svg.clientHeight - 0.65 * offsetBottom;
+    var yPos = chart.clientHeight - 0.65 * offsetBottom;
     var idLabel;
     var i = 1;
     
-    while (xDraw <= svg.clientWidth - offsetRight && i <= 5){
+    while (xDraw <= chart.clientWidth - offsetRight && i <= 5){
         xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
         idLabel = 'xTick' + i;
         text = x.toString();
@@ -1149,9 +1147,9 @@ function updateGraph(){
 
     document.getElementById('pathGridY').setAttribute('d', xGrid);
 
-    let yDraw = svg.clientHeight - offsetBottom;
+    let yDraw = chart.clientHeight - offsetBottom;
     var yGrid = '';
-    x = svg.clientWidth - offsetRight;
+    x = chart.clientWidth - offsetRight;
     y = 0;
     i = 1;
     while (yDraw > offsetTop){
@@ -1177,8 +1175,8 @@ function updateGraph(){
 
     document.getElementById("pathGridX").setAttribute("d", yGrid);
     
-    xPos = offsetLeft + 0.5 * (svg.clientWidth - offsetLeft - offsetRight);
-    yPos = svg.clientHeight - 0.25 * offsetBottom;
+    xPos = offsetLeft + 0.5 * (chart.clientWidth - offsetLeft - offsetRight);
+    yPos = chart.clientHeight - 0.25 * offsetBottom;
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
     
@@ -1188,14 +1186,14 @@ function updateGraph(){
     var yO = arch.rb - (arch.rb - 0.4 * arch.rise) * Math.cos(0.5 * Theta);
 
     var xBs = offsetLeft + (xB - xMin) * scaleX + dxs;
-    var yBs = svg.clientHeight - offsetBottom - (yB - yMin) * scaleY;
+    var yBs = chart.clientHeight - offsetBottom - (yB - yMin) * scaleY;
     var xOs = offsetLeft + (xO - xMin) * scaleX + dxs;
-    var yOs = svg.clientHeight - offsetBottom - (yO - yMin) * scaleY;
+    var yOs = chart.clientHeight - offsetBottom - (yO - yMin) * scaleY;
  
     document.getElementById('pathRb').setAttribute('d', 'M' + xOs + ' ' + yOs + 'L' + xBs + ' ' + yBs);
     
     var RbLeft = offsetLeft + (0.5 * (xB + xO) - xMin) * scaleX + dxs + 2;
-    var RbTop = svg.clientHeight - offsetBottom - (0.5 * (yB + yO) - yMin) * scaleY - 10;
+    var RbTop = chart.clientHeight - offsetBottom - (0.5 * (yB + yO) - yMin) * scaleY - 10;
     document.getElementById('rbLabel').setAttribute("x", RbLeft);
     document.getElementById('rbLabel').setAttribute("y", RbTop);
 
@@ -1204,14 +1202,14 @@ function updateGraph(){
         xO = 0.6 * xT;
         yO = arch.rise - arch.rt + 0.6 * arch.rt * Math.cos(0.5 * Phi);
     var xTs = offsetLeft + (xT - xMin) * scaleX + dxs;
-    var yTs = svg.clientHeight - offsetBottom - (yT - yMin) * scaleY;
+    var yTs = chart.clientHeight - offsetBottom - (yT - yMin) * scaleY;
     var xOs = offsetLeft + (xO - xMin) * scaleX + dxs;
-    var yOs = svg.clientHeight - offsetBottom - (yO - yMin) * scaleY;
+    var yOs = chart.clientHeight - offsetBottom - (yO - yMin) * scaleY;
  
     document.getElementById('pathRt').setAttribute('d', 'M' + xOs + ' ' + yOs + 'L' + xTs + ' ' + yTs);
 
     var RtLeft = offsetLeft + (0.5 * (xT + xO) - xMin) * scaleX + dxs ;
-    var RtTop = svg.clientHeight - offsetBottom - (0.5 * (yT + yO) - yMin) * scaleY;
+    var RtTop = chart.clientHeight - offsetBottom - (0.5 * (yT + yO) - yMin) * scaleY;
 
     document.getElementById('rtLabel').setAttribute("x", RtLeft);
     document.getElementById('rtLabel').setAttribute("y", RtTop);
@@ -1220,14 +1218,14 @@ function updateGraph(){
     var xC = arch.XD + arch.rc * Math.sin(Math.PI / 4.0);
     var yC = arch.YD - arch.rc * Math.cos(Math.PI / 4.0);
     var xCs = offsetLeft + (xC - xMin) * scaleX + dxs;
-    var yCs = svg.clientHeight - offsetBottom - (yC - yMin) * scaleY;
+    var yCs = chart.clientHeight - offsetBottom - (yC - yMin) * scaleY;
     var xDs = offsetLeft + (arch.XD - xMin) * scaleX + dxs;
-    var yDs = svg.clientHeight - offsetBottom - (arch.YD - yMin) * scaleY;
+    var yDs = chart.clientHeight - offsetBottom - (arch.YD - yMin) * scaleY;
 
     document.getElementById('pathRc').setAttribute('d', 'M' + xDs + ' ' + yDs + 'L' + xCs + ' ' + yCs);
 
     var RcLeft = offsetLeft + (0.5 * (xC + arch.XD) - xMin) * scaleX + dxs ;
-    var RcTop = svg.clientHeight - offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
+    var RcTop = chart.clientHeight - offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
     document.getElementById('rcLabel').setAttribute("x", RcLeft);
     document.getElementById('rcLabel').setAttribute("y", RcTop);
 

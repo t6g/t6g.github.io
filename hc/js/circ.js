@@ -352,17 +352,15 @@ function setValues() {
 function updateGraph(){
     'use strict';
 
-    var svg = document.getElementById('svg');
-    if(svg == null){
+    var chart = document.getElementById('chart');
+    if(chart == null){
         return;
     }
       
-    svg.setAttribute('width', svg.clientHeight * 1.5);
-
     document.getElementById('axesRect').setAttribute('x', offsetLeft);
     document.getElementById('axesRect').setAttribute('y', offsetTop);
-    document.getElementById('axesRect').setAttribute('width', svg.clientWidth- offsetLeft - offsetRight);
-    document.getElementById('axesRect').setAttribute('height', svg.clientHeight - offsetTop - offsetBottom);
+    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- offsetLeft - offsetRight);
+    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - offsetTop - offsetBottom);
     
     //drawing 
     var xMin = 0;
@@ -370,8 +368,8 @@ function updateGraph(){
     var yMin = 0;
     var yMax = 2.0 * circ.r;
 
-    var scaleX = (svg.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
-    var scaleY = (svg.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
+    var scaleX = (chart.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
+    var scaleY = (chart.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
 
     if(scaleX >= scaleY){
         scaleX = scaleY;
@@ -383,25 +381,25 @@ function updateGraph(){
     var rxs = circ.r * scaleX;
     var rys = circ.r * scaleY;
     
-    var dxs = 0.5 * (-offsetLeft + svg.clientWidth - offsetRight) - rxs; //displacement for x to move circle to the middle
+    var dxs = 0.5 * (-offsetLeft + chart.clientWidth - offsetRight) - rxs; //displacement for x to move circle to the middle
     
     var x0 = 0;
     var y0 = circ.r;
     var x0s = offsetLeft + (x0 - xMin) * scaleX + dxs;
-    var y0s = svg.clientHeight - offsetBottom - (y0 - yMin) * scaleY;
+    var y0s = chart.clientHeight - offsetBottom - (y0 - yMin) * scaleY;
 
     var xnl = circ.r * (1.0 - Math.sin(0.5 * circ.thetan));
     var xnr = circ.r * (1.0 + Math.sin(0.5 * circ.thetan));
     var xnls = offsetLeft + (xnl - xMin) * scaleX + dxs;
     var xnrs = offsetLeft + (xnr - xMin) * scaleX + dxs;
-    var yns = svg.clientHeight - offsetBottom -(circ.dn - yMin) * scaleY;
+    var yns = chart.clientHeight - offsetBottom -(circ.dn - yMin) * scaleY;
 
 
     var xcl = circ.r * (1.0 - Math.sin(0.5 * circ.thetac));
     var xcr = circ.r * (1.0 + Math.sin(0.5 * circ.thetac));
     var xcls = offsetLeft + (xcl - xMin) * scaleX + dxs;
     var xcrs = offsetLeft + (xcr - xMin) * scaleX + dxs;
-    var ycs = svg.clientHeight - offsetBottom - (circ.dc - yMin) * scaleY;
+    var ycs = chart.clientHeight - offsetBottom - (circ.dc - yMin) * scaleY;
 
     
     document.getElementById('pathChan').setAttribute('d', 'M' + x0s + ' ' + y0s + ' a ' + rxs + ' ' + rys + ' 0 1 0 ' + 2.0* rxs + ' 0 ' + ' a ' + rxs + ' ' + rys + ' 0 1 0 -' + 2.0* rxs + ' 0 ');
@@ -416,17 +414,17 @@ function updateGraph(){
     
     //draw grid lines;
     let x = 0;
-    let y = svg.clientHeight - offsetBottom;
-    let xmid = 0.5 * (offsetLeft + svg.clientWidth - offsetRight);
+    let y = chart.clientHeight - offsetBottom;
+    let xmid = 0.5 * (offsetLeft + chart.clientWidth - offsetRight);
     let xDraw = xmid;
     var xGrid = '';
     var text;
     var xPos;
-    var yPos = svg.clientHeight - 0.65 * offsetBottom;
+    var yPos = chart.clientHeight - 0.65 * offsetBottom;
     var idLabel;
     var i = 1;
     
-    while (xDraw <= svg.clientWidth - offsetRight && i <= 5){
+    while (xDraw <= chart.clientWidth - offsetRight && i <= 5){
         xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
         idLabel = 'xTick' + i;
         text = x.toString();
@@ -471,9 +469,9 @@ function updateGraph(){
     var yInc = niceIncrement(yMin, yMax);
     var yIncDraw = yInc * scaleY;
     
-    let yDraw = svg.clientHeight - offsetBottom;
+    let yDraw = chart.clientHeight - offsetBottom;
     var yGrid = '';
-    x = svg.clientWidth - offsetRight;
+    x = chart.clientWidth - offsetRight;
     y = 0;
     i = 1;
     while (yDraw > offsetTop){
@@ -499,8 +497,8 @@ function updateGraph(){
 
     document.getElementById("pathGridX").setAttribute("d", yGrid);
     
-    xPos = offsetLeft + 0.5 * (svg.clientWidth - offsetLeft - offsetRight);
-    yPos = svg.clientHeight - 0.25 * offsetBottom;
+    xPos = offsetLeft + 0.5 * (chart.clientWidth - offsetLeft - offsetRight);
+    yPos = chart.clientHeight - 0.25 * offsetBottom;
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
     

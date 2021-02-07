@@ -1,4 +1,4 @@
-<svg id="svg" height="300" width="450">
+<svg id="chart" height="300" width="450">
     <rect id="axesRect" x="50" y="50" width="400" height="200" fill="none" stroke="black"/>
 
     <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
@@ -29,12 +29,10 @@
     <text id="yTick8" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
     <text id="yTick9" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
 
-
-    <!-- triangular channel-->
     <path id="pathChan" d="M50 50 L250 250 L450 50" stroke="black" stroke-width="3" fill="none"/>
-    <!-- normal water surface-->
+
     <path id="pathNorm" d="M150 150 h 200" stroke="blue" stroke-width="1" fill="none"/>
-    <!-- critical water surface-->
+
     <path id="pathCrit" d="M200 200 h 100" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
 
     <path id="pathRb" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
