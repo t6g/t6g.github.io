@@ -1231,5 +1231,13 @@ function updateGraph(){
     document.getElementById('rcLabel').setAttribute("x", RcLeft);
     document.getElementById('rcLabel').setAttribute("y", RcTop);
 
+    document.getElementById('rbLabel').childNodes[0].textContent = "Rb";
+    document.getElementById('rtLabel').childNodes[0].textContent = "Rt";
+    document.getElementById('rcLabel').childNodes[0].textContent = "Rc";
+
+    document.getElementById('pathRb').setAttribute('stroke', 'black');
+    document.getElementById('pathRt').setAttribute('stroke', 'black');
+    document.getElementById('pathRc').setAttribute('stroke', 'black');
+
 }
 

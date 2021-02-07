@@ -1,0 +1,49 @@
+<svg id="svg" height="300" width="450">
+    <rect id="axesRect" x="50" y="50" width="400" height="200" fill="none" stroke="black"/>
+
+    <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+
+    <path id="pathGridY" d="M100 50 V250 M150 50 V250 M200 50 V250 M250 50 V250 M300 50 V250 M350 50 V250  M400 50 V250" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+
+    <text id="xLabel" x="250" y="290" text-anchor="middle" >Station (ft)</text>
+
+    <text id="yLabel" text-anchor="middle" transform='translate(15, 150) rotate(-90)'>Depth (ft)</text>
+
+    <text id="xTick1" x="50"  y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick2" x="100" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick3" x="150" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick4" x="200" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick5" x="250" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick6" x="300" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick7" x="350" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick8" x="400" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="xTick9" x="450" y="270" text-anchor="middle">&nbsp;</text>
+
+    <text id="yTick1" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick2" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick3" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick4" x="30" y="200" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick5" x="30" y="250" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick6" x="30" y="300" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick7" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick8" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+    <text id="yTick9" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+
+
+    <!-- triangular channel-->
+    <path id="pathChan" d="M50 50 L250 250 L450 50" stroke="black" stroke-width="3" fill="none"/>
+    <!-- normal water surface-->
+    <path id="pathNorm" d="M150 150 h 200" stroke="blue" stroke-width="1" fill="none"/>
+    <!-- critical water surface-->
+    <path id="pathCrit" d="M200 200 h 100" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+
+    <path id="pathRb" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+    <path id="pathRt" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+    <path id="pathRc" d="M50 50 L30 50" stroke="white" stroke-width="1" fill="none" stroke-dasharray="3,3"/>
+
+    <text id="rbLabel" x="50"  y="270" text-anchor="middle">&nbsp;</text>
+    <text id="rtLabel" x="100" y="270" text-anchor="middle">&nbsp;</text>
+    <text id="rcLabel" x="150" y="270" text-anchor="middle">&nbsp;</text>
+                
+
+</svg>
