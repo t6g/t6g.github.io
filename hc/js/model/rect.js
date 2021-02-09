@@ -19,10 +19,10 @@ class RectangularChannel extends OpenChannel {
         return this.b + 2.0 * this.dc;
     }
     get vc() {
-        return Math.sqrt(gUS * this.dc);
+        return Math.sqrt(oc.g * this.dc);
     }
     get dc() {
-        return Math.pow(this.Qn * this.Qn / gUS / this.b / this.b, 1.0 / 3.0);
+        return Math.pow(this.Qn * this.Qn / oc.g / this.b / this.b, 1.0 / 3.0);
     }
     Q2Dn(Q) {
         if (Q <= 0) return 0;
@@ -35,16 +35,16 @@ class RectangularChannel extends OpenChannel {
         dPdy = 2.0;
         dAdy = this.b;
 
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolQ)
+        while (Math.abs(deltay) > oc.TolD && Math.abs(f) > oc.TolQ)
         {
                 A = this.b * yi;
                 P = this.b + 2.0 * yi;
-                f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-                df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dAdy - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dPdy);
+                f = oc.Ku / this.mN * Math.sqrt(this.cs) * Math.pow(A, oc.X + 1) * Math.pow(P, -oc.X) - Q;
+                df = oc.Ku / this.mN * Math.sqrt(this.cs) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dAdy - oc.X * Math.pow(A / P, oc.X+1) * dPdy);
                 deltay = f / df;
                 yi -= deltay;
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
         return yi;
     }

@@ -25,7 +25,7 @@ class ArchChannel extends OpenChannel {
         return this.y2P(this.dc, this.rb, this.rt, this.rc, this.rise);
     }
     get vc() {
-        return Math.sqrt(gUS * this.ac / this.y2x(this.dc, this.rb, this.rt, this.rc, this.rise) / 2.0);
+        return Math.sqrt(oc.g * this.ac / this.y2x(this.dc, this.rb, this.rt, this.rc, this.rise) / 2.0);
     }
     get dc() {
         return this.Q2Dc(this.Qn, this.rb, this.rt, this.rc, this.rise);
@@ -162,21 +162,21 @@ class ArchChannel extends OpenChannel {
         let A, P, dA, ddA, dP = -2.0 * rt, f = 100.0, df; //ddP = 0
         let dzeta = 10.0;
         let phi = Math.acos(((rt - rc) * (rt - rc) + (rb + rt - rise) * (rb + rt - rise) - (rb - rc) * (rb - rc)) / 2.0 / (rt - rc) / (rb + rt - rise));
-        let zeta = 0.5 * phi, zetamin = 0.0, zetamax = phi;
+        let zeta = 0.25 * phi, zetamin = 0.0, zetamax = phi;
         let Atotal = this.ATotal;
         let Ptotal = this.PTotal;
         let count = 0;
 
-        while (Math.abs(dzeta) > TolAngle && Math.abs(f) > TolD) {
+        while (Math.abs(dzeta) > oc.TolA && Math.abs(f) > oc.TolD) {
             A = Atotal - rt * rt * (zeta - Math.sin(zeta) * Math.cos(zeta));
             dA = -1.0 * rt * rt * (1.0 - Math.cos(2.0 * zeta));
             ddA = -2.0 * rt * rt * Math.sin(2.0 * zeta);
             P = Ptotal - 2.0 * rt * zeta;
-            f = 5.0 * dA * P - 2.0 * A * dP;
+            f = (oc.X + 1) * dA * P - oc.X * A * dP;
 
-            if (Math.abs(f) < TolD) break;
+            if (Math.abs(f) < oc.TolD) break;
 
-            df = 3.0 * dA * dP + 5.0 * ddA * P;
+            df = dA * dP + (oc.X + 1) * ddA * P;
             dzeta = f / df;
 
             if (zeta - dzeta <= zetamin) {
@@ -196,7 +196,7 @@ class ArchChannel extends OpenChannel {
             zeta -= dzeta;
 
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return zeta;
@@ -207,7 +207,7 @@ class ArchChannel extends OpenChannel {
         let zeta = this.zetamax(this.rb, this.rt, this.rc, this.rise);
         let A = this.ATotal - this.rt * this.rt * (zeta - Math.sin(zeta) * Math.cos(zeta));
         let P = this.PTotal - 2.0 * this.rt * zeta;
-        let v = KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.sqrt(this.cs);
+        let v = oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y);
         return v * A;
     }
 
@@ -231,9 +231,9 @@ class ArchChannel extends OpenChannel {
         let ye = rb * (1.0 - Math.cos(Theta));
         let AE = rb * rb * (Theta - Math.sin(Theta) * Math.cos(Theta));
         let PE = 2.0 * rb * Theta;
-        let QE = AE * KuUS / this.mN * Math.pow(AE / PE, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
+        let QE = AE * oc.Ku / this.mN * Math.pow(AE / PE, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
 
-        if (Math.abs(Q - QE) < TolQ) return ye;
+        if (Math.abs(Q - QE) < oc.TolQ) return ye;
 
         if (Q <= QE) {
             tmin = 0.0;
@@ -241,18 +241,19 @@ class ArchChannel extends OpenChannel {
             let t = 0.5 * (tmin + tmax);
             dP = 2.0 * rb;
 
-            while (Math.abs(dt) > TolAngle && Math.abs(f) > TolQ) {
+            while (Math.abs(dt) > oc.TolA && Math.abs(f) > oc.TolQ) {
                 A = rb * rb * (t - Math.sin(t) * Math.cos(t));
                 dA = rb * rb * (1.0 - Math.cos(2.0 * t));
                 P = 2.0 * rb * t;
-                f = A * KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+                f = A * oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y) - Q;
 
                 if (f <= 0) tmin = t;
                 else tmax = t;
 
-                if (Math.abs(f) < TolQ) break;
+                if (Math.abs(f) < oc.TolQ) break;
 
-                df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0 / 3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0 / 2.0);
+                //df = oc.Ku / this.mN / 3.0 * Math.pow(A / P, 2.0 / 3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0 / 2.0);
+                df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dA - oc.X * Math.pow(A / P, oc.X + 1) * dP);
 
                 dt = f / df;
 
@@ -265,7 +266,7 @@ class ArchChannel extends OpenChannel {
                 t -= dt;
 
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
 
             return rb * (1.0 - Math.cos(t));
@@ -277,9 +278,9 @@ class ArchChannel extends OpenChannel {
         let xd = (rb - rc) * Math.sin(Theta);
         let AF = AE + rc * rc * (Math.PI / 2.0 - Theta) + (xd + xe) * (yd - ye);
         let PF = PE + 2.0 * rc * (Math.PI / 2.0 - Theta);
-        let QF = AF * KuUS / this.mN * Math.pow(AF / PF, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
+        let QF = AF * oc.Ku / this.mN * Math.pow(AF / PF, 2.0 / 3.0) * Math.pow(this.cs, 1.0 / 2.0);
 
-        if (Math.abs(Q - QF) < TolQ) return yd;
+        if (Math.abs(Q - QF) < oc.TolQ) return yd;
 
         if (Q <= QF) {
             f = 100.0;
@@ -288,7 +289,7 @@ class ArchChannel extends OpenChannel {
             dP = 2.0 * rc;
             let t = 0.5 * (tmin + tmax);
 
-            while (Math.abs(dt) > TolAngle && Math.abs(f) > TolD) {
+            while (Math.abs(dt) > oc.TolA && Math.abs(f) > oc.TolD) {
 
                 xl = xd + rc * Math.cos(Theta + t) * Math.tan(Theta);
                 y = yd - rc * Math.cos(Theta + t);
@@ -296,14 +297,16 @@ class ArchChannel extends OpenChannel {
                 P = PE + 2.0 * rc * t;
                 dA = rc * rc * (1.0 - Math.cos(2.0 * (t + Theta)) - Math.cos(2.0 * (t + Theta)) * Math.tan(Theta))
                     + rc * (xe + xl) * Math.sin(t + Theta) + rc * (y - ye) * Math.cos(t + Theta);
-                f = A * KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+                //f = A * oc.Ku / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+                f = A * oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y) - Q;
 
                 if (f <= 0) tmin = t;
                 else tmax = t;
 
-                if (Math.abs(f) < TolQ) break;
+                if (Math.abs(f) < oc.TolQ) break;
 
-                df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0 / 3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0 / 2.0);
+                //df = oc.Ku / this.mN / 3.0 * Math.pow(A / P, 2.0 / 3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0 / 2.0);
+                df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dA - oc.X * Math.pow(A / P, oc.X + 1) * dP);
 
                 dt = f / df;
 
@@ -316,7 +319,7 @@ class ArchChannel extends OpenChannel {
                 t -= dt;
 
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
 
             return yd - rc * Math.cos(t + Theta);
@@ -328,9 +331,9 @@ class ArchChannel extends OpenChannel {
         let yG = yc + rt * Math.cos(phi);
         let AG = AF + rc * rc * (Math.PI / 2.0 - phi) + (xd + XG) * (yG - yd);
         let PG = PF + 2.0 * rc * (Math.PI / 2.0 - phi);
-        let QG = AG * KuUS / this.mN * Math.pow(AG / PG, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0);
+        let QG = AG * oc.Ku / this.mN * Math.pow(AG / PG, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0);
 
-        if (Math.abs(Q - QG) < TolQ) return yG;
+        if (Math.abs(Q - QG) < oc.TolQ) return yG;
 
         if (Q <= QG) {
             dt = 100.0;
@@ -340,19 +343,21 @@ class ArchChannel extends OpenChannel {
             let eta = 0.5 * (tmin + tmax);
             dP = 2.0 * rc;
 
-            while (Math.abs(dt) > TolAngle && Math.abs(f) > TolQ) {
+            while (Math.abs(dt) > oc.TolA && Math.abs(f) > oc.TolQ) {
 
                 A = AF + rc * rc * eta + (2.0 * xd + rc * Math.cos(eta)) * rc * Math.sin(eta);
                 P = PF + 2.0 * rc * eta;
                 dA = rc * rc + 2.0 * xd * rc * Math.cos(eta) + rc * rc * Math.cos(2.0 * eta);
-                f = A * KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+                //f = A * oc.Ku / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+                f = A * oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y) - Q;
 
                 if (f <= 0) tmin = eta;
                 else tmax = eta;
 
-                if (Math.abs(f) < TolQ) break;
+                if (Math.abs(f) < oc.TolQ) break;
 
-                df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0/3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0/2.0);
+                //df = oc.Ku / this.mN / 3.0 * Math.pow(A / P, 2.0/3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0/2.0);
+                df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dA - oc.X * Math.pow(A / P, oc.X + 1) * dP);
                 dt = f / df;
 
                 if (eta - dt <= tmin || eta - dt >= tmax) {
@@ -364,7 +369,7 @@ class ArchChannel extends OpenChannel {
                 eta -= dt;
 
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
 
             return yd + rc * Math.sin(eta);
@@ -378,20 +383,22 @@ class ArchChannel extends OpenChannel {
         let t = 0.5 * (tmin + tmax);
         dP = -2.0 * rt;
 
-        while (Math.abs(delta) > TolAngle && Math.abs(f) > TolQ) {
+        while (Math.abs(delta) > oc.TolA && Math.abs(f) > oc.TolQ) {
             A = AT - rt * rt * (t - Math.sin(t) * Math.cos(t));
             P = PT - 2.0 * rt * t;
             dA = -rt * rt * (1.0 - Math.cos(2.0 * t));
-            f = A * KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+            //f = A * oc.Ku / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0) - Q;
+            f = A * oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y) - Q;
 
             if (f >= 0)
                 tmin = t;
             else
                 tmax = t;
 
-            if (Math.abs(f) < TolQ) break;
+            if (Math.abs(f) < oc.TolQ) break;
 
-            df = KuUS / this.mN / 3.0 * Math.pow(A / P, 2.0/3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0/2.0);
+            //df = oc.Ku / this.mN / 3.0 * Math.pow(A / P, 2.0/3.0) * (5.0 * dA - 2.0 * A / P * dP) * Math.pow(this.cs, 1.0/2.0);
+            df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dA - oc.X * Math.pow(A / P, oc.X + 1) * dP);
 
             delta = f / df;
 
@@ -407,7 +414,7 @@ class ArchChannel extends OpenChannel {
             t -= delta;
 
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return yc + rt * Math.cos(t);
@@ -421,7 +428,7 @@ class ArchChannel extends OpenChannel {
         var YE = rb * (1.0 - Math.cos(Theta));
         var AE = rb * rb * (Theta - Math.sin(Theta) * Math.cos(Theta));
         var dAdy = 2.0 * rb * Math.sin(Theta);
-        var QcE = Math.sqrt(gUS * AE * AE * AE / dAdy);
+        var QcE = Math.sqrt(oc.g * AE * AE * AE / dAdy);
         var ti, tmin, tmax, delta = 10.0;
         var A, ddAdydt, dAdt, dydt, f = 100.0, df;
         var count = 0;
@@ -431,21 +438,21 @@ class ArchChannel extends OpenChannel {
             tmax = Theta;
             ti = 0.5 * (tmin + tmax);
 
-            while (Math.abs(delta) > TolAngle && Math.abs(f) > TolQ) {
+            while (Math.abs(delta) > oc.TolA && Math.abs(f) > oc.TolQ) {
                 A = rb * rb * (ti - Math.sin(ti) * Math.cos(ti));
                 dAdt = rb * rb * (1.0 - Math.cos(2.0 * ti));
                 dAdy = 2.0 * rb * Math.sin(ti);
                 ddAdydt = 2.0 * rb * Math.cos(ti);
-                f = gUS * A * A * A - Q * Q * dAdy;
+                f = oc.g * A * A * A - Q * Q * dAdy;
 
-                if (Math.abs(f) < TolQ) break;
+                if (Math.abs(f) < oc.TolQ) break;
 
                 if (f > 0)
                     tmax = Math.min(ti, tmax);
                 else
                     tmin = Math.max(ti, tmin);
 
-                df = 3.0 * gUS * A * A * dAdt - Q * Q * ddAdydt;
+                df = 3.0 * oc.g * A * A * dAdt - Q * Q * ddAdydt;
                 delta = f / df;
 
                 if (ti - delta <= tmin || ti - delta >= tmax) {
@@ -459,7 +466,7 @@ class ArchChannel extends OpenChannel {
                 ti -= delta;
 
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
 
             return rb * (1.0 - Math.cos(ti));
@@ -475,7 +482,7 @@ class ArchChannel extends OpenChannel {
         var XL, dXLdt = -rc * Math.tan(Theta);
         dAdt = rc * rc * 2.0 + 2.0 * XD * dydt + dXLdt * (YF - YE);
         dAdy = dAdt / dydt;
-        var QcF = Math.sqrt(gUS * AF * AF * AF / dAdy);
+        var QcF = Math.sqrt(oc.g * AF * AF * AF / dAdy);
         var y;
 
         if (Q <= QcF) {
@@ -484,7 +491,7 @@ class ArchChannel extends OpenChannel {
             ti = 0.5 * (tmin + tmax);
             let ddXLdt, ddAdt, ddydt;
 
-            while (Math.abs(delta) > TolAngle && Math.abs(f) > TolD) {
+            while (Math.abs(delta) > oc.TolA && Math.abs(f) > oc.TolD) {
                 XL = XD + rc * Math.cos(Theta + ti) * Math.tan(Theta);
                 y = YF - rc * Math.cos(Theta + ti);
                 A = AE + rc * rc * ti - rc * rc * (Math.sin(ti + Theta) - Math.cos(ti + Theta) * Math.tan(Theta)) * Math.cos(ti + Theta) + (XE + XL) * (y - YE);
@@ -496,16 +503,16 @@ class ArchChannel extends OpenChannel {
                 dAdy = dAdt / dydt;
                 ddAdt = 2.0 * rc * rc * (Math.sin(2.0 * (ti + Theta)) - Math.cos(2.0 * (ti + Theta)) * Math.tan(Theta)) + (XE + XL) * ddydt + dXLdt * dydt + ddXLdt * (y - YE) + dXLdt * ddydt;
                 ddAdydt = (ddAdt * dydt - dAdt * ddydt) / dydt / dydt;
-                f = gUS * A * A * A - Q * Q * dAdy;
+                f = oc.g * A * A * A - Q * Q * dAdy;
 
-                if (Math.abs(f) < TolD) break;
+                if (Math.abs(f) < oc.TolD) break;
 
                 if (f > 0)
                     tmax = Math.min(ti, tmax);
                 else
                     tmin = Math.max(ti, tmin);
 
-                df = 3.0 * gUS * A * A * dAdt - Q * Q * ddAdydt;
+                df = 3.0 * oc.g * A * A * dAdt - Q * Q * ddAdydt;
                 delta = f / df;
 
                 if (ti - delta <= tmin || ti - delta >= tmax) {
@@ -519,7 +526,7 @@ class ArchChannel extends OpenChannel {
                 ti -= delta;
 
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
 
             return YF - rc * Math.cos(ti + Theta);
@@ -532,7 +539,7 @@ class ArchChannel extends OpenChannel {
         dydt = rc * Math.cos(eta);
         dAdt = rc * rc + 2.0 * XD * rc * Math.cos(eta) + rc * rc * Math.cos(2.0 * eta);
         dAdy = dAdt / dydt;
-        var QcG = Math.sqrt(gUS * AG * AG * AG / dAdy);
+        var QcG = Math.sqrt(oc.g * AG * AG * AG / dAdy);
 
         if (Q <= QcG) {
             tmin = 0.0;
@@ -541,7 +548,7 @@ class ArchChannel extends OpenChannel {
             let ddAdt, ddydt;
 
 
-            while (Math.abs(delta) > TolAngle && Math.abs(f) > TolD && Math.abs(tmax - tmin) > TolAngle) {
+            while (Math.abs(delta) > oc.TolA && Math.abs(f) > oc.TolD && Math.abs(tmax - tmin) > oc.TolA) {
                 y = YF + rc * Math.sin(ti);
                 A = AF + rc * rc * ti + (2.0 * XD + rc * Math.cos(ti)) * rc * Math.sin(ti);
                 dydt = rc * Math.cos(ti);                                                          //y'
@@ -550,16 +557,16 @@ class ArchChannel extends OpenChannel {
                 ddAdt = -2.0 * XD * rc * Math.sin(ti) - 2.0 * rc * rc * Math.sin(2.0 * ti);         //A'' 
                 dAdy = dAdt / dydt;
                 ddAdydt = (ddAdt * dydt - dAdt * ddydt) / dydt / dydt;
-                f = gUS * A * A * A - Q * Q * dAdy;
+                f = oc.g * A * A * A - Q * Q * dAdy;
 
-                if (Math.abs(f) < TolD) break;
+                if (Math.abs(f) < oc.TolD) break;
 
                 if (f > 0)
                     tmax = Math.min(ti, tmax);
                 else
                     tmin = Math.max(ti, tmin);
 
-                df = 3.0 * gUS * A * A * dAdt - Q * Q * ddAdydt;
+                df = 3.0 * oc.g * A * A * dAdt - Q * Q * ddAdydt;
                 delta = f / df;
 
                 if (ti - delta <= tmin || ti - delta >= tmax) {
@@ -573,7 +580,7 @@ class ArchChannel extends OpenChannel {
                 ti -= delta;
 
                 count++;
-                if (count > MaxCount) break;
+                if (count > oc.MaxCount) break;
             }
 
             return YF + rc * Math.sin(ti);
@@ -586,21 +593,21 @@ class ArchChannel extends OpenChannel {
         tmax = Phi;
         ti = 0.5 * (tmin + tmax);
 
-        while (Math.abs(delta) > TolAngle && Math.abs(f) > TolD && Math.abs(tmax - tmin) > TolAngle) {
+        while (Math.abs(delta) > oc.TolA && Math.abs(f) > oc.TolD && Math.abs(tmax - tmin) > oc.TolA) {
             A = AT - rt * rt * (ti - Math.sin(ti) * Math.cos(ti));
             dAdt = -rt * rt * (1 - Math.cos(2.0 * ti));
             dAdy = 2.0 * rt * Math.sin(ti);
             ddAdydt = 2.0 * rt * Math.cos(ti);;
-            f = gUS * A * A * A - Q * Q * dAdy;
+            f = oc.g * A * A * A - Q * Q * dAdy;
 
-            if (Math.abs(f) < TolD) break;
+            if (Math.abs(f) < oc.TolD) break;
 
             if (f < 0)
                 tmax = Math.min(ti, tmax);
             else
                 tmin = Math.max(ti, tmin);
 
-            df = 3.0 * gUS * A * A * dAdt - Q * Q * ddAdydt;
+            df = 3.0 * oc.g * A * A * dAdt - Q * Q * ddAdydt;
             delta = f / df;
 
             if (ti - delta <= tmin || ti - delta >= tmax) {
@@ -614,7 +621,7 @@ class ArchChannel extends OpenChannel {
             ti -= delta;
 
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return rise - rt + rt * Math.cos(ti);

@@ -1,21 +1,5 @@
 // Hydraulic Calculator util.js 1.0 2021-02-07 by GT
 
-const KuUS = 1.487;
-const gUS = 32.17;
-
-const offsetLeft = 60;
-const offsetTop = 30;
-const offsetRight = 30;
-const offsetBottom = 60;
-var whRatio = 1.5;
-
-const TolD = 0.0001;        //tolerance for depth ft or m
-const TolQ = 0.0001;        //tolerance for flow rate, cfs or m^3/s
-const TolAngle = 0.000001;  //tolerance for angle (radian)
-const MaxCount = 100;       //maximum number of iterations for Newton's Method
-
-const ThetaMaxCircle = 5.27810713; //theta to reach maximum discharge using Manning's equation Q = f(A^5/3 P^-2/3) 
-
 function hideRbRtRc()
 {
     w3.hide('#pathRb');

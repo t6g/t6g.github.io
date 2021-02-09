@@ -31,7 +31,7 @@ class EllipticalChannel extends OpenChannel {
     }
 
     get vc() {
-        return Math.sqrt(gUS * this.ac / 2.0 / this.a / Math.sin(this.alphac));
+        return Math.sqrt(oc.g * this.ac / 2.0 / this.a / Math.sin(this.alphac));
     }
     get dc() {
         let A, dAdy, dAdalpha, ddAdydalpha, f = 10.0, df;
@@ -46,18 +46,18 @@ class EllipticalChannel extends OpenChannel {
 
         let alphai = Math.PI / 2.0; //Math.acos(1.0 - this.dn / this.b);
 
-        while (Math.abs(deltaalpha) > TolAngle && Math.abs(f) > TolQ)
+        while (Math.abs(deltaalpha) > oc.TolA && Math.abs(f) > oc.TolQ)
         {
             A = this.a * this.b * (alphai - Math.sin(alphai) * Math.cos(alphai));
             dAdy = 2.0 * this.a * Math.sin(alphai);
-            f = gUS * A * A * A - Q * Q * dAdy;
+            f = oc.g * A * A * A - Q * Q * dAdy;
             
             if(f > 0) tmax = alphai;
             else tmin = alphai;
             
             dAdalpha = (1.0 - Math.cos(2.0 * alphai)) * this.a * this.b;
             ddAdydalpha = 2.0 * this.a * Math.cos(alphai);
-            df = 3.0 * gUS * A * A * dAdalpha - Q * Q * ddAdydalpha;
+            df = 3.0 * oc.g * A * A * dAdalpha - Q * Q * ddAdydalpha;
             deltaalpha = f / df;
             
             if (alphai - deltaalpha < tmin)
@@ -69,7 +69,7 @@ class EllipticalChannel extends OpenChannel {
             alphai -= deltaalpha;
 
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return this.b * (1.0 - Math.cos(alphai));
@@ -91,18 +91,18 @@ class EllipticalChannel extends OpenChannel {
                            this.b * this.b * Math.sin(alpha) * Math.sin(alpha));
             dP = 2.0 * ds;
             ddP = -(this.a * this.a - this.b * this.b) * Math.sin(2.0 * alpha) / ds;
-            f = 5.0 * P * dA - 2 * A * dP;
+            f = (oc.X + 1) * P * dA - oc.X * A * dP;
 
-            if (Math.abs(f) < TolD) break;
+            if (Math.abs(f) < oc.TolD) break;
 
-            df = 3.0 * dP * dA + 5.0 * P * ddA - 2.0 * A * ddP;
+            df = dP * dA + (oc.X + 1) * P * ddA - oc.X * A * ddP;
             delta = f / df;
 
             alpha -= delta;
 
             cnt++;
-            if (cnt > MaxCount) break;
-        } while (Math.abs(delta) > TolAngle);
+            if (cnt > oc.MaxCount) break;
+        } while (Math.abs(delta) > oc.TolA);
 
         return alpha;        
     } 
@@ -111,7 +111,7 @@ class EllipticalChannel extends OpenChannel {
         let alpha = this.alphamax;
         let A = this.a * this.b * (alpha - Math.sin(alpha) * Math.cos(alpha));
         let P = this.alpha2Perimeter(alpha, this.a, this.b);;
-        let v = KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.sqrt(this.cs);
+        let v = oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y);
         return v * A;
     }
 
@@ -132,7 +132,7 @@ class EllipticalChannel extends OpenChannel {
         let tmax = this.alphamax;
         let count = 0;
 
-        while (Math.abs(delta) > TolAngle && Math.abs(f) > TolQ)
+        while (Math.abs(delta) > oc.TolA && Math.abs(f) > oc.TolQ)
         {
             A = this.a * this.b * (alpha - Math.sin(alpha) * Math.cos(alpha));
             dA = this.a * this.b * (1.0 - Math.cos(2.0 * alpha));
@@ -142,14 +142,14 @@ class EllipticalChannel extends OpenChannel {
                 this.b * this.b * Math.sin(alpha) * Math.sin(alpha));
             dP = 2.0 * ds;
 
-            f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-            df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dA - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dP);
+            f = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * Math.pow(A, oc.X + 1) * Math.pow(P, -oc.X) - Q;
+            df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dA - oc.X * Math.pow(A / P, oc.X + 1) * dP);
 
             if (f > 0)
                 tmax = alpha;
             else
             {
-                if(Math.abs(f) < TolQ) 
+                if(Math.abs(f) < oc.TolQ) 
                 {
                     break;
                 }
@@ -167,7 +167,7 @@ class EllipticalChannel extends OpenChannel {
             alpha -= delta;
             count++;
             
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return this.b * (1.0 - Math.cos(alpha))
@@ -216,8 +216,8 @@ class EllipticalChannel extends OpenChannel {
             p -= delta;
             n++;
 
-            if (n > MaxCount) break;
-        } while (Math.abs(2*a*delta) > TolD);
+            if (n > oc.MaxCount) break;
+        } while (Math.abs(2*a*delta) > oc.TolD);
 
         return 2.0 * p * Math.max(a, b);        
     }

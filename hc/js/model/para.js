@@ -26,7 +26,7 @@ class ParabolicChannel extends OpenChannel {
     }
 
     get vc() {
-        return Math.sqrt(2.0 / 3.0 * gUS * this.dc);
+        return Math.sqrt(2.0 / 3.0 * oc.g * this.dc);
     }
     get dc() {
         let A, dAdy, df;
@@ -39,15 +39,15 @@ class ParabolicChannel extends OpenChannel {
         let d2Ady2 = this.z1 + this.z2;
 
         //use Equations in Table 2.1 French 1985 to estimate yi
-        y = Math.pow(0.84 * 4 * this.cd * Q * Q / gUS / this.tw, 0.25);
+        y = Math.pow(0.84 * 4 * this.cd * Q * Q / oc.g / this.tw, 0.25);
         
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolQ)
+        while (Math.abs(deltay) > oc.TolD && Math.abs(f) > oc.TolQ)
         {
             A = 2.0 * this.tw / 3.0 / Math.sqrt(this.cd) * y * Math.sqrt(y);
             dAdy = this.tw * Math.sqrt(y / this.cd);
             d2Ady2 = 0.5 * this.tw / Math.sqrt(this.cd * y);
-            f = gUS * A * A * A - Q * Q * dAdy;
-            df = 3.0 * gUS * A * A * dAdy - Q * Q * d2Ady2;
+            f = oc.g * A * A * A - Q * Q * dAdy;
+            df = 3.0 * oc.g * A * A * dAdy - Q * Q * d2Ady2;
             deltay = f / df;
             while (deltay >= y)
                 deltay /= 2.0;
@@ -57,7 +57,7 @@ class ParabolicChannel extends OpenChannel {
 
             y -= deltay;
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return y;
@@ -68,7 +68,7 @@ class ParabolicChannel extends OpenChannel {
         let ta = this.tw * this.tw / 16.0 / this.cd;
         let tb = Math.sqrt(y * y + ta * y);
         let P = ta * Math.log((tb + y) / (tb - y)) + 2.0 * tb;
-        let v = KuUS / this.mN * Math.pow(A / P, 2.0/3.0) * Math.pow(this.cs, 1.0/2.0);
+        let v = oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y);
         let Qmax = v * A;
         if (Q >= Qmax){
             return this.cd;
@@ -81,7 +81,7 @@ class ParabolicChannel extends OpenChannel {
 
         y = 0.5 * this.cd;
 
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolQ)
+        while (Math.abs(deltay) > oc.TolD && Math.abs(f) > oc.TolQ)
         {
             A = 2.0 * this.tw / 3.0 / Math.sqrt(this.cd) * y * Math.sqrt(y);
             dAdy = this.tw * Math.sqrt(y / this.cd);
@@ -89,8 +89,8 @@ class ParabolicChannel extends OpenChannel {
             P = ta * Math.log((tb + y) / (tb - y)) + 2.0 * tb;
             dPdy = ta * ((2.0 * y + ta) / tb + 1) / (tb + y) - ta * ((2.0 * y + ta) / tb - 1) / (tb - y) + (2.0 * y + ta) / tb;
 
-            f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-            df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dAdy - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dPdy);
+            f = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * Math.pow(A, oc.X + 1) * Math.pow(P, -oc.X) - Q;
+            df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dAdy - oc.X * Math.pow(A / P, oc.X + 1) * dPdy);
             deltay = f / df;
 
             while (deltay >= y)
@@ -101,7 +101,7 @@ class ParabolicChannel extends OpenChannel {
 
             y -= deltay;
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
     return y;    
     }

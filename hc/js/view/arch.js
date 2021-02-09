@@ -362,10 +362,10 @@ function update(){
         return;
     }
       
-    document.getElementById('axesRect').setAttribute('x', offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- offsetLeft - offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - offsetTop - offsetBottom);
+    document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
+    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
+    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
+    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
     
     //drawing 
     var xMin = 0;
@@ -374,8 +374,8 @@ function update(){
     var yMin = 0;
     var yMax = arch.rise;
 
-    var scaleX = (chart.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
-    var scaleY = (chart.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
+    var scaleX = (chart.clientWidth - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+    var scaleY = (chart.clientHeight - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
 
     if(scaleX >= scaleY){
         scaleX = scaleY;
@@ -385,7 +385,7 @@ function update(){
     }
 
     //displacement for x to move circle to the middle
-    var dxs = 0.5 * (-offsetLeft + chart.clientWidth - offsetRight); 
+    var dxs = 0.5 * (-oc.offsetLeft + chart.clientWidth - oc.offsetRight); 
 
     // draw arch 
     var Theta = arch.Theta;
@@ -395,17 +395,17 @@ function update(){
     
     var xE = arch.XE;
     var yE = arch.YE;
-    var xEs = offsetLeft + (xE - xMin) * scaleX + dxs;
-    var xEns = offsetLeft + (-xE - xMin) * scaleX + dxs;
-    var yEs = chart.clientHeight - offsetBottom - (yE - yMin) * scaleY;
+    var xEs = oc.offsetLeft + (xE - xMin) * scaleX + dxs;
+    var xEns = oc.offsetLeft + (-xE - xMin) * scaleX + dxs;
+    var yEs = chart.clientHeight - oc.offsetBottom - (yE - yMin) * scaleY;
     var rbxs = arch.rb * scaleX;
     var rbys = arch.rb * scaleY;
     
     var xG = arch.XG;
     var yG = arch.YG;
-    var xGs = offsetLeft + (xG - xMin) * scaleX + dxs;
-    var xGns = offsetLeft + (-xG - xMin) * scaleX + dxs;
-    var yGs = chart.clientHeight - offsetBottom - (yG - yMin) * scaleY;
+    var xGs = oc.offsetLeft + (xG - xMin) * scaleX + dxs;
+    var xGns = oc.offsetLeft + (-xG - xMin) * scaleX + dxs;
+    var yGs = chart.clientHeight - oc.offsetBottom - (yG - yMin) * scaleY;
     var rcxs = arch.rc * scaleX;
     var rcys = arch.rc * scaleY;
     
@@ -415,16 +415,16 @@ function update(){
     //normal water surface
     var xnr = arch.y2x(arch.dn, arch.rb, arch.rt, arch.rc, arch.rise);
     var xnl = -xnr;
-    var xnls = offsetLeft + (xnl - xMin) * scaleX + dxs;
-    var xnrs = offsetLeft + (xnr - xMin) * scaleX + dxs;
-    var yns = chart.clientHeight - offsetBottom -(arch.dn - yMin) * scaleY;
+    var xnls = oc.offsetLeft + (xnl - xMin) * scaleX + dxs;
+    var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX + dxs;
+    var yns = chart.clientHeight - oc.offsetBottom -(arch.dn - yMin) * scaleY;
 
     //critical water surface
     var xcr = arch.y2x(arch.dc, arch.rb, arch.rt, arch.rc, arch.rise);
     var xcl = -xcr;
-    var xcls = offsetLeft + (xcl - xMin) * scaleX + dxs;
-    var xcrs = offsetLeft + (xcr - xMin) * scaleX + dxs;
-    var ycs = chart.clientHeight - offsetBottom - (arch.dc - yMin) * scaleY;
+    var xcls = oc.offsetLeft + (xcl - xMin) * scaleX + dxs;
+    var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX + dxs;
+    var ycs = chart.clientHeight - oc.offsetBottom - (arch.dc - yMin) * scaleY;
 
     
     document.getElementById('pathChan').setAttribute('d', 'M ' + xEs + ' ' + yEs + 
@@ -450,19 +450,19 @@ function update(){
 
     //draw grid lines;
     let x = 0;
-    let y = chart.clientHeight - offsetBottom;
-    let xmid = 0.5 * (offsetLeft + chart.clientWidth - offsetRight);
+    let y = chart.clientHeight - oc.offsetBottom;
+    let xmid = 0.5 * (oc.offsetLeft + chart.clientWidth - oc.offsetRight);
     let xDraw = xmid;
     var xGrid = '';
     var text;
     var xPos;
-    var yPos = chart.clientHeight - 0.65 * offsetBottom;
+    var yPos = chart.clientHeight - 0.65 * oc.offsetBottom;
     var idLabel;
     var i = 1;
     
     //vertical grid lines and labels
-    while (xDraw <= chart.clientWidth - offsetRight && i <= 5){
-        xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
+    while (xDraw <= chart.clientWidth - oc.offsetRight && i <= 5){
+        xGrid += 'M' + xDraw + ' ' + oc.offsetTop + 'L' + xDraw + ' ' + y;
 
         idLabel = 'xTick' + i;
         text = x.toString();
@@ -479,9 +479,9 @@ function update(){
     
     x = 0;
     xDraw = xmid;
-    while (xDraw > offsetLeft + xIncDraw && i <= 10){
+    while (xDraw > oc.offsetLeft + xIncDraw && i <= 10){
         xDraw -= xIncDraw;
-        xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
+        xGrid += 'M' + xDraw + ' ' + oc.offsetTop + 'L' + xDraw + ' ' + y;
 
         idLabel = 'xTick' + i;
         x -= xInc;
@@ -504,15 +504,15 @@ function update(){
     document.getElementById('pathGridY').setAttribute('d', xGrid);
 
     //horizontal grid lines and labels
-    let yDraw = chart.clientHeight - offsetBottom;
+    let yDraw = chart.clientHeight - oc.offsetBottom;
     var yGrid = '';
-    x = chart.clientWidth - offsetRight;
+    x = chart.clientWidth - oc.offsetRight;
     y = 0;
     i = 1;
-    while (yDraw > offsetTop){
-        yGrid += 'M' + offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
+    while (yDraw > oc.offsetTop){
+        yGrid += 'M' + oc.offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
 
-        xPos = 0.70*offsetLeft;
+        xPos = 0.70*oc.offsetLeft;
         idLabel = 'yTick' + i;
         text = y.toString();
         if(text.length > 10) {
@@ -534,8 +534,8 @@ function update(){
     document.getElementById("pathGridX").setAttribute("d", yGrid);
 
     // horizontal axis label (station ft)
-    xPos = offsetLeft + 0.5 * (chart.clientWidth - offsetLeft - offsetRight);
-    yPos = chart.clientHeight - 0.25 * offsetBottom;
+    xPos = oc.offsetLeft + 0.5 * (chart.clientWidth - oc.offsetLeft - oc.offsetRight);
+    yPos = chart.clientHeight - 0.25 * oc.offsetBottom;
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
     
@@ -545,15 +545,15 @@ function update(){
     var xO = (arch.rb - 0.4 * arch.rise) * Math.sin(0.5 * Theta);
     var yO = arch.rb - (arch.rb - 0.4 * arch.rise) * Math.cos(0.5 * Theta);
 
-    var xBs = offsetLeft + (xB - xMin) * scaleX + dxs;
-    var yBs = chart.clientHeight - offsetBottom - (yB - yMin) * scaleY;
-    var xOs = offsetLeft + (xO - xMin) * scaleX + dxs;
-    var yOs = chart.clientHeight - offsetBottom - (yO - yMin) * scaleY;
+    var xBs = oc.offsetLeft + (xB - xMin) * scaleX + dxs;
+    var yBs = chart.clientHeight - oc.offsetBottom - (yB - yMin) * scaleY;
+    var xOs = oc.offsetLeft + (xO - xMin) * scaleX + dxs;
+    var yOs = chart.clientHeight - oc.offsetBottom - (yO - yMin) * scaleY;
  
     document.getElementById('pathRb').setAttribute('d', 'M' + xOs + ' ' + yOs + 'L' + xBs + ' ' + yBs);
     
-    var RbLeft = offsetLeft + (0.5 * (xB + xO) - xMin) * scaleX + dxs + 2;
-    var RbTop = chart.clientHeight - offsetBottom - (0.5 * (yB + yO) - yMin) * scaleY - 10;
+    var RbLeft = oc.offsetLeft + (0.5 * (xB + xO) - xMin) * scaleX + dxs + 2;
+    var RbTop = chart.clientHeight - oc.offsetBottom - (0.5 * (yB + yO) - yMin) * scaleY - 10;
     document.getElementById('rbLabel').setAttribute("x", RbLeft);
     document.getElementById('rbLabel').setAttribute("y", RbTop);
 
@@ -562,15 +562,15 @@ function update(){
     var yT = arch.rise - arch.rt + arch.rt * Math.cos(0.5 * Phi);
         xO = 0.6 * xT;
         yO = arch.rise - arch.rt + 0.6 * arch.rt * Math.cos(0.5 * Phi);
-    var xTs = offsetLeft + (xT - xMin) * scaleX + dxs;
-    var yTs = chart.clientHeight - offsetBottom - (yT - yMin) * scaleY;
-    var xOs = offsetLeft + (xO - xMin) * scaleX + dxs;
-    var yOs = chart.clientHeight - offsetBottom - (yO - yMin) * scaleY;
+    var xTs = oc.offsetLeft + (xT - xMin) * scaleX + dxs;
+    var yTs = chart.clientHeight - oc.offsetBottom - (yT - yMin) * scaleY;
+    var xOs = oc.offsetLeft + (xO - xMin) * scaleX + dxs;
+    var yOs = chart.clientHeight - oc.offsetBottom - (yO - yMin) * scaleY;
  
     document.getElementById('pathRt').setAttribute('d', 'M' + xOs + ' ' + yOs + 'L' + xTs + ' ' + yTs);
 
-    var RtLeft = offsetLeft + (0.5 * (xT + xO) - xMin) * scaleX + dxs ;
-    var RtTop = chart.clientHeight - offsetBottom - (0.5 * (yT + yO) - yMin) * scaleY;
+    var RtLeft = oc.offsetLeft + (0.5 * (xT + xO) - xMin) * scaleX + dxs ;
+    var RtTop = chart.clientHeight - oc.offsetBottom - (0.5 * (yT + yO) - yMin) * scaleY;
 
     document.getElementById('rtLabel').setAttribute("x", RtLeft);
     document.getElementById('rtLabel').setAttribute("y", RtTop);
@@ -578,15 +578,15 @@ function update(){
     //draw and label rc
     var xC = arch.XD + arch.rc * Math.sin(Math.PI / 4.0);
     var yC = arch.YD - arch.rc * Math.cos(Math.PI / 4.0);
-    var xCs = offsetLeft + (xC - xMin) * scaleX + dxs;
-    var yCs = chart.clientHeight - offsetBottom - (yC - yMin) * scaleY;
-    var xDs = offsetLeft + (arch.XD - xMin) * scaleX + dxs;
-    var yDs = chart.clientHeight - offsetBottom - (arch.YD - yMin) * scaleY;
+    var xCs = oc.offsetLeft + (xC - xMin) * scaleX + dxs;
+    var yCs = chart.clientHeight - oc.offsetBottom - (yC - yMin) * scaleY;
+    var xDs = oc.offsetLeft + (arch.XD - xMin) * scaleX + dxs;
+    var yDs = chart.clientHeight - oc.offsetBottom - (arch.YD - yMin) * scaleY;
 
     document.getElementById('pathRc').setAttribute('d', 'M' + xDs + ' ' + yDs + 'L' + xCs + ' ' + yCs);
 
-    var RcLeft = offsetLeft + (0.5 * (xC + arch.XD) - xMin) * scaleX + dxs ;
-    var RcTop = chart.clientHeight - offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
+    var RcLeft = oc.offsetLeft + (0.5 * (xC + arch.XD) - xMin) * scaleX + dxs ;
+    var RcTop = chart.clientHeight - oc.offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
     document.getElementById('rcLabel').setAttribute("x", RcLeft);
     document.getElementById('rcLabel').setAttribute("y", RcTop);
 }

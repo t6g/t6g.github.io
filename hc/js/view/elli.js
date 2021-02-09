@@ -306,10 +306,10 @@ function update(){
         return;
     }
       
-    document.getElementById('axesRect').setAttribute('x', offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- offsetLeft - offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - offsetTop - offsetBottom);
+    document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
+    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
+    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
+    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
     
     //drawing 
     var xMin = 0;
@@ -317,8 +317,8 @@ function update(){
     var yMin = 0;
     var yMax = 2.0 * elli.b;
 
-    var scaleX = (chart.clientWidth - offsetLeft - offsetRight)/ (xMax - xMin);
-    var scaleY = (chart.clientHeight - offsetTop - offsetBottom) / (yMax - yMin);
+    var scaleX = (chart.clientWidth - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+    var scaleY = (chart.clientHeight - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
 
     if(scaleX >= scaleY){
         scaleX = scaleY;
@@ -330,25 +330,25 @@ function update(){
     var rxs = elli.a * scaleX;
     var rys = elli.b * scaleY;
     
-    var dxs = 0.5 * (-offsetLeft + chart.clientWidth - offsetRight) - rxs; //displacement for x to move circle to the middle
+    var dxs = 0.5 * (-oc.offsetLeft + chart.clientWidth - oc.offsetRight) - rxs; //displacement for x to move circle to the middle
     
     var x0 = 0;
     var y0 = elli.b;
-    var x0s = offsetLeft + (x0 - xMin) * scaleX + dxs;
-    var y0s = chart.clientHeight - offsetBottom - (y0 - yMin) * scaleY;
+    var x0s = oc.offsetLeft + (x0 - xMin) * scaleX + dxs;
+    var y0s = chart.clientHeight - oc.offsetBottom - (y0 - yMin) * scaleY;
 
     var xnl = elli.a * (1.0 - Math.sin(elli.alphan));
     var xnr = elli.a * (1.0 + Math.sin(elli.alphan));
-    var xnls = offsetLeft + (xnl - xMin) * scaleX + dxs;
-    var xnrs = offsetLeft + (xnr - xMin) * scaleX + dxs;
-    var yns = chart.clientHeight - offsetBottom -(elli.dn - yMin) * scaleY;
+    var xnls = oc.offsetLeft + (xnl - xMin) * scaleX + dxs;
+    var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX + dxs;
+    var yns = chart.clientHeight - oc.offsetBottom -(elli.dn - yMin) * scaleY;
 
 
     var xcl = elli.a * (1.0 - Math.sin(elli.alphac));
     var xcr = elli.a * (1.0 + Math.sin(elli.alphac));
-    var xcls = offsetLeft + (xcl - xMin) * scaleX + dxs;
-    var xcrs = offsetLeft + (xcr - xMin) * scaleX + dxs;
-    var ycs = chart.clientHeight - offsetBottom - (elli.dc - yMin) * scaleY;
+    var xcls = oc.offsetLeft + (xcl - xMin) * scaleX + dxs;
+    var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX + dxs;
+    var ycs = chart.clientHeight - oc.offsetBottom - (elli.dc - yMin) * scaleY;
 
     
     document.getElementById('pathChan').setAttribute('d', 'M' + x0s + ' ' + y0s + ' a ' + rxs + ' ' + rys + ' 0 1 0 ' + 2.0* rxs + ' 0 ' + ' a ' + rxs + ' ' + rys + ' 0 1 0 -' + 2.0* rxs + ' 0 ');
@@ -370,18 +370,18 @@ function update(){
 
     //draw grid lines;
     let x = 0;
-    let y = chart.clientHeight - offsetBottom;
-    let xmid = 0.5 * (offsetLeft + chart.clientWidth - offsetRight);
+    let y = chart.clientHeight - oc.offsetBottom;
+    let xmid = 0.5 * (oc.offsetLeft + chart.clientWidth - oc.offsetRight);
     let xDraw = xmid;
     var xGrid = '';
     var text;
     var xPos;
-    var yPos = chart.clientHeight - 0.65 * offsetBottom;
+    var yPos = chart.clientHeight - 0.65 * oc.offsetBottom;
     var idLabel;
     var i = 1;
     
-    while (xDraw <= chart.clientWidth - offsetRight && i <= 5){
-        xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
+    while (xDraw <= chart.clientWidth - oc.offsetRight && i <= 5){
+        xGrid += 'M' + xDraw + ' ' + oc.offsetTop + 'L' + xDraw + ' ' + y;
         idLabel = 'xTick' + i;
         text = x.toString();
         if(text.length > 10) {
@@ -397,9 +397,9 @@ function update(){
     
     x = 0;
     xDraw = xmid;
-    while (xDraw > offsetLeft + xIncDraw && i <= 10){
+    while (xDraw > oc.offsetLeft + xIncDraw && i <= 10){
         xDraw -= xIncDraw;
-        xGrid += 'M' + xDraw + ' ' + offsetTop + 'L' + xDraw + ' ' + y;
+        xGrid += 'M' + xDraw + ' ' + oc.offsetTop + 'L' + xDraw + ' ' + y;
 
         idLabel = 'xTick' + i;
         x -= xInc;
@@ -420,14 +420,14 @@ function update(){
 
     document.getElementById('pathGridY').setAttribute('d', xGrid);
 
-    let yDraw = chart.clientHeight - offsetBottom;
+    let yDraw = chart.clientHeight - oc.offsetBottom;
     var yGrid = '';
-    x = chart.clientWidth - offsetRight;
+    x = chart.clientWidth - oc.offsetRight;
     y = 0;
     i = 1;
-    while (yDraw > offsetTop){
-        yGrid += 'M' + offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
-        xPos = 0.70*offsetLeft;
+    while (yDraw > oc.offsetTop){
+        yGrid += 'M' + oc.offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
+        xPos = 0.70*oc.offsetLeft;
         idLabel = 'yTick' + i;
         text = y.toString();
         if(text.length > 10) {
@@ -448,8 +448,8 @@ function update(){
 
     document.getElementById("pathGridX").setAttribute("d", yGrid);
     
-    xPos = offsetLeft + 0.5 * (chart.clientWidth - offsetLeft - offsetRight);
-    yPos = chart.clientHeight - 0.25 * offsetBottom;
+    xPos = oc.offsetLeft + 0.5 * (chart.clientWidth - oc.offsetLeft - oc.offsetRight);
+    yPos = chart.clientHeight - 0.25 * oc.offsetBottom;
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
     

@@ -28,7 +28,7 @@ class CircularChannel extends OpenChannel {
         return this.thetac * this.r;
     }
     get vc() {
-        return Math.sqrt(gUS * this.ac / 2.0 / this.r / Math.sin(this.thetac/2.0));
+        return Math.sqrt(oc.g * this.ac / 2.0 / this.r / Math.sin(this.thetac/2.0));
     }
     get dc() {
         let A, dAdy, dAdtheta, ddAdydtheta, f = 10.0, df;
@@ -36,18 +36,18 @@ class CircularChannel extends OpenChannel {
         let count = 0;
         let Q = this.Qn;
         //use French 1985 Table 2.1 Equation to estimate yc
-        let yi = Math.min(1.01 * Math.pow(2.0 * this.r, -0.26) * Math.pow(Q * Q / gUS, 0.25), 0.85 * 2 * this.r);
+        let yi = Math.min(1.01 * Math.pow(2.0 * this.r, -0.26) * Math.pow(Q * Q / oc.g, 0.25), 0.85 * 2 * this.r);
 
         let thetai = 2.0 * Math.acos(1.0 - yi / this.r);
 
-        while (Math.abs(deltatheta) > TolAngle && Math.abs(f) > TolQ)
+        while (Math.abs(deltatheta) > oc.TolA && Math.abs(f) > oc.TolQ)
         {
             A = (thetai - Math.sin(thetai)) * this.r * this.r / 2.0;
             dAdy = 2.0 * this.r * Math.sin(thetai / 2.0);
-            f = gUS * A * A * A - Q * Q * dAdy;
+            f = oc.g * A * A * A - Q * Q * dAdy;
             dAdtheta = 0.5 * (1.0 - Math.cos(thetai)) * this.r * this.r;
             ddAdydtheta = this.r * Math.cos(thetai / 2.0);
-            df = 3.0 * gUS * A * A * dAdtheta - Q * Q * ddAdydtheta;
+            df = 3.0 * oc.g * A * A * dAdtheta - Q * Q * ddAdydtheta;
             deltatheta = f / df;
             thetai -= deltatheta;
             if (thetai >= 2.0 * Math.PI) thetai = 2.0 * Math.PI;
@@ -55,21 +55,24 @@ class CircularChannel extends OpenChannel {
             if(thetai < 0.0) thetai = 0.0;
 
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return this.r * (1.0 - Math.cos(thetai / 2.0));
     }
+
+    static get thetaMax() {return 5.27810713;}
+    
     get Qmax(){
-        let theta = ThetaMaxCircle;
+        let theta = CircularChannel.thetaMax;
         let A = (theta - Math.sin(theta)) * this.r * this.r / 2.0;
         let P = theta * this.r;
-        let v = KuUS / this.mN * Math.pow(A / P, 2.0 / 3.0) * Math.sqrt(this.cs);
+        let v = oc.Ku / this.mN * Math.pow(A / P, oc.X) * Math.pow(this.cs, oc.Y);
         return v * A;
 
     }
     get ymax(){
-        return this.r * (1.0 - Math.cos(ThetaMaxCircle / 2.0));
+        return this.r * (1.0 - Math.cos(CircularChannel.thetaMax / 2.0));
     }
     
     
@@ -83,10 +86,10 @@ class CircularChannel extends OpenChannel {
         let deltatheta = 10.0;
         let thetai = Math.PI;
         let tmin = 0.0;
-        let tmax = ThetaMaxCircle;
+        let tmax = CircularChannel.thetaMax;
         let count = 0;
 
-        while (Math.abs(deltatheta) > TolAngle && Math.abs(f) > TolQ)
+        while (Math.abs(deltatheta) > oc.TolA && Math.abs(f) > oc.TolQ)
         {
             // A = (theta - sin(theta))r^2 / 2
             A = (thetai - Math.sin(thetai)) * this.r * this.r / 2.0;
@@ -94,14 +97,14 @@ class CircularChannel extends OpenChannel {
             dAdtheta = (1.0 - Math.cos(thetai)) * this.r * this.r / 2.0;
             // P = theta r
             P = thetai * this.r;
-            f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-            df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dAdtheta - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dPdtheta);
+            f = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * Math.pow(A, oc.X + 1) * Math.pow(P, -oc.X) - Q;
+            df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dAdtheta - oc.X * Math.pow(A / P, oc.X + 1) * dPdtheta);
 
             if (f > 0)
                 tmax = thetai;
             else
             {
-                if(Math.abs(f) < TolQ) 
+                if(Math.abs(f) < oc.TolQ) 
                 {
                     break;
                 }
@@ -119,7 +122,7 @@ class CircularChannel extends OpenChannel {
             thetai -= deltatheta;
             count++;
             
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
             
         return this.r * (1.0 - Math.cos(thetai / 2.0));

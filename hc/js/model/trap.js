@@ -23,7 +23,7 @@ class TrapezoidalChannel extends OpenChannel {
 
     get vc() {
         let dAdy = (this.z1 + this.z2) * this.dc + this.b;
-        return Math.sqrt(gUS * this.ac / dAdy);
+        return Math.sqrt(oc.g * this.ac / dAdy);
     }
     get dc() {
         let A, dAdy, df;
@@ -36,20 +36,20 @@ class TrapezoidalChannel extends OpenChannel {
 
         //use Equations in Table 2.1 French 1985 to estimate yi
         if (Q / Math.pow(this.b, 2.5) < 0.1)
-            yi = Math.pow(Q * Q / gUS / this.b / this.b, 1.0 / 3.0);
+            yi = Math.pow(Q * Q / oc.g / this.b / this.b, 1.0 / 3.0);
         else 
-            yi = 0.81 * Math.pow((Q * Q / gUS * Math.pow(0.5 * (this.z1 + this.z2), -0.75) * Math.pow(this.b, -1.25)), 0.27) - this.b / 15.0 / (this.z1 + this.z2);
+            yi = 0.81 * Math.pow((Q * Q / oc.g * Math.pow(0.5 * (this.z1 + this.z2), -0.75) * Math.pow(this.b, -1.25)), 0.27) - this.b / 15.0 / (this.z1 + this.z2);
 
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolD)
+        while (Math.abs(deltay) > oc.TolD && Math.abs(f) > oc.TolD)
         {
             A = this.b * yi + 1.0 / 2.0 * yi * yi * (this.z1 + this.z2);
             dAdy = this.b + (this.z1 + this.z2) * yi;
-            f = gUS * A * A * A - Q * Q * dAdy;
-            df = 3.0 * gUS * A * A * dAdy - Q * Q * d2Ady2;
+            f = oc.g * A * A * A - Q * Q * dAdy;
+            df = 3.0 * oc.g * A * A * dAdy - Q * Q * d2Ady2;
             deltay = f / df;
             yi -= deltay;
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
         return yi;
     }
@@ -63,16 +63,16 @@ class TrapezoidalChannel extends OpenChannel {
         
         let dPdy = Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2);
 
-        while (Math.abs(deltay) > TolD && Math.abs(f) > TolD) {
+        while (Math.abs(deltay) > oc.TolD && Math.abs(f) > oc.TolD) {
             A = this.b * yi + 1.0 / 2.0 * yi * yi * (this.z1 + this.z2);
             dAdy = this.b + (this.z1 + this.z2) * yi;
             P = this.b + dPdy * yi;
-            f = KuUS / this.mN * Math.sqrt(this.cs) * Math.pow(A, 5.0 / 3.0) * Math.pow(P, -2.0 / 3.0) - Q;
-            df = KuUS / this.mN * Math.sqrt(this.cs) * (5.0 / 3.0 * Math.pow(A / P, 2.0 / 3.0) * dAdy - 2.0 / 3.0 * Math.pow(A / P, 5.0 / 3.0) * dPdy);
+            f = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * Math.pow(A, oc.X + 1) * Math.pow(P, -oc.X) - Q;
+            df = oc.Ku / this.mN * Math.pow(this.cs, oc.Y) * ((oc.X + 1) * Math.pow(A / P, oc.X) * dAdy - oc.X * Math.pow(A / P, oc.X + 1) * dPdy);
             deltay = f / df;
             yi -= deltay;
             count++;
-            if (count > MaxCount) break;
+            if (count > oc.MaxCount) break;
         }
 
         return yi;

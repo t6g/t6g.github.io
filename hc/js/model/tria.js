@@ -20,14 +20,14 @@ class TriangularChannel extends OpenChannel {
         return (Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)) * this.dc;
     }
     get vc() {
-        return Math.sqrt(0.5 * gUS * this.dc);
+        return Math.sqrt(0.5 * oc.g * this.dc);
     }
     get dc() {
-        return Math.pow(8.0 * this.Qn * this.Qn / gUS / (this.z1 + this.z2) / (this.z1 + this.z2), 1.0 / 5.0);
+        return Math.pow(8.0 * this.Qn * this.Qn / oc.g / (this.z1 + this.z2) / (this.z1 + this.z2), 1.0 / 5.0);
     }
     Q2Dn(Q) {
-        return Math.pow(Q * this.mN / KuUS / Math.sqrt(this.cs) * Math.pow(0.5 * (this.z1 + this.z2), -5.0 / 3.0) *
-            Math.pow((Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)), 2.0 / 3.0), 3.0 / 8.0);
+        return Math.pow(Q * this.mN / oc.Ku / Math.sqrt(this.cs) * Math.pow(0.5 * (this.z1 + this.z2), -oc.X - 1) *
+            Math.pow((Math.sqrt(1.0 + this.z1 * this.z1) + Math.sqrt(1.0 + this.z2 * this.z2)), oc.X), 1/(oc.X + 2));
     }
 }
 

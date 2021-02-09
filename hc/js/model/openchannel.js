@@ -1,3 +1,32 @@
+var oc = {
+    isUSCustomary : true,
+    KuUS : 1.487,
+    KuSI : 1.0,
+    gUS : 32.17,
+    gSI : 9.81,
+
+    get g () {
+        return this.isUSCustomary ? this.gUS : this.gSI;
+    },
+    
+    get Ku (){
+        return this.isUSCustomary ? this.KuUS : this.KuSI;
+    },
+
+    X : 2.0 / 3.0,
+    Y : 1.0 / 2.0,
+
+    TolD : 0.000001, //tolerance for depth ft or m
+    TolA : 0.000001, //tolerance for angle (radian)
+    TolQ : 0.000001, //tolerance for flow rate, cfs or m^3/s
+    MaxCount: 100,   //maximum number of iterations for Newton's Method
+    
+    offsetLeft : 60,
+    offsetTop : 30,
+    offsetRight : 30,
+    offsetBottom : 60,
+};
+
 class OpenChannel {
     constructor(cs, mN, dn) {
         this.cs = cs;
@@ -13,7 +42,7 @@ class OpenChannel {
         throw new TypeError('peri is not defined in OpenChannel');
     }
     get vn() {
-        return KuUS / this.mN * Math.pow(this.an / this.pn, 2.0 / 3.0) * Math.sqrt(this.cs);
+        return oc.Ku / this.mN * Math.pow(this.an / this.pn, oc.X) * Math.pow(this.cs, oc.Y);
     }
     get Qn() {
         return this.vn * this.an;
@@ -31,7 +60,7 @@ class OpenChannel {
         throw new TypeError('dc is not defined in OpenChannel');
     }
     get sc() {
-        return Math.pow(this.vc / (KuUS / this.mN * Math.pow(this.ac / this.pc, 2.0 / 3.0)), 2.0);
+        return Math.pow(this.vc / (oc.Ku / this.mN * Math.pow(this.ac / this.pc, oc.X)), 1.0/oc.Y);
     }
     get fr() {
         return this.vn / this.vc;
