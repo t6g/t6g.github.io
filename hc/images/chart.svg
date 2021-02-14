@@ -1,9 +1,9 @@
 <svg id="chart" height="300" width="450">
     <rect id="axesRect" x="50" y="50" width="400" height="200" fill="none" stroke="black"/>
 
-    <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+    <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450" stroke="gray" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
-    <path id="pathGridY" d="M100 50 V250 M150 50 V250 M200 50 V250 M250 50 V250 M300 50 V250 M350 50 V250  M400 50 V250" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+    <path id="pathGridY" d="M100 50 V250 M150 50 V250 M200 50 V250 M250 50 V250 M300 50 V250 M350 50 V250  M400 50 V250" stroke="gray" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
     <text id="xLabel" x="250" y="290" text-anchor="middle" >Station (ft)</text>
 

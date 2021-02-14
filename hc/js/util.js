@@ -1,5 +1,17 @@
 // Hydraulic Calculator util.js 1.0 2021-02-07 by GT
 
+function setLightDarkMode(){
+    if (oc.isDarkMode) {
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+        //document.getElementById('axesRect').setAttribute('stroke', "white");
+        //document.getElementById('xLabel').setAttribute('color', "white");
+        //document.getElementById('yLabel').setAttribute('color', "white");
+
+        //document.getElementById('pathChan').setAttribute('stroke', "white");
+    }
+}
+
 function hideRbRtRc()
 {
     w3.hide('#pathRb');

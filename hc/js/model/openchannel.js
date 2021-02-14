@@ -25,6 +25,8 @@ var oc = {
     offsetTop : 30,
     offsetRight : 30,
     offsetBottom : 60,
+
+    isDarkMode: true
 };
 
 class OpenChannel {

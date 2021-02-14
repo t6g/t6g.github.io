@@ -5,6 +5,8 @@ const tria = new TriangularChannel(3, 3, 0.01, 0.05, 0.5);
 
 window.onload = function () {
 
+    setLightDarkMode();
+
     //check localstorage
     checkLocalStorage();
 
@@ -222,6 +224,7 @@ function update(){
     if(chart == null){
         return;
     }
+    
       
     document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
     document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
@@ -270,6 +273,11 @@ function update(){
     
     document.getElementById('pathCrit').setAttribute('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
 
+    if (oc.isDarkMode) {
+        document.getElementById('pathChan').setAttribute('stroke', 'white');
+        document.getElementById('axesRect').setAttribute('stroke', 'white');
+    }
+    
     //draw grid lines;
     var xInc = niceIncrement(xMin, xMax);
     var xIncDraw = xInc * scaleX;
@@ -292,6 +300,10 @@ function update(){
         document.getElementById(idLabel).setAttribute('x', xDraw);
         document.getElementById(idLabel).setAttribute('y', yPos);
         document.getElementById(idLabel).childNodes[0].textContent = x.toString();
+        if (oc.isDarkMode) {
+            document.getElementById(idLabel).setAttribute('fill', 'white');
+        }
+        
         xDraw += xIncDraw;
         x += xInc;
         i += 1;
@@ -323,6 +335,9 @@ function update(){
         document.getElementById(idLabel).setAttribute("x", xPos);
         document.getElementById(idLabel).setAttribute("y", yDraw);
         document.getElementById(idLabel).childNodes[0].textContent = text;
+        if (oc.isDarkMode) {
+            document.getElementById(idLabel).setAttribute('fill', 'white');
+        }
         yDraw -= yIncDraw;
         y += yInc;
         i += 1;
@@ -339,6 +354,20 @@ function update(){
     yPos = chart.clientHeight - 0.25 * oc.offsetBottom;
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
+
+    if (oc.isDarkMode) {
+        document.getElementById('xLabel').setAttribute('fill', 'white');
+        document.getElementById('yLabel').setAttribute('fill', 'white');
+        document.getElementById('navTria').setAttribute('fill', 'white');
+        document.getElementById('navTrap').setAttribute('fill', 'white');
+        document.getElementById('navRect').setAttribute('fill', 'white');
+        document.getElementById('navCirc').setAttribute('fill', 'white');
+        document.getElementById('navElli').setAttribute('fill', 'white');
+        document.getElementById('navPara').setAttribute('fill', 'white');
+        document.getElementById('navArch').setAttribute('fill', 'white');
+        document.getElementById('navSett').setAttribute('fill', 'white');
+        document.getElementById('svgGroup').setAttribute('fill', 'white');
+    }
     
 }
 
