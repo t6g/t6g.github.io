@@ -15,12 +15,13 @@
     <script src="js/model/openchannel.js"></script>
     <script src="js/model/elli.js"></script>
     <script src="js/view/elli.js"></script>
+    <script src="js/view/ocvw.js"></script>
 </head>
 <body>
     <header>
-        Open Channel Calculator
+        <div w3-include-html="images/RobotoCondensedRegular30.svg" id="logo"></div>
+        <nav w3-include-html="nav.html"></nav>
     </header>
-    <nav w3-include-html="nav.html"></nav>
 
     <main>
         <div w3-include-html="images/chart.svg" id="graph"></div>
@@ -61,13 +62,13 @@
 
                 <span>
                     <label class="label" for="span" >Span</label>
-                    <label class="unit">in</label>
+                    <label class="unit" id="aUnit">in</label>
                     <input class="value" id="span" name="span" type="number" min="1" step="1" value="18">
                 </span>
 
                 <span>
                     <label class="label" for="rise" >Rise</label>
-                    <label class="unit">in</label>
+                    <label class="unit" id="bUnit">in</label>
                     <input class="value" id="rise" name="rise" type="number" min="1" step="1" value="12">
                 </span>
 
@@ -83,12 +84,12 @@
                 </span>
                 <span>
                     <label class="label" for="normalDepth" class="label">Normal Depth</label>
-                    <label class="unit">ft</label>
+                    <label class="unit" id="dnUnit">ft</label>
                     <input class="value" id="normalDepth" name="normalDepth" type="number" min="0.01" value="0.5" step="0.1">
                 </span>
                 <span>
                     <label class="label" for="chdischargeannelSlope" class="label">Discharge</label>
-                    <label class="unit">ft<sup>3</sup>/s</label>
+                    <label class="unit" id="qnUnit">ft<sup>3</sup>/s</label>
                     <input class="value" id="discharge" name="discharge" type="number" min="0.01" value="0.1" step="0.1">
                 </span>
             </fieldset>
@@ -98,7 +99,7 @@
         </div>
     </main>
     <script>
-        w3.includeHTML(update);
+        w3.includeHTML(initElli);
     </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ body {
     margin-right: auto;
 }
 
+/*
 @media (prefers-color-scheme: dark) {
     background: black;
 }
@@ -13,7 +14,7 @@ body {
     background-color: white;
   }
 }
-
+*/
 header {
     display: flex;
     justify-content:space-between;
@@ -23,12 +24,12 @@ header {
 }
 
 nav {
+    display: flex;
     text-align: right;
-    /*background-color: #333;*/
 }
 
 nav a {
-    padding-top:16px;
+    padding-top:2px;
     padding-left: 2px;
     padding-right: 2px;
     margin: 2px;
@@ -44,6 +45,10 @@ nav a:hover {
 nav a svg{
     width: 30px;
     height: 30px;
+}
+
+.navItem{
+    display: none;
 }
 
 .spansvg {
@@ -71,6 +76,10 @@ fieldset{
 }
 .text{
     text-align: right;
+    float: right;
+}
+
+.switch1{
     float: right;
 }
 

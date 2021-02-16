@@ -72,6 +72,9 @@ class ArchChannel extends OpenChannel {
     get PTotal() {
         return 2.0 * this.rb * this.Theta + 2.0 * this.rc * (Math.PI - this.Theta - this.Phi) + 2.0 * this.rt * this.Phi;
     }
+    get isClosedConduit() {
+        return true;
+    }
     // calculate area given y
     y2A(y, rb, rt, rc, rise) {
         if (y <= 0) return 0.0;

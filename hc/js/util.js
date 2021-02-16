@@ -1,14 +1,25 @@
 // Hydraulic Calculator util.js 1.0 2021-02-07 by GT
 
-function setLightDarkMode(){
-    if (oc.isDarkMode) {
-        document.body.style.backgroundColor = "black";
-        document.body.style.color = "white";
-        //document.getElementById('axesRect').setAttribute('stroke', "white");
-        //document.getElementById('xLabel').setAttribute('color', "white");
-        //document.getElementById('yLabel').setAttribute('color', "white");
-
-        //document.getElementById('pathChan').setAttribute('stroke', "white");
+function hambergerClick(){
+    if(document.getElementById('Tria').style.display === 'none') {
+        document.getElementById('Tria').style.display = 'block';
+        document.getElementById('Rect').style.display = 'block';
+        document.getElementById('Trap').style.display = 'block';
+        document.getElementById('Para').style.display = 'block';
+        document.getElementById('Circ').style.display = 'block';
+        document.getElementById('Elli').style.display = 'block';
+        document.getElementById('Arch').style.display = 'block';
+        document.getElementById('Sett').style.display = 'block';
+    }
+    else {
+        document.getElementById('Tria').style.display = 'none';
+        document.getElementById('Rect').style.display = 'none';
+        document.getElementById('Trap').style.display = 'none';
+        document.getElementById('Para').style.display = 'none';
+        document.getElementById('Circ').style.display = 'none';
+        document.getElementById('Elli').style.display = 'none';
+        document.getElementById('Arch').style.display = 'none';
+        document.getElementById('Sett').style.display = 'none';
     }
 }
 

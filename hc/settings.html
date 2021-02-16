@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Open Channel Calculator - Settings</title>
+
+    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    
+    <script src="js/w3.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/view/ocvw.js"></script>
+    <script src="js/settings.js"></script>
+    
+</head>
+<body>
+    <header>
+        <div w3-include-html="images/RobotoCondensedRegular30.svg" id="logo"></div>
+        <nav w3-include-html="nav.html"></nav>
+    </header>
+    <main>
+        <div>
+            <fieldset id="left">
+                <span>
+                    <input id="unit" name="unit" type="checkbox">
+                    <label id=labelUnit for="unit">US Customary / SI Unit</label>
+                </span>
+                <span>
+                    <input id="mode" name="mode" type="checkbox">
+                    <label id=labelMode for="mode">Light/Dark Mode</label>
+                </span>
+            </fieldset>
+        </div>
+    </main>
+    <script>
+        w3.includeHTML(initSettings);
+    </script>
+</body>
+</html>

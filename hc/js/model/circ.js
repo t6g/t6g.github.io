@@ -75,6 +75,9 @@ class CircularChannel extends OpenChannel {
         return this.r * (1.0 - Math.cos(CircularChannel.thetaMax / 2.0));
     }
     
+    get isClosedConduit() {
+        return true;
+    }
     
     Q2Dn(Q) {
         if (Q >= this.Qmax) {

@@ -7,8 +7,8 @@ window.onload = function () {
 
     checkLocalStorage();
 
-    document.getElementById('span').setAttribute('value', elli.a * 24);
-    document.getElementById('rise').setAttribute('value', elli.b * 24);
+    document.getElementById('span').value = oc.isUSCustomary ? elli.a * 24 : elli.a * 2000;
+    document.getElementById('rise').value = oc.isUSCustomary ? elli.b * 24 : elli.b * 2000;
     document.getElementById('channelSlope').setAttribute('value', elli.cs);
     document.getElementById('manningsN').setAttribute('value', elli.mN);
     document.getElementById('normalDepth').setAttribute('value', elli.dn);
@@ -34,7 +34,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                elli.a = tmp;
+                elli.a = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -44,7 +44,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                elli.b = tmp;
+                elli.b = oc.isUSCustomary ? tmp : tmp / 3.28;
                 if (elli.dn > 2 * tmp) {
                     elli.dn = 2.0 * tmp;
                 }
@@ -77,6 +77,9 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
+                
+                if(oc.isUSCustomary) tmp = tmp / 3.28;
+                
                 if (tmp <= 2.0 * elli.b) {
                     elli.dn = tmp;
                 }
@@ -102,8 +105,8 @@ function respondSelect(e) {
         return;
     }
     else if (span <= 0) {
-            alert("Please input a positive number for span!");
-            return;
+        alert("Please input a positive number for span!");
+        return;
     }
 
     //rise
@@ -119,15 +122,19 @@ function respondSelect(e) {
     }
     
     //set span
-    document.getElementById('span').value = span;
-    elli.a = span / 24.0;
-    localStorage.setItem("elli.a", elli.a);
-
-    //set rise
-    document.getElementById('rise').value = rise;
-
-    rise /= 12.0;  //for check with normal depth
+    document.getElementById('span').value = oc.isUSCustomary ? span : span * 25.4;
+    elli.a = oc.isUSCustomary ? span / 24 : span / 2000;
     
+    if(oc.isUSCustomary)
+        localStorage.setItem("elli.a", elli.a);
+    else
+        localStorage.setItem("elli.a", elli.a * 3.28);
+        
+    //set rise
+    document.getElementById('rise').value = oc.isUSCustomary ? rise : rise * 25.4;
+
+    rise /= oc.isUSCustomary ? 12.0 : 1000.0;
+        
     if (rise < elli.dn) {
         alert('Normal depth is lowered to rise!');
         elli.dn = rise;
@@ -135,7 +142,10 @@ function respondSelect(e) {
     }
 
     elli.b = rise / 2.0;
-    localStorage.setItem("elli.b", elli.b);
+    if(oc.isUSCustomary)
+        localStorage.setItem("elli.b", elli.b);
+    else
+        localStorage.setItem("elli.b", elli.b * 3.28);
 
     document.getElementById('discharge').value =  elli.Qn.toFixed(2);
 
@@ -149,17 +159,22 @@ function respondSpan(e) {
     var tmp = parseFloat(document.getElementById('span').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for span!");
-        document.getElementById('span').value = elli.a * 24;
+        document.getElementById('span').value = oc.isUSCustomary ? elli.a * 24: elli.a * 2000;
         return;
     }
     else if (tmp <= 0) {
             alert("Please input a positive number for span!");
-            document.getElementById('span').value = elli.a * 24;
+            document.getElementById('span').value = oc.isUSCustomary ? elli.a * 24: elli.a * 2000;
             return;
     }
     else{
-        elli.a = tmp / 24.0;
-        localStorage.setItem("elli.a", elli.a);
+        elli.a = oc.isUSCustomary ? tmp / 24.0 : tmp / 2000;
+        
+        if(oc.isUSCustomary)
+            localStorage.setItem("elli.a", elli.a);
+        else
+            localStorage.setItem("elli.a", elli.a * 3.28);
+            
         document.getElementById('discharge').value =  elli.Qn.toFixed(2);
         update();
     }
@@ -169,23 +184,27 @@ function respondRise(e) {
     var tmp = parseFloat(document.getElementById('rise').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for rise!");
-        document.getElementById('rise').value = elli.b * 24;
+        document.getElementById('rise').value = oc.isUSCustomary ? elli.b * 24 : elli.b * 2000;
         return;
     }
     else if (tmp <= 0) {
         alert("Please input a positive number for rise!");
-        document.getElementById('rise').value = elli.b * 24;
+        document.getElementById('rise').value = oc.isUSCustomary ? elli.b * 24 : elli.b * 2000;
         return;
     }
     else {
-        tmp /= 12.0;
+        tmp /= oc.isUSCustomary ? 12 : 1000;
         if (tmp < elli.dn) {
             alert('Normal depth is lowered to rise!');
             elli.dn = tmp;
             document.getElementById('normalDepth').value = elli.dn.toFixed(2);
         }
         elli.b = tmp / 2.0;
-        localStorage.setItem("elli.b", elli.b);
+        if(oc.isUSCustomary)
+            localStorage.setItem("elli.b", elli.b);
+        else
+            localStorage.setItem("elli.b", elli.b * 3.28);
+            
         document.getElementById('discharge').value = elli.Qn.toFixed(2);
         update();
     }
@@ -247,7 +266,11 @@ function respondNormalDepth(e) {
     }
     else {
         elli.dn = tmp;
-        localStorage.setItem("elli.dn", elli.dn);
+        if(oc.isUSCustomary)
+            localStorage.setItem("elli.dn", elli.dn);
+        else
+            localStorage.setItem("elli.dn", elli.dn * 3.28);
+            
         document.getElementById('discharge').value = elli.Qn.toFixed(2);
         update();
     }
@@ -271,7 +294,11 @@ function respondDischarge(e) {
     }
     else {
         elli.dn = elli.Q2Dn(tmp);
-        localStorage.setItem("elli.dn", elli.dn);
+        if(oc.isUSCustomary)
+            localStorage.setItem("elli.dn", elli.dn);
+        else
+            localStorage.setItem("elli.dn", elli.dn * 3.28);
+            
         document.getElementById('normalDepth').value = elli.dn.toFixed(2);
         update();
     }
@@ -293,7 +320,26 @@ function setValues() {
     document.getElementById('capacity').innerHTML = elli.Qmax.toFixed(3);
     document.getElementById('ymax').innerHTML = elli.ymax.toFixed(3);
 
-    hideRbRtRc();
+    //hideRbRtRc();
+}
+function initElli(){
+    init(true);
+
+    if(!oc.isUSCustomary){
+        document.getElementById("aUnit").childNodes[0].textContent = "mm";
+        document.getElementById("bUnit").childNodes[0].textContent = "mm";
+/*
+        let diametersInmm = [  '460x280',   '575x365',   '770x490',   '865x550',   '960x610', 
+                              '1055x670',  '1150x730',  '1250x795',  '1345x855',  '1535x975', 
+                              '1730x1095', '1920x1220', '2110x1340', '2305x1465', '2495x1585', 
+                              '2690x1705', '2880x1830', '3070x1950', '3265x2075', '3455x2195', 
+                              '3648x2315', '3840x2440', '4225x2680', '4610x2925'];
+        var sels = document.getElementById('select').options;
+        for (let i = 1; i < sels.length; i++) {
+            sels[i].value = diametersInmm[i];
+            sels[i].innerHTML = diametersInmm[i];
+        } */
+    }
 }
 
 function update(){
@@ -306,10 +352,10 @@ function update(){
         return;
     }
       
-    document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
+    //document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
+    //document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
+    //document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
+    //document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
     
     //drawing 
     var xMin = 0;

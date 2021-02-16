@@ -7,7 +7,7 @@ window.onload = function () {
 
     checkLocalStorage();
 
-    document.getElementById('diameter').setAttribute('value', circ.r * 12 * 2);
+    document.getElementById('diameter').value = oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2 ;
     document.getElementById('channelSlope').setAttribute('value', circ.cs);
     document.getElementById('manningsN').setAttribute('value', circ.mN);
     document.getElementById('normalDepth').setAttribute('value', circ.dn);
@@ -29,6 +29,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
+                if(!oc.isUSCustomary) tmp = tmp / 3.28;
                 circ.r = tmp;
                 if (circ.dn > 2 * tmp) {
                     circ.dn = 2 * tmp;
@@ -62,6 +63,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
+                if(!oc.isUSCustomary) tmp = tmp / 3.28;
                 if (tmp <= 2.0 * circ.r) {
                     circ.dn = tmp;
                 }
@@ -74,7 +76,8 @@ function checkLocalStorage() {
 }
 
 function respondSelect(e) {
-    document.getElementById('diameter').value = document.getElementById('select').value;
+    let tmp = document.getElementById('select').value;
+    document.getElementById('diameter').value = oc.isUSCustomary ?  tmp : tmp * 25.4;
     respondDiameter(e);
     document.getElementById('select').value = '';
 }
@@ -83,23 +86,31 @@ function respondDiameter(e) {
     var tmp = parseFloat(document.getElementById('diameter').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for diameter!");
-        document.getElementById('diameter').value = circ.r * 24;
+        if(oc.isUSCustomary) document.getElementById('diameter').value = circ.r * 24;
+        else document.getElementById('diameter').value = circ.r * 2000;
         return;
     }
     else if (tmp <= 0) {
-            alert("Please input a positive number for diameter!");
-            document.getElementById('diameter').value = circ.r * 24;
-            return;
+        alert("Please input a positive number for diameter!");
+        if(oc.isUSCustomary) document.getElementById('diameter').value = circ.r * 24;
+        else document.getElementById('diameter').value = circ.r * 2000;
+        return;
     }
     else{
-        tmp /= 12.0;
+        if(oc.isUSCustomary) tmp /= 12.0;
+        else tmp /= 1000.0;
+
         if (tmp < circ.dn) {
             alert('Normal depth is lowered to diameter!');
             circ.dn = tmp;
             document.getElementById('normalDepth').value =  circ.dn.toFixed(2);
         }
         circ.r = tmp / 2.0;
-        localStorage.setItem("circ.r", circ.r)
+        if (oc.isUSCustomary)
+            localStorage.setItem("circ.r", circ.r)
+        else
+            localStorage.setItem("circ.r", circ.r * 3.28)
+            
         document.getElementById('discharge').value =  circ.Qn.toFixed(2);
         update();
     }
@@ -161,7 +172,11 @@ function respondNormalDepth(e) {
     }
     else {
         circ.dn = tmp;
-        localStorage.setItem("circ.dn", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("circ.dn", tmp)
+        else
+            localStorage.setItem("circ.dn", tmp * 3.28)
+            
         document.getElementById('discharge').value = circ.Qn.toFixed(2);
         update();
     }
@@ -185,9 +200,30 @@ function respondDischarge(e) {
     }
     else {
         circ.dn = circ.Q2Dn(tmp);
-        localStorage.setItem("circ.dn", circ.dn)
+        if(oc.isUSCustomary)
+            localStorage.setItem("circ.dn", circ.dn)
+        else
+            localStorage.setItem("circ.dn", circ.dn * 3.28)
+            
         document.getElementById('normalDepth').value = circ.dn.toFixed(2);
         update();
+    }
+}
+
+function initCirc(){
+    init(true);
+    
+    if(!oc.isUSCustomary){
+        document.getElementById("diamUnit").childNodes[0].textContent = "mm";
+        /*
+        let diametersInmm = [ 150,  200,  250,  300,  375,  450,  525,  600,  675,  750, 
+                              825,  900, 1050, 1200, 1350, 1500, 1650, 1800, 1950, 2100,
+                             2250, 2400, 2550, 2700, 2850, 3000, 3150, 3300, 3450, 3600];
+        var sels = document.getElementById('select').options;
+        for (let i = 1; i < sels.length; i++) {
+            sels[i].value = diametersInmm[i];
+            sels[i].innerHTML = diametersInmm[i];
+        }*/
     }
 }
 
@@ -205,7 +241,7 @@ function setValues() {
     document.getElementById('capacity').innerHTML = circ.Qmax.toFixed(3);
     document.getElementById('ymax').innerHTML = circ.ymax.toFixed(3);
 
-    hideRbRtRc();
+    //hideRbRtRc();
 }
 
 function update(){

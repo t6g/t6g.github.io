@@ -41,7 +41,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                trap.b = tmp;
+                trap.b = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -81,7 +81,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                trap.dn = tmp;
+                trap.dn = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -122,7 +122,11 @@ function respondBottomWidth(e) {
     }
     else {
         trap.b = tmp;
-        localStorage.setItem("trap.b", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("trap.b", tmp)
+        else
+            localStorage.setItem("trap.b", tmp * 3.28)
+            
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
         update();
     }
@@ -199,7 +203,11 @@ function respondNormalDepth(e) {
     }
     else {
         trap.dn = tmp;
-        localStorage.setItem("trap.dn", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("trap.dn", tmp);
+        else
+            localStorage.setItem("trap.dn", tmp * 3.28);
+            
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
         update();
     }
@@ -217,9 +225,21 @@ function respondDischarge(e) {
     }
     else {
         trap.dn = trap.Q2Dn(tmp);
-        localStorage.setItem("trap.dn", trap.dn.toFixed(2))
+        if(oc.isUSCustomary)
+            localStorage.setItem("trap.dn", trap.dn);
+        else
+            localStorage.setItem("trap.dn", trap.dn * 3.28);
+            
         document.getElementById('normalDepth').value = trap.dn.toFixed(2);
         update();
+    }
+}
+
+function initTrap(){
+    init();
+
+    if(!oc.isUSCustomary){
+        document.getElementById("bwUnit").childNodes[0].textContent = "m";
     }
 }
 
@@ -235,10 +255,10 @@ function setValues() {
     document.getElementById('criticalSlope').innerHTML = trap.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = trap.fr.toFixed(3);
 
-    w3.hide('#spanCapacity');
-    w3.hide('#spanYmax');
+    //w3.hide('#spanCapacity');
+    //w3.hide('#spanYmax');
 
-    hideRbRtRc();
+    //hideRbRtRc();
 }
 
 function update(){
@@ -251,10 +271,10 @@ function update(){
         return;
     }
       
-    document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
+    //document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
+    //document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
+    //document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
+    //document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
     
     //drawing 
     var xMin = 0;

@@ -3,10 +3,10 @@ const arch = new ArchChannel(15.25, 4.91667, 1.25, 6.0, 0.01, 0.013, 0.5);
 window.onload = function () {
     checkLocalStorage();
 
-    document.getElementById('rb').setAttribute('value', (arch.rb * 12).toFixed(2));
-    document.getElementById('rt').setAttribute('value', (arch.rt * 12).toFixed(2));
-    document.getElementById('rc').setAttribute('value', (arch.rc * 12).toFixed(2));
-    document.getElementById('rise').setAttribute('value', (arch.rise * 12).toFixed(2));
+    document.getElementById('rb').value = oc.isUSCustomary ? (arch.rb * 12).toFixed(2) : (arch.rb * 1000).toFixed(1);
+    document.getElementById('rt').value = oc.isUSCustomary ? (arch.rt * 12).toFixed(2) : (arch.rt * 1000).toFixed(1);
+    document.getElementById('rc').value = oc.isUSCustomary ? (arch.rc * 12).toFixed(2) : (arch.rc * 1000).toFixed(1);
+    document.getElementById('rise').value = oc.isUSCustomary ? (arch.rise * 12).toFixed(2) : (arch.rise * 1000).toFixed(1);
     document.getElementById('channelSlope').setAttribute('value', arch.cs);
     document.getElementById('manningsN').setAttribute('value', arch.mN);
     document.getElementById('normalDepth').setAttribute('value', arch.dn);
@@ -31,7 +31,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rb = tmp;
+                arch.rb = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -41,7 +41,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rt = tmp;
+                arch.rt = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -51,7 +51,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rc = tmp;
+                arch.rc = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -61,7 +61,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rise = tmp;
+                arch.rise = oc.isUSCustomary ? tmp : tmp / 3.28;
                 if (arch.dn > tmp) {
                     arch.dn = tmp;
                 }
@@ -92,6 +92,7 @@ function checkLocalStorage() {
     tmp = localStorage.getItem("arch.dn");
     if (tmp !== null) {
         tmp = parseFloat(tmp);
+        if (!oc.isUSCustomary) tmp = tmp / 3.28;
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
                 if (tmp <= arch.rise) {
@@ -150,16 +151,47 @@ function respondSelect(e) {
         return;
     }
     
-    document.getElementById('rb').value = rb.toFixed(2);
-    document.getElementById('rt').value = rt.toFixed(2);
-    document.getElementById('rc').value = rc.toFixed(2);
-    document.getElementById('rise').value = rise.toFixed(2);
+    var numdigit = 2;
 
-    localStorage.setItem("arch.rb", arch.rb);
-    localStorage.setItem("arch.rt", arch.rt);
-    localStorage.setItem("arch.rc", arch.rc);
-    localStorage.setItem("arch.rise", arch.rise);
+    if (!oc.isUSCustomary) {
+        rb *= 25.4;
+        rt *= 25.4;
+        rc *= 25.4;
+        rise *= 25.4;
+        numdigit = 0;
+    } 
+    
+    
+    document.getElementById('rb').value = rb.toFixed(numdigit);
+    document.getElementById('rt').value = rt.toFixed(numdigit);
+    document.getElementById('rc').value = rc.toFixed(numdigit);
+    document.getElementById('rise').value = rise.toFixed(numdigit);
 
+    if (!oc.isUSCustomary) {
+        arch.rb = rb / 1000;
+        arch.rt = rt / 1000;
+        arch.rc = rc / 1000;
+        arch.rise = rise / 1000;
+    }
+    else {
+        arch.rb = rb / 12;
+        arch.rt = rt / 12;
+        arch.rc = rc / 12;
+        arch.rise = rise / 12;
+    }
+    
+    if(oc.isUSCustomary) {
+        localStorage.setItem("arch.rb", arch.rb);
+        localStorage.setItem("arch.rt", arch.rt);
+        localStorage.setItem("arch.rc", arch.rc);
+        localStorage.setItem("arch.rise", arch.rise);
+    }
+    else {
+        localStorage.setItem("arch.rb", arch.rb * 3.28);
+        localStorage.setItem("arch.rt", arch.rt * 3.28);
+        localStorage.setItem("arch.rc", arch.rc * 3.28);
+        localStorage.setItem("arch.rise", arch.rise * 3.28);
+    }
     
     document.getElementById('select').value = '';
     update();
@@ -170,17 +202,23 @@ function respondrb(e) {
     var tmp = parseFloat(document.getElementById('rb').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for rb!");
-        document.getElementById('rb').value = (arch.rb * 12).toFixed(2);
+        if (oc.isUSCustomary) document.getElementById('rb').value = (arch.rb * 12).toFixed(2);
+        else document.getElementById('rb').value = (arch.rb * 1000).toFixed(2);
         return;
     }
     else if (tmp <= 0) {
-            alert("Please input a positive number for rb!");
-            document.getElementById('rb').value = (arch.rb * 12).toFixed(2);
-            return;
+        alert("Please input a positive number for rb!");
+        if (oc.isUSCustomary) document.getElementById('rb').value = (arch.rb * 12).toFixed(2);
+        else document.getElementById('rb').value = (arch.rb * 1000).toFixed(2);
+        return;
     }
     else{
-        arch.rb = tmp / 12.0;
-        localStorage.setItem("arch.rb", arch.rb);
+        arch.rb = oc.isUSCustomary ? tmp / 12 : tmp / 1000;
+        if(oc.isUSCustomary)
+            localStorage.setItem("arch.rb", arch.rb);
+        else
+            localStorage.setItem("arch.rb", arch.rb * 3.28);
+            
         document.getElementById('discharge').value =  arch.Qn.toFixed(2);
         update();
     }
@@ -189,17 +227,23 @@ function respondrt(e) {
     var tmp = parseFloat(document.getElementById('rt').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for rt!");
-        document.getElementById('rt').value = (arch.rt * 12).toFixed(2);
+        if (oc.isUSCustomary) document.getElementById('rt').value = (arch.rt * 12).toFixed(2);
+        else document.getElementById('rt').value = (arch.rt * 1000).toFixed(2);
         return;
     }
     else if (tmp <= 0) {
-            alert("Please input a positive number for rt!");
-            document.getElementById('rt').value = (arch.rt * 12).toFixed(2);
-            return;
+        alert("Please input a positive number for rt!");
+        if (oc.isUSCustomary) document.getElementById('rt').value = (arch.rt * 12).toFixed(2);
+        else document.getElementById('rt').value = (arch.rt * 1000).toFixed(2);
+        return;
     }
     else{
-        arch.rt = tmp / 12.0;
-        localStorage.setItem("arch.rt", arch.rt);
+        arch.rt = oc.isUSCustomary ? tmp / 12 : tmp / 1000;
+        if(oc.isUSCustomary)
+            localStorage.setItem("arch.rt", arch.rt);
+        else
+            localStorage.setItem("arch.rt", arch.rt * 3.28);
+            
         document.getElementById('discharge').value =  arch.Qn.toFixed(2);
         update();
     }
@@ -209,17 +253,23 @@ function respondrc(e) {
     var tmp = parseFloat(document.getElementById('rc').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for rc!");
-        document.getElementById('rc').value = (arch.rc * 12).toFixed(2);
+        if(oc.isUSCustomary)document.getElementById('rc').value = (arch.rc * 12).toFixed(2);
+        else document.getElementById('rc').value = (arch.rc * 1000).toFixed(2);
         return;
     }
     else if (tmp <= 0) {
-            alert("Please input a positive number for rc!");
-            document.getElementById('rc').value = (arch.rc * 12).toFixed(2);
-            return;
+        alert("Please input a positive number for rc!");
+        if(oc.isUSCustomary)document.getElementById('rc').value = (arch.rc * 12).toFixed(2);
+        else document.getElementById('rc').value = (arch.rc * 1000).toFixed(2);
+        return;
     }
     else{
-        arch.rc = tmp / 12.0;
-        localStorage.setItem("arch.rc", arch.rc);
+        arch.rc = oc.isUSCustomary ? tmp / 12 : tmp / 1000;
+        if(oc.isUSCustomary)
+            localStorage.setItem("arch.rc", arch.rc);
+        else
+            localStorage.setItem("arch.rc", arch.rc * 3.28);
+            
         document.getElementById('discharge').value =  arch.Qn.toFixed(2);
         update();
     }
@@ -229,24 +279,34 @@ function respondRise(e) {
     var tmp = parseFloat(document.getElementById('rise').value);
     if (isNaN(tmp)) {
         alert("Please input a valid number for rise!");
-        document.getElementById('rise').value = (arch.rise * 12).toFixed(2);
+        if(oc.isUSCustomary)document.getElementById('rise').value = (arch.rise * 12).toFixed(2);
+        else document.getElementById('rise').value = (arch.rise * 1000).toFixed(2);
         return;
     }
     else if (tmp <= 0) {
         alert("Please input a positive number for rise!");
-        document.getElementById('rise').value = (arch.rise * 12).toFixed(2);
+        if(oc.isUSCustomary)document.getElementById('rise').value = (arch.rise * 12).toFixed(2);
+        else document.getElementById('rise').value = (arch.rise * 1000).toFixed(2);
         return;
     }
     else {
-        tmp /= 12.0;
+        tmp /= oc.isUSCustomary ? 12 : 1000;
         if (tmp < arch.dn) {
             alert('Normal depth is lowered to rise!');
             arch.dn = tmp;
-            localStorage.setItem("arch.dn", arch.dn);
+            if(oc.isUSCustomary)
+                localStorage.setItem("arch.dn", arch.dn);
+            else
+                localStorage.setItem("arch.dn", arch.dn * 3.28);
+                
             document.getElementById('normalDepth').value = arch.dn.toFixed(2);
         }
         arch.rise = tmp;
-        localStorage.setItem("arch.rise", arch.rise);
+        if (oc.isUSCustomary)
+            localStorage.setItem("arch.rise", arch.rise);
+        else
+            localStorage.setItem("arch.rise", arch.rise * 3.28);
+            
         document.getElementById('discharge').value = arch.Qn.toFixed(2);
         update();
     }
@@ -308,7 +368,11 @@ function respondNormalDepth(e) {
     }
     else {
         arch.dn = tmp;
-        localStorage.setItem("arch.dn", arch.dn);
+        if (oc.isUSCustomary)
+            localStorage.setItem("arch.dn", arch.dn);
+        else
+            localStorage.setItem("arch.dn", arch.dn * 3.28);
+            
         document.getElementById('discharge').value = arch.Qn.toFixed(2);
         update();
     }
@@ -332,7 +396,11 @@ function respondDischarge(e) {
     }
     else {
         arch.dn = arch.Q2Dn(tmp, arch.rb, arch.rt, arch.rc, arch.rise);
-        localStorage.setItem("arch.dn", arch.dn);
+        if(oc.isUSCustomary)
+            localStorage.setItem("arch.dn", arch.dn);
+        else
+            localStorage.setItem("arch.dn", arch.dn * 3.28);
+            
         document.getElementById('normalDepth').value = arch.dn.toFixed(2);
         update();
     }
@@ -353,6 +421,17 @@ function setValues() {
     document.getElementById('ymax').innerHTML = arch.ymax.toFixed(3);
 }
 
+function initArch(){
+    init(true, true);
+    if(!oc.isUSCustomary){
+        document.getElementById("rtUnit").childNodes[0].textContent = "mm";
+        document.getElementById("rbUnit").childNodes[0].textContent = "mm";
+        document.getElementById("rcUnit").childNodes[0].textContent = "mm";
+        document.getElementById("riseUnit").childNodes[0].textContent = "mm";
+    }
+}
+
+
 function update(){
     'use strict';
     setValues();
@@ -362,11 +441,6 @@ function update(){
         return;
     }
       
-    document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
-    
     //drawing 
     var xMin = 0;
     let xF = arch.XF;

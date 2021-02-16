@@ -1,5 +1,7 @@
 var oc = {
     isUSCustomary : true,
+    isLightMode: true,
+
     KuUS : 1.487,
     KuSI : 1.0,
     gUS : 32.17,
@@ -22,11 +24,9 @@ var oc = {
     MaxCount: 100,   //maximum number of iterations for Newton's Method
     
     offsetLeft : 60,
-    offsetTop : 30,
+    offsetTop : 10,
     offsetRight : 30,
-    offsetBottom : 60,
-
-    isDarkMode: true
+    offsetBottom : 60
 };
 
 class OpenChannel {
@@ -72,5 +72,8 @@ class OpenChannel {
     }
     Q2Dn(Q) {
         throw new TypeError('sc is not defined in OpenChannel');
+    }
+    get isClosedConduit() {
+        return false;
     }
 }

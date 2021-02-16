@@ -4,10 +4,6 @@
 const tria = new TriangularChannel(3, 3, 0.01, 0.05, 0.5);
 
 window.onload = function () {
-
-    setLightDarkMode();
-
-    //check localstorage
     checkLocalStorage();
 
     document.getElementById('leftSideSlope').setAttribute('value', tria.z1);
@@ -24,9 +20,6 @@ window.onload = function () {
     document.getElementById('normalDepth').addEventListener("change", respondNormalDepth);
     document.getElementById('discharge').addEventListener("change", respondDischarge);
 
-    //document.getElementById('myCanvas').addEventListener("re")
-    
-    //drawCanvas();
     update();
 }
 
@@ -76,7 +69,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                tria.dn = tmp;
+                tria.dn = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -173,7 +166,11 @@ function respondNormalDepth(e) {
     }
     else {
         tria.dn = tmp;
-        localStorage.setItem("tria.dn", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("tria.dn", tmp);
+        else
+            localStorage.setItem("tria.dn", tmp * 3.28);
+            
         document.getElementById('discharge').value = tria.Qn.toFixed(2);
         update();
     }
@@ -191,7 +188,11 @@ function respondDischarge(e) {
     }
     else {
         tria.dn = tria.Q2Dn(tmp);
-        localStorage.setItem("tria.dn", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("tria.dn", tria.dn);
+        else
+            localStorage.setItem("tria.dn", tria.dn * 3.28);
+            
         document.getElementById('normalDepth').value = tria.dn.toFixed(2);
         update();
     }
@@ -209,10 +210,10 @@ function setValues() {
     document.getElementById('criticalSlope').innerHTML = tria.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = tria.fr.toFixed(3);
     
-    w3.hide('#spanCapacity');
-    w3.hide('#spanYmax');
+    //w3.hide('#spanCapacity');
+    //w3.hide('#spanYmax');
 
-    hideRbRtRc();
+    //hideRbRtRc();
 }
 
 function update(){
@@ -226,10 +227,10 @@ function update(){
     }
     
       
-    document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
+    //document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
+    //document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
+    //document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
+    //document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
     
     //drawing 
     var xMin = 0;
@@ -273,10 +274,10 @@ function update(){
     
     document.getElementById('pathCrit').setAttribute('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
 
-    if (oc.isDarkMode) {
-        document.getElementById('pathChan').setAttribute('stroke', 'white');
-        document.getElementById('axesRect').setAttribute('stroke', 'white');
-    }
+//    if (oc.isDarkMode) {
+//        document.getElementById('pathChan').setAttribute('stroke', 'white');
+//        document.getElementById('axesRect').setAttribute('stroke', 'white');
+//    }
     
     //draw grid lines;
     var xInc = niceIncrement(xMin, xMax);
@@ -300,9 +301,9 @@ function update(){
         document.getElementById(idLabel).setAttribute('x', xDraw);
         document.getElementById(idLabel).setAttribute('y', yPos);
         document.getElementById(idLabel).childNodes[0].textContent = x.toString();
-        if (oc.isDarkMode) {
-            document.getElementById(idLabel).setAttribute('fill', 'white');
-        }
+//        if (oc.isDarkMode) {
+//            document.getElementById(idLabel).setAttribute('fill', 'white');
+//        }
         
         xDraw += xIncDraw;
         x += xInc;
@@ -335,9 +336,9 @@ function update(){
         document.getElementById(idLabel).setAttribute("x", xPos);
         document.getElementById(idLabel).setAttribute("y", yDraw);
         document.getElementById(idLabel).childNodes[0].textContent = text;
-        if (oc.isDarkMode) {
-            document.getElementById(idLabel).setAttribute('fill', 'white');
-        }
+//        if (oc.isDarkMode) {
+//            document.getElementById(idLabel).setAttribute('fill', 'white');
+//        }
         yDraw -= yIncDraw;
         y += yInc;
         i += 1;
@@ -355,6 +356,7 @@ function update(){
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
 
+    /*
     if (oc.isDarkMode) {
         document.getElementById('xLabel').setAttribute('fill', 'white');
         document.getElementById('yLabel').setAttribute('fill', 'white');
@@ -368,6 +370,6 @@ function update(){
         document.getElementById('navSett').setAttribute('fill', 'white');
         document.getElementById('svgGroup').setAttribute('fill', 'white');
     }
-    
+    */
 }
 

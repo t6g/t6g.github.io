@@ -29,7 +29,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                para.tw = tmp;
+                para.tw = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -39,7 +39,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                paraa.cd = tmp;
+                paraa.cd = oc.isUSCustomary? tmp : tmp / 3.28;
             }
         }
     }
@@ -69,7 +69,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                para.dn = tmp;
+                para.dn = oc.isUSCustomary ? tmp : tmp /3.28;
             }
         }
     }
@@ -90,7 +90,11 @@ function respondTopWidth(e) {
     }
     else {
         para.tw = tmp;
-        localStorage.setItem("para.tw", tmp)
+        if (oc.isUSCustomary)
+            localStorage.setItem("para.tw", tmp)
+        else
+            localStorage.setItem("para.tw", tmp * 3.28)
+            
         document.getElementById('discharge').value =  para.Qn.toFixed(2);
         update();
     }
@@ -110,7 +114,11 @@ function respondChannelDepth(e) {
     }
     else {
         para.cd = tmp;
-        localStorage.setItem("para.cd", tmp)
+        if (oc.isUSCustomary)
+            localStorage.setItem("para.cd", tmp)
+        else
+            localStorage.setItem("para.cd", tmp * 3.28)
+            
         document.getElementById('discharge').value = para.Qn.toFixed(2);
         update();
     }
@@ -168,7 +176,11 @@ function respondNormalDepth(e) {
     }
     else {
         para.dn = tmp;
-        localStorage.setItem("para.dn", tmp)
+        if (oc.isUSCustomary)
+            localStorage.setItem("para.dn", tmp)
+        else
+            localStorage.setItem("para.dn", tmp * 3.28)
+            
         document.getElementById('discharge').value = para.Qn.toFixed(2);
         update();
     }
@@ -186,9 +198,21 @@ function respondDischarge(e) {
     }
     else {
         para.dn = para.Q2Dn(tmp);
-        localStorage.setItem("para.dn", tmp)
+        if (oc.isUSCustomary)
+            localStorage.setItem("para.dn", para.dn);
+        else
+            localStorage.setItem("para.dn", para.dn * 3.28)
         document.getElementById('normalDepth').value = para.dn.toFixed(2);
         update();
+    }
+}
+
+function initPara(){
+    init();
+
+    if(!oc.isUSCustomary){
+        document.getElementById("twUnit").childNodes[0].textContent = "m";
+        document.getElementById("cdUnit").childNodes[0].textContent = "m";
     }
 }
 

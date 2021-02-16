@@ -118,6 +118,10 @@ class EllipticalChannel extends OpenChannel {
     get ymax(){
         return this.b * (1.0 - Math.cos(this.alphamax));
     }
+
+    get isClosedConduit() {
+        return true;
+    }
     
     Q2Dn(Q) {
         if (Q >= this.Qmax) {

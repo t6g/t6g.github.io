@@ -29,7 +29,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.b = tmp;
+                rect.b = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -59,7 +59,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.dn = tmp;
+                rect.dn = oc.isUSCustomary ? tmp : tmp / 3.28;
             }
         }
     }
@@ -80,7 +80,11 @@ function respondBottomWidth(e) {
 
     else {
         rect.b = tmp;
-        localStorage.setItem("rect.b", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("rect.b", tmp);
+        else
+            localStorage.setItem("rect.b", tmp * 3.28);
+        
         document.getElementById('discharge').value =  rect.Qn.toFixed(2);
         update();
     }
@@ -138,7 +142,11 @@ function respondNormalDepth(e) {
     }
     else {
         rect.dn = tmp;
-        localStorage.setItem("rect.dn", tmp)
+        if(oc.isUSCustomary)
+            localStorage.setItem("rect.dn", tmp)
+        else
+            localStorage.setItem("rect.dn", tmp * 3.28)
+            
         document.getElementById('discharge').value = rect.Qn.toFixed(2);
         update();
     }
@@ -156,11 +164,25 @@ function respondDischarge(e) {
     }
     else {
         rect.dn = rect.Q2Dn(tmp);
-        localStorage.setItem("rect.dn", tmp)
+        
+        if(oc.isUSCustomary)
+            localStorage.setItem("rect.dn", rect.dn);
+        else
+            localStorage.setItem("rect.dn", rect.dn * 3.28);
+            
         document.getElementById('normalDepth').value = rect.dn.toFixed(2);
         update();
     }
 }
+
+function initRect(){
+    init();
+
+    if(!oc.isUSCustomary){
+        document.getElementById("bwUnit").childNodes[0].textContent = "m";
+    }
+}
+
 
 function setValues() {
     if(!(document.getElementById('area'))){
@@ -174,10 +196,10 @@ function setValues() {
     document.getElementById('criticalSlope').innerHTML = rect.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = rect.fr.toFixed(3);
 
-    w3.hide('#spanCapacity');
-    w3.hide('#spanYmax');
+    //w3.hide('#spanCapacity');
+    //w3.hide('#spanYmax');
 
-    hideRbRtRc();
+    //hideRbRtRc();
 
 }
 
