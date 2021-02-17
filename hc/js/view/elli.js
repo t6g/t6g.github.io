@@ -1,7 +1,7 @@
 // JavaScript source code
 'use strict'
 
-const elli = new EllipticalChannel(12, 18, 0.01, 0.013, 0.5);
+const elli = new EllipticalChannel(18, 12, 0.01, 0.013, 0.5);
 
 window.onload = function () {
 

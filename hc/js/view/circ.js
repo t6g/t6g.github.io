@@ -1,7 +1,7 @@
 // JavaScript source code
 'use strict'
 
-const circ = new CircularChannel(24, 0.01, 0.013, 1.88);
+const circ = new CircularChannel(24, 0.01, 0.013, 1.0);
 
 window.onload = function () {
 
