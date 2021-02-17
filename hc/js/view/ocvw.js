@@ -58,6 +58,18 @@ function init(isClosedConduit, isArch) {
         document.body.style.backgroundColor = "black";
         document.body.style.color = "white";
         
+        document.getElementById('channelSlope').style.background = 'black';
+        document.getElementById('channelSlope').style.color = 'white';
+
+        document.getElementById('manningsN').style.background = 'black';
+        document.getElementById('manningsN').style.color = 'white';
+
+        document.getElementById('normalDepth').style.background = 'black';
+        document.getElementById('normalDepth').style.color = 'white';
+        
+        document.getElementById('discharge').style.background = 'black';
+        document.getElementById('discharge').style.color = 'white';
+        
         document.getElementById('pathChan').setAttribute('stroke', 'white');
         document.getElementById('axesRect').setAttribute('stroke', 'white');
 

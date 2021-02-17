@@ -5,13 +5,12 @@ const rect = new RectangularChannel(1, 0.01, 0.05, 0.5);
 
 window.onload = function () {
 
-    //check localstorage
     checkLocalStorage();
 
-    document.getElementById('bottomWidth').setAttribute('value', rect.b);
+    document.getElementById('bottomWidth').setAttribute('value', rect.b.toFixed(2));
     document.getElementById('channelSlope').setAttribute('value', rect.cs);
     document.getElementById('manningsN').setAttribute('value', rect.mN);
-    document.getElementById('normalDepth').setAttribute('value', rect.dn);
+    document.getElementById('normalDepth').setAttribute('value', rect.dn.toFixed(2));
     document.getElementById('discharge').setAttribute('value', rect.Qn.toFixed(2));
 
     document.getElementById('bottomWidth').addEventListener("change", respondBottomWidth);
@@ -29,7 +28,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.b = oc.isUSCustomary ? tmp : tmp / 3.28;
+                rect.b = tmp;
             }
         }
     }
@@ -59,9 +58,17 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                rect.dn = oc.isUSCustomary ? tmp : tmp / 3.28;
+                rect.dn = tmp;
             }
         }
+    }
+
+    tmp = localStorage.getItem("oc.isUSCustomary");
+    if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
+    
+    if(!oc.isUSCustomary) {
+        rect.b /= oc.m2ft;
+        rect.dn /= oc.m2ft;
     }
 }
 
@@ -80,11 +87,8 @@ function respondBottomWidth(e) {
 
     else {
         rect.b = tmp;
-        if(oc.isUSCustomary)
-            localStorage.setItem("rect.b", tmp);
-        else
-            localStorage.setItem("rect.b", tmp * 3.28);
-        
+        localStorage.setItem("rect.b", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
+
         document.getElementById('discharge').value =  rect.Qn.toFixed(2);
         update();
     }
@@ -142,10 +146,7 @@ function respondNormalDepth(e) {
     }
     else {
         rect.dn = tmp;
-        if(oc.isUSCustomary)
-            localStorage.setItem("rect.dn", tmp)
-        else
-            localStorage.setItem("rect.dn", tmp * 3.28)
+        localStorage.setItem("rect.dn", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value = rect.Qn.toFixed(2);
         update();
@@ -165,10 +166,7 @@ function respondDischarge(e) {
     else {
         rect.dn = rect.Q2Dn(tmp);
         
-        if(oc.isUSCustomary)
-            localStorage.setItem("rect.dn", rect.dn);
-        else
-            localStorage.setItem("rect.dn", rect.dn * 3.28);
+        localStorage.setItem("rect.dn", oc.isUSCustomary ? rect.dn : rect.dn * oc.m2ft);
             
         document.getElementById('normalDepth').value = rect.dn.toFixed(2);
         update();
@@ -180,6 +178,11 @@ function initRect(){
 
     if(!oc.isUSCustomary){
         document.getElementById("bwUnit").childNodes[0].textContent = "m";
+    }
+
+    if(!oc.isLightMode) {
+        document.getElementById('bottomWidth').style.background = 'black';
+        document.getElementById('bottomWidth').style.color = 'white';
     }
 }
 
@@ -195,11 +198,6 @@ function setValues() {
     document.getElementById('criticalVelocity').innerHTML = rect.vc.toFixed(3);
     document.getElementById('criticalSlope').innerHTML = rect.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = rect.fr.toFixed(3);
-
-    //w3.hide('#spanCapacity');
-    //w3.hide('#spanYmax');
-
-    //hideRbRtRc();
 
 }
 

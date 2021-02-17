@@ -7,11 +7,11 @@ window.onload = function () {
     checkLocalStorage();
 
     document.getElementById('leftSideSlope').setAttribute('value', trap.z1);
-    document.getElementById('bottomWidth').setAttribute('value', trap.b);
+    document.getElementById('bottomWidth').setAttribute('value', trap.b.toFixed(2));
     document.getElementById('rightSideSlope').setAttribute('value', trap.z2);
     document.getElementById('channelSlope').setAttribute('value', trap.cs);
     document.getElementById('manningsN').setAttribute('value', trap.mN);
-    document.getElementById('normalDepth').setAttribute('value', trap.dn);
+    document.getElementById('normalDepth').setAttribute('value', trap.dn.toFixed(2));
     document.getElementById('discharge').setAttribute('value', trap.Qn.toFixed(2));
 
     document.getElementById('leftSideSlope').addEventListener("change", respondLeftSideSlope);
@@ -41,7 +41,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                trap.b = oc.isUSCustomary ? tmp : tmp / 3.28;
+                trap.b = tmp;
             }
         }
     }
@@ -81,9 +81,17 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                trap.dn = oc.isUSCustomary ? tmp : tmp / 3.28;
+                trap.dn = tmp;
             }
         }
+    }
+    
+    tmp = localStorage.getItem("oc.isUSCustomary");
+    if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
+    
+    if(!oc.isUSCustomary) {
+        trap.b /= oc.m2ft;
+        trap.dn /= oc.m2ft;
     }
 }
 
@@ -122,10 +130,8 @@ function respondBottomWidth(e) {
     }
     else {
         trap.b = tmp;
-        if(oc.isUSCustomary)
-            localStorage.setItem("trap.b", tmp)
-        else
-            localStorage.setItem("trap.b", tmp * 3.28)
+
+        localStorage.setItem("trap.b", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
         update();
@@ -203,10 +209,7 @@ function respondNormalDepth(e) {
     }
     else {
         trap.dn = tmp;
-        if(oc.isUSCustomary)
-            localStorage.setItem("trap.dn", tmp);
-        else
-            localStorage.setItem("trap.dn", tmp * 3.28);
+        localStorage.setItem("trap.dn", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value = trap.Qn.toFixed(2);
         update();
@@ -225,10 +228,7 @@ function respondDischarge(e) {
     }
     else {
         trap.dn = trap.Q2Dn(tmp);
-        if(oc.isUSCustomary)
-            localStorage.setItem("trap.dn", trap.dn);
-        else
-            localStorage.setItem("trap.dn", trap.dn * 3.28);
+        localStorage.setItem("trap.dn", oc.isUSCustomary ? trap.dn : trap.dn * oc.m2ft);
             
         document.getElementById('normalDepth').value = trap.dn.toFixed(2);
         update();
@@ -240,6 +240,17 @@ function initTrap(){
 
     if(!oc.isUSCustomary){
         document.getElementById("bwUnit").childNodes[0].textContent = "m";
+    }
+
+    if(!oc.isLightMode) {
+        document.getElementById('leftSideSlope').style.background = 'black';
+        document.getElementById('leftSideSlope').style.color = 'white';
+
+        document.getElementById('rightSideSlope').style.background = 'black';
+        document.getElementById('rightSideSlope').style.color = 'white';
+
+        document.getElementById('bottomWidth').style.background = 'black';
+        document.getElementById('bottomWidth').style.color = 'white';
     }
 }
 
@@ -255,10 +266,6 @@ function setValues() {
     document.getElementById('criticalSlope').innerHTML = trap.sc.toFixed(3);
     document.getElementById('froudeNumber').innerHTML = trap.fr.toFixed(3);
 
-    //w3.hide('#spanCapacity');
-    //w3.hide('#spanYmax');
-
-    //hideRbRtRc();
 }
 
 function update(){
@@ -271,11 +278,6 @@ function update(){
         return;
     }
       
-    //document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    //document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    //document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    //document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
-    
     //drawing 
     var xMin = 0;
     var xMax = trap.depth * (trap.z1 + trap.z2) + trap.b;

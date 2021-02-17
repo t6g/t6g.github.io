@@ -1,15 +1,16 @@
 const arch = new ArchChannel(15.25, 4.91667, 1.25, 6.0, 0.01, 0.013, 0.5);
 
 window.onload = function () {
+
     checkLocalStorage();
 
-    document.getElementById('rb').value = oc.isUSCustomary ? (arch.rb * 12).toFixed(2) : (arch.rb * 1000).toFixed(1);
-    document.getElementById('rt').value = oc.isUSCustomary ? (arch.rt * 12).toFixed(2) : (arch.rt * 1000).toFixed(1);
-    document.getElementById('rc').value = oc.isUSCustomary ? (arch.rc * 12).toFixed(2) : (arch.rc * 1000).toFixed(1);
-    document.getElementById('rise').value = oc.isUSCustomary ? (arch.rise * 12).toFixed(2) : (arch.rise * 1000).toFixed(1);
+    document.getElementById('rb').value = oc.isUSCustomary ? (arch.rb * 12).toFixed(2) : (arch.rb * 1000).toFixed(0);
+    document.getElementById('rt').value = oc.isUSCustomary ? (arch.rt * 12).toFixed(2) : (arch.rt * 1000).toFixed(0);
+    document.getElementById('rc').value = oc.isUSCustomary ? (arch.rc * 12).toFixed(2) : (arch.rc * 1000).toFixed(0);
+    document.getElementById('rise').value = oc.isUSCustomary ? (arch.rise * 12).toFixed(2) : (arch.rise * 1000).toFixed(0);
     document.getElementById('channelSlope').setAttribute('value', arch.cs);
     document.getElementById('manningsN').setAttribute('value', arch.mN);
-    document.getElementById('normalDepth').setAttribute('value', arch.dn);
+    document.getElementById('normalDepth').setAttribute('value', arch.dn.toFixed(2));
     document.getElementById('discharge').setAttribute('value', arch.Qn.toFixed(2));
 
     document.getElementById('select').addEventListener("change", respondSelect);
@@ -31,7 +32,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rb = oc.isUSCustomary ? tmp : tmp / 3.28;
+                arch.rb = tmp;
             }
         }
     }
@@ -41,7 +42,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rt = oc.isUSCustomary ? tmp : tmp / 3.28;
+                arch.rt = tmp;
             }
         }
     }
@@ -51,7 +52,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rc = oc.isUSCustomary ? tmp : tmp / 3.28;
+                arch.rc = tmp;
             }
         }
     }
@@ -61,7 +62,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                arch.rise = oc.isUSCustomary ? tmp : tmp / 3.28;
+                arch.rise = tmp;
                 if (arch.dn > tmp) {
                     arch.dn = tmp;
                 }
@@ -92,7 +93,6 @@ function checkLocalStorage() {
     tmp = localStorage.getItem("arch.dn");
     if (tmp !== null) {
         tmp = parseFloat(tmp);
-        if (!oc.isUSCustomary) tmp = tmp / 3.28;
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
                 if (tmp <= arch.rise) {
@@ -103,6 +103,17 @@ function checkLocalStorage() {
                 }
             }
         }
+    }
+
+    tmp = localStorage.getItem("oc.isUSCustomary");
+    if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
+    
+    if(!oc.isUSCustomary) {
+        arch.rb /= oc.m2ft;
+        arch.rt /= oc.m2ft;
+        arch.rc /= oc.m2ft;
+        arch.rise /= oc.m2ft;
+        arch.dn /= oc.m2ft;
     }
 }
 
@@ -154,10 +165,10 @@ function respondSelect(e) {
     var numdigit = 2;
 
     if (!oc.isUSCustomary) {
-        rb *= 25.4;
-        rt *= 25.4;
-        rc *= 25.4;
-        rise *= 25.4;
+        rb *= oc.in2mm;
+        rt *= oc.in2mm;
+        rc *= oc.in2mm;
+        rise *= oc.in2mm;
         numdigit = 0;
     } 
     
@@ -174,10 +185,10 @@ function respondSelect(e) {
         arch.rise = rise / 1000;
     }
     else {
-        arch.rb = rb / 12;
-        arch.rt = rt / 12;
-        arch.rc = rc / 12;
-        arch.rise = rise / 12;
+        arch.rb = rb / oc.ft2in;
+        arch.rt = rt / oc.ft2in;
+        arch.rc = rc / oc.ft2in;
+        arch.rise = rise / oc.ft2in;
     }
     
     if(oc.isUSCustomary) {
@@ -187,10 +198,10 @@ function respondSelect(e) {
         localStorage.setItem("arch.rise", arch.rise);
     }
     else {
-        localStorage.setItem("arch.rb", arch.rb * 3.28);
-        localStorage.setItem("arch.rt", arch.rt * 3.28);
-        localStorage.setItem("arch.rc", arch.rc * 3.28);
-        localStorage.setItem("arch.rise", arch.rise * 3.28);
+        localStorage.setItem("arch.rb", arch.rb * oc.m2ft);
+        localStorage.setItem("arch.rt", arch.rt * oc.m2ft);
+        localStorage.setItem("arch.rc", arch.rc * oc.m2ft);
+        localStorage.setItem("arch.rise", arch.rise * oc.m2ft);
     }
     
     document.getElementById('select').value = '';
@@ -428,6 +439,22 @@ function initArch(){
         document.getElementById("rbUnit").childNodes[0].textContent = "mm";
         document.getElementById("rcUnit").childNodes[0].textContent = "mm";
         document.getElementById("riseUnit").childNodes[0].textContent = "mm";
+    }
+    if(!oc.isLightMode) {
+        document.getElementById('select').style.background = 'black';
+        document.getElementById('select').style.color = 'white';
+
+        document.getElementById('rb').style.background = 'black';
+        document.getElementById('rb').style.color = 'white';
+
+        document.getElementById('rt').style.background = 'black';
+        document.getElementById('rt').style.color = 'white';
+
+        document.getElementById('rc').style.background = 'black';
+        document.getElementById('rc').style.color = 'white';
+
+        document.getElementById('rise').style.background = 'black';
+        document.getElementById('rise').style.color = 'white';
     }
 }
 

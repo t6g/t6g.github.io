@@ -6,6 +6,9 @@ var oc = {
     KuSI : 1.0,
     gUS : 32.17,
     gSI : 9.81,
+    m2ft : 3.28,
+    ft2in : 12,
+    in2mm : 25.4,
 
     get g () {
         return this.isUSCustomary ? this.gUS : this.gSI;
@@ -24,7 +27,7 @@ var oc = {
     MaxCount: 100,   //maximum number of iterations for Newton's Method
     
     offsetLeft : 60,
-    offsetTop : 10,
+    offsetTop : 0,
     offsetRight : 30,
     offsetBottom : 60
 };

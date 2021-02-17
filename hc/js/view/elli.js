@@ -7,11 +7,11 @@ window.onload = function () {
 
     checkLocalStorage();
 
-    document.getElementById('span').value = oc.isUSCustomary ? elli.a * 24 : elli.a * 2000;
-    document.getElementById('rise').value = oc.isUSCustomary ? elli.b * 24 : elli.b * 2000;
+    document.getElementById('span').value = (oc.isUSCustomary ? elli.a * oc.ft2in * 2 : elli.a * 2000).toFixed(0);
+    document.getElementById('rise').value = (oc.isUSCustomary ? elli.b * oc.ft2in * 2 : elli.b * 2000).toFixed(0);
     document.getElementById('channelSlope').setAttribute('value', elli.cs);
     document.getElementById('manningsN').setAttribute('value', elli.mN);
-    document.getElementById('normalDepth').setAttribute('value', elli.dn);
+    document.getElementById('normalDepth').setAttribute('value', elli.dn.toFixed(2));
     document.getElementById('discharge').setAttribute('value', elli.Qn.toFixed(2));
 
     //setValues();
@@ -34,7 +34,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                elli.a = oc.isUSCustomary ? tmp : tmp / 3.28;
+                elli.a = tmp;
             }
         }
     }
@@ -44,7 +44,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                elli.b = oc.isUSCustomary ? tmp : tmp / 3.28;
+                elli.b = tmp;
                 if (elli.dn > 2 * tmp) {
                     elli.dn = 2.0 * tmp;
                 }
@@ -77,9 +77,6 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                
-                if(oc.isUSCustomary) tmp = tmp / 3.28;
-                
                 if (tmp <= 2.0 * elli.b) {
                     elli.dn = tmp;
                 }
@@ -88,6 +85,15 @@ function checkLocalStorage() {
                 }
             }
         }
+    }
+
+    tmp = localStorage.getItem("oc.isUSCustomary");
+    if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
+    
+    if(!oc.isUSCustomary) {
+        elli.a /= oc.m2ft;
+        elli.b /= oc.m2ft;
+        elli.dn /= oc.m2ft;
     }
 }
 
@@ -122,16 +128,13 @@ function respondSelect(e) {
     }
     
     //set span
-    document.getElementById('span').value = oc.isUSCustomary ? span : span * 25.4;
+    document.getElementById('span').value = oc.isUSCustomary ? span : span * oc.in2mm;
     elli.a = oc.isUSCustomary ? span / 24 : span / 2000;
     
-    if(oc.isUSCustomary)
-        localStorage.setItem("elli.a", elli.a);
-    else
-        localStorage.setItem("elli.a", elli.a * 3.28);
+    localStorage.setItem("elli.a", oc.isUSCustomary ? elli.a : elli.a * oc.m2ft);
         
     //set rise
-    document.getElementById('rise').value = oc.isUSCustomary ? rise : rise * 25.4;
+    document.getElementById('rise').value = oc.isUSCustomary ? rise : rise * oc.in2mm;
 
     rise /= oc.isUSCustomary ? 12.0 : 1000.0;
         
@@ -142,10 +145,7 @@ function respondSelect(e) {
     }
 
     elli.b = rise / 2.0;
-    if(oc.isUSCustomary)
-        localStorage.setItem("elli.b", elli.b);
-    else
-        localStorage.setItem("elli.b", elli.b * 3.28);
+    localStorage.setItem("elli.b", oc.isUSCustomary ? elli.b : elli.b * oc.m2ft);
 
     document.getElementById('discharge').value =  elli.Qn.toFixed(2);
 
@@ -169,12 +169,9 @@ function respondSpan(e) {
     }
     else{
         elli.a = oc.isUSCustomary ? tmp / 24.0 : tmp / 2000;
+
+        localStorage.setItem("elli.a", oc.isUSCustomary ? elli.a : elli.a * oc.m2ft);
         
-        if(oc.isUSCustomary)
-            localStorage.setItem("elli.a", elli.a);
-        else
-            localStorage.setItem("elli.a", elli.a * 3.28);
-            
         document.getElementById('discharge').value =  elli.Qn.toFixed(2);
         update();
     }
@@ -200,10 +197,8 @@ function respondRise(e) {
             document.getElementById('normalDepth').value = elli.dn.toFixed(2);
         }
         elli.b = tmp / 2.0;
-        if(oc.isUSCustomary)
-            localStorage.setItem("elli.b", elli.b);
-        else
-            localStorage.setItem("elli.b", elli.b * 3.28);
+
+        localStorage.setItem("elli.b", oc.isUSCustomary ? elli.b : elli.b * oc.m2ft);
             
         document.getElementById('discharge').value = elli.Qn.toFixed(2);
         update();
@@ -266,10 +261,7 @@ function respondNormalDepth(e) {
     }
     else {
         elli.dn = tmp;
-        if(oc.isUSCustomary)
-            localStorage.setItem("elli.dn", elli.dn);
-        else
-            localStorage.setItem("elli.dn", elli.dn * 3.28);
+        localStorage.setItem("elli.dn", oc.isUSCustomary ? elli.dn : elli.dn * oc.m2ft);
             
         document.getElementById('discharge').value = elli.Qn.toFixed(2);
         update();
@@ -294,10 +286,7 @@ function respondDischarge(e) {
     }
     else {
         elli.dn = elli.Q2Dn(tmp);
-        if(oc.isUSCustomary)
-            localStorage.setItem("elli.dn", elli.dn);
-        else
-            localStorage.setItem("elli.dn", elli.dn * 3.28);
+        localStorage.setItem("elli.dn", oc.isUSCustomary ? elli.dn : elli.dn * oc.m2ft);
             
         document.getElementById('normalDepth').value = elli.dn.toFixed(2);
         update();
@@ -320,7 +309,6 @@ function setValues() {
     document.getElementById('capacity').innerHTML = elli.Qmax.toFixed(3);
     document.getElementById('ymax').innerHTML = elli.ymax.toFixed(3);
 
-    //hideRbRtRc();
 }
 function initElli(){
     init(true);
@@ -340,6 +328,17 @@ function initElli(){
             sels[i].innerHTML = diametersInmm[i];
         } */
     }
+
+    if(!oc.isLightMode) {
+        document.getElementById('select').style.background = 'black';
+        document.getElementById('select').style.color = 'white';
+
+        document.getElementById('span').style.background = 'black';
+        document.getElementById('span').style.color = 'white';
+
+        document.getElementById('rise').style.background = 'black';
+        document.getElementById('rise').style.color = 'white';
+    }
 }
 
 function update(){
@@ -352,11 +351,6 @@ function update(){
         return;
     }
       
-    //document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    //document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    //document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    //document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
-    
     //drawing 
     var xMin = 0;
     var xMax = 2.0 * elli.a;

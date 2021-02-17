@@ -6,11 +6,11 @@ const para = new ParabolicChannel(10, 1, 0.01, 0.05, 0.5);
 window.onload = function () {
     checkLocalStorage();
 
-    document.getElementById('topWidth').setAttribute('value', para.tw);
-    document.getElementById('channelDepth').setAttribute('value', para.cd);
+    document.getElementById('topWidth').setAttribute('value', para.tw.toFixed(2));
+    document.getElementById('channelDepth').setAttribute('value', para.cd.toFixed(2));
     document.getElementById('channelSlope').setAttribute('value', para.cs);
     document.getElementById('manningsN').setAttribute('value', para.mN);
-    document.getElementById('normalDepth').setAttribute('value', para.dn);
+    document.getElementById('normalDepth').setAttribute('value', para.dn.toFixed(2));
     document.getElementById('discharge').setAttribute('value', para.Qn.toFixed(2));
 
     document.getElementById('topWidth').addEventListener("change", respondTopWidth);
@@ -29,7 +29,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                para.tw = oc.isUSCustomary ? tmp : tmp / 3.28;
+                para.tw = tmp;
             }
         }
     }
@@ -39,7 +39,7 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                paraa.cd = oc.isUSCustomary? tmp : tmp / 3.28;
+                paraa.cd = tmp;
             }
         }
     }
@@ -73,6 +73,16 @@ function checkLocalStorage() {
             }
         }
     }
+
+    tmp = localStorage.getItem("oc.isUSCustomary");
+    if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
+    
+    if(!oc.isUSCustomary) {
+        para.tw /= oc.m2ft;
+        para.cd /= oc.m2ft;
+        para.dn /= oc.m2ft;
+    }
+    
 }
 
 
@@ -90,10 +100,7 @@ function respondTopWidth(e) {
     }
     else {
         para.tw = tmp;
-        if (oc.isUSCustomary)
-            localStorage.setItem("para.tw", tmp)
-        else
-            localStorage.setItem("para.tw", tmp * 3.28)
+        localStorage.setItem("para.tw", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value =  para.Qn.toFixed(2);
         update();
@@ -114,10 +121,7 @@ function respondChannelDepth(e) {
     }
     else {
         para.cd = tmp;
-        if (oc.isUSCustomary)
-            localStorage.setItem("para.cd", tmp)
-        else
-            localStorage.setItem("para.cd", tmp * 3.28)
+        localStorage.setItem("para.cd", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value = para.Qn.toFixed(2);
         update();
@@ -176,10 +180,7 @@ function respondNormalDepth(e) {
     }
     else {
         para.dn = tmp;
-        if (oc.isUSCustomary)
-            localStorage.setItem("para.dn", tmp)
-        else
-            localStorage.setItem("para.dn", tmp * 3.28)
+        localStorage.setItem("para.dn", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value = para.Qn.toFixed(2);
         update();
@@ -198,10 +199,7 @@ function respondDischarge(e) {
     }
     else {
         para.dn = para.Q2Dn(tmp);
-        if (oc.isUSCustomary)
-            localStorage.setItem("para.dn", para.dn);
-        else
-            localStorage.setItem("para.dn", para.dn * 3.28)
+        localStorage.setItem("para.dn", oc.isUSCustomary ? para.dn : para.dn * oc.m2ft);
         document.getElementById('normalDepth').value = para.dn.toFixed(2);
         update();
     }
@@ -213,6 +211,14 @@ function initPara(){
     if(!oc.isUSCustomary){
         document.getElementById("twUnit").childNodes[0].textContent = "m";
         document.getElementById("cdUnit").childNodes[0].textContent = "m";
+    }
+
+    if(!oc.isLightMode) {
+        document.getElementById('topWidth').style.background = 'black';
+        document.getElementById('topWidth').style.color = 'white';
+
+        document.getElementById('channelDepth').style.background = 'black';
+        document.getElementById('channelDepth').style.color = 'white';
     }
 }
 

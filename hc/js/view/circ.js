@@ -7,10 +7,10 @@ window.onload = function () {
 
     checkLocalStorage();
 
-    document.getElementById('diameter').value = oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2 ;
+    document.getElementById('diameter').value = (oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2).toFixed(0);
     document.getElementById('channelSlope').setAttribute('value', circ.cs);
     document.getElementById('manningsN').setAttribute('value', circ.mN);
-    document.getElementById('normalDepth').setAttribute('value', circ.dn);
+    document.getElementById('normalDepth').setAttribute('value', circ.dn.toFixed(2));
     document.getElementById('discharge').setAttribute('value', circ.Qn.toFixed(2));
 
     document.getElementById('select').addEventListener("change", respondSelect);
@@ -29,7 +29,6 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                if(!oc.isUSCustomary) tmp = tmp / 3.28;
                 circ.r = tmp;
                 if (circ.dn > 2 * tmp) {
                     circ.dn = 2 * tmp;
@@ -63,7 +62,6 @@ function checkLocalStorage() {
         tmp = parseFloat(tmp);
         if (!(isNaN(tmp))) {
             if (tmp > 0) {
-                if(!oc.isUSCustomary) tmp = tmp / 3.28;
                 if (tmp <= 2.0 * circ.r) {
                     circ.dn = tmp;
                 }
@@ -72,6 +70,14 @@ function checkLocalStorage() {
                 }
             }
         }
+    }
+    
+    tmp = localStorage.getItem("oc.isUSCustomary");
+    if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
+    
+    if(!oc.isUSCustomary) {
+        circ.r /= oc.m2ft;
+        circ.dn /= oc.m2ft;
     }
 }
 
@@ -106,10 +112,8 @@ function respondDiameter(e) {
             document.getElementById('normalDepth').value =  circ.dn.toFixed(2);
         }
         circ.r = tmp / 2.0;
-        if (oc.isUSCustomary)
-            localStorage.setItem("circ.r", circ.r)
-        else
-            localStorage.setItem("circ.r", circ.r * 3.28)
+
+        localStorage.setItem("circ.r", oc.isUSCustomary ? circ.r : circ.r * oc.m2ft);
             
         document.getElementById('discharge').value =  circ.Qn.toFixed(2);
         update();
@@ -172,10 +176,8 @@ function respondNormalDepth(e) {
     }
     else {
         circ.dn = tmp;
-        if(oc.isUSCustomary)
-            localStorage.setItem("circ.dn", tmp)
-        else
-            localStorage.setItem("circ.dn", tmp * 3.28)
+
+        localStorage.setItem("circ.dn", oc.isUSCustomary ? tmp : tmp * oc.m2ft);
             
         document.getElementById('discharge').value = circ.Qn.toFixed(2);
         update();
@@ -200,10 +202,7 @@ function respondDischarge(e) {
     }
     else {
         circ.dn = circ.Q2Dn(tmp);
-        if(oc.isUSCustomary)
-            localStorage.setItem("circ.dn", circ.dn)
-        else
-            localStorage.setItem("circ.dn", circ.dn * 3.28)
+        localStorage.setItem("circ.dn", oc.isUSCustomary ? circ.dn : circ.dn * oc.m2ft);
             
         document.getElementById('normalDepth').value = circ.dn.toFixed(2);
         update();
@@ -225,6 +224,15 @@ function initCirc(){
             sels[i].innerHTML = diametersInmm[i];
         }*/
     }
+    
+    if(!oc.isLightMode) {
+        document.getElementById('select').style.background = 'black';
+        document.getElementById('select').style.color = 'white';
+
+        document.getElementById('diameter').style.background = 'black';
+        document.getElementById('diameter').style.color = 'white';
+    }
+    
 }
 
 function setValues() {
