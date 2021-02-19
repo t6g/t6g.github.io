@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Open Channel Calculator - Triangular</title>
+    <title>Open Channel Calculator - Irregular</title>
 
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
@@ -14,8 +14,8 @@
     <script src="js/util.js"></script>
     <script src="js/model/openchannel.js"></script>
     <script src="js/view/ocvw.js"></script>
-    <script src="js/model/tria.js"></script>
-    <script src="js/view/tria.js"></script>
+    <script src="js/model/irre.js"></script>
+    <script src="js/view/irre.js"></script>
 </head>
 <body>
     <header>
@@ -30,25 +30,25 @@
         <div id="calculationTable">
             <fieldset id="left">
                 <span>
-                    <label class="label" for="leftSideSlope" >Left Side Slope</label>
-                    <label class="unit">h:v</label>
-                    <input class="value" id="leftSideSlope" name="leftSideSlope" type="number" min="1" value="3" step="1">
-                </span>
-                <span>
-                    <label class="label" for="rightSideSlope">Right Side Slope</label>
-                    <label class="unit">h:v</label>
-                    <input class="value" id="rightSideSlope" name="rightSideSlope" type="number" min="1" value="3" step="1">
-                </span>
-
-                <span>
                     <label class="label" for="channelSlope">Channel Slope</label>
                     <label class="unit">v:h</label>
                     <input class="value" id="channelSlope" name="channelSlope" type="number" min="0.001" value="0.01" step="0.001">
                 </span>
                 <span>
+                    <label class="label" for="selectN" >Select N Method</label>
+                    <label class="unit">&nbsp;</label>
+                    <select class="value" id="selectN" name="selectN">
+                        <option value='Pavlovskii'>Pavlovskii</option>
+                        <option value='Horton'>Horton</option>
+                        <option value='Colebatch'>Colebatch</option>
+                        <option value='Cox'>Cox</option>
+                        <option value='Lotter'>Lotter</option>
+                    </select>
+                </span>
+                <span>
                     <label class="label" for="manningsN">Manning's N</label>
                     <label class="unit">&nbsp;</label>
-                    <input class="value" id="manningsN" name="manningsN" type="number"  min="0.001" value="0.013" step="0.001">
+                    <input class="value" id="manningsN" name="manningsN" type="number"  min="0.001" value="0.013" step="0.001" readonly>
                 </span>
                 <span>
                     <label class="label" for="normalDepth" class="label">Normal Depth</label>
@@ -63,7 +63,33 @@
             </fieldset>
 
             <fieldset w3-include-html="resu.html" id="right"></fieldset>
-
+        </div>
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Station</th>
+                        <th>Elevation</th>
+                        <th>Manning's N</th>
+                    </tr>
+                </thead>
+                <tbody  id='geometryTable' contenteditable="true">
+                    <tr> <td>0</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>1</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>2</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>3</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>4</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>5</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>6</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>7</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>8</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>9</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>10</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>11</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>12</td> <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>13</td> <td>3  </td> <td>0.06</td> </tr>
+                </tbody>
+        </table>            
         </div>
     </main>
 <!--    <footer w3-include-html="footer.html"></footer> -->
@@ -72,7 +98,7 @@
         <span>Last modified: <script>document.write(new Date(document.lastModified).toLocaleDateString());</script></span>
     </footer>
     <script>
-        w3.includeHTML(initTria);
+        w3.includeHTML(initIrre);
     </script>
 </body>
 </html>

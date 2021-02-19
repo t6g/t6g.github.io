@@ -107,6 +107,20 @@ fieldset span input[type="number"], select {
     text-align-last: right; 
 }
 
+td {
+    text-align: right;
+}
+
+footer {
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    text-align: right;
+    margin: 5px;
+    font-size: 0.8rem;
+}
+
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     body {
