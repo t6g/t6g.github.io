@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <title>Rain Fall IDF for Rational Method in Chesterfield VA</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="js/rainfall.js"></script>
+    <body>
+        <div>
+            <fieldset id="inputFieldset" align="center">
+                <legend>Rainfall Intensity Calculator (for Rational Method at Chesterfield VA)</legend>
+                <span>
+                    <label for="NOAAsite" class="left">Choose a site:</label>
+                    <select name="NOAAsite" id="NOAAsite" value="0" class="right">
+                      <option value="0">Chesterfield</option>
+                      <option value="1">Hopewell</option>
+                      <option value="2">Powhatan</option>
+                      <option value="3">Richmond WSO Airport</option>
+                      <option value="4">Richmond WB City</option>
+                    </select>        
+                </span>
+
+                <span>
+                    <label for="intervalStorm" class="left">Choose a storm:</label>
+                    <select name="intervalStorm" id="intervalStorm" value="0" class="right">
+                      <option value="0">1-year</option>
+                      <option value="1">2-year</option>
+                      <option value="2">5-year</option>
+                      <option value="3">10-year</option>
+                      <option value="4">25-year</option>
+                      <option value="5">50-year</option>
+                      <option value="6">100-year</option>
+                    </select>        
+                </span>
+
+                <span>
+                    <label for="tcInput" class="left">Time of Concentration (minute):</label>
+                    <input id="tcInput" name="tcInput" type="number" min="5" max="60" value="5" step="1" class="right">
+                </span>
+
+                <span>
+                    <label class="left">Rainfall Intensity (inch/hour)</label>
+                    <label id="rfiOutput" class="right"></label>
+                </span>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Rainfall Intensity (inch/hour) Table</legend>
+                <table>
+                    <thead>
+                        <th>Tc (min</th><th>1-year</th><th>2-year</th><th>5-year</th><th>10-year</th><th>25-year</th><th>50-year</th><th>100-year</th>
+                    </thead>
+                    <tbody id="rfd">
+                        <tr><td> 5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>10</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>15</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>20</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>25</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>30</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>35</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>40</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>45</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>50</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>55</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>60</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>            
+            </fieldset>
+
+            <svg id="chart" width="600" height="400">
+                <!--<rect id="svgBorderRect" fill="none" stroke="black" x="0" y="0" width="600" height="400"/> -->
+
+                <rect id="axesRect" x="50" y="20" width="540" height="330" fill="none" stroke="black"/>
+                
+                <text id="xLabel" x="300" y="390" text-anchor="middle" >Time of Concentration (minute)</text>
+
+                <text id="yLabel" text-anchor="middle" transform='translate(15, 200) rotate(-90)'>Rainfall Intensity (inch/hour)</text>
+
+                <path id="pathGridX" d="M50 53 h540 M50 86 h540 M50 119 h540 M50 152 h540 M50 185 h540 M50 218 h540 M50 251 h540 M50 284 h540 M50 317 h540" stroke="black" stroke-width="0.1" fill="none" stroke-dasharray="4,4"/>
+
+                <path id="pathGridY" d="M95 20 v330 M140 20 v330 M185 20 v330 M230 20 v330  M275 20 v330 M320 20 v330 M365 20 v330 M410 20 v330 M455 20 v330 M500 20 v330 M545 20 v330" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+
+                <text id="xTick1" x="50"  y="370" text-anchor="middle">0</text>
+                <text id="xTick2" x="95"  y="370" text-anchor="middle">5</text>
+                <text id="xTick3" x="140" y="370" text-anchor="middle">10</text>
+                <text id="xTick4" x="185" y="370" text-anchor="middle">15</text>
+                <text id="xTick5" x="230" y="370" text-anchor="middle">20</text>
+                <text id="xTick6" x="275" y="370" text-anchor="middle">25</text>
+                <text id="xTick6" x="320" y="370" text-anchor="middle">30</text>
+                <text id="xTick7" x="365" y="370" text-anchor="middle">35</text>
+                <text id="xTick8" x="410" y="370" text-anchor="middle">40</text>
+                <text id="xTick9" x="455" y="370" text-anchor="middle">45</text>
+                <text id="xTicka" x="500" y="370" text-anchor="middle">50</text>
+                <text id="xTickb" x="545" y="370" text-anchor="middle">55</text>
+                <text id="xTickc" x="590" y="370" text-anchor="middle">60</text>
+                
+                <text id="yTick1" x="30" y= "20" text-anchor="middle" alignment-baseline="middle">10</text>
+                <text id="yTick2" x="30" y= "53" text-anchor="middle" alignment-baseline="middle">9 </text>
+                <text id="yTick3" x="30" y= "86" text-anchor="middle" alignment-baseline="middle">8</text>
+                <text id="yTick4" x="30" y="119" text-anchor="middle" alignment-baseline="middle">7</text>
+                <text id="yTick5" x="30" y="152" text-anchor="middle" alignment-baseline="middle">6</text>
+                <text id="yTick6" x="30" y="185" text-anchor="middle" alignment-baseline="middle">5</text>
+                <text id="yTick7" x="30" y="218" text-anchor="middle" alignment-baseline="middle">4</text>
+                <text id="yTick8" x="30" y="251" text-anchor="middle" alignment-baseline="middle">3</text>
+                <text id="yTick9" x="30" y="284" text-anchor="middle" alignment-baseline="middle">2</text>
+                <text id="yTicka" x="30" y="317" text-anchor="middle" alignment-baseline="middle">1</text>
+                <text id="yTickb" x="30" y="350" text-anchor="middle" alignment-baseline="middle">0</text>
+
+                <text id="lbl1y"   x="520"  y="50"  text-anchor="left">1 y</text>
+                <text id="lbl2y"   x="520"  y="80"  text-anchor="left" fill="blue">2 y</text>
+                <text id="lbl10y"  x="520"  y="110" text-anchor="left" fill="green">10 y</text>
+                <text id="lbl100y" x="520"  y="140" text-anchor="left" fill="red">100 y</text>
+                
+                
+                <path id="path01" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none"/>
+                <path id="path02" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none"/>
+                <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+                <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+            </svg>            
+        </div>
+        <p> The rainfall Intensity-Duration-Frequency (IDF) curves are based on VDOT drainage manual, which were derived by VDOT using the Rainfall Precipitation Frequency data from NOAA’s Atlas 14. Rainfall intensity \(i\) (in/hr) is calculated from time of concentration \(t_c\) (minute), \(B\), \(D\) and \(E\)  
+        using the following equation
+        <p>
+            \begin{equation}
+                i = \frac{B}{(t_c + D)^E}
+            \end{equation}
+        </p>
+            
+        <p>There are four NOAA stations 
+        <a href="https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_printpage.html?st=va&sta=44-7201&data=depth&units=english&series=pds" target="_blank"> Richomd WSO Airport</a>, 
+        <a href="https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_printpage.html?st=va&sta=44-7206&data=depth&units=english&series=pds" target="_blank"> Richomd WB City</a>,         
+        <a href="https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_printpage.html?st=va&sta=44-6906&data=depth&units=english&series=pds" target="_blank"> Powhatan</a>, and
+        <a href="https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_printpage.html?st=va&sta=44-4101&data=depth&units=english&series=pds" target="_blank"> Hopewell</a> 
+        around Chesterfield VA. Average of \(B\), \(D\) and \(E\) from these four stations (no rounding) are used for Chesterfield county. </p>  
+<!--
+        <table id="TableBDE" style='font-size:70%'>
+            <caption>B, D, and E Values at NOAA Stations Near Chesterfield VA</caption>
+            <thead>
+                <tr><th>Station</th>
+                    <th colspan="3">1-year</th>
+                    <th colspan="3">2-year</th>
+                    <th colspan="3">5-year</th>
+                    <th colspan="3">10-year</th>
+                    <th colspan="3">25-year</th>
+                    <th colspan="3">50-year</th>
+                    <th colspan="3">100-year</th></tr>
+                <tr><th></th>
+                    <th>B</th><th>D</th><th>E</th>
+                    <th>B</th><th>D</th><th>E</th>
+                    <th>B</th><th>D</th><th>E</th>
+                    <th>B</th><th>D</th><th>E</th>
+                    <th>B</th><th>D</th><th>E</th>
+                    <th>B</th><th>D</th><th>E</th>
+                    <th>B</th><th>D</th><th>E</th></tr>
+            </thead>
+            <tbody>
+                <tr><th>Hopewell</th>
+                    <td>47.07</td><td>10.99</td><td>0.84</td>
+                    <td>56.89</td><td>11.48</td><td>0.84</td>
+                    <td>59.47</td><td>11.34</td><td>0.80</td>
+                    <td>60.39</td><td>10.88</td><td>0.77</td>
+                    <td>58.31</td><td>10.16</td><td>0.73</td>
+                    <td>56.79</td><td> 9.60</td><td>0.70</td>
+                    <td>54.74</td><td> 8.98</td><td>0.67</td></tr>
+                <tr><th>Powhatan</th>
+                    <td>45.14</td><td>11.16</td><td>0.84</td>
+                    <td>53.84</td><td>11.53</td><td>0.84</td>
+                    <td>57.71</td><td>11.61</td><td>0.81</td>
+                    <td>58.65</td><td>11.14</td><td>0.78</td>
+                    <td>55.84</td><td>10.25</td><td>0.74</td>
+                    <td>55.12</td><td>9.83</td><td>0.71</td>
+                    <td>53.32</td><td>9.30</td><td>0.68</td></tr>
+                <tr><th>WB City</th>
+                    <td>46.49</td><td>11.09</td><td>0.84</td>
+                    <td>54.21</td><td>11.19</td><td>0.83</td>
+                    <td>58.15</td><td>11.23</td><td>0.80</td>
+                    <td>59.29</td><td>10.90</td><td>0.77</td>
+                    <td>57.44</td><td>10.18</td><td>0.73</td>
+                    <td>55.73</td><td>9.63</td><td>0.70</td>
+                    <td>53.10</td><td>8.97</td><td>0.67</td></tr>
+                <tr><th>Airport</th>
+                    <td>46.27</td><td>11.01</td><td>0.84</td>
+                    <td>54.61</td><td>11.24</td><td>0.83</td>
+                    <td>59.16</td><td>11.40</td><td>0.80</td>
+                    <td>59.77</td><td>10.92</td><td>0.78</td>
+                    <td>57.15</td><td>10.11</td><td>0.73</td>
+                    <td>55.88</td><td>9.61</td><td>0.70</td>
+                    <td>53.69</td><td>9.01</td><td>0.67</td></tr>
+            </tbody>
+        </table>
+    -->
+            <table id="TableBDE">
+            <caption>B, D, and E Values at NOAA Stations Near Chesterfield VA</caption>
+            <thead>
+                <tr><th>Station</th>
+                    <th></th>
+                    <th>1-year</th>
+                    <th>2-year</th>
+                    <th>5-year</th>
+                    <th>10-year</th>
+                    <th>25-year</th>
+                    <th>50-year</th>
+                    <th>100-year</th></tr>
+            </thead>
+            <tbody>
+                <tr><th rowspan=3>Hopewell</th> <th>B</th> 
+                    <td>47.07</td> <td>56.89</td><td>59.47</td><td>60.39</td>
+                    <td>58.31</td><td>56.79</td><td>54.74</td></tr>
+                <tr><th>D</th>                     
+                    <td>10.99</td> <td>11.48</td> <td>11.34</td><td>10.88</td>
+                    <td>10.16</td><td> 9.60</td><td> 8.98</td></tr>
+                <tr><th>E</th>                     
+                    <td>0.84</td> <td>0.84</td><td>0.80</td><td>0.77</td>
+                    <td>0.73</td><td>0.70</td><td>0.67</td></tr>
+                <tr><th rowspan=3>Powhatan</th><th>B</th>
+                    <td>45.14</td><td>53.84</td><td>57.71</td><td>58.65</td>
+                    <td>55.84</td><td>55.12</td><td>53.32</td></tr>
+                <tr><th>D</th>
+                    <td>11.16</td><td>11.53</td><td>11.61</td><td>11.14</td>
+                    <td>10.25</td><td>9.83</td><td>9.30</td></tr>
+                <tr><th>E</th>
+                    <td>0.84</td><td>0.84</td><td>0.81</td><td>0.78</td>
+                    <td>0.74</td><td>0.71</td><td>0.68</td></tr>
+                <tr><th rowspan=3>Richmond WB City</th> <th>B</th> 
+                    <td>46.49</td><td>54.21</td><td>58.15</td><td>59.29</td>
+                    <td>57.44</td><td>55.73</td><td>53.10</td></tr>
+                <tr><th>D</th>
+                    <td>11.09</td><td>11.19</td><td>11.23</td><td>10.90</td>
+                    <td>10.18</td><td>9.63</td><td>8.97</td></tr>
+                <tr><th>E</th>
+                    <td>0.84</td><td>0.83</td><td>0.80</td><td>0.77</td>
+                    <td>0.73</td><td>0.70</td><td>0.67</td></tr>
+                <tr><th rowspan=3>Richmond WSO Airport</th> <th>B</th> 
+                    <td>46.27</td><td>54.61</td><td>59.16</td><td>59.77</td>
+                    <td>57.15</td><td>55.88</td><td>53.69</td></tr>
+                <tr><th>D</th>
+                    <td>11.01</td><td>11.24</td><td>11.40</td><td>10.92</td>
+                    <td>10.11</td><td>9.61</td><td>9.01</td></tr>
+                <tr><th>E</th><td>0.84</td><td>0.83</td><td>0.80</td><td>0.78</td>
+                    <td>0.73</td><td>0.70</td><td>0.67</td></tr>
+                <tr><th rowspan=3>Chesterfield</th> <th>B</th> 
+                    <td>46.2425</td><td>54.8875</td><td>58.6225</td><td>59.5250</td>
+                    <td>57.1850</td><td>55.8800</td><td>53.7125</td></tr>
+                <tr><th>D</th>
+                    <td>11.0625</td><td>11.3600</td><td>11.3950</td><td>10.9600</td>
+                    <td>10.1750</td><td>9.6675</td><td>9.0650</td></tr>
+                <tr><th>E</th><td>0.8400</td><td>0.8350</td><td>0.8025</td><td>0.7750</td>
+                    <td>0.7325</td><td>0.7025</td><td>0.6725</td></tr>
+            </tbody>
+        </table>
+        
+        <p align="center"><iframe src="https://www.google.com/maps/d/embed?mid=19Ju3sP96C5uRpm3sp8meTs5MYyA1r_df&hl=en" width="640" height="480" id="map"></iframe></p>
+        
+
+    </body>
+    <script>
+        $( document ).ready(function() {
+            updateRFIOutput();
+            updateTable();
+            updateGraph();
+        });
+        
+        $( "#NOAAsite" ).change(function() {
+            updateRFIOutput();
+            updateTable();
+            updateGraph();
+        });
+        
+        $( "#intervalStorm" ).change(updateRFIOutput);
+        
+        $( "#tcInput" ).change(updateRFIOutput);
+        
+        function updateRFIOutput() {
+            var site = parseInt($( "#NOAAsite" ).val());
+            var interval = parseInt($( "#intervalStorm" ).val());
+            var tc = parseFloat($( "#tcInput" ).val());
+            var rfd = rf.i(site, interval, tc);
+            $( "#rfiOutput" ).html(rfd.toFixed(2));
+        }
+        
+        function updateGraph(){
+            var h = 400;
+            var w = 600;
+            var oxl = 50;
+            var oxr = 10;
+            var sx = (w - oxl - oxr) / 60;
+            var oyt = 20;
+            var oyb = 50;
+            var sy = (h - oyt - oyb) / 10;
+            
+            var x = 5;
+            var xs = oxl + x * sx;
+
+            var site = parseInt($( "#NOAAsite" ).val());
+            var y = rf.i(site, 0, x);
+            var ys = h - oyb - y * sy;
+            var s1 = "M " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+            
+            y = rf.i(site, 1, x);
+            ys = h - oyb - y * sy;
+            var s2 = "M " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+            
+            y = rf.i(site, 3, x);
+            ys = h - oyb - y * sy;
+            var s10 = "M " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+
+            y = rf.i(site, 6, x);
+            ys = h - oyb - y * sy;
+            var s100 = "M " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+
+            //var x0s = offsetLeft + (x0 - xMin) * scaleX;
+            //var y0s = svg.clientHeight - offsetBottom - (y0 - yMin) * scaleY;
+            
+            for (x = 10; x < 61; x+=5){
+                xs = oxl + x * sx;
+                y = rf.i(site, 0, x);
+                ys = h - oyb - y * sy;
+                s1 += " L " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+
+                y = rf.i(site, 1, x);
+                ys = h - oyb - y * sy;
+                s2 += " L " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+
+                y = rf.i(site, 3, x);
+                ys = h - oyb - y * sy;
+                s10 += " L " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+
+                y = rf.i(site, 6, x);
+                ys = h - oyb - y * sy;
+                s100 += " L " + xs.toFixed(2) + ' ' + ys.toFixed(2);
+            }
+            
+            $("#path01").attr("d", s1);
+            $("#path02").attr("d", s2);
+            $("#path10").attr("d", s10);
+            $("#path100").attr("d", s100);
+        
+        }
+        
+        function updateTable() {
+            $( "#rfd tr" ).each(function () {
+                $( "td", this ).each(function () {
+                    if (this.cellIndex !== 0) {
+                        var site = parseInt($( "#NOAAsite" ).val());
+                        var interval = this.cellIndex - 1;
+                        var tc = parseFloat(this.parentElement.cells[0].innerText);
+                        var rfd = rf.i(site, interval, tc);
+                        $( this ).html(rfd.toFixed(2));
+                    }
+                })
+            })
+        }
+        
+        
+    </script>
+</html>
