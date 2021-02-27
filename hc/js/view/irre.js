@@ -1,6 +1,6 @@
 // JavaScript source code
 'use strict'
-
+/*
 const irre = new IrregularChannel([[0, 3.5, 0.06], 
                                   [1, 3,   0.06], 
                                   [2, 3,   0.06],
@@ -11,9 +11,17 @@ const irre = new IrregularChannel([[0, 3.5, 0.06],
                                   [7, 2.5, 0.06],
                                   [8, 2.8, 0.06],
                                   [9, 3.0, 0.06],
-                                  [10, 3.5, 0.06]],
+                                  [10, 3.5, 0.06]], */
+const irre = new IrregularChannel([
+                                  [ 0, 10, 0.06], 
+                                  [10,  7, 0.06], 
+                                  [20,  8, 0.06],
+                                  [30,  4, 0.05],
+                                  [40,  8, 0.06],
+                                  [50,  7, 0.06],
+                                  [60, 10, 0.06]],
                                   'Pavlovskii',
-                                  0.01, 0.05, 0.6);
+                                  0.01, 0.05, 1);
 
 window.onload = function () {
     checkLocalStorage();
@@ -29,7 +37,7 @@ window.onload = function () {
     document.getElementById('normalDepth').addEventListener("change", respondNormalDepth);
     document.getElementById('discharge').addEventListener("change", respondDischarge);
 
-    document.getElementById('geometryTable').addEventListener("change", respondGeometry);
+    //document.getElementById('geometryTable').addEventListener("change", respondGeometry);
 
     update();
 }
@@ -132,8 +140,99 @@ function respondDischarge(e) {
     }
 }
 
-function respondGeometry(e) {
-    console.log(e);
+function respondKeyup(e) {
+    if(e.keyCode===13) {
+        e.preventDefault();
+    }
+}
+
+function addARow(){
+    var tb = document.getElementById('geometryTable');
+    var nr = tb.rows.length;
+    var row = tb.rows[nr-1].cloneNode(true);
+    for (var j = 0; j < row.cells.length; j++) {
+        row.cells[j].innerHTML = '&nbsp;'
+        if(j < 3) row.cells[j].tabIndex = 0;
+    }
+    tb.appendChild(row);
+    
+    if(document.getElementById('btnDeleteARow').disabled && tb.rows.length > 3)
+        document.getElementById('btnDeleteARow').disabled = false;
+}
+
+function deleteARow(){
+    var tableGeometry = document.getElementById('geometryTable');
+    if(tableGeometry.rows.length >= 4) {
+        if (tableGeometry.rows.length === 4)
+            document.getElementById('btnDeleteARow').disabled = true;
+        tableGeometry.deleteRow(-1);
+    }
+}
+
+function applyGeometry(){
+    var tableGeometry = document.getElementById('geometryTable');
+    var tmpArr = [];
+    var xs = [];
+    var ys = [];
+    var ns = [];
+    //check if all numbers are positive
+    for (var i = 0; i < tableGeometry.rows.length; i++) {
+        for (var j = 0; j < tableGeometry.rows[i].cells.length; j++) {
+            let tmp = parseFloat(tableGeometry.rows[i].cells[j].innerHTML); 
+            //if not a number
+            if (isNaN(tmp)) {
+                alert('Please input a number!');
+                tableGeometry.rows[i].cells[j].focus();    
+                return;
+            }
+            else if(tmp < 0) {  //if negative
+                alert('Please input a positive number!');
+                tableGeometry.rows[i].cells[j].focus();    
+                return;
+            }
+            if (j === 0) xs.push(tmp);
+            if (j === 1) ys.push(tmp);
+            if (j === 2) ns.push(tmp);
+        }
+        tmpArr.push([xs[i], ys[i], ns[i]]);
+    }
+    
+    //check stations increase monotonically
+    for (var i = 1; i < xs.length; i++) {
+        if( xs[i] < xs[i-1]) {
+            alert('please input a station number >= previous station!');
+            tableGeometry.rows[i].cells[0].focus();    
+            return;
+        }
+    }
+    
+    for (var i = 0; i < ns.length; i++){
+        if(ns[i] <= 0) {
+            alert('please input a positive n value!');
+            tableGeometry.rows[i].cells[2].focus();    
+            return;
+        }
+    }
+        
+    var yb = Math.min(...ys);
+    var ib = ys.indexOf(yb);
+    
+    if (ib === 0) {
+        alert('We would not like the first station to be the bottom, please increase the elevation!');
+        tableGeometry.rows[0].cells[1].focus();    
+        return;
+    }
+        
+    if (ib === (xs.length-1)) {
+        alert('We would not like the last station to be the bottom, please increase the elevation!');
+        tableGeometry.rows[ib].cells[1].focus();    
+        return;
+    }
+    
+    irre.geometry = null;
+    irre.geometry = tmpArr;
+    initIrre();
+    update();
 }
 
 function initIrre(){
@@ -150,7 +249,7 @@ function initIrre(){
             for (var j = 0; j < tableGeometry.rows[i].cells.length; j++) {
                 tableGeometry.rows[i].cells[j].innerHTML = irre.geometry[i][j];
                 tableGeometry.rows[i].cells[j].tabIndex = tabindex;
-                //tabindex++;
+                tableGeometry.rows[i].cells[j].addEventListener('keyup', respondKeyup);
             }
         }
         else {
@@ -162,7 +261,7 @@ function initIrre(){
             for (var j = 0; j < row.cells.length; j++) {
                 row.cells[j].innerHTML = irre.geometry[i][j];
                 row.cells[j].tabIndex = tabindex;
-                //tabindex++;
+                row.cells[j].addEventListener('keyup', respondKeyup);
             }
             tableGeometry.appendChild(row);
         }
@@ -173,10 +272,12 @@ function initIrre(){
             for (var j = 0; j < tableGeometry.rows[i].cells.length; j++) {
                 tableGeometry.rows[i].cells[j].innerHTML = '';
                 tableGeometry.rows[i].cells[j].tabIndex = tabindex;
-                //tabindex++;
+                tableGeometry.rows[i].cells[j].addEventListener('keyup', respondKeyup);
             }
         }
     }
+
+    
     
     if(!oc.isLightMode) {
         document.getElementById('geometryTable').style.background = 'black';
@@ -233,14 +334,14 @@ function update(){
     var xnr = irre.d2xR(irre.dn);
     var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
     var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
-    var yns = chart.clientHeight - oc.offsetBottom -(irre.dn - yMin) * scaleY;
+    var yns = chart.clientHeight - oc.offsetBottom -(irre.yBottom + irre.dn - yMin) * scaleY;
 
 
     var xcl = irre.d2xL(irre.dc);
     var xcr = irre.d2xR(irre.dc);;
     var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
     var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
-    var ycs = chart.clientHeight - oc.offsetBottom - (irre.dc - yMin) * scaleY;
+    var ycs = chart.clientHeight - oc.offsetBottom - (irre.yBottom + irre.dc - yMin) * scaleY;
 
     
     document.getElementById('pathChan').setAttribute('d', pathChan);

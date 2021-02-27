@@ -5,6 +5,39 @@ body {
     max-width: 700px;
 }
 
+fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+fieldset span {
+    text-align: left;
+    padding: 3px;
+}
+fieldset span .right {
+    width: 150px;
+    float: right;
+    text-align: right;
+}
+/* mas input and select length equal */
+input, select {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        font-size: inherit;
+    font-family: inherit;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -17,38 +50,8 @@ tbody th{
     text-align: left;
 }
 
-div fieldset {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    max-width: 600px;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-div fieldset span {
-    text-align: left;
-    padding: 3px;
-}
-
 svg{
     display: block;
     margin: auto;
 }
 
-div fieldset span .right {
-    width: 150px;
-    float: right;
-    text-align: right;
-}
-
-/* mas input and select length equal */
-input, select {
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-        font-size: inherit;
-    font-family: inherit;
-
-}

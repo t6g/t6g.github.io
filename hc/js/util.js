@@ -6,6 +6,7 @@ function hambergerClick(){
         document.getElementById('Rect').style.display = 'block';
         document.getElementById('Trap').style.display = 'block';
         document.getElementById('Para').style.display = 'block';
+        document.getElementById('Irre').style.display = 'block';
         document.getElementById('Circ').style.display = 'block';
         document.getElementById('Elli').style.display = 'block';
         document.getElementById('Arch').style.display = 'block';
@@ -16,6 +17,7 @@ function hambergerClick(){
         document.getElementById('Rect').style.display = 'none';
         document.getElementById('Trap').style.display = 'none';
         document.getElementById('Para').style.display = 'none';
+        document.getElementById('Irre').style.display = 'none';
         document.getElementById('Circ').style.display = 'none';
         document.getElementById('Elli').style.display = 'none';
         document.getElementById('Arch').style.display = 'none';

@@ -27,6 +27,7 @@ class IrregularChannel extends OpenChannel {
     get iBottom() {
         return this.ys.indexOf(this.yBottom);
     }
+    
     get yLeft() {
         return Math.max(...(this.ys.slice(0, this.iBottom)));
     }
@@ -52,6 +53,12 @@ class IrregularChannel extends OpenChannel {
     get vn() {
         this.mN = this.d2N(this.dn);
         return oc.Ku / this.mN * Math.pow(this.an / this.pn, oc.X) * Math.pow(this.cs, oc.Y);
+    }
+    get xnLeft() {
+        return this.d2xL(this.dn);
+    }
+    get xnRight() {
+        return this.d2xR(this.dn);
     }
     get ac() {
         return this.d2A(this.dc);

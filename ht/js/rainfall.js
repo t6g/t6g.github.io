@@ -56,7 +56,7 @@ rf.i = function (site, interval, tc) {
 /* site: 
          0 chesterfield, 
          1 Hopewell, 
-         2 Powhantan, 
+         2 Powhatan, 
          3 Richmond WSO airport,
          4 Richmond WB city
    interval:
@@ -75,4 +75,15 @@ rf.i = function (site, interval, tc) {
     if(interval > 6) interval = 6;
     var bde = this.BDEs[site][interval];
     return bde[0]/Math.pow(tc + bde[1], bde[2]);
+};
+
+rf.station = function (site) {
+    switch (site) {
+        case 0: return "Chesterfield"; 
+        case 1: return "Hopewell";
+        case 2: return "Powhatan";
+        case 3: return "Richmond WSO Airport";
+        case 4: return "Richmond WB City";
+        default: return "";
+    };
 };

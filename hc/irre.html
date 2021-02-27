@@ -65,7 +65,8 @@
             <fieldset w3-include-html="resu.html" id="right"></fieldset>
         </div>
         <div>
-            <table border="1">
+        <fieldset id='profile'>
+            <table>
                 <thead>
                     <tr>
                         <th>Station</th>
@@ -74,22 +75,72 @@
                     </tr>
                 </thead>
                 <tbody  id='geometryTable' contenteditable="true">
-                    <tr> <td>0</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>1</td> <td>3  </td> <td>0.06</td> </tr>
-                    <tr> <td>2</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>3</td> <td>3  </td> <td>0.06</td> </tr>
-                    <tr> <td>4</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>5</td> <td>3  </td> <td>0.06</td> </tr>
-                    <tr> <td>6</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>7</td> <td>3  </td> <td>0.06</td> </tr>
-                    <tr> <td>8</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>9</td> <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>0</td>  <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>1</td>  <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>2</td>  <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>3</td>  <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>4</td>  <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>5</td>  <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>6</td>  <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>7</td>  <td>3  </td> <td>0.06</td> </tr>
+                    <tr> <td>8</td>  <td>3.5</td> <td>0.06</td> </tr>
+                    <tr> <td>9</td>  <td>3  </td> <td>0.06</td> </tr>
                     <tr> <td>10</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>11</td> <td>3  </td> <td>0.06</td> </tr>
-                    <tr> <td>12</td> <td>3.5</td> <td>0.06</td> </tr>
-                    <tr> <td>13</td> <td>3  </td> <td>0.06</td> </tr>
                 </tbody>
-        </table>            
+<!--                <tfoot>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </tfoot>
+-->        </table>          
+        <span id='btns'>
+            <button onclick='addARow()'>Add a Row</button>
+            <button onclick='deleteARow()' id='btnDeleteARow'>Delete a Row</button>
+            <button onclick='applyGeometry()'>Apply</button>
+        </span>
+        </fieldset>
+
+        <fieldset id='profile1'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Station</th>
+                        <th>Elevation</th>
+                        <th>Manning's N</th>
+                    </tr>
+                </thead>
+                <tbody  id='geometryTable1' contenteditable="true">
+                    <tr> 
+                        <td><input class="value" type="number" min="0" value="0" step="0.1"></td> 
+                        <td><input class="value" type="number" min="0" value="3" step="0.1"></td>
+                        <td><input class="value" type="number" min="0" value="0.013" step="0.001"></td>
+                    </tr>
+                    <tr> 
+                        <td><input class="value" type="number" min="0" value="0" step="0.1"></td> 
+                        <td><input class="value" type="number" min="0" value="3" step="0.1"></td>
+                        <td><input class="value" type="number" min="0" value="0.013" step="0.001"></td>
+                    </tr>
+                    <tr> 
+                        <td><input class="value" type="number" min="0" value="0" step="0.1"></td> 
+                        <td><input class="value" type="number" min="0" value="3" step="0.1"></td>
+                        <td><input class="value" type="number" min="0" value="0.013" step="0.001"></td>
+                    </tr>
+                    <tr> 
+                        <td><input class="value" type="number" min="0" value="0" step="0.1"></td> 
+                        <td><input class="value" type="number" min="0" value="3" step="0.1"></td>
+                        <td><input class="value" type="number" min="0" value="0.013" step="0.001"></td>
+                    </tr>
+                </tbody>
+        </table>          
+        <span id='btns'>
+            <button onclick='addARow()'>Add a Row</button>
+            <button onclick='deleteARow()' id='btnDeleteARow'>Delete a Row</button>
+            <button onclick='applyGeometry()'>Apply</button>
+        </span>
+        </fieldset>
+            
         </div>
     </main>
 <!--    <footer w3-include-html="footer.html"></footer> -->
