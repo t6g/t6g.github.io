@@ -4,13 +4,16 @@
     <title>Rain Fall IDF for Rational Method in Chesterfield VA</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="js/rainfall.js"></script>
     <body>
-        <fieldset id="inputFieldset" align="center">
+        <section id="calculator">
+            <fieldset id="inputFieldset" align="center">
             <legend>Rainfall Intensity Calculator (for Rational Method at Chesterfield VA)</legend>
             <span>
                 <label for="NOAAsite" class="left">Choose a site:</label>
@@ -46,8 +49,8 @@
                 <label id="rfiOutput" class="right"></label>
             </span>
         </fieldset>
-            
-        <table>
+        </section>            
+        <table class="table">
             <caption id="captionRainfallTable"></caption>
             <thead>
                 <th>Tc (min</th><th>1-year</th><th>2-year</th><th>5-year</th><th>10-year</th><th>25-year</th><th>50-year</th><th>100-year</th>
@@ -68,7 +71,8 @@
             </tbody>
         </table>            
 
-        <svg id="chart" width="600" height="400">
+        <div class="svg-container">
+        <svg id="chart" viewBox="0 0 600 400" preserveAspectRatio="xMinYMin meet" class="svg-content">
             <!--<rect id="svgBorderRect" fill="none" stroke="black" x="0" y="0" width="600" height="400"/> -->
 
             <rect id="axesRect" x="50" y="20" width="540" height="330" fill="none" stroke="black"/>
@@ -108,7 +112,7 @@
             <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
             <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
         </svg>            
-
+        </div>
         <p> The rainfall Intensity-Duration-Frequency (IDF) curves are based on VDOT drainage manual, which were derived by VDOT using the Rainfall Precipitation Frequency data from NOAA’s Atlas 14. Rainfall intensity \(i\) (in/hr) is calculated from time of concentration \(t_c\) (minute), \(B\), \(D\) and \(E\)  
         using the following equation
         <p>
@@ -180,7 +184,7 @@
             </tbody>
         </table>
     -->
-            <table id="TableBDE">
+            <table id="TableBDE" class="table">
             <caption>B, D, and E Values at NOAA Stations Near Chesterfield VA</caption>
             <thead>
                 <tr><th>Station</th>
@@ -240,7 +244,9 @@
             </tbody>
         </table>
         
-        <p align="center"><iframe src="https://www.google.com/maps/d/embed?mid=19Ju3sP96C5uRpm3sp8meTs5MYyA1r_df&hl=en" width="640" height="480" id="map"></iframe></p>
+        <div class="iframe-container">
+            <iframe src="https://www.google.com/maps/d/embed?mid=19Ju3sP96C5uRpm3sp8meTs5MYyA1r_df&hl=en" width="640" height="480" id="map"></iframe>
+        </div>
         
 
     </body>
