@@ -5,6 +5,23 @@ body {
     max-width: 1280px;
 }
 
+nav {
+    display: flex;
+    position: fixed;
+}
+
+nav a {
+    padding-top:2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 2px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #ddd;
+}
+
 fieldset {
     display: flex;
     flex-direction: column;
@@ -30,7 +47,19 @@ input, select {
        -moz-box-sizing: border-box;
             box-sizing: border-box;
         font-size: inherit;
-    font-family: inherit;
+      font-family: inherit;
+}
+
+select {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+table{
+    caption-side: top;
+}
+table caption {
+    text-align: center;
 }
 th, td{
     text-align: center;
@@ -68,27 +97,7 @@ th, td{
     height: 100%;
     width: 100%;
 }
-/*
-table {
-    margin-left: auto;
-    margin-right: auto;
-}
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 2px;
+section {
+    padding-top: 40px;
 }
-tbody td{
-    text-align: right;
-}
-tbody th{
-    text-align: left;
-}
-
-svg{
-    display: block;
-    margin: auto;
-}
-
-*/

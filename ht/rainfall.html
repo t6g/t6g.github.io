@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <meta charset="UTF-8">
-    <title>Rain Fall IDF for Rational Method in Chesterfield VA</title>
+    <title>Rainfall IDF for Rational Method at Chesterfield VA</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -12,9 +12,18 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="js/rainfall.js"></script>
     <body>
+        <header>
+            <nav>
+                  <a href="#calculator">Calcalutor</a>
+                  <a href="#rainfallTable">Table</a>
+                  <a href="#idfGraph">Curve</a>
+                  <a href="#moreInfo">More</a>
+            </nav>            
+        </header>
         <section id="calculator">
+            <h3 style="text-align:center;">Rainfall Intensity Calculator</h3>
+            <p style="text-align:center;">for Rational method at Chesterfield VA</p>
             <fieldset id="inputFieldset" align="center">
-            <legend>Rainfall Intensity Calculator (for Rational Method at Chesterfield VA)</legend>
             <span>
                 <label for="NOAAsite" class="left">Choose a site:</label>
                 <select name="NOAAsite" id="NOAAsite" value="0" class="right">
@@ -40,16 +49,19 @@
             </span>
 
             <span>
-                <label for="tcInput" class="left">Time of Concentration (minute):</label>
+                <label for="tcInput" class="left">Time of concentration (minute):</label>
                 <input id="tcInput" name="tcInput" type="number" min="5" max="60" value="5" step="1" class="right">
             </span>
 
             <span>
-                <label class="left">Rainfall Intensity (inch/hour)</label>
+                <label class="left">Rainfall intensity (inch/hour):</label>
                 <label id="rfiOutput" class="right"></label>
             </span>
         </fieldset>
-        </section>            
+        </section>    
+        
+        <section id="rainfallTable">
+            <h3 style="text-align:center;">Rainfall Intensity</h3>
         <table class="table">
             <caption id="captionRainfallTable"></caption>
             <thead>
@@ -70,50 +82,56 @@
                 <tr><td>60</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
             </tbody>
         </table>            
+        </section>    
 
-        <div class="svg-container">
-        <svg id="chart" viewBox="0 0 600 400" preserveAspectRatio="xMinYMin meet" class="svg-content">
-            <!--<rect id="svgBorderRect" fill="none" stroke="black" x="0" y="0" width="600" height="400"/> -->
+        <section id="idfGraph">
+            <h3 style="text-align:center;">Intensity-Duration-Frequency Curves</h3>
 
-            <rect id="axesRect" x="50" y="20" width="540" height="330" fill="none" stroke="black"/>
+            <svg id="chart" viewBox="0 0 600 400">
 
-            <text id="xLabel" x="300" y="390" text-anchor="middle" >Time of Concentration (minute)</text>
+                <rect id="axesRect" x="50" y="20" width="540" height="330" fill="none" stroke="black"/>
 
-            <text id="yLabel" text-anchor="middle" transform='translate(15, 200) rotate(-90)'>Rainfall Intensity (inch/hour)</text>
+                <text id="xLabel" x="300" y="390" text-anchor="middle" >Time of Concentration (minute)</text>
 
-            <path id="pathGridX" d="M50 53 h540 M50 86 h540 M50 119 h540 M50 152 h540 M50 185 h540 M50 218 h540 M50 251 h540 M50 284 h540 M50 317 h540" stroke="black" stroke-width="0.1" fill="none" stroke-dasharray="4,4"/>
+                <text id="yLabel" text-anchor="middle" transform='translate(15, 200) rotate(-90)'>Rainfall Intensity (inch/hour)</text>
 
-            <path id="pathGridY" d="M95 20 v330 M140 20 v330 M185 20 v330 M230 20 v330  M275 20 v330 M320 20 v330 M365 20 v330 M410 20 v330 M455 20 v330 M500 20 v330 M545 20 v330" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
+                <path id="pathGridX" d="M50 53 h540 M50 86 h540 M50 119 h540 M50 152 h540 M50 185 h540 M50 218 h540 M50 251 h540 M50 284 h540 M50 317 h540" stroke="black" stroke-width="0.1" fill="none" stroke-dasharray="4,4"/>
 
-            <text id="xTick1" x="50"  y="370" text-anchor="middle">0</text>
-            <text id="xTick3" x="140" y="370" text-anchor="middle">10</text>
-            <text id="xTick5" x="230" y="370" text-anchor="middle">20</text>
-            <text id="xTick6" x="320" y="370" text-anchor="middle">30</text>
-            <text id="xTick8" x="410" y="370" text-anchor="middle">40</text>
-            <text id="xTicka" x="500" y="370" text-anchor="middle">50</text>
-            <text id="xTickc" x="590" y="370" text-anchor="middle">60</text>
+                <path id="pathGridY" d="M95 20 v330 M140 20 v330 M185 20 v330 M230 20 v330  M275 20 v330 M320 20 v330 M365 20 v330 M410 20 v330 M455 20 v330 M500 20 v330 M545 20 v330" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4"/>
 
-            <text id="yTick1" x="30" y= "20" text-anchor="middle" alignment-baseline="middle">10</text>
-            <text id="yTick3" x="30" y= "86" text-anchor="middle" alignment-baseline="middle">8</text>
-            <text id="yTick5" x="30" y="152" text-anchor="middle" alignment-baseline="middle">6</text>
-            <text id="yTick7" x="30" y="218" text-anchor="middle" alignment-baseline="middle">4</text>
-            <text id="yTick9" x="30" y="284" text-anchor="middle" alignment-baseline="middle">2</text>
-            <text id="yTickb" x="30" y="350" text-anchor="middle" alignment-baseline="middle">0</text>
+                <text id="xTick1" x="50"  y="370" text-anchor="middle">0</text>
+                <text id="xTick3" x="140" y="370" text-anchor="middle">10</text>
+                <text id="xTick5" x="230" y="370" text-anchor="middle">20</text>
+                <text id="xTick6" x="320" y="370" text-anchor="middle">30</text>
+                <text id="xTick8" x="410" y="370" text-anchor="middle">40</text>
+                <text id="xTicka" x="500" y="370" text-anchor="middle">50</text>
+                <text id="xTickc" x="590" y="370" text-anchor="middle">60</text>
 
-            <text id="lbl1y"   x="520"  y="50"  text-anchor="left">1 y</text>
-            <text id="lbl2y"   x="520"  y="80"  text-anchor="left" fill="blue">2 y</text>
-            <text id="lbl10y"  x="520"  y="110" text-anchor="left" fill="green">10 y</text>
-            <text id="lbl100y" x="520"  y="140" text-anchor="left" fill="red">100 y</text>
+                <text id="yTick1" x="30" y= "20" text-anchor="middle" alignment-baseline="middle">10</text>
+                <text id="yTick3" x="30" y= "86" text-anchor="middle" alignment-baseline="middle">8</text>
+                <text id="yTick5" x="30" y="152" text-anchor="middle" alignment-baseline="middle">6</text>
+                <text id="yTick7" x="30" y="218" text-anchor="middle" alignment-baseline="middle">4</text>
+                <text id="yTick9" x="30" y="284" text-anchor="middle" alignment-baseline="middle">2</text>
+                <text id="yTickb" x="30" y="350" text-anchor="middle" alignment-baseline="middle">0</text>
 
-            <text id="lblTitle" x="250" y = "40"></text>
+                <text id="lbl1y"   x="520"  y="50"  text-anchor="left">1 y</text>
+                <text id="lbl2y"   x="520"  y="80"  text-anchor="left" fill="blue">2 y</text>
+                <text id="lbl10y"  x="520"  y="110" text-anchor="left" fill="green">10 y</text>
+                <text id="lbl100y" x="520"  y="140" text-anchor="left" fill="red">100 y</text>
 
-            <path id="path01" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none"/>
-            <path id="path02" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none"/>
-            <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
-            <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
-        </svg>            
-        </div>
-        <p> The rainfall Intensity-Duration-Frequency (IDF) curves are based on VDOT drainage manual, which were derived by VDOT using the Rainfall Precipitation Frequency data from NOAA’s Atlas 14. Rainfall intensity \(i\) (in/hr) is calculated from time of concentration \(t_c\) (minute), \(B\), \(D\) and \(E\)  
+                <text id="lblTitle" x="250" y = "40"></text>
+
+                <path id="path01" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none"/>
+                <path id="path02" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none"/>
+                <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+                <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+            </svg>            
+
+        </section>
+        <section id="moreInfo">
+            <h3 style="text-align:center;">More Information</h3>
+
+            <p> The rainfall Intensity-Duration-Frequency (IDF) curves are based on VDOT drainage manual, which were derived by VDOT using the Rainfall Precipitation Frequency data from NOAA’s Atlas 14. Rainfall intensity \(i\) (in/hr) is calculated from time of concentration \(t_c\) (minute), \(B\), \(D\) and \(E\)  
         using the following equation
         <p>
             \begin{equation}
@@ -127,6 +145,7 @@
         <a href="https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_printpage.html?st=va&sta=44-6906&data=depth&units=english&series=pds" target="_blank"> Powhatan</a>, and
         <a href="https://hdsc.nws.noaa.gov/hdsc/pfds/pfds_printpage.html?st=va&sta=44-4101&data=depth&units=english&series=pds" target="_blank"> Hopewell</a> 
         around Chesterfield VA. Average of \(B\), \(D\) and \(E\) from these four stations (no rounding) are used for Chesterfield county. </p>  
+            </section>
 <!--
         <table id="TableBDE" style='font-size:70%'>
             <caption>B, D, and E Values at NOAA Stations Near Chesterfield VA</caption>
@@ -184,6 +203,7 @@
             </tbody>
         </table>
     -->
+        <section id="bdeAroundChesterfield">
             <table id="TableBDE" class="table">
             <caption>B, D, and E Values at NOAA Stations Near Chesterfield VA</caption>
             <thead>
@@ -247,7 +267,7 @@
         <div class="iframe-container">
             <iframe src="https://www.google.com/maps/d/embed?mid=19Ju3sP96C5uRpm3sp8meTs5MYyA1r_df&hl=en" width="640" height="480" id="map"></iframe>
         </div>
-        
+        </section>
 
     </body>
     <script>
@@ -304,9 +324,6 @@
             ys = h - oyb - y * sy;
             var s100 = "M " + xs.toFixed(2) + ' ' + ys.toFixed(2);
 
-            //var x0s = offsetLeft + (x0 - xMin) * scaleX;
-            //var y0s = svg.clientHeight - offsetBottom - (y0 - yMin) * scaleY;
-            
             for (let i = 1; i < xa.length; i++){
             
                 xs = oxl + xa[i] * sx;
