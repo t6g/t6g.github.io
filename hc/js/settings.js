@@ -39,6 +39,7 @@ function initSettings(){
         document.getElementById('navTria').setAttribute('fill', 'white');
         document.getElementById('navTrap').setAttribute('fill', 'white');
         document.getElementById('navRect').setAttribute('fill', 'white');
+        document.getElementById('navIrre').setAttribute('fill', 'white');
         document.getElementById('navCirc').setAttribute('fill', 'white');
         document.getElementById('navElli').setAttribute('fill', 'white');
         document.getElementById('navPara').setAttribute('fill', 'white');
@@ -92,6 +93,7 @@ function respondMode(e) {
         document.getElementById('navTria').setAttribute('fill', 'white');
         document.getElementById('navTrap').setAttribute('fill', 'white');
         document.getElementById('navRect').setAttribute('fill', 'white');
+        document.getElementById('navIrre').setAttribute('fill', 'white');
         document.getElementById('navCirc').setAttribute('fill', 'white');
         document.getElementById('navElli').setAttribute('fill', 'white');
         document.getElementById('navPara').setAttribute('fill', 'white');

@@ -15,9 +15,9 @@ const irre = new IrregularChannel([[0, 3.5, 0.06],
 const irre = new IrregularChannel([
                                   [ 0, 10, 0.06], 
                                   [10,  7, 0.06], 
-                                  [20,  8, 0.06],
+                                  [20,  7, 0.06],
                                   [30,  4, 0.05],
-                                  [40,  8, 0.06],
+                                  [40,  7, 0.06],
                                   [50,  7, 0.06],
                                   [60, 10, 0.06]],
                                   'Pavlovskii',
@@ -177,6 +177,18 @@ function applyGeometry(){
     var ns = [];
     //check if all numbers are positive
     for (var i = 0; i < tableGeometry.rows.length; i++) {
+        //check if entire row empty
+        if (!String.prototype.trim) {
+            String.prototype.trim = function() { return this.replace(/^\s+|\s+$/, '');};
+        }
+        if (
+            i >= 2 &&
+            tableGeometry.rows[i].cells[0].innerHTML.trim() == "" &&
+            tableGeometry.rows[i].cells[1].innerHTML.trim() == "" &&
+            tableGeometry.rows[i].cells[2].innerHTML.trim() == "") {
+            break;
+        }
+            
         for (var j = 0; j < tableGeometry.rows[i].cells.length; j++) {
             let tmp = parseFloat(tableGeometry.rows[i].cells[j].innerHTML); 
             //if not a number
