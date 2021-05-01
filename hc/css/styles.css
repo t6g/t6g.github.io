@@ -111,6 +111,10 @@ td {
     text-align: right;
 }
 
+table, th, td {
+    border-collapse: collapse;
+}
+
 footer {
     display: flex;
     justify-content:space-between;
