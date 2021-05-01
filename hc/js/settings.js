@@ -74,6 +74,7 @@ function respondMode(e) {
         document.getElementById('navTria').setAttribute('fill', 'black');
         document.getElementById('navTrap').setAttribute('fill', 'black');
         document.getElementById('navRect').setAttribute('fill', 'black');
+        document.getElementById('navIrri').setAttribute('fill', 'black');
         document.getElementById('navCirc').setAttribute('fill', 'black');
         document.getElementById('navElli').setAttribute('fill', 'black');
         document.getElementById('navPara').setAttribute('fill', 'black');
