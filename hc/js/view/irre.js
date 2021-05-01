@@ -72,6 +72,11 @@ function checkLocalStorage() {
     if (tmp !== null) oc.isUSCustomary = tmp ==="false" ? false : true;
     
     if(!oc.isUSCustomary) irre.dn /= oc.m2ft;
+    
+    tmp = JSON.parse(localStorage.getItem("irre.geometry"));
+    if(tmp !== null) {
+        irre.geometry = tmp;
+    }
 }
 
 function respondChannelSlope(e) {
@@ -243,6 +248,9 @@ function applyGeometry(){
     
     irre.geometry = null;
     irre.geometry = tmpArr;
+    // save to local storage
+    localStorage.setItem("irre.geometry", JSON.stringify(irre.geometry));
+
     initIrre();
     update();
 }
