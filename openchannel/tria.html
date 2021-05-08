@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - Triangular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/model/tria.js"></script>
+</head>
+<body>
+
+    <div class="container-md">
+        <!-- navigation bar -->
+        <nav class="navbar navbar-expand-md navbar-light">
+            <a href="#" class="navbar-brand"><span>GT</span></a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-lable="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li><a class="nav-link" href="tria.html">Triangular</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/rect.html">Rectangular</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/trap.html">Trapezoidal</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/para.html">Parabolic</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/irre.html">Irregular</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/circ.html">Circular</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/elli.html">Elliptical</a></li>
+                    <li><a class="nav-link" href="https://t6g.github.io/hc/arch.html">Arch</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- row 1 -->
+        <div class="row" >
+            <div class="text-center">
+                <svg id="chart" viewBox="0 0 450 300" style="display:inline-block;max-width:450;">
+                    <rect id="axesRect" x="60" y="0" width="360" height="240" fill="none" stroke="black"/>
+                    
+                    <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450" stroke="gray" stroke-width="0.5" fill="none" stroke-dasharray="4,4"/>
+
+                    <text id="xTick1" x="50"  y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick2" x="100" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick3" x="150" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick4" x="200" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick5" x="250" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick6" x="300" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick7" x="350" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick8" x="400" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick9" x="450" y="270" text-anchor="middle">&nbsp;</text>
+
+                    <text id="xLabel" x="250" y="290" text-anchor="middle" >Station (ft)</text>
+
+                    <path id="pathGridY" d="M100 50 V250 M150 50 V250 M200 50 V250 M250 50 V250 M300 50 V250 M350 50 V250  M400 50 V250" stroke="gray" stroke-width="0.5" fill="none" stroke-dasharray="4,4"/>
+
+                    <text id="yTick1" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick2" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick3" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick4" x="30" y="200" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick5" x="30" y="250" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick6" x="30" y="300" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick7" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick8" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick9" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+
+                    <text id="yLabel" text-anchor="middle" transform='translate(15, 140) rotate(-90)'>Depth (ft)</text>
+
+                    <path id="pathChan" d="M50 50 L250 250 L450 50" stroke="black" stroke-width="3" fill="none"/>
+
+                    <path id="pathNorm" d="M150 150 h 200" stroke="blue" stroke-width="1" fill="none"/>
+
+                    <path id="pathCrit" d="M200 200 h 100" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
+
+                    <path id="pathRb" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
+                    <path id="pathRt" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
+                    <path id="pathRc" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
+
+                    <text id="rbLabel" x="50"  y="270" text-anchor="middle" style="Display:none;">Rb</text>
+                    <text id="rtLabel" x="100" y="270" text-anchor="middle" style="Display:none;">Rt</text>
+                    <text id="rcLabel" x="150" y="270" text-anchor="middle" style="Display:none;">Rc</text>
+
+                </svg>
+            </div>
+        </div>
+        <!-- row 2 -->
+        <div class="row">
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Left Side Slope</td>
+                            <td><input class="value" id="leftSideSlope" name="leftSideSlope" type="number" min="1" value="1" step="1"></td>
+                            <td><span class="alert-danger d-none d-print-none"  id="errorMessageLSS">nonpositive</span></td>
+                            <td>h:v</td>
+                        </tr>
+
+                        <tr>
+                            <td>Right Side Slope</td> 
+                            <td><input class="value" id="rightSideSlope" name="rightSideSlope" type="number" min="1" value="1" step="1"></td>
+                            <td id="errorMessageRSS"><span class="alert alert-danger d-none d-print-none" role="alert" >Input a positive number</span></td>
+                            <td>h:v</td>
+                        </tr>
+                        <tr>
+                            <td>Channel Slope</td> 
+                            <td><input class="value" id="channelSlope" name="channelSlope" type="number" min="0.001" value="0.1" step="0.001"></td>
+                            <td id="errorMessageCS"><span class="alert alert-danger d-none d-print-none" role="alert">Input a positive number</span></td>
+                            <td>v:h</td></tr>
+                        <tr>
+                            <td>Manning's N</td>
+                            <td><input class="value" id="manningsN" name="manningsN" type="number"  min="0.001" value="0.13" step="0.001"></td>
+                            <td id="errorMessageMN"><span class="alert alert-danger d-none d-print-none" role="alert">Input a positive number</span></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Normal Depth</td>
+                            <td><input class="value" id="normalDepth" name="normalDepth" type="number" min="0.01" value="1.5" step="0.1"></td>
+                            <td id="errorMessageDN"><span class="alert alert-danger d-none d-print-none" role="alert" >Input a positive number</span></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Discharge</td>
+                            <td><input class="value" id="discharge" name="discharge" type="number" min="0.1" value="0.1" step="1.1"></td>
+                            <td id="errorMessageQn"><span class="alert alert-danger d-none d-print-none" role="alert" >Input a positive number</span></td>
+                            <td>ft<sup>3</sup>/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Flow Area</td>
+                            <td id="area">1</td>
+                            <td>ft<sup>2</sup></td>
+                        </tr>
+                        <tr>
+                            <td>Wet Perimeter</td>
+                            <td id="peri">1</td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Velocity</td>
+                            <td id="velo">1</td>
+                            <td>ft/s</td>
+                        </tr>
+                        <tr>
+                            <td>Critical Depth</td>
+                            <td id="vc">1</td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Critical Velocity</td>
+                            <td id="dc">1</td>
+                            <td>ft/s</td>
+                        </tr>
+                        <tr>
+                            <td>Critical Slope</td>
+                            <td id="sc">1</td>
+                            <td>v:h</td>
+                        </tr>
+                        <tr>
+                            <td>Froude Number</td>
+                            <td id="fr">1</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!--right-->
+        </div> <!--row2-->
+    </div> <!--container-->
+    <script>
+        $( document ).ready(function() {
+            const tria = new TriangularChannel(3, 3, 0.01, 0.05, 0.5);
+            
+            $("#leftSideSlope").val(tria.z1);
+            $("#rightSideSlope").val(tria.z2);
+            $("#channelSlope").val(tria.cs);
+            $("#manningsN").val(tria.mN);
+            $("#normalDepth").val(tria.dn.toFixed(2));
+            $("#discharge").val(tria.Qn.toFixed(2));
+
+            update();
+            
+            $("#leftSideSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    if( $("#errorMessageLSS").hasClass("d-none") ) {
+                        $("#errorMessageLSS").removeClass("d-none");
+                    }
+                }
+                else {
+                    if(!($("#errorMessageLSS").hasClass("d-none"))){
+                       $("#errorMessageLSS").addClass("d-none");
+                       }
+                    tria.z1 = tmp;
+                    $('discharge').val(tria.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#rightSideSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    if( $("#errorMessageRSS").hasClass("d-none") ) {
+                        $("#errorMessageRSS").removeClass("d-none");
+                    }
+                }
+                else {
+                    if(!($("#errorMessageRSS").hasClass("d-none"))){
+                       $("#errorMessageRSS").addClass("d-none");
+                       }
+                    tria.z2 = tmp;
+                    $('discharge').val(tria.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#channelSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    if( $("#errorMessageCS").hasClass("d-none") ) {
+                        $("#errorMessageCS").removeClass("d-none");
+                    }
+                }
+                else {
+                    if(!($("#errorMessageCS").hasClass("d-none"))){
+                       $("#errorMessageCS").addClass("d-none");
+                       }
+                    tria.cs = tmp;
+                    $('discharge').val(tria.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#manningsN").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    if( $("#errorMessageMN").hasClass("d-none") ) {
+                        $("#errorMessageMN").removeClass("d-none");
+                    }
+                }
+                else {
+                    if(!($("#errorMessageMN").hasClass("d-none"))){
+                       $("#errorMessageMN").addClass("d-none");
+                       }
+                    tria.mN = tmp;
+                    $('discharge').val(tria.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#normalDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    if( $("#errorMessageDN").hasClass("d-none") ) {
+                        $("#errorMessageDN").removeClass("d-none");
+                    }
+                }
+                else {
+                    if(!($("#errorMessageDN").hasClass("d-none"))){
+                       $("#errorMessageDN").addClass("d-none");
+                       }
+                    tria.dn = tmp;
+                    $('discharge').val(tria.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#discharge").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    if( $("#errorMessageQN").hasClass("d-none") ) {
+                        $("#errorMessageQN").removeClass("d-none");
+                    }
+                }
+                else {
+                    if(!($("#errorMessageQN").hasClass("d-none"))){
+                       $("#errorMessageQN").addClass("d-none");
+                       }
+
+                    tria.dn = tria.Q2Dn(tmp);
+                    $('normalDepth').val(tria.dn.toFixed(2));
+                    update();
+                }
+            });
+            
+            function setValues(){
+                $("#area").html(tria.an.toFixed(3));
+                $("#peri").html(tria.pn.toFixed(3));
+                $("#velo").html(tria.vn.toFixed(3));
+                $("#dc").html(tria.dc.toFixed(3));
+                $("#vc").html(tria.vc.toFixed(3));
+                $("#sc").html(tria.sc.toFixed(3));
+                $("#fr").html(tria.fr.toFixed(3));
+            }
+
+            function update(){
+    
+                setValues();
+                
+                const h = 300;
+                const w = 450;
+                
+                //drawing 
+                var xMin = 0;
+                var xMax = tria.depth * (tria.z1 + tria.z2)
+                var yMin = 0;
+                var yMax = tria.depth;
+
+                var scaleX = (w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+                var scaleY = (h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+
+                var x0 = 0.0;
+                var y0 = tria.depth;
+                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
+                var y0s = h - oc.offsetBottom - (y0 - yMin) * scaleY;
+
+                var x1 = tria.depth * tria.z1;
+                var y1 = 0;
+                var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
+                var y1s = h - oc.offsetBottom - (y1 - yMin) * scaleY;
+
+                var x2 = tria.depth * (tria.z1 + tria.z2);
+                var x2s = oc.offsetLeft + (x2 - xMin) * scaleX;
+
+                var xnl = (tria.depth - tria.dn) * tria.z1;
+                var xnr = tria.depth * tria.z1 + tria.dn * tria.z2;
+                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
+                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
+                var yns = h - oc.offsetBottom -(tria.dn - yMin) * scaleY;
+
+
+                var xcl = (tria.depth - tria.dc) * tria.z1;
+                var xcr = tria.depth * tria.z1 + tria.dc * tria.z2;
+                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
+                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
+                var ycs = h - oc.offsetBottom - (tria.dc - yMin) * scaleY;
+
+
+                document.getElementById('pathChan').setAttribute('d', 'M' + x0s + ' ' + y0s + 'L' + x1s + ' ' + y1s + 'L' + x2s + ' ' + y0s);
+
+                document.getElementById('pathNorm').setAttribute('d', 'M' + xnls + ' ' + yns + 'L' + xnrs + ' ' + yns);
+
+                document.getElementById('pathCrit').setAttribute('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
+
+                //draw grid lines;
+                var xInc = niceIncrement(xMin, xMax);
+                var xIncDraw = xInc * scaleX;
+
+                //draw grid lines;
+                let x = 0;
+                let y = h - oc.offsetBottom;
+                let xDraw = oc.offsetLeft;
+                var xGrid = '';
+                var text;
+                var xPos;
+                var yPos;
+                var idLabel;
+                var i = 1;
+
+                while (xDraw <= w - oc.offsetRight){
+                    xGrid += 'M' + xDraw + ' ' + oc.offsetTop + 'L' + xDraw + ' ' + y;
+                    yPos = h - 0.65 * oc.offsetBottom;
+                    idLabel = 'xTick' + i;
+                    document.getElementById(idLabel).setAttribute('x', xDraw);
+                    document.getElementById(idLabel).setAttribute('y', yPos);
+                    document.getElementById(idLabel).childNodes[0].textContent = x.toString();
+
+                    xDraw += xIncDraw;
+                    x += xInc;
+                    i += 1;
+                }
+
+                for (; i < 10; i++){
+                    idLabel = 'xTick' + i;
+                    document.getElementById(idLabel).childNodes[0].textContent = ' ';
+                }
+
+                document.getElementById('pathGridY').setAttribute('d', xGrid);
+
+                var yInc = niceIncrement(yMin, yMax);
+                var yIncDraw = yInc * scaleY;
+
+                let yDraw = h - oc.offsetBottom;
+                var yGrid = '';
+                x = w - oc.offsetRight;
+                y = 0;
+                i = 1;
+                while (yDraw > oc.offsetTop){
+                    yGrid += 'M' + oc.offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
+                    xPos = 0.70*oc.offsetLeft;
+                    idLabel = 'yTick' + i;
+                    text = y.toString();
+                    if(text.length > 10) {
+                        text = y.toFixed(yInc.countDecimals());
+                    }
+                    document.getElementById(idLabel).setAttribute("x", xPos);
+                    document.getElementById(idLabel).setAttribute("y", yDraw);
+                    document.getElementById(idLabel).childNodes[0].textContent = text;
+
+                    yDraw -= yIncDraw;
+                    y += yInc;
+                    i += 1;
+                }
+
+                for (; i < 10; i++){
+                    idLabel = 'yTick' + i;
+                    document.getElementById(idLabel).childNodes[0].textContent = ' ';
+                }
+
+                document.getElementById("pathGridX").setAttribute("d", yGrid);
+
+                xPos = oc.offsetLeft + 0.5 * (w - oc.offsetLeft - oc.offsetRight);
+                yPos = h - 0.25 * oc.offsetBottom;
+                document.getElementById('xLabel').setAttribute("x", xPos);
+                document.getElementById('xLabel').setAttribute("y", yPos);
+
+            }
+        });
+    </script>
+
+</body>
+</html>
