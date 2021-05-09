@@ -41,7 +41,11 @@ function drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY){
         idLabel = 'xTick' + i;
         $('#'+idLabel).attr('x', xDraw);
         $('#'+idLabel).attr('y', yPos);
-        document.getElementById(idLabel).childNodes[0].textContent = x.toString();
+        text = x.toString();
+        if(text.length > 10) {
+            text = x.toFixed(xInc.countDecimals());
+        }
+        document.getElementById(idLabel).childNodes[0].textContent = text;
 
         xDraw += xIncDraw;
         x += xInc;

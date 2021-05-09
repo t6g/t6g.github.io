@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - rectngular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/model/rect.js"></script>
+    <script src="js/view/ocvw.js"></script>
+</head>
+<body>
+
+    <div class="container-md" >
+        <!-- navbar -->
+        <div id="mynav"></div>
+
+        <!-- row 1 chart -->
+        <div class="row" >
+            <div class="text-center" id="chartDIV"></div>
+        </div>
+
+        <!-- row 2 input output table -->
+        <div class="row">
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Bottom Width</td> 
+                            <td><input class="value" id="bottomWidth" type="number" min="0.1" value="1" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Manning's N</td>
+                            <td><input class="value" id="manningsN" type="number"  min="0.001" value="0.13" step="0.001"></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Channel Slope</td> 
+                            <td><input class="value" id="channelSlope" type="number" min="0.001" value="0.1" step="0.001"></td>
+                            <td>v:h</td></tr>
+                        <tr>
+                            <td>Normal Depth</td>
+                            <td><input class="value" id="normalDepth" type="number" min="0.01" value="1.5" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Discharge</td>
+                            <td><input class="value" id="discharge" type="number" min="0.1" value="0.1" step="1.1"></td>
+                            <td>ft<sup>3</sup>/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+            </div>
+
+            <div class="col-md-6 box" id="output"></div>
+            
+        </div> <!--row2-->
+    </div> <!--container-->
+    <script>
+        $( document ).ready(function() {
+
+            $("#mynav").load("nav.html");
+            
+            $("#chartDIV").load("img/chart.svg");
+
+            $("#output").load("output.html");
+
+            const rect = new RectangularChannel(1, 0.01, 0.05, 0.5);
+            
+            $("#bottomWidth").val(rect.b);
+            $("#channelSlope").val(rect.cs);
+            $("#manningsN").val(rect.mN);
+            $("#normalDepth").val(rect.dn.toFixed(2));
+            $("#discharge").val(rect.Qn.toFixed(2));
+
+            $("#bottomWidth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                    $("#bottomWidth").val(rect.b);
+                }
+                else {
+                    rect.b = tmp;
+                    $('#discharge').val(rect.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#channelSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    rect.cs = tmp;
+                    $('#discharge').val(rect.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#manningsN").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    rect.mN = tmp;
+                    $('#discharge').val(rect.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#normalDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    rect.dn = tmp;
+                    $('#discharge').val(rect.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#discharge").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    rect.dn = rect.Q2Dn(tmp);
+                    $("#normalDepth").val(rect.dn.toFixed(2));
+                    update();
+                }
+            });
+
+            function update(){
+                setValues();
+                updateChart();
+            }
+            
+            function setValues(){
+                $("#area").html(rect.an.toFixed(3));
+                $("#peri").html(rect.pn.toFixed(3));
+                $("#velo").html(rect.vn.toFixed(3));
+                $("#dc").html(rect.dc.toFixed(3));
+                $("#vc").html(rect.vc.toFixed(3));
+                $("#sc").html(rect.sc.toFixed(3));
+                $("#fr").html(rect.fr.toFixed(3));
+            }
+
+            function updateChart(){
+
+                //drawing 
+                var xMin = 0;
+                var xMax = rect.b;
+                var yMin = 0;
+                var yMax = rect.depth;
+
+                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+
+                var x0 = 0.0;
+                var y0 = rect.depth;
+                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
+                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+
+                var x1 = rect.depth * rect.b;
+                var y1 = 0;
+                var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
+                var y1s = ocvw.h - oc.offsetBottom - (y1 - yMin) * scaleY;
+
+                var yns = ocvw.h - oc.offsetBottom -(rect.dn - yMin) * scaleY;
+
+                var ycs = ocvw.h - oc.offsetBottom - (rect.dc - yMin) * scaleY;
+
+
+                $('#pathChan').attr('d', 'M ' + x0s + ' ' + y0s + ' V ' + y1s + ' H' + x1s + ' V' + y0s);
+
+                $('#pathNorm').attr('d', 'M ' + x0s + ' ' + yns + ' L ' + x1s + ' ' + yns);
+
+                $('#pathCrit').attr('d', 'M ' + x0s + ' ' + ycs + ' L ' + x1s + ' ' + ycs);
+            
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+            }
+
+            const onDomElementIsReady = (elementToWatch)=> {
+                //create promise
+                return new Promise((res, rej)=> {
+                    let idInterval = setInterval(()=> {
+                        //keep waiting until the element exist
+                        if($(elementToWatch).length > 0) {
+                            clearInterval(idInterval); //remove the interval
+                            res($(elementToWatch)); //resolve the promise            
+                        }
+                    },100);
+                });
+            };
+            
+            //how to use it?
+            onDomElementIsReady("#chartDIV").then(element => {
+                updateChart();
+            });
+            
+            onDomElementIsReady("#output").then(element => {
+                setValues();
+            });
+        });
+    </script>
+
+</body>
+</html>
