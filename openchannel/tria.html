@@ -94,7 +94,7 @@
             $("#leftSideSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!");
                     $("#leftSideSlope").val(tria.z1);
                 }
                 else {
@@ -107,7 +107,7 @@
             $("#rightSideSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!");
                     $("#rightSideSlope").val(tria.z2);
                 }
                 else {
@@ -120,7 +120,8 @@
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#channelSlope").val(tria.cs);
                 }
                 else {
                     tria.cs = tmp;
@@ -132,7 +133,8 @@
             $("#manningsN").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#manningsN").val(tria.mN);
                 }
                 else {
                     tria.mN = tmp;
@@ -144,7 +146,8 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#normalDepth").val(tria.dn.toFixed(2));
                 }
                 else {
                     tria.dn = tmp;
@@ -156,7 +159,8 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#discharge").val(tria.Qn.toFixed(2));
                 }
                 else {
                     tria.dn = tria.Q2Dn(tmp);

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Open Channel Calculator - rectngular</title>
+    <title>Open Channel Calculator - rectangular</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/styles.css">
@@ -87,7 +87,7 @@
             $("#bottomWidth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                     $("#bottomWidth").val(rect.b);
                 }
                 else {
@@ -100,7 +100,7 @@
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     rect.cs = tmp;
@@ -112,7 +112,7 @@
             $("#manningsN").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     rect.mN = tmp;
@@ -124,7 +124,7 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     rect.dn = tmp;
@@ -136,7 +136,7 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     rect.dn = rect.Q2Dn(tmp);

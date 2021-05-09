@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Open Channel Calculator - parangular</title>
+    <title>Open Channel Calculator - Parabolic</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/styles.css">
@@ -94,7 +94,7 @@
             $("#topWidth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                     $("#topWidth").val(para.tw);
                 }
                 else {
@@ -107,7 +107,7 @@
             $("#channelDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                     $("#channelDepth").val(para.cd);
                 }
                 else {
@@ -120,7 +120,7 @@
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     para.cs = tmp;
@@ -132,7 +132,7 @@
             $("#manningsN").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     para.mN = tmp;
@@ -144,7 +144,7 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     para.dn = tmp;
@@ -156,7 +156,7 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade();
+                    showErrorFade("Nonpositive values are not accepted!")();
                 }
                 else {
                     para.dn = para.Q2Dn(tmp);

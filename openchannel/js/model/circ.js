@@ -4,7 +4,7 @@
 class CircularChannel extends OpenChannel {
     constructor(d, cs, mN, dn) {
         super(cs, mN, dn);
-        this.r = d / 12.0 / 2.0; 
+        this.r = d /12 / 2.0; 
     }
 
     get thetan()

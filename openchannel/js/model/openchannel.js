@@ -32,6 +32,14 @@ var oc = {
     offsetBottom : 60
 };
 
+function in2ftm(valin){
+    if(oc.isUSCustomary) {
+        return valin / oc.ft2in;
+    } else {
+        return valin * oc.in2mm / 1000;
+    }
+}
+
 class OpenChannel {
     constructor(cs, mN, dn) {
         this.cs = cs;

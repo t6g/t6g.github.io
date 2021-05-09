@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - Circular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/model/circ.js"></script>
+    <script src="js/view/ocvw.js"></script>
+</head>
+<body>
+
+    <div class="container-md" >
+        <!-- navbar -->
+        <div id="mynav"></div>
+
+        <!-- row 1 chart -->
+        <div class="row" >
+            <div class="text-center" id="chartDIV"></div>
+        </div>
+
+        <!-- row 2 input output table -->
+        <div class="row">
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Select
+                            </td>
+                            <td>
+                            <select class="value" id="select" name="select">
+                                <option style="display:none;" selected></option>     
+                                <option value="6">6&rdquo;</option>
+                                <option value="8">8&rdquo;</option>
+                                <option value="10">10&rdquo;</option>
+                                <option value="12">12&rdquo;</option>
+                                <option value="15">15&rdquo;</option>
+                                <option value="18">18&rdquo;</option>
+                                <option value="21">21&rdquo;</option>
+                                <option value="24">24&rdquo;</option>
+                                <option value="30">30&rdquo;</option>
+                                <option value="33">33&rdquo;</option>
+                                <option value="36">36&rdquo;</option>
+                                <option value="42">42&rdquo;</option>
+                                <option value="48">48&rdquo;</option>
+                                <option value="54">54&rdquo;</option>
+                                <option value="60">60&rdquo;</option>
+                                <option value="66">66&rdquo;</option>
+                                <option value="72">72&rdquo;</option>
+                                <option value="78">78&rdquo;</option>
+                                <option value="84">84&rdquo;</option>
+                                <option value="90">90&rdquo;</option>
+                                <option value="96">96&rdquo;</option>
+                                <option value="102">102&rdquo;</option>
+                                <option value="108">108&rdquo;</option>
+                                <option value="114">114&rdquo;</option>
+                                <option value="120">120&rdquo;</option>
+                                <option value="126">126&rdquo;</option>
+                                <option value="132">132&rdquo;</option>
+                                <option value="138">138&rdquo;</option>
+                                <option value="144">144&rdquo;</option>
+                            </select>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Diameter</td> 
+                            <td><input class="value" id="diameter" type="number" min="1" value="12" step="1"></td>
+                            <td>in</td>
+                        </tr>
+                        <tr>
+                            <td>Manning's N</td>
+                            <td><input class="value" id="manningsN" type="number"  min="0.001" value="0.13" step="0.001"></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Channel Slope</td> 
+                            <td><input class="value" id="channelSlope" type="number" min="0.001" value="0.1" step="0.001"></td>
+                            <td>v:h</td></tr>
+                        <tr>
+                            <td>Normal Depth</td>
+                            <td><input class="value" id="normalDepth" type="number" min="0.01" value="1.5" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Discharge</td>
+                            <td><input class="value" id="discharge" type="number" min="0.1" value="0.1" step="1.1"></td>
+                            <td>ft<sup>3</sup>/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+            </div>
+
+            <div class="col-md-6 box" id="output"></div>
+            
+        </div> <!--row2-->
+    </div> <!--container-->
+    <script>
+        $( document ).ready(function() {
+
+            $("#mynav").load("nav.html");
+            
+            $("#chartDIV").load("img/chart.svg");
+
+            $("#output").load("output.html");
+
+            const circ = new CircularChannel(24, 0.01, 0.05, 0.5);
+            
+            $("#diameter").val((oc.isUSCustomary ? circ.r * oc.ft2in * 2 : circ.r * 1000 * 2).toFixed(0));
+            $("#channelSlope").val(circ.cs);
+            $("#manningsN").val(circ.mN);
+            $("#normalDepth").val(circ.dn.toFixed(2));
+            $("#discharge").val(circ.Qn.toFixed(2));
+
+            // unit in select options is inch
+            $("#select").change(function(){
+                let tmp = $('#select').val();
+                let tmpftm = tmp / (oc.isUSCustomary ? 12 : tmp * oc.in2mm / 1000);
+                
+                if(tmpftm < circ.dn){
+                    showErrorFade("Selected diameter is less than normal depth. Please adjust normal depth before selecting a small diameter!");
+                }
+                else {
+                    $('#diameter').val(tmp);
+                    circ.r = tmpftm / 2;
+                    $('#discharge').val(circ.Qn.toFixed(2));
+                    update();
+                }
+                           
+                $('#select').val('');
+                
+            });
+            
+            $("#diameter").change(function(){
+                let tmp = parseFloat(this.value);
+                let tmpftm = tmp / (oc.isUSCustomary ? 12 : tmp * oc.in2mm / 1000);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#diameter").val((oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2).toFixed(0));
+                }
+                else if (tmpftm < circ.dn) {
+                    showErrorFade("Input diameter is less than normal depth. Please adjust normal depth before selecting a small diameter!");
+                    $("#diameter").val((oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2).toFixed(0));
+                } else {
+                    circ.r = tmpftm / 2;
+                    $('#discharge').val(circ.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#channelSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#channelSlope").val(circ.cs);
+                }
+                else {
+                    circ.cs = tmp;
+                    $('#discharge').val(circ.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#manningsN").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#manningsN").val(circ.mN);
+                }
+                else {
+                    circ.mN = tmp;
+                    $('#discharge').val(circ.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#normalDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#normalDepth").val(circ.dn.toFixed(2));
+                }
+                else if(tmp > 2*circ.r){
+                    showErrorFade("Input normal depth is greater than diameter. It is not accepted!");
+                    $("#normalDepth").val(circ.dn.toFixed(2));
+                } else {
+                    circ.dn = tmp;
+                    $('#discharge').val(circ.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#discharge").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#discharge").val(circ.Qn.toFixed(2));
+                } else if (tmp > circ.Qmax){
+                    showErrorFade("Input discharge is greater than capacity. It is not accepted!");
+                    $("#discharge").val(circ.Qn.toFixed(2));
+                } else {
+                    circ.dn = circ.Q2Dn(tmp);
+                    $("#normalDepth").val(circ.dn.toFixed(2));
+                    update();
+                }
+            });
+
+            function update(){
+                setValues();
+                updateChart();
+            }
+            
+            function setValues(){
+                $("#area").html(circ.an.toFixed(3));
+                $("#peri").html(circ.pn.toFixed(3));
+                $("#velo").html(circ.vn.toFixed(3));
+                $("#dc").html(circ.dc.toFixed(3));
+                $("#vc").html(circ.vc.toFixed(3));
+                $("#sc").html(circ.sc.toFixed(3));
+                $("#fr").html(circ.fr.toFixed(3));
+                $("#capacity").html(circ.Qmax.toFixed(3));
+                $("#ymax").html(circ.ymax.toFixed(3));
+            }
+
+            function updateChart(){
+
+                //drawing 
+                var xMin = 0;
+                var xMax = 2 * circ.r;
+                var yMin = 0;
+                var yMax = 2 * circ.r;
+
+                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+
+                if(scaleX >= scaleY){
+                    scaleX = scaleY;
+                }
+                else{
+                    scaleY = scaleX;
+                }
+
+                var rxs = circ.r * scaleX;
+                var rys = circ.r * scaleY;
+
+                var dxs = 0.5 * (-oc.offsetLeft + ocvw.w - oc.offsetRight) - rxs; //displacement for x to move circle to the middle
+
+                var x0 = 0;
+                var y0 = circ.r;
+                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX + dxs;
+                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+
+                var xnl = circ.r * (1.0 - Math.sin(0.5 * circ.thetan));
+                var xnr = circ.r * (1.0 + Math.sin(0.5 * circ.thetan));
+                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX + dxs;
+                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX + dxs;
+                var yns = ocvw.h - oc.offsetBottom -(circ.dn - yMin) * scaleY;
+
+
+                var xcl = circ.r * (1.0 - Math.sin(0.5 * circ.thetac));
+                var xcr = circ.r * (1.0 + Math.sin(0.5 * circ.thetac));
+
+                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX + dxs;
+                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX + dxs;
+                var ycs = ocvw.h - oc.offsetBottom - (circ.dc - yMin) * scaleY;
+
+
+                $('#pathChan').attr('d', 'M' + x0s + ' ' + y0s + ' a ' + rxs + ' ' + rys + ' 0 1 0 ' + 2.0* rxs + ' 0 ' + ' a ' + rxs + ' ' + rys + ' 0 1 0 -' + 2.0* rxs + ' 0 ');
+
+                $('#pathNorm').attr('d', 'M' + xnls + ' ' + yns + 'L' + xnrs + ' ' + yns);
+
+                $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
+            
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+            }
+
+            const onDomElementIsReady = (elementToWatch)=> {
+                //create promise
+                return new Promise((res, rej)=> {
+                    let idInterval = setInterval(()=> {
+                        //keep waiting until the element exist
+                        if($(elementToWatch).length > 0) {
+                            clearInterval(idInterval); //remove the interval
+                            res($(elementToWatch)); //resolve the promise            
+                        }
+                    },100);
+                });
+            };
+            
+            //how to use it?
+            onDomElementIsReady("#chartDIV").then(element => {
+                updateChart();
+            });
+            
+            onDomElementIsReady("#output").then(element => {
+                setValues();
+                $('#capacityRow').show();
+                $('#ymaxRow').show();
+            });
+        });
+    </script>
+
+</body>
+</html>

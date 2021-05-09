@@ -7,9 +7,10 @@ var ocvw = {
     offsetBottom : 60
 };
 
-function showErrorFade()
+function showErrorFade(msg)
 {
     if( $("#errorMessage").hasClass("d-none") ) {
+        $("#errorMessage").html(msg);
         $("#errorMessage").removeClass("d-none");
     }
 

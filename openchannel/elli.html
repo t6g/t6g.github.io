@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - Elliptical</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/model/elli.js"></script>
+    <script src="js/view/ocvw.js"></script>
+</head>
+<body>
+
+    <div class="container-md" >
+        <!-- navbar -->
+        <div id="mynav"></div>
+
+        <!-- row 1 chart -->
+        <div class="row" >
+            <div class="text-center" id="chartDIV"></div>
+        </div>
+
+        <!-- row 2 input output table -->
+        <div class="row">
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Select
+                            </td>
+                            <td>
+                            <select class="value" id="select" name="select">
+                                <option style="display:none;" selected></option>     
+                                <option value="18x12">18&rdquo;x12&rdquo;</option>
+                                <option value="23x14">23&rdquo;x14&rdquo;</option>
+                                <option value="30x19">30&rdquo;x19&rdquo;</option>
+                                <option value="34x22">34&rdquo;x22&rdquo;</option>
+                                <option value="38x24">38&rdquo;x24&rdquo;</option>
+                                <option value="42x27">42&rdquo;x27&rdquo;</option>
+                                <option value="45x29">45&rdquo;x29&rdquo;</option>
+                                <option value="49x32">49&rdquo;x32&rdquo;</option>
+                                <option value="53x34">53&rdquo;x34&rdquo;</option>
+                                <option value="60x38">60&rdquo;x38&rdquo;</option>
+                                <option value="68x43">68&rdquo;x43&rdquo;</option>
+                                <option value="76x48">76&rdquo;x48&rdquo;</option>
+                                <option value="83x53">83&rdquo;x53&rdquo;</option>
+                                <option value="91x58">91&rdquo;x58&rdquo;</option>
+                                <option value="98x63">98&rdquo;x63&rdquo;</option>
+                                <option value="106x68">106&rdquo;x68&rdquo;</option>
+                                <option value="113x72">113&rdquo;x72&rdquo;</option>
+                                <option value="121x77">121&rdquo;x77&rdquo;</option>
+                                <option value="128x82">128&rdquo;x82&rdquo;</option>
+                                <option value="136x87">136&rdquo;x87&rdquo;</option>
+                                <option value="143x92">143&rdquo;x92&rdquo;</option>
+                                <option value="151x97">151&rdquo;x97&rdquo;</option>
+                                <option value="161x106">161&rdquo;x106&rdquo;</option>
+                                <option value="180x116">180&rdquo;x116&rdquo;</option>
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Span</td> 
+                            <td><input class="value" id="span" type="number" min="1" value="12" step="1"></td>
+                            <td>in</td>
+                        </tr>
+                        <tr>
+                            <td>Rise</td> 
+                            <td><input class="value" id="rise" type="number" min="1" value="12" step="1"></td>
+                            <td>in</td>
+                        </tr>
+                        <tr>
+                            <td>Manning's N</td>
+                            <td><input class="value" id="manningsN" type="number"  min="0.001" value="0.13" step="0.001"></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Channel Slope</td> 
+                            <td><input class="value" id="channelSlope" type="number" min="0.001" value="0.1" step="0.001"></td>
+                            <td>v:h</td></tr>
+                        <tr>
+                            <td>Normal Depth</td>
+                            <td><input class="value" id="normalDepth" type="number" min="0.01" value="1.5" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Discharge</td>
+                            <td><input class="value" id="discharge" type="number" min="0.1" value="0.1" step="1.1"></td>
+                            <td>ft<sup>3</sup>/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+            </div>
+
+            <div class="col-md-6 box" id="output"></div>
+            
+        </div> <!--row2-->
+    </div> <!--container-->
+    <script>
+        $( document ).ready(function() {
+
+            $("#mynav").load("nav.html");
+            
+            $("#chartDIV").load("img/chart.svg");
+
+            $("#output").load("output.html");
+
+            const elli = new EllipticalChannel(18, 12, 0.01, 0.05, 0.5);
+            
+            $("#span").val((oc.isUSCustomary ? elli.a * oc.ft2in * 2 : elli.a * 2000).toFixed(0));
+            $("#rise").val((oc.isUSCustomary ? elli.b * oc.ft2in * 2 : elli.b * 2000).toFixed(0));
+            $("#channelSlope").val(elli.cs);
+            $("#manningsN").val(elli.mN);
+            $("#normalDepth").val(elli.dn.toFixed(2));
+            $("#discharge").val(elli.Qn.toFixed(2));
+
+            $("#select").change(function(){
+                let tmp = $('#select').val();
+                let idx = tmp.indexOf('x');
+
+                //validate
+                //span
+                let span = tmp.substring(0, idx);
+    
+                //rise
+                let rise = tmp.substring(idx+1);
+                let riseftm = oc.isUSCustomary ? rise / oc.ft2in : rise * oc.in2mm / 1000;
+                
+                if(riseftm < elli.dn){
+                    showErrorFade("Selected rise is less than normal depth. Please adjust normal depth before selecting a small rise!");
+                    $('#select').val('');
+                    return;
+                }
+                
+                $('#span').val(oc.isUSCustomary ? span : span * oc.in2mm);
+                elli.a = oc.isUSCustomary ? span / 12 / 2 : span * oc.in2mm / 1000 / 2;
+                
+                $('#rise').val(oc.isUSCustomary ? rise : rise * oc.in2mm);
+                elli.b = riseftm / 2;
+                
+                $('#discharge').val(elli.Qn.toFixed(2));
+                update();
+
+                $('#select').val('');
+                
+            });
+            
+            $("#span").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#span").val((oc.isUSCustomary ? elli.a * 12 * 2 : elli.a * 1000 * 2).toFixed(0));
+                } else {
+                    elli.a = oc.isUSCustomary ? tmp / 12 / 2 : tmp / 1000 / 2;
+                    $('#discharge').val(elli.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#rise").change(function(){
+                var tmp = parseFloat(this.value);
+                
+                let riseftm = oc.isUSCustomary ? tmp / oc.ft2in : tmp / 1000;
+                
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#rise").val((oc.isUSCustomary ? elli.b * 12 * 2 : elli.b * 1000 * 2).toFixed(0));
+                } else if (riseftm < elli.dn){
+                    showErrorFade("Selected rise is less than normal depth. Please adjust normal depth before selecting a small rise!");
+                    $("#rise").val((oc.isUSCustomary ? elli.b * 12 * 2 : elli.b * 1000 * 2).toFixed(0));
+                } else {
+                    elli.b = oc.isUSCustomary ? tmp / 12 / 2 : tmp / 1000 / 2;
+                    $('#discharge').val(elli.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+
+            $("#channelSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#channelSlope").val(elli.cs);
+                }
+                else {
+                    elli.cs = tmp;
+                    $('#discharge').val(elli.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#manningsN").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#manningsN").val(elli.mN);
+                }
+                else {
+                    elli.mN = tmp;
+                    $('#discharge').val(elli.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#normalDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#normalDepth").val(elli.dn.toFixed(2));
+                } else if (tmp > 2*elli.b){
+                    showErrorFade("Input normal depth is greater than diameter. It is not accepted!");
+                    $("#normalDepth").val(circ.dn.toFixed(2));
+                } else {
+                    elli.dn = tmp;
+                    $('#discharge').val(elli.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#discharge").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#discharge").val(elli.Qn.toFixed(2));
+                }
+                else if (tmp > elli.Qmax) {
+                    showErrorFade("Input discharge is greater than capacity. It is not accepted!");
+                    $("#discharge").val(elli.Qn.toFixed(2));
+                } else {
+                    elli.dn = elli.Q2Dn(tmp);
+                    $("#normalDepth").val(elli.dn.toFixed(2));
+                    update();
+                }
+            });
+
+            function update(){
+                setValues();
+                updateChart();
+            }
+            
+            function setValues(){
+                $("#area").html(elli.an.toFixed(3));
+                $("#peri").html(elli.pn.toFixed(3));
+                $("#velo").html(elli.vn.toFixed(3));
+                $("#dc").html(elli.dc.toFixed(3));
+                $("#vc").html(elli.vc.toFixed(3));
+                $("#sc").html(elli.sc.toFixed(3));
+                $("#fr").html(elli.fr.toFixed(3));
+                $("#capacity").html(elli.Qmax.toFixed(3));
+                $("#ymax").html(elli.ymax.toFixed(3));
+            }
+
+            function updateChart(){
+
+                //drawing 
+                var xMin = 0;
+                var xMax = 2 * elli.a;
+                var yMin = 0;
+                var yMax = 2 * elli.b;
+
+                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+
+                if(scaleX >= scaleY){
+                    scaleX = scaleY;
+                }
+                else{
+                    scaleY = scaleX;
+                }
+
+                var rxs = elli.a * scaleX;
+                var rys = elli.b * scaleY;
+
+                var dxs = 0.5 * (-oc.offsetLeft + ocvw.w - oc.offsetRight) - rxs; //displacement for x to move ellile to the middle
+
+                var x0 = 0;
+                var y0 = elli.b;
+                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX + dxs;
+                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+
+                var xnl = elli.a * (1.0 - Math.sin(elli.alphan));
+                var xnr = elli.a * (1.0 + Math.sin(elli.alphan));
+                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX + dxs;
+                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX + dxs;
+                var yns = ocvw.h - oc.offsetBottom -(elli.dn - yMin) * scaleY;
+
+
+                var xcl = elli.a * (1.0 - Math.sin(elli.alphac));
+                var xcr = elli.a * (1.0 + Math.sin(elli.alphac));
+                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX + dxs;
+                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX + dxs;
+                var ycs = ocvw.h - oc.offsetBottom - (elli.dc - yMin) * scaleY;
+
+                $('#pathChan').attr('d', 'M' + x0s + ' ' + y0s + ' a ' + rxs + ' ' + rys + ' 0 1 0 ' + 2.0* rxs + ' 0 ' + ' a ' + rxs + ' ' + rys + ' 0 1 0 -' + 2.0* rxs + ' 0 ');
+
+                $('#pathNorm').attr('d', 'M' + xnls + ' ' + yns + 'L' + xnrs + ' ' + yns);
+
+                $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
+            
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+            }
+
+            const onDomElementIsReady = (elementToWatch)=> {
+                //create promise
+                return new Promise((res, rej)=> {
+                    let idInterval = setInterval(()=> {
+                        //keep waiting until the element exist
+                        if($(elementToWatch).length > 0) {
+                            clearInterval(idInterval); //remove the interval
+                            res($(elementToWatch)); //resolve the promise            
+                        }
+                    },10);
+                });
+            };
+            
+            //how to use it?
+            onDomElementIsReady("#chartDIV").then(element => {
+                updateChart();
+            });
+            
+            onDomElementIsReady("#output").then(element => {
+                setValues();
+                $('#capacityRow').show();
+                $('#ymaxRow').show();
+            });
+        });
+    </script>
+
+</body>
+</html>
