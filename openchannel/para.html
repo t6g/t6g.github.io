@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - parangular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/model/para.js"></script>
+    <script src="js/view/ocvw.js"></script>
+</head>
+<body>
+
+    <div class="container-md" >
+        <!-- navbar -->
+        <div id="mynav"></div>
+
+        <!-- row 1 chart -->
+        <div class="row" >
+            <div class="text-center" id="chartDIV"></div>
+        </div>
+
+        <!-- row 2 input output table -->
+        <div class="row">
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Top Width</td>
+                            <td><input class="value" id="topWidth" type="number" min="1" value="10" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+
+                        <tr>
+                            <td>Channel Depth</td> 
+                            <td><input class="value" id="channelDepth" type="number" min="0.01" value="1" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Manning's N</td>
+                            <td><input class="value" id="manningsN" type="number"  min="0.001" value="0.13" step="0.001"></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Channel Slope</td> 
+                            <td><input class="value" id="channelSlope" type="number" min="0.001" value="0.1" step="0.001"></td>
+                            <td>v:h</td></tr>
+                        <tr>
+                            <td>Normal Depth</td>
+                            <td><input class="value" id="normalDepth" type="number" min="0.01" value="1.5" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Discharge</td>
+                            <td><input class="value" id="discharge" type="number" min="0.1" value="0.1" step="1.1"></td>
+                            <td>ft<sup>3</sup>/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+            </div>
+
+            <div class="col-md-6 box" id="output"></div>
+            
+        </div> <!--row2-->
+    </div> <!--container-->
+    <script>
+        $( document ).ready(function() {
+
+            $("#mynav").load("nav.html");
+            
+            $("#chartDIV").load("img/chart.svg");
+
+            $("#output").load("output.html");
+
+            const para = new ParabolicChannel(10, 1, 0.01, 0.05, 0.5);
+            
+            $("#topWidth").val(para.tw);
+            $("#channelDepth").val(para.cd);
+            $("#channelSlope").val(para.cs);
+            $("#manningsN").val(para.mN);
+            $("#normalDepth").val(para.dn.toFixed(2));
+            $("#discharge").val(para.Qn.toFixed(2));
+
+            $("#topWidth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                    $("#topWidth").val(para.tw);
+                }
+                else {
+                    para.tw = tmp;
+                    $('#discharge').val(para.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#channelDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                    $("#channelDepth").val(para.cd);
+                }
+                else {
+                    para.cd = tmp;
+                    $('#discharge').val(para.Qn.toFixed(2));
+                    update();
+                }
+            });
+
+            $("#channelSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    para.cs = tmp;
+                    $('#discharge').val(para.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#manningsN").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    para.mN = tmp;
+                    $('#discharge').val(para.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#normalDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    para.dn = tmp;
+                    $('#discharge').val(para.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#discharge").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade();
+                }
+                else {
+                    para.dn = para.Q2Dn(tmp);
+                    $("#normalDepth").val(para.dn.toFixed(2));
+                    update();
+                }
+            });
+
+            function update(){
+                setValues();
+                updateChart();
+            }
+            
+            function setValues(){
+                $("#area").html(para.an.toFixed(3));
+                $("#peri").html(para.pn.toFixed(3));
+                $("#velo").html(para.vn.toFixed(3));
+                $("#dc").html(para.dc.toFixed(3));
+                $("#vc").html(para.vc.toFixed(3));
+                $("#sc").html(para.sc.toFixed(3));
+                $("#fr").html(para.fr.toFixed(3));
+            }
+
+            function updateChart(){
+
+                //drawing 
+                var xMin = 0;
+                var xMax = para.tw
+                var yMin = 0;
+                var yMax = para.cd;
+
+                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+
+                var x0 = 0.0;
+                var y0 = para.cd;
+                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
+                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+
+                var x1 = 0.5 * para.tw;
+                var y1 = -para.cd;
+                var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
+                var y1s = ocvw.h - oc.offsetBottom - (y1 - yMin) * scaleY;
+
+                var x2 = para.tw;
+                var x2s = oc.offsetLeft + (x2 - xMin) * scaleX;
+
+                var xnl = 0.5 * para.tw - 0.5 * para.tw * Math.sqrt(para.dn / para.cd);
+                var xnr = 0.5 * para.tw + 0.5 * para.tw * Math.sqrt(para.dn / para.cd);;
+                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
+                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
+                var yns = ocvw.h - oc.offsetBottom -(para.dn - yMin) * scaleY;
+
+
+                var xcl = 0.5 * para.tw - 0.5 * para.tw * Math.sqrt(para.dc / para.cd);
+                var xcr = 0.5 * para.tw + 0.5 * para.tw * Math.sqrt(para.dc / para.cd);;
+                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
+                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
+                var ycs = ocvw.h - oc.offsetBottom - (para.dc - yMin) * scaleY;
+
+                $('#pathChan').attr('d', 'M' + x0s + ' ' + y0s + ' Q ' + x1s + ' ' + y1s + ' ' + x2s + ' ' + y0s);
+
+                $('#pathNorm').attr('d', 'M' + xnls + ' ' + yns + 'L' + xnrs + ' ' + yns);
+
+                $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
+            
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+            }
+
+            const onDomElementIsReady = (elementToWatch)=> {
+                //create promise
+                return new Promise((res, rej)=> {
+                    let idInterval = setInterval(()=> {
+                        //keep waiting until the element exist
+                        if($(elementToWatch).length > 0) {
+                            clearInterval(idInterval); //remove the interval
+                            res($(elementToWatch)); //resolve the promise            
+                        }
+                    },100);
+                });
+            };
+            
+            //how to use it?
+            onDomElementIsReady("#chartDIV").then(element => {
+                updateChart();
+            });
+            
+            onDomElementIsReady("#output").then(element => {
+                setValues();
+            });
+        });
+    </script>
+
+</body>
+</html>
