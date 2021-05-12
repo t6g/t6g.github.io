@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Open Channel Calculator - irregular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/model/openchannel.js"></script>
+    <script src="js/model/irre.js"></script>
+    <script src="js/view/ocvw.js"></script>
+    <script src="js/numbertable.js"></script>
+</head>
+<body>
+
+    <div class="container-md" >
+        <!-- navbar -->
+        <div id="mynav"></div>
+
+        <!-- row 1 chart -->
+        <div class="row" >
+            <div class="col-md-6 box">
+                <div class="text-center" id="chartDIV"></div>
+            </div>
+            
+            <div class="col-md-6 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Composite N
+                            </td>
+                            <td>
+                                <select class="value" id="selectN" name="selectN">
+                                    <option value='Pavlovskii'>Pavlovskii</option>
+                                    <option value='Horton'>Horton</option>
+                                    <option value='Colebatch'>Colebatch</option>
+                                    <option value='Cox'>Cox</option>
+                                    <option value='Lotter'>Lotter</option>
+                                </select>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Manning's N</td>
+                            <td id="manningsN" style="text-align:right;width:6rem;">1</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Channel Slope</td> 
+                            <td><input class="value" id="channelSlope" type="number" min="0.001" value="0.1" step="0.001"></td>
+                            <td>v:h</td></tr>
+                        <tr>
+                            <td>Normal Depth</td>
+                            <td><input class="value" id="normalDepth" type="number" min="0.01" value="1.5" step="0.1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td>Discharge</td>
+                            <td><input class="value" id="discharge" type="number" min="0.1" value="0.1" step="1.1"></td>
+                            <td>ft<sup>3</sup>/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+            </div>            
+        </div>
+
+        <!-- row 2 input output table -->
+        <div class="row">
+
+            <div class="col-md-6 box" id="divYZNS">
+                <table class="table" style="text-align:right;" id="tableXZNS">
+                    <thead>
+                        <tr>
+                            <th>X (ft) </th>
+                            <th>Z (ft)</th>
+                            <th>N </th>
+                            <th>d (ft) </th>
+                        </tr>
+                    </thead>
+                    <tbody id="xzns">
+                        <tr> <td>0</td>  <td>3.5</td> <td>0.06</td> <td>0.06</td> </tr>
+                        <tr> <td>1</td>  <td>3  </td> <td>0.06</td> <td>0.06</td> </tr>
+                        <tr> <td>2</td>  <td>3.5</td> <td>0.06</td> <td>0.06</td> </tr>
+                    </tbody>
+                </table>
+                <input class="value" id="numberInput" type="number" value="1" style="box-sizing: border-box;display:none;position:absolute;">
+                
+                <div style="display:flex; flex-direction:row; justify-content: space-around;">
+                      <button type="button" id="btnAdd" class="btn btn-outline-primary">Add</button>
+                      <button type="button" id="btnDel" class="btn btn-outline-primary">Delete</button>
+                      <button type="button" id="btnApp" class="btn btn-outline-primary">Apply</button>
+                </div>
+            </div>
+            
+            <div class="col-md-6 box" id="output"></div>
+            
+        </div> <!--row2-->
+    </div> <!--container-->
+    <script>
+        $( document ).ready(function() {
+
+            $("#mynav").load("nav.html");
+            
+            $("#chartDIV").load("img/chart.svg");
+
+            $("#output").load("output.html");
+
+            $("#xzns").numbertable();
+            
+            const irre = new IrregularChannel([
+                                  [ 0, 10, 0.06], 
+                                  [10,  7, 0.06], 
+                                  [20,  7, 0.06],
+                                  [30,  4, 0.05],
+                                  [40,  7, 0.06],
+                                  [50,  7, 0.06],
+                                  [60, 10, 0.06]],
+                                  'Pavlovskii',
+                                  0.01, 0.05, 1);
+
+            var zbottom = irre.yBottom;
+            
+            $("#selectN").val(irre.nMethod);
+            $("#channelSlope").val(irre.cs.toFixed(3));
+            $("#manningsN").html(irre.d2N(irre.dn).toFixed(3));
+            $("#normalDepth").val(irre.dn.toFixed(2));
+            $("#discharge").val(irre.Qn.toFixed(2));
+
+            setXZNTable();
+            
+            $("#selectN").change(function(){
+                irre.nMethod = $("#selectN").val();
+                update();
+            });
+            
+            $("#channelSlope").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#channelSlope").val(irre.cs);
+                }
+                else {
+                    irre.cs = tmp;
+                    $('#discharge').val(irre.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#normalDepth").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#normalDepth").val(irre.dn.toFixed(2));
+/*                }
+                else if(tmp > 2*irre.r){
+                    showErrorFade("Input normal depth is greater than diameter. It is not accepted!");
+                    $("#normalDepth").val(irre.dn.toFixed(2));
+*/                } else {
+                    irre.dn = tmp;
+                    $('#discharge').val(irre.Qn.toFixed(2));
+                    update();
+                }
+            });
+            
+            $("#discharge").change(function(){
+                var tmp = parseFloat(this.value);
+                if (isNaN(tmp) || (tmp <=0)) {
+                    showErrorFade("Nonpositive values are not accepted!");
+                    $("#discharge").val(irre.Qn.toFixed(2));
+                } else if (tmp > irre.Qmax){
+                    showErrorFade("Input discharge is greater than capacity. It is not accepted!");
+                    $("#discharge").val(irre.Qn.toFixed(2));
+                } else {
+                    irre.dn = irre.Q2Dn(tmp);
+                    $("#normalDepth").val(irre.dn.toFixed(2));
+                    update();
+                }
+            });
+
+            function update(){
+                setValues();
+                updateChart();
+            }
+            
+            function setValues(){
+                $("#manningsN").html(irre.d2N(irre.dn).toFixed(3));
+                $("#area").html(irre.an.toFixed(3));
+                $("#peri").html(irre.pn.toFixed(3));
+                $("#velo").html(irre.vn.toFixed(3));
+                $("#dc").html(irre.dc.toFixed(3));
+                $("#vc").html(irre.vc.toFixed(3));
+                $("#sc").html(irre.sc.toFixed(3));
+                $("#fr").html(irre.fr.toFixed(3));
+                $("#capacity").html(irre.Qmax.toFixed(3));
+            }
+            
+            function setXZNTable(){
+                let tabl = document.getElementById('xzns');
+                var nRowTabl = tabl.rows.length;
+                var row = null;
+                var i = 0;
+                var tabindex = 0;
+                var zb = irre.yBottom;
+    
+                for (i = 0; i < irre.geometry.length; i++) {
+                    if(i < tabl.rows.length){
+                        for (var j = 0; j < tabl.rows[i].cells.length - 1; j++) {
+                            tabl.rows[i].cells[j].innerHTML = irre.geometry[i][j];
+                            tabl.rows[i].cells[j].tabIndex = tabindex;
+                        }
+                        tabl.rows[i].cells[j].innerHTML = irre.geometry[i][1] - zb;                        
+                    }
+                    else {
+                        $("#tableXZNS > tbody").append("<tr><td>" + 
+                                    irre.geometry[i][0]+"</td><td>" + 
+                                    irre.geometry[i][1]+"</td><td>" + 
+                                    irre.geometry[i][2]+"</td><td>" + 
+                                    (irre.geometry[i][1] - zb) +"</td></tr>");
+                        for (var j = 0; j < tabl.rows[i].cells.length - 1; j++) {
+                            tabl.rows[i].cells[j].tabIndex = tabindex;
+                        };
+                        
+/*                        if(row == null)
+                            row = tabl.rows[nRowTabl-1].cloneNode(true);
+                        else
+                            row = row.cloneNode(true);
+
+                        for (var j = 0; j < row.cells.length - 1; j++) {
+                            row.cells[j].innerHTML = irre.geometry[i][j];
+                            row.cells[j].tabIndex = tabindex;
+                        }
+                        row.cells[j].innerHTML = irre.geometry[i][1] - irre.yBottom;     
+                        tabl.appendChild(row);
+  */                  }
+                }
+
+                if(nRowTabl > irre.geometry.length){
+                    for (i; i < tabl.rows.length; i++) {
+                        for (var j = 0; j < tabl.rows[i].cells.length; j++) {
+                            tabl.rows[i].cells[j].innerHTML = '&nbsp;';
+                            tabl.rows[i].cells[j].tabIndex = tabindex;
+                        }
+                    }
+                }
+            }
+
+$("#btnAdd").click(function() {
+    var tb = document.getElementById('xzns');
+    var nr = tb.rows.length;
+    var row = tb.rows[nr-1].cloneNode(true);
+//    for (var j = 0; j < row.cells.length; j++) {
+//        row.cells[j].innerHTML = '&nbsp;'
+//        if(j < 3) row.cells[j].tabIndex = 0;
+//    }
+    tb.appendChild(row);
+    
+    if(document.getElementById('btnDel').disabled && tb.rows.length > 3)
+        document.getElementById('btnDel').disabled = false;
+});
+
+$("#btnDel").click(function(){
+    var tableGeometry = document.getElementById('xzns');
+    if(tableGeometry.rows.length >= 4) {
+        if (tableGeometry.rows.length === 4)
+            document.getElementById('btnDel').disabled = true;
+        tableGeometry.deleteRow(-1);
+    }
+});
+
+$("#btnApp").click(function(){
+    var tableGeometry = document.getElementById('xzns');
+    var tmpArr = [];
+    var xs = [];
+    var ys = [];
+    var ns = [];
+    //check if all numbers are positive
+    for (var i = 0; i < tableGeometry.rows.length; i++) {
+        //check if entire row empty
+        if (i >= 2 &&
+            tableGeometry.rows[i].cells[0].innerHTML == "&nbsp;" &&
+            tableGeometry.rows[i].cells[1].innerHTML == "&nbsp;" &&
+            tableGeometry.rows[i].cells[2].innerHTML == "&nbsp;") {
+            break;
+        };
+
+        //check if entire row empty
+        /*
+        if (!String.prototype.trim) {
+            String.prototype.trim = function() { return this.replace(/^\s+|\s+$/, '');};
+        }
+        if (
+            i >= 2 &&
+            tableGeometry.rows[i].cells[0].innerHTML.trim() == "" &&
+            tableGeometry.rows[i].cells[1].innerHTML.trim() == "" &&
+            tableGeometry.rows[i].cells[2].innerHTML.trim() == "") {
+            break;
+        }
+          
+          */
+        for (var j = 0; j < tableGeometry.rows[i].cells.length; j++) {
+            let tmp = parseFloat(tableGeometry.rows[i].cells[j].innerHTML); 
+            //if not a number
+            if (isNaN(tmp)) {
+                alert('Please input a number!');
+                tableGeometry.rows[i].cells[j].focus();    
+                return;
+            }
+            else if(tmp < 0) {  //if negative
+                alert('Please input a positive number!');
+                tableGeometry.rows[i].cells[j].focus();    
+                return;
+            }
+            if (j === 0) xs.push(tmp);
+            if (j === 1) ys.push(tmp);
+            if (j === 2) ns.push(tmp);
+        }
+        tmpArr.push([xs[i], ys[i], ns[i]]);
+    }
+    
+    //check stations increase monotonically
+    for (var i = 1; i < xs.length; i++) {
+        if( xs[i] < xs[i-1]) {
+            alert('please input a station number >= previous station!');
+            tableGeometry.rows[i].cells[0].focus();    
+            return;
+        }
+    }
+    
+    for (var i = 0; i < ns.length; i++){
+        if(ns[i] <= 0) {
+            alert('please input a positive n value!');
+            tableGeometry.rows[i].cells[2].focus();    
+            return;
+        }
+    }
+        
+    var yb = Math.min(...ys);
+    var ib = ys.indexOf(yb);
+    
+    if (ib === 0) {
+        alert('We would not like the first station to be the bottom, please increase the elevation!');
+        tableGeometry.rows[0].cells[1].focus();    
+        return;
+    }
+        
+    if (ib === (xs.length-1)) {
+        alert('We would not like the last station to be the bottom, please increase the elevation!');
+        tableGeometry.rows[ib].cells[1].focus();    
+        return;
+    }
+    
+    irre.geometry = null;
+    irre.geometry = tmpArr;
+    // save to local storage
+    //localStorage.setItem("irre.geometry", JSON.stringify(irre.geometry));
+
+    //initIrre();
+    $("#manningsN").html(irre.d2N(irre.dn).toFixed(3));
+    $('#discharge').val(irre.Qn.toFixed(2));
+    update();
+});
+                        
+            
+            function updateChart(){
+
+    //drawing 
+    var xMin = irre.geometry[0][0];
+    var xMax = irre.geometry[irre.geometry.length - 1][0];
+    var yMin = irre.yBottom;
+    var yMax = Math.max(irre.yLeft, irre.yRight);
+
+    var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
+    var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+
+    var x0s = oc.offsetLeft + (irre.geometry[0][0] - xMin) * scaleX;
+    var y0s = ocvw.h - oc.offsetBottom - (irre.geometry[0][1] - yMin) * scaleY;
+
+    var pathChan = 'M' + x0s + ' ' + y0s;
+    for (let i = 1; i < irre.geometry.length; i++) {
+        let x1s = oc.offsetLeft + (irre.geometry[i][0] - xMin) * scaleX;
+        let y1s = chart.clientHeight - oc.offsetBottom - (irre.geometry[i][1] - yMin) * scaleY;
+        pathChan += ' L ' + x1s + ' ' + y1s;
+    }
+        
+    var xnl = irre.d2xL(irre.dn);
+    var xnr = irre.d2xR(irre.dn);
+    var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
+    var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
+    var yns = ocvw.h - oc.offsetBottom -(irre.yBottom + irre.dn - yMin) * scaleY;
+
+
+    var xcl = irre.d2xL(irre.dc);
+    var xcr = irre.d2xR(irre.dc);;
+    var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
+    var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
+    var ycs = ocvw.h - oc.offsetBottom - (irre.yBottom + irre.dc - yMin) * scaleY;
+
+
+                $('#pathChan').attr('d', pathChan);
+
+                $('#pathNorm').attr('d', 'M' + xnls + ' ' + yns + 'L' + xnrs + ' ' + yns);
+
+                $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
+            
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+            }
+
+            const onDomElementIsReady = (elementToWatch)=> {
+                //create promise
+                return new Promise((res, rej)=> {
+                    let idInterval = setInterval(()=> {
+                        //keep waiting until the element exist
+                        if($(elementToWatch).length > 0) {
+                            clearInterval(idInterval); //remove the interval
+                            res($(elementToWatch)); //resolve the promise            
+                        }
+                    },100);
+                });
+            };
+            
+            //how to use it?
+            onDomElementIsReady("#chartDIV").then(element => {
+                updateChart();
+            });
+            
+            onDomElementIsReady("#output").then(element => {
+                setValues();
+                $('#capacityRow').show();
+                $('#ymaxRow').show();
+            });
+        });
+    </script>
+
+</body>
+</html>
