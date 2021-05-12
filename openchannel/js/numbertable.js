@@ -4,6 +4,11 @@
     $.fn.numbertable = function(){
         $('#divYZNS').on('click', 'td', function(event){
 
+            // if last column, bypass
+            if(event.target.cellIndex === 3) {
+                return;
+            }
+            
             //update existing active cell value to input
             if(activeCell){
                 let v =  parseFloat($('#numberInput').val());
