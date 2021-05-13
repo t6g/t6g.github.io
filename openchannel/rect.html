@@ -77,6 +77,11 @@
             $("#output").load("output.html");
 
             const rect = new RectangularChannel(1, 0.01, 0.05, 0.5);
+            let tmp = localStorage.getItem('rect');
+            if (tmp) {
+                Object.assign(rect, JSON.parse(tmp));
+            }
+            
             
             $("#bottomWidth").val(rect.b);
             $("#channelSlope").val(rect.cs);
@@ -92,6 +97,7 @@
                 }
                 else {
                     rect.b = tmp;
+                    localStorage.setItem('rect', JSON.stringify(rect));
                     $('#discharge').val(rect.Qn.toFixed(2));
                     update();
                 }
@@ -104,6 +110,7 @@
                 }
                 else {
                     rect.cs = tmp;
+                    localStorage.setItem('rect', JSON.stringify(rect));
                     $('#discharge').val(rect.Qn.toFixed(2));
                     update();
                 }
@@ -116,6 +123,7 @@
                 }
                 else {
                     rect.mN = tmp;
+                    localStorage.setItem('rect', JSON.stringify(rect));
                     $('#discharge').val(rect.Qn.toFixed(2));
                     update();
                 }
@@ -128,6 +136,7 @@
                 }
                 else {
                     rect.dn = tmp;
+                    localStorage.setItem('rect', JSON.stringify(rect));
                     $('#discharge').val(rect.Qn.toFixed(2));
                     update();
                 }
@@ -140,6 +149,7 @@
                 }
                 else {
                     rect.dn = rect.Q2Dn(tmp);
+                    localStorage.setItem('rect', JSON.stringify(rect));
                     $("#normalDepth").val(rect.dn.toFixed(2));
                     update();
                 }

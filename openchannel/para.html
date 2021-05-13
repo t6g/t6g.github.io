@@ -83,6 +83,11 @@
             $("#output").load("output.html");
 
             const para = new ParabolicChannel(10, 1, 0.01, 0.05, 0.5);
+            let tmp = localStorage.getItem('para');
+            if (tmp) {
+                Object.assign(para, JSON.parse(tmp));
+            }
+            
             
             $("#topWidth").val(para.tw);
             $("#channelDepth").val(para.cd);
@@ -99,6 +104,7 @@
                 }
                 else {
                     para.tw = tmp;
+                    localStorage.setItem('para', JSON.stringify(para));
                     $('#discharge').val(para.Qn.toFixed(2));
                     update();
                 }
@@ -112,6 +118,7 @@
                 }
                 else {
                     para.cd = tmp;
+                    localStorage.setItem('para', JSON.stringify(para));
                     $('#discharge').val(para.Qn.toFixed(2));
                     update();
                 }
@@ -124,6 +131,7 @@
                 }
                 else {
                     para.cs = tmp;
+                    localStorage.setItem('para', JSON.stringify(para));
                     $('#discharge').val(para.Qn.toFixed(2));
                     update();
                 }
@@ -136,6 +144,7 @@
                 }
                 else {
                     para.mN = tmp;
+                    localStorage.setItem('para', JSON.stringify(para));
                     $('#discharge').val(para.Qn.toFixed(2));
                     update();
                 }
@@ -148,6 +157,7 @@
                 }
                 else {
                     para.dn = tmp;
+                    localStorage.setItem('para', JSON.stringify(para));
                     $('#discharge').val(para.Qn.toFixed(2));
                     update();
                 }
@@ -160,6 +170,7 @@
                 }
                 else {
                     para.dn = para.Q2Dn(tmp);
+                    localStorage.setItem('para', JSON.stringify(para));
                     $("#normalDepth").val(para.dn.toFixed(2));
                     update();
                 }

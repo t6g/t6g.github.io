@@ -117,6 +117,11 @@
             $("#output").load("output.html");
 
             const circ = new CircularChannel(24, 0.01, 0.05, 0.5);
+
+            let tmp = localStorage.getItem('circ');
+            if (tmp) {
+                Object.assign(circ, JSON.parse(tmp));
+            }
             
             $("#diameter").val((oc.isUSCustomary ? circ.r * oc.ft2in * 2 : circ.r * 1000 * 2).toFixed(0));
             $("#channelSlope").val(circ.cs);
@@ -135,6 +140,7 @@
                 else {
                     $('#diameter').val(tmp);
                     circ.r = tmpftm / 2;
+                    localStorage.setItem('circ', JSON.stringify(circ));
                     $('#discharge').val(circ.Qn.toFixed(2));
                     update();
                 }
@@ -155,6 +161,7 @@
                     $("#diameter").val((oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2).toFixed(0));
                 } else {
                     circ.r = tmpftm / 2;
+                    localStorage.setItem('circ', JSON.stringify(circ));
                     $('#discharge').val(circ.Qn.toFixed(2));
                     update();
                 }
@@ -168,6 +175,7 @@
                 }
                 else {
                     circ.cs = tmp;
+                    localStorage.setItem('circ', JSON.stringify(circ));
                     $('#discharge').val(circ.Qn.toFixed(2));
                     update();
                 }
@@ -181,6 +189,7 @@
                 }
                 else {
                     circ.mN = tmp;
+                    localStorage.setItem('circ', JSON.stringify(circ));
                     $('#discharge').val(circ.Qn.toFixed(2));
                     update();
                 }
@@ -197,6 +206,7 @@
                     $("#normalDepth").val(circ.dn.toFixed(2));
                 } else {
                     circ.dn = tmp;
+                    localStorage.setItem('circ', JSON.stringify(circ));
                     $('#discharge').val(circ.Qn.toFixed(2));
                     update();
                 }
@@ -212,6 +222,7 @@
                     $("#discharge").val(circ.Qn.toFixed(2));
                 } else {
                     circ.dn = circ.Q2Dn(tmp);
+                    localStorage.setItem('circ', JSON.stringify(circ));
                     $("#normalDepth").val(circ.dn.toFixed(2));
                     update();
                 }

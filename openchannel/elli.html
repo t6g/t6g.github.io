@@ -116,6 +116,11 @@
             $("#output").load("output.html");
 
             const elli = new EllipticalChannel(18, 12, 0.01, 0.05, 0.5);
+
+            let tmp = localStorage.getItem('elli');
+            if (tmp) {
+                Object.assign(elli, JSON.parse(tmp));
+            }
             
             $("#span").val((oc.isUSCustomary ? elli.a * oc.ft2in * 2 : elli.a * 2000).toFixed(0));
             $("#rise").val((oc.isUSCustomary ? elli.b * oc.ft2in * 2 : elli.b * 2000).toFixed(0));
@@ -147,6 +152,9 @@
                 
                 $('#rise').val(oc.isUSCustomary ? rise : rise * oc.in2mm);
                 elli.b = riseftm / 2;
+
+                localStorage.setItem('elli', JSON.stringify(elli));
+
                 
                 $('#discharge').val(elli.Qn.toFixed(2));
                 update();
@@ -162,6 +170,7 @@
                     $("#span").val((oc.isUSCustomary ? elli.a * 12 * 2 : elli.a * 1000 * 2).toFixed(0));
                 } else {
                     elli.a = oc.isUSCustomary ? tmp / 12 / 2 : tmp / 1000 / 2;
+                    localStorage.setItem('elli', JSON.stringify(elli));
                     $('#discharge').val(elli.Qn.toFixed(2));
                     update();
                 }
@@ -180,6 +189,7 @@
                     $("#rise").val((oc.isUSCustomary ? elli.b * 12 * 2 : elli.b * 1000 * 2).toFixed(0));
                 } else {
                     elli.b = oc.isUSCustomary ? tmp / 12 / 2 : tmp / 1000 / 2;
+                    localStorage.setItem('elli', JSON.stringify(elli));
                     $('#discharge').val(elli.Qn.toFixed(2));
                     update();
                 }
@@ -194,6 +204,7 @@
                 }
                 else {
                     elli.cs = tmp;
+                    localStorage.setItem('elli', JSON.stringify(elli));
                     $('#discharge').val(elli.Qn.toFixed(2));
                     update();
                 }
@@ -207,6 +218,7 @@
                 }
                 else {
                     elli.mN = tmp;
+                    localStorage.setItem('elli', JSON.stringify(elli));
                     $('#discharge').val(elli.Qn.toFixed(2));
                     update();
                 }
@@ -222,6 +234,7 @@
                     $("#normalDepth").val(circ.dn.toFixed(2));
                 } else {
                     elli.dn = tmp;
+                    localStorage.setItem('elli', JSON.stringify(elli));
                     $('#discharge').val(elli.Qn.toFixed(2));
                     update();
                 }
@@ -238,6 +251,7 @@
                     $("#discharge").val(elli.Qn.toFixed(2));
                 } else {
                     elli.dn = elli.Q2Dn(tmp);
+                    localStorage.setItem('elli', JSON.stringify(elli));
                     $("#normalDepth").val(elli.dn.toFixed(2));
                     update();
                 }

@@ -117,6 +117,11 @@
             $("#output").load("output.html");
 
             const arch = new ArchChannel(15.25, 4.91667, 1.25, 6.0, 0.01, 0.013, 0.5);
+            let tmp = localStorage.getItem('arch');
+            if (tmp) {
+                Object.assign(arch, JSON.parse(tmp));
+            }
+            
             
             $("#rb").val((oc.isUSCustomary ? arch.rb * oc.ft2in : arch.rb * 1000).toFixed(0));
             $("#rt").val((oc.isUSCustomary ? arch.rt * oc.ft2in : arch.rt * 1000).toFixed(0));
@@ -155,6 +160,8 @@
                 
                 $('#rise').val(oc.isUSCustomary ? rise : rise * oc.in2mm);
                 arch.rise = riseftm;
+
+                localStorage.setItem('arch', JSON.stringify(arch));
                 
                 $('#discharge').val(arch.Qn.toFixed(2));
                 update();
@@ -170,6 +177,7 @@
                     $("#rb").val((oc.isUSCustomary ? arch.rb * oc.ft2in : arch.rb * 1000).toFixed(0));
                 } else {
                     arch.rb = oc.isUSCustomary ? tmp / oc.ft2in : tmp / 1000;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -182,6 +190,7 @@
                     $("#rt").val((oc.isUSCustomary ? arch.rt * oc.ft2in : arch.rt * 1000).toFixed(0));
                 } else {
                     arch.rt = oc.isUSCustomary ? tmp / oc.ft2in : tmp / 1000;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -194,6 +203,7 @@
                     $("#rc").val((oc.isUSCustomary ? arch.rc * oc.ft2in : arch.rc * 1000).toFixed(0));
                 } else {
                     arch.rc = oc.isUSCustomary ? tmp / oc.ft2in : tmp / 1000;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -213,6 +223,7 @@
                     $("#rise").val((oc.isUSCustomary ? arch.rise * oc.ft2in : arch.b * 1000).toFixed(0));
                 } else {
                     arch.rise = oc.isUSCustomary ? tmp / ocvw.ft2in : tmp / 1000;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -227,6 +238,7 @@
                 }
                 else {
                     arch.cs = tmp;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -240,6 +252,7 @@
                 }
                 else {
                     arch.mN = tmp;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -255,6 +268,7 @@
                     $("#normalDepth").val(circ.dn.toFixed(2));
                 } else {
                     arch.dn = tmp;
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $('#discharge').val(arch.Qn.toFixed(2));
                     update();
                 }
@@ -271,6 +285,7 @@
                     $("#discharge").val(arch.Qn.toFixed(2));
                 } else {
                     arch.dn = arch.Q2Dn(tmp);
+                    localStorage.setItem('arch', JSON.stringify(arch));
                     $("#normalDepth").val(arch.dn.toFixed(2));
                     update();
                 }

@@ -84,6 +84,11 @@
 
             const tria = new TriangularChannel(3, 3, 0.01, 0.05, 0.5);
             
+            let tmp = localStorage.getItem('tria');
+            if (tmp) {
+                Object.assign(tria, JSON.parse(tmp));
+            }
+            
             $("#leftSideSlope").val(tria.z1);
             $("#rightSideSlope").val(tria.z2);
             $("#channelSlope").val(tria.cs);
@@ -99,6 +104,7 @@
                 }
                 else {
                     tria.z1 = tmp;
+                    localStorage.setItem('tria', JSON.stringify(tria));
                     $('#discharge').val(tria.Qn.toFixed(2));
                     update();
                 }
@@ -112,6 +118,7 @@
                 }
                 else {
                     tria.z2 = tmp;
+                    localStorage.setItem('tria', JSON.stringify(tria));
                     $('#discharge').val(tria.Qn.toFixed(2));
                     update();
                 }
@@ -125,6 +132,7 @@
                 }
                 else {
                     tria.cs = tmp;
+                    localStorage.setItem('tria', JSON.stringify(tria));
                     $('#discharge').val(tria.Qn.toFixed(2));
                     update();
                 }
@@ -138,6 +146,7 @@
                 }
                 else {
                     tria.mN = tmp;
+                    localStorage.setItem('tria', JSON.stringify(tria));
                     $('#discharge').val(tria.Qn.toFixed(2));
                     update();
                 }
@@ -151,6 +160,7 @@
                 }
                 else {
                     tria.dn = tmp;
+                    localStorage.setItem('tria', JSON.stringify(tria));
                     $('#discharge').val(tria.Qn.toFixed(2));
                     update();
                 }
@@ -164,6 +174,7 @@
                 }
                 else {
                     tria.dn = tria.Q2Dn(tmp);
+                    localStorage.setItem('tria', JSON.stringify(tria));
                     $("#normalDepth").val(tria.dn.toFixed(2));
                     update();
                 }
