@@ -389,7 +389,7 @@ $("#btnApp").click(function(){
     var pathChan = 'M' + x0s + ' ' + y0s;
     for (let i = 1; i < irre.geometry.length; i++) {
         let x1s = oc.offsetLeft + (irre.geometry[i][0] - xMin) * scaleX;
-        let y1s = chart.clientHeight - oc.offsetBottom - (irre.geometry[i][1] - yMin) * scaleY;
+        let y1s = ocvw.h - oc.offsetBottom - (irre.geometry[i][1] - yMin) * scaleY;
         pathChan += ' L ' + x1s + ' ' + y1s;
     }
         

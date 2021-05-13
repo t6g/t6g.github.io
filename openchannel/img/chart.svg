@@ -1,7 +1,7 @@
                 <svg id="chart" viewBox="0 0 450 300" style="display:inline-block;max-width:450;">
                     <rect id="axesRect" x="60" y="0" width="360" height="240" fill="none" stroke="black"/>
                     
-                    <path id="pathGridX" d="M50 100 H450 M50 150 H450 M50 200 H450 M50 250 H450" stroke="gray" stroke-width="0.5" fill="none" stroke-dasharray="4,4"/>
+                    <path id="pathGridX" d="M50 100" stroke="gray" stroke-width="0.5" fill="none" stroke-dasharray="4,4"/>
 
                     <text id="xTick1" x="50"  y="270" text-anchor="middle">&nbsp;</text>
                     <text id="xTick2" x="100" y="270" text-anchor="middle">&nbsp;</text>
@@ -35,9 +35,9 @@
 
                     <path id="pathCrit" d="M0 0" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
 
-                    <path id="pathRb" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
-                    <path id="pathRt" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
-                    <path id="pathRc" d="M50 50 L30 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
+                    <path id="pathRb" d="M50 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
+                    <path id="pathRt" d="M50 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
+                    <path id="pathRc" d="M50 50" stroke="black" stroke-width="1" fill="none" stroke-dasharray="3,3" style="Display:none;"/>
 
                     <text id="rbLabel" x="50"  y="270" text-anchor="middle" style="Display:none;">Rb</text>
                     <text id="rtLabel" x="100" y="270" text-anchor="middle" style="Display:none;">Rt</text>

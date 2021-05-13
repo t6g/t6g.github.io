@@ -52,7 +52,7 @@
             }).focus();
         });
 
-        $(document).on('keydown', function(event){
+        $('#divYZNS').on('keydown', function(event){
             var toActiveCell;
 
             switch (event.keyCode){
