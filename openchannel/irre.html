@@ -70,7 +70,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+                <div class="alert alert-warning" role="alert" id='warningdiv' style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessage">message</span>
+                </div>
             </div>            
         </div>
 
@@ -100,6 +103,10 @@
                       <button type="button" id="btnDel" class="btn btn-outline-primary">Delete</button>
                       <button type="button" id="btnApp" class="btn btn-outline-primary">Apply</button>
                 </div>
+                <div class="alert alert-warning" role="alert" style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningxznsMessage">message</span>
+                </div>
             </div>
             
             <div class="col-md-6 box" id="output"></div>
@@ -127,7 +134,12 @@
                                   [60, 10, 0.06]],
                                   'Pavlovskii',
                                   0.01, 0.05, 1);
-
+            
+            let tmp = localStorage.getItem('irre');
+            if (tmp) {
+                Object.assign(irre, JSON.parse(tmp));
+            }
+            
             var zbottom = irre.yBottom;
             
             $("#selectN").val(irre.nMethod);
@@ -140,17 +152,19 @@
             
             $("#selectN").change(function(){
                 irre.nMethod = $("#selectN").val();
+                localStorage.setItem('irre', JSON.stringify(irre));
                 update();
             });
             
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#channelSlope").val(irre.cs);
                 }
                 else {
                     irre.cs = tmp;
+                    localStorage.setItem('irre', JSON.stringify(irre));
                     $('#discharge').val(irre.Qn.toFixed(2));
                     update();
                 }
@@ -159,14 +173,15 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#normalDepth").val(irre.dn.toFixed(2));
 /*                }
                 else if(tmp > 2*irre.r){
-                    showErrorFade("Input normal depth is greater than diameter. It is not accepted!");
+                    showMessage($('#warningMessage'), ("Input normal depth is greater than diameter. It is not accepted!");
                     $("#normalDepth").val(irre.dn.toFixed(2));
 */                } else {
                     irre.dn = tmp;
+                    localStorage.setItem('irre', JSON.stringify(irre));
                     $('#discharge').val(irre.Qn.toFixed(2));
                     update();
                 }
@@ -175,13 +190,14 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#discharge").val(irre.Qn.toFixed(2));
                 } else if (tmp > irre.Qmax){
-                    showErrorFade("Input discharge is greater than capacity. It is not accepted!");
+                    showMessage($('#warningMessage'), "Input discharge is greater than capacity. It is not accepted!");
                     $("#discharge").val(irre.Qn.toFixed(2));
                 } else {
                     irre.dn = irre.Q2Dn(tmp);
+                    localStorage.setItem('irre', JSON.stringify(irre));
                     $("#normalDepth").val(irre.dn.toFixed(2));
                     update();
                 }
@@ -312,12 +328,12 @@ $("#btnApp").click(function(){
             let tmp = parseFloat(tableGeometry.rows[i].cells[j].innerHTML); 
             //if not a number
             if (isNaN(tmp)) {
-                alert('Please input a number!');
+                showMessage($('#warningxznsMessage'), 'Please input a number!');
                 tableGeometry.rows[i].cells[j].focus();    
                 return;
             }
             else if(tmp < 0) {  //if negative
-                alert('Please input a positive number!');
+                showMessage($('#warningxznsMessage'), 'Please input a positive number!');
                 tableGeometry.rows[i].cells[j].focus();    
                 return;
             }
@@ -331,7 +347,7 @@ $("#btnApp").click(function(){
     //check stations increase monotonically
     for (var i = 1; i < xs.length; i++) {
         if( xs[i] < xs[i-1]) {
-            alert('please input a station number >= previous station!');
+            showMessage($('#warningxznsMessage'), 'please input a station number >= previous station!');
             tableGeometry.rows[i].cells[0].focus();    
             return;
         }
@@ -339,7 +355,7 @@ $("#btnApp").click(function(){
     
     for (var i = 0; i < ns.length; i++){
         if(ns[i] <= 0) {
-            alert('please input a positive n value!');
+            showMessage($('#warningxznsMessage'), 'please input a positive n value!');
             tableGeometry.rows[i].cells[2].focus();    
             return;
         }
@@ -349,19 +365,22 @@ $("#btnApp").click(function(){
     var ib = ys.indexOf(yb);
     
     if (ib === 0) {
-        alert('We would not like the first station to be the bottom, please increase the elevation!');
+        showMessage($('#warningxznsMessage'), 'We would not like the first station to be the bottom, please increase the elevation at the first station!');
         tableGeometry.rows[0].cells[1].focus();    
         return;
     }
         
     if (ib === (xs.length-1)) {
-        alert('We would not like the last station to be the bottom, please increase the elevation!');
+        showMessage($('#warningxznsMessage'), 'We would not like the last station to be the bottom, please increase the elevation!');
         tableGeometry.rows[ib].cells[1].focus();    
         return;
     }
     
     irre.geometry = null;
     irre.geometry = tmpArr;
+
+    localStorage.setItem('irre', JSON.stringify(irre));
+
     // save to local storage
     //localStorage.setItem("irre.geometry", JSON.stringify(irre.geometry));
 

@@ -66,7 +66,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+                <div class="alert alert-warning" role="alert" id='warningdiv' style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessage">message</span>
+                </div>
             </div>
 
             <div class="col-md-6 box" id="output"></div>
@@ -99,7 +102,7 @@
             $("#topWidth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!")();
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#topWidth").val(para.tw);
                 }
                 else {
@@ -113,7 +116,7 @@
             $("#channelDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!")();
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#channelDepth").val(para.cd);
                 }
                 else {
@@ -127,7 +130,7 @@
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!")();
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                 }
                 else {
                     para.cs = tmp;
@@ -140,7 +143,7 @@
             $("#manningsN").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!")();
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                 }
                 else {
                     para.mN = tmp;
@@ -153,7 +156,7 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!")();
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                 }
                 else {
                     para.dn = tmp;
@@ -166,7 +169,7 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!")();
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                 }
                 else {
                     para.dn = para.Q2Dn(tmp);

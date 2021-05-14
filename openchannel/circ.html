@@ -100,7 +100,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessage">message</span>
+                </div>
             </div>
 
             <div class="col-md-6 box" id="output"></div>
@@ -135,7 +138,7 @@
                 let tmpftm = tmp / (oc.isUSCustomary ? 12 : tmp * oc.in2mm / 1000);
                 
                 if(tmpftm < circ.dn){
-                    showErrorFade("Selected diameter is less than normal depth. Please adjust normal depth before selecting a small diameter!");
+                    showMessage($('#warningMessage'), "Selected diameter is less than normal depth. Please adjust normal depth before selecting a small diameter!");
                 }
                 else {
                     $('#diameter').val(tmp);
@@ -153,11 +156,11 @@
                 let tmp = parseFloat(this.value);
                 let tmpftm = tmp / (oc.isUSCustomary ? 12 : tmp * oc.in2mm / 1000);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#diameter").val((oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2).toFixed(0));
                 }
                 else if (tmpftm < circ.dn) {
-                    showErrorFade("Input diameter is less than normal depth. Please adjust normal depth before selecting a small diameter!");
+                    showMessage($('#warningMessage'), "Input diameter is less than normal depth. Please adjust normal depth before selecting a small diameter!");
                     $("#diameter").val((oc.isUSCustomary ? circ.r * 12 * 2 : circ.r * 1000 * 2).toFixed(0));
                 } else {
                     circ.r = tmpftm / 2;
@@ -170,7 +173,7 @@
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#channelSlope").val(circ.cs);
                 }
                 else {
@@ -184,7 +187,7 @@
             $("#manningsN").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#manningsN").val(circ.mN);
                 }
                 else {
@@ -198,11 +201,11 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#normalDepth").val(circ.dn.toFixed(2));
                 }
                 else if(tmp > 2*circ.r){
-                    showErrorFade("Input normal depth is greater than diameter. It is not accepted!");
+                    showMessage($('#warningMessage'), "Input normal depth is greater than diameter. It is not accepted!");
                     $("#normalDepth").val(circ.dn.toFixed(2));
                 } else {
                     circ.dn = tmp;
@@ -215,10 +218,10 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#discharge").val(circ.Qn.toFixed(2));
                 } else if (tmp > circ.Qmax){
-                    showErrorFade("Input discharge is greater than capacity. It is not accepted!");
+                    showMessage($('#warningMessage'), "Input discharge is greater than capacity. It is not accepted!");
                     $("#discharge").val(circ.Qn.toFixed(2));
                 } else {
                     circ.dn = circ.Q2Dn(tmp);

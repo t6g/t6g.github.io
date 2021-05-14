@@ -10,32 +10,7 @@
             }
             
             //update existing active cell value to input
-            if(activeCell){
-                let v =  parseFloat($('#numberInput').val());
-                
-                if(activeCell.cellIndex === 1){
-                    let rw = activeCell.parentElement;
-                    let tb = rw.parentElement;
-                    let zb = parseFloat(tb.rows[0].cells[1].innerHTML);
-                    for (let i = 1; i< tb.rows.length; i++){
-                        let tmp = parseFloat(tb.rows[i].cells[1].innerHTML);
-                        if (zb > tmp) {
-                            zb = tmp;
-                        }
-                    }
-                    
-                    if(v >= zb){
-                        rw.cells[3].innerHTML = v - zb;
-                    } else {
-                        zb = v;
-                        for (let i = 0; i < tb.rows.length; i++){
-                            tb.rows[i].cells[3].innerHTML = parseFloat(tb.rows[i].cells[1].innerHTML) - zb;
-                        }
-                    }
-                }
-                activeCell.innerHTML = $('#numberInput').val();
-                
-            }
+            updateActiveCell();
 
             activeCell = event.target;
             
@@ -78,6 +53,18 @@
                 $(toActiveCell).trigger('click');
             }
         });
+        
+        $('#numberInput').on('focusout', function(event){
+            
+            updateActiveCell();
+            
+            activeCell = null;
+            
+            //$('#numberInput').hide();
+            $('#numberInput').css({display:'none'});
+
+        });
+                         
         $(window).on('resize', function(){
             if(!activeCell){
                 return;
@@ -92,6 +79,38 @@
             }).focus();
         });
     };
+    
+    //update activeCell from input box before moving out of the cell
+    function updateActiveCell(){
+        if(!activeCell){
+            return;
+        }
+
+        let v =  parseFloat($('#numberInput').val());
+
+        if(activeCell.cellIndex === 1){
+            let rw = activeCell.parentElement;
+            let tb = rw.parentElement;
+            let zb = parseFloat(tb.rows[0].cells[1].innerHTML);
+            for (let i = 1; i< tb.rows.length; i++){
+                let tmp = parseFloat(tb.rows[i].cells[1].innerHTML);
+                if (zb > tmp) {
+                    zb = tmp;
+                }
+            }
+
+            if(v >= zb){
+                rw.cells[3].innerHTML = v - zb;
+            } else {
+                zb = v;
+                for (let i = 0; i < tb.rows.length; i++){
+                    tb.rows[i].cells[3].innerHTML = parseFloat(tb.rows[i].cells[1].innerHTML) - zb;
+                }
+            }
+        }
+        
+        activeCell.innerHTML = $('#numberInput').val();
+    }
     //find next cell
     function findCell(cell, direction){
         var row = cell.parentElement,

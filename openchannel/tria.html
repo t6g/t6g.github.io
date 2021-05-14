@@ -66,8 +66,12 @@
                         </tr>
                     </tbody>
                 </table>
-                <span class="alert-danger d-none d-print-none" id="errorMessage">Input must be positive!</span>
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessage">message</span>
+                </div>
             </div>
+                
 
             <div class="col-md-6 box" id="output"></div>
             
@@ -99,7 +103,7 @@
             $("#leftSideSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#leftSideSlope").val(tria.z1);
                 }
                 else {
@@ -113,7 +117,7 @@
             $("#rightSideSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#rightSideSlope").val(tria.z2);
                 }
                 else {
@@ -127,7 +131,7 @@
             $("#channelSlope").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#channelSlope").val(tria.cs);
                 }
                 else {
@@ -141,7 +145,7 @@
             $("#manningsN").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#manningsN").val(tria.mN);
                 }
                 else {
@@ -155,7 +159,7 @@
             $("#normalDepth").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#normalDepth").val(tria.dn.toFixed(2));
                 }
                 else {
@@ -169,7 +173,7 @@
             $("#discharge").change(function(){
                 var tmp = parseFloat(this.value);
                 if (isNaN(tmp) || (tmp <=0)) {
-                    showErrorFade("Nonpositive values are not accepted!");
+                    showMessage($('#warningMessage'), "Nonpositive values are not accepted!");
                     $("#discharge").val(tria.Qn.toFixed(2));
                 }
                 else {

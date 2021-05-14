@@ -7,18 +7,14 @@ var ocvw = {
     offsetBottom : 60
 };
 
-function showErrorFade(msg)
+function showMessage(element, message)
 {
-    if( $("#errorMessage").hasClass("d-none") ) {
-        $("#errorMessage").html(msg);
-        $("#errorMessage").removeClass("d-none");
+    element.html(message);
+    
+    if(element.parent().is(':hidden')) {
+        element.parent().show();
     }
-
-    if(!($("#errorMessage").hasClass("d-none"))){
-        setTimeout(function(){$("#errorMessage").addClass("d-none");}, 1000);
-    }
-
-}
+};
 
 function drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY){
     //draw grid lines;
