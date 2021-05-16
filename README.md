@@ -1,8 +1,11 @@
 # t6g.github.io
-Guoping Tang's web applications
+##Guoping Tang's web site and applications
 
-openchannel: new development for open channel flow calculation using jQuery + Bootstrap for easy maintenance
+###openchannel: 
+new development for open channel flow calculation using html5 + JavaScript + jQuery + Bootstrap for easy maintenance
 
-hc: early version of open channel flow calculation using JavaScript
+###hc: 
+early version of open channel flow calculation using html5 + JavaScript
 
-ee: develop tools to aid plan review
+###ee: 
+develop web tools to aid plan review

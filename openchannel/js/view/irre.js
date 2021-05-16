@@ -17,7 +17,7 @@
                                   [50,  7, 0.06],
                                   [60, 10, 0.06]],
                                   'Pavlovskii',
-                                  0.01, 0.05, 1);
+                                  0.01, 0.05, 4);
             
             let tmp = localStorage.getItem('irre');
             if (tmp) {
