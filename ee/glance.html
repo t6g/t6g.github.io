@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <style>
+            p{
+                margin-left: 2rem;
+            }
+            input[type="checkbox"] {
+                margin-right: 0.3rem;
+            }
+            input[type="radio"] {
+                margin-right: 0.3rem;
+            }
+            ul {
+                list-style: none;
+            }
+            li {
+                margin-top: 0.3rem;
+                margin-bottom: 0.3rem;
+            }
+            .noTentative{
+                display: none;
+            }
+            .vsmp2c {
+                display: none;
+            }
+        </style>
+        <title>Subdivision Plan Design/Review Checklist</title>
+    </head>
+    <body>
+        <div class="container">
+            <h4 class="text-center">First Glance Review Checklist for Subdivision Plans</h4>
+            <p class="text-center">Environmental Engineering Department, Chesterfield VA</p>
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-primary" id="btnReset">Reset</button>
+                <button type="button" class="btn btn-outline-primary" id="btnSave">Save</button>
+                <button type="button" class="btn btn-outline-primary" id="btnDownload">Download</button>
+                <button type="button" class="btn btn-outline-primary" id="btnUpload">Upload</button>
+            </div>
+            
+            <div class="text-center mt-3"><input type='file' name='selectedFile' id="selectFile" hidden/></div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="transmittalLetter">Transmittal letter</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="checklistSubdivision">Subdivision design/review checklist</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="zoningConditions">Two copies of approved zoning conditions (if any)</label></li>
+                        <li> 
+                            <label class="radio-inline"><input type="radio" name="hasTentative" value="yes" id="hasTentativeYes" checked>Yes</label>
+                            <label class="radio-inline"><input type="radio" name="hasTentative" value="no" id="hasTentativeNo">No</label>
+                            tentative conditions/preliminary plat?
+                        </li>
+                        <ul id="listwTentative">
+                            <li><label class="checkbox-inline"><input type="checkbox" id="tentativeConditions">Two copies of approved preliminary conditions/plans</label></li>
+                        </ul>
+
+                        <ul id="listwoTentative" style="display:none;">    
+                            <li><label class="checkbox-inline"><input type="checkbox" id="roadNameLetter">PlanRVA road name approval letter</label></li>
+                            <li><label class="checkbox-inline"><input type="checkbox" id="wetlandsConfirmation">COE/DEQ wetlands confirmation</label></li>
+                            <li><label class="checkbox-inline"><input type="checkbox" id="RPADApproval">Copy of confirmed RPAD from Water Quality</label></li>
+                            <li><label class="checkbox-inline"><input type="checkbox" id="embellishmentLetter">Embellishment letter</label></li>
+                            <li><label class="checkbox-inline"><input type="checkbox" id="VSMPDocumentation">VSMP documentation for part IIB/C technical compliance</label></li>
+                        </ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="complianceEEZoningConditions">Compliance with Environmental Zoning Conditions</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="esc">Phased erosion control plan with construction narratives, EC narrative checklist, EC notes, MS-19 table</label></li>
+
+                        <li>
+                            <label class="radio-inline"><input type="radio" name="isVSMP2b" value="yes" id="isVSMP2bYes" checked>IIB</label>
+                            <label class="radio-inline"><input type="radio" name="isVSMP2b" value="no" id="isVSMP2bNo" >IIC</label>
+                            VSMP compliance criteria  
+                        </li>
+
+                        <ul id="listVSMP2c" style="display:none">
+                            <li><label class="checkbox-inline"><input type="checkbox" id="channelProtection2c">Part IIC onsite/offsite MS-19 analysis (channel protection) and flood protection on all outfalls and natural drainageways</label></li>
+                            <ul><li>Section locations shown accompanied by all calculations</li></ul>
+                        </ul>
+                        <ul id="listVSMP2b">
+                            <li><label class="checkbox-inline"><input type="checkbox" id="VRRM">Part IIB VRRM spreadsheet calculations</label></li>
+                            <li><label class="checkbox-inline"><input type="checkbox" id="channelProtection2b">Part IIB Natural channel protection from concentrated stormwater by energy balance or 1% rule</label></li>
+                        </ul>
+
+                        <li><label class="checkbox-inline"><input type="checkbox" id="hydrologyOnsite">On-site hydrology/drainage area plan</label></li>
+                        <ul><li>Minimum 5-foot contours with incremental drainage areas showing acreage contributions to each point of entry to drainage system. Drainage area plan shall be 1"=50' unless otherwise approved</li></ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="hydrologyOffsite">Off-site Hydrology/Drainage Area Plan</label></li>
+                        <ul><li>Off-site hydrology must be included in the plan assembly.</li></ul>
+                    </ul>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
+                </div> <!-- col-lg-6-->
+                <div class="col-lg-6">
+                    <ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="profileRoad">Profiles of all roads &amp; stubs</label></li>
+                        <ul><li>To include existing ground, left/right offsets along RW, sags/crests, percent slope, storm sewer/inlet structures and profiles of stub roads 300 feet beyond property line</li></ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="profileDrainage">Profiles of all drainage easement outfalls</label></li>
+                        <ul><li>To include percent of slope, as well as stationing that corresponds to plan view stationing.</li></ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="stationingROW">Stationing on plan view of all easements and right-of-way for correlation with profiles</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="calculationDrainage">10/100 year design calculations provided for drainage improvements – culvert, storm sewer, open channel, HGL, pond routing, etc.</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="calculationFlood">100 year backwaters and 100 year floodplains with section locations and elevations shown in plan view</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="scheduleStormSewer">Drainage structure schedules as applicable on each plan sheet, every pipe segment and inlet assigned structure number</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="existingStructures">Information on existing structures that affect site, e.g., ‘Existing 24” CMP invert in and out</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="CBPACompliance">Chesapeake Bay compliance sheets</label></li>
+                        <ul><li>CBPA compliance note on title sheet. Compliance sheets must include wetlands, RPA limits, BMP design, CBPA/MS4 table, etc.</li></ul>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">Streetlights</label></li>
+                        <ul><li>A separate, detached plan sheet must be submitted depicting all existing and proposed roads, vehicle counts, and locations of required streetlights as determined under the guidelines of the Chesterfield County Streetlight Policy as it pertains to new development</li></ul>
+                    </ul>
+                </div>
+            </div>  <!--row-->
+            <div>
+                <h6 class="text-center">Standard Comments</h6>
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
+                </div>
+                <ol id="generatedComments">
+                    
+                </ol>
+            </div>
+        </div>      <!-- container -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+        -->
+        
+        <script src="js/glance.js"></script>
+    </body>
+</html>
