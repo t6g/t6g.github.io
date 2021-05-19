@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Open Channel Calculator</title>
-    <meta name="description" content="Open Channel Calculator">
+    <meta name="description" content="Open Channel Flow Calculator">
     <meta name="keywords" content="open channel flow, Manning's equation, triangular, rectangular, trapezoidal, parabolic, circular, elliptical, arch, irregular, normal flow, critical flow">
     <meta name="author" content="Guoping Tang">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 </head>
 <body>
     <div class="container-md" >
         <!-- navbar -->
-        <div id="mynav"></div>
+        <div id="mynav">
             <nav class="navbar navbar-expand-md navbar-light">
                 <a href="#" class="navbar-brand"><span>GT</span></a>
                 <button class="navbar-toggler"
@@ -38,9 +42,53 @@
                     </ul>
                 </div>
             </nav>
+        </div>
+        
+        <h3 class="text-center">Open Channel Flow Calculator</h3>
 
         <div class="row" >
-            <a href='https://github.com/t6g/HydraulicCalculator/blob/master/OpenChannel/tex/OpenChannel.pdf'>Equations and numerical methods</a> 
+            <div class="col-lg-6">
+                <h4>Introduction</h4>
+                <p>
+                    Open Channel Flow Calculator is a web application for normal and critical flow calculation for 
+                    <a href="tria.html">triangular</a>,  
+                    <a href="rect.html">rectangular</a>,  
+                    <a href="trap.html">trapezoidal</a>,  
+                    <a href="para.html">parabolic</a>,  
+                    <a href="elli.html">elliptical</a>,  
+                    <a href="arch.html">arch</a>,  and 
+                    <a href="irre.html">irregular</a> channels or closed conduits using Manning's equation.
+                    
+                    Details are referred to <a href='https://github.com/t6g/HydraulicCalculator/blob/master/OpenChannel/tex/OpenChannel.pdf'>Open Channel Flow with Manning's equation</a>. 
+                </p>
+                <p>
+                    An early version is available for 
+                    <a href="https://t6g.github.io/hc/tria.html">triangular</a>,  
+                    <a href="https://t6g.github.io/hc/rect.html">rectangular</a>,  
+                    <a href="https://t6g.github.io/hc/trap.html">trapezoidal</a>,  
+                    <a href="https://t6g.github.io/hc/para.html">parabolic</a>,  
+                    <a href="https://t6g.github.io/hc/elli.html">elliptical</a>, and 
+                    <a href="https://t6g.github.io/hc/arch.html">arch</a>. 
+                </p>
+
+                <h4>Notes</h4>
+                <p>
+                    When a parameter except discharge is changed in the input, Calculator recalculates discharge and other variables. 
+                </p>
+                <p>
+                    When discharge is changed in the input, Calculator calculates and saves the normal depth. The discharge is not saved, therefore, the final discharge may be slightly different from the input discharge.
+                </p>
+
+                
+                <h4>Issues</h4>
+                <p>
+                    You may check  <a href='https://github.com/t6g/t6g.github.io/issues'>known issues</a>, where you may report new issues, ask question, and contribute to resolving the issues and development. Less issue is expected on Chrome than others as the code is tested mostly on Chrome.
+                </p>
+            </div>    
+            <div class="col-lg-6">
+            </div>    
+        
+ 
         </div>
     </div>
 
