@@ -2,12 +2,15 @@
 
             $("#mynav").load("nav.html");
             
-            $("#chartDIV").load("img/chart.svg");
+            $("#chartDIV").load("img/chart.svg", function(){
+                updateChart();
+            });
 
-            $("#output").load("output.html");
+            $("#output").load("output.html", function(){
+                setValues();
+            });
 
-            $("#xzns").numbertable();
-            
+
             const irre = new IrregularChannel([
                                   [ 0, 10, 0.06], 
                                   [10,  7, 0.06], 
@@ -33,7 +36,10 @@
             $("#discharge").val(irre.Qn.toFixed(2));
 
             setXZNTable();
+
+            $("#xzns").numericalTable();
             
+
             $("#selectN").change(function(){
                 irre.nMethod = $("#selectN").val();
                 localStorage.setItem('irre', JSON.stringify(irre));
@@ -122,9 +128,9 @@
                         tabl.rows[i].cells[j].innerHTML = irre.geometry[i][1] - zb;                        
                     }
                     else {
-                        $("#tableXZNS > tbody").append("<tr><td>" + 
-                                    irre.geometry[i][0]+"</td><td>" + 
-                                    irre.geometry[i][1]+"</td><td>" + 
+                        $("#tableXZNS > tbody").append("<tr><td  contenteditable='true'>" + 
+                                    irre.geometry[i][0]+"</td><td contenteditable='true''>" + 
+                                    irre.geometry[i][1]+"</td><td contenteditable='true'>" + 
                                     irre.geometry[i][2]+"</td><td>" + 
                                     (irre.geometry[i][1] - zb) +"</td></tr>");
                         for (var j = 0; j < tabl.rows[i].cells.length - 1; j++) {
@@ -319,27 +325,4 @@ $("#btnApp").click(function(){
                 drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
             }
 
-            const onDomElementIsReady = (elementToWatch)=> {
-                //create promise
-                return new Promise((res, rej)=> {
-                    let idInterval = setInterval(()=> {
-                        //keep waiting until the element exist
-                        if($(elementToWatch).length > 0) {
-                            clearInterval(idInterval); //remove the interval
-                            res($(elementToWatch)); //resolve the promise            
-                        }
-                    },100);
-                });
-            };
-            
-            //how to use it?
-            onDomElementIsReady("#chartDIV").then(element => {
-                updateChart();
-            });
-            
-            onDomElementIsReady("#output").then(element => {
-                setValues();
-                $('#capacityRow').show();
-                $('#ymaxRow').show();
-            });
         });

@@ -11,7 +11,8 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <!--<script src="js/model/culvert.js"></script> -->
-<script src="js/view/culvert.js"></script>
+    <script src="js/view/culvert.js"></script>
+    <script src="js/util/numericalTable.js"></script>
 <body>
     <div class="container">
         <div>
@@ -42,7 +43,7 @@
         <div class="row">
             <div class="col-md-4 box">
                 <h5 style="text-align:center;">Drinage Areas</h5>
-                <table class="table" id='DATable'>
+                <table class="table mb-0" id='DATable'>
                     <caption id="captionDATable"></caption>
                     <thead>
                         <tr><th>Area</th><th>C</th><th>CA</th></tr>
@@ -59,25 +60,39 @@
                         <tr><th> </th><th></th><th> </th></tr>
                     </tfoot>
                 </table>
+<!--                <div class="text-center"> 
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnAdd">&#10010;</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnDel">&#10006;</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="btnApp">&#10004;</button>
+                </div>
+            -->
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessageDA">message</span>
+                </div>
             </div>
             <div class="col-md-4 box">
                 <h5 style="text-align:center;">Sheet Flow</h5>
-                <table class="table">
+                <table class="table" id='SFTable'>
                     <thead>
                         <tr><th>L</th><th>S</th><th>C</th><th>T</th></tr>
                         <tr><td>(ft)</td><td>(v/h)</td><td></td><td>(minute) </td></tr>
                     </thead>
                     <tbody id="SFTableBody">
-                        <tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td></td></tr>
-                        <tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td></td></tr>
-                        <tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td></td></tr>
-                        <tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td></td></tr>
-                        <tr><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td></td></tr>
+                        <tr><td  contenteditable="true"></td><td  contenteditable="true"></td><td  contenteditable="true"></td><td></td></tr>
+                        <tr><td  contenteditable="true"></td><td  contenteditable="true"></td><td  contenteditable="true"></td><td></td></tr>
+                        <tr><td  contenteditable="true"></td><td  contenteditable="true"></td><td  contenteditable="true"></td><td></td></tr>
+                        <tr><td  contenteditable="true"></td><td  contenteditable="true"></td><td  contenteditable="true"></td><td></td></tr>
+                        <tr><td  contenteditable="true"></td><td  contenteditable="true"></td><td  contenteditable="true"></td><td></td></tr>
                     </tbody>
                     <tfoot id="SFTableFoot">
                         <tr><th></th><th></th><th></th><th></th></tr>
                     </tfoot>
                 </table>
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessageSF">message</span>
+                </div>
             </div>
 
             <div class="col-md-4 box">

@@ -2,9 +2,13 @@
 
             $("#mynav").load("nav.html");
             
-            $("#chartDIV").load("img/chart.svg");
+            $("#chartDIV").load("img/chart.svg", function(){
+                updateChart();
+            });
 
-            $("#output").load("output.html");
+            $("#output").load("output.html", function(){
+                setValues();
+            });
 
             const arch = new ArchChannel(15.25, 4.91667, 1.25, 6.0, 0.01, 0.013, 0.5);
             let tmp = localStorage.getItem('arch');
@@ -323,33 +327,5 @@
     $('#rcLabel').attr("y", RcTop);            
             }
 
-            const onDomElementIsReady = (elementToWatch)=> {
-                //create promise
-                return new Promise((res, rej)=> {
-                    let idInterval = setInterval(()=> {
-                        //keep waiting until the element exist
-                        if($(elementToWatch).length > 0) {
-                            clearInterval(idInterval); //remove the interval
-                            res($(elementToWatch)); //resolve the promise            
-                        }
-                    },10);
-                });
-            };
-            
-            //how to use it?
-            onDomElementIsReady("#chartDIV").then(element => {
-                updateChart();
-                $("#pathRb").show();
-                $("#pathRt").show();
-                $("#pathRc").show();
-                $("#rbLabel").show();
-                $("#rtLabel").show();
-                $("#rcLabel").show();
-            });
-            
-            onDomElementIsReady("#output").then(element => {
-                setValues();
-                $('#capacityRow').show();
-                $('#ymaxRow').show();
-            });
+
         });

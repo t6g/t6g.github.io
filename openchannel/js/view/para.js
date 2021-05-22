@@ -2,9 +2,13 @@
 
             $("#mynav").load("nav.html");
             
-            $("#chartDIV").load("img/chart.svg");
+            $("#chartDIV").load("img/chart.svg", function(){
+                updateChart();
+            });
 
-            $("#output").load("output.html");
+            $("#output").load("output.html", function(){
+                setValues();
+            });
 
             const para = new ParabolicChannel(10, 1, 0.01, 0.05, 0.5);
             let tmp = localStorage.getItem('para');
@@ -161,25 +165,4 @@
                 drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
             }
 
-            const onDomElementIsReady = (elementToWatch)=> {
-                //create promise
-                return new Promise((res, rej)=> {
-                    let idInterval = setInterval(()=> {
-                        //keep waiting until the element exist
-                        if($(elementToWatch).length > 0) {
-                            clearInterval(idInterval); //remove the interval
-                            res($(elementToWatch)); //resolve the promise            
-                        }
-                    },100);
-                });
-            };
-            
-            //how to use it?
-            onDomElementIsReady("#chartDIV").then(element => {
-                updateChart();
-            });
-            
-            onDomElementIsReady("#output").then(element => {
-                setValues();
-            });
         });

@@ -2,9 +2,13 @@
 
             $("#mynav").load("nav.html");
             
-            $("#chartDIV").load("img/chart.svg");
+            $("#chartDIV").load("img/chart.svg", function(){
+                updateChart();
+            });
 
-            $("#output").load("output.html");
+            $("#output").load("output.html", function(){
+                setValues();
+            });
 
             const elli = new EllipticalChannel(18, 12, 0.01, 0.05, 0.5);
 
@@ -215,27 +219,4 @@
                 drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
             }
 
-            const onDomElementIsReady = (elementToWatch)=> {
-                //create promise
-                return new Promise((res, rej)=> {
-                    let idInterval = setInterval(()=> {
-                        //keep waiting until the element exist
-                        if($(elementToWatch).length > 0) {
-                            clearInterval(idInterval); //remove the interval
-                            res($(elementToWatch)); //resolve the promise            
-                        }
-                    },10);
-                });
-            };
-            
-            //how to use it?
-            onDomElementIsReady("#chartDIV").then(element => {
-                updateChart();
-            });
-            
-            onDomElementIsReady("#output").then(element => {
-                setValues();
-                $('#capacityRow').show();
-                $('#ymaxRow').show();
-            });
         });

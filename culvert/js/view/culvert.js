@@ -1,30 +1,40 @@
-$(document).ready(function () {
+jQuery(document).ready(function () {
     const data = {
         "DAs":[
-            {"A":4.54, "C":0.28},
-            {"A":1.00, "C":0.45}],
+            {"A":2.00, "C":0.45},
+            {"A":1.00, "C":0.30},
+            {"A":0.00, "C":0.20},
+            {"A":0.00, "C":0.20},
+            {"A":0.00, "C":0.20}],
 
         "Seelyes":[
             {"L":100.0, "S":0.01, "C":0.30},
-            {"L":150.0, "S":0.02, "C":0.20}],
+            {"L":150.0, "S":0.02, "C":0.20},
+            {"L":0.0, "S":0.02, "C":0.20},
+            {"L":0.0, "S":0.02, "C":0.20},
+            {"L":0.0, "S":0.02, "C":0.20}],
         "Kirpichs":[
             {"L": 3000.0, "H": 100.0}
         ]
     };
 
-    setDATablejQuery();
-    //$("#DATable").numTable();
+    setDATableBody();
+    setDATableFoot();
+    $("#DATable").numericalTable();
 
-    setSFTable();
-    setCFTable();
+    setSFTableBody();
+    setSFTableFoot();
+
+    $("#SFTable").numericalTable();
         //updateRFIOutput();
         //updateTable();
         //updateGraph();
-    function setDATable() {
-        //let tbl = $("#DATable");
-        var ASum = 0.0;
-        var CASum = 0.0;
-        
+
+    setCFTable();
+
+    
+    function setDATableBody() {
+
         var tbl = document.getElementById('DATableBody');
         
         for (let j = 0; j < data.DAs.length; j++) {
@@ -32,14 +42,56 @@ $(document).ready(function () {
             tbl.rows[j].cells[1].innerHTML = data.DAs[j].C.toFixed(2);
             let ca = data.DAs[j].A * data.DAs[j].C;
             tbl.rows[j].cells[2].innerHTML = ca.toFixed(2);
-            ASum += data.DAs[j].A;
-            CASum += ca;
         };
-
-        var tft = document.getElementById('DATableFoot');
-        tft.rows[0].cells[0].innerHTML = ASum.toFixed(2);
-        tft.rows[0].cells[2].innerHTML = CASum.toFixed(2);
     };
+    
+    function setDATableFoot(){
+        var sumA = 0.0;
+        var sumCA = 0.0;
+        for (let i = 0; i < data.DAs.length; i++) {
+            sumA += data.DAs[i].A;
+            sumCA += data.DAs[i].A * data.DAs[i].C;
+        }
+
+        $('#DATableFoot tr th')[0].innerHTML = sumA.toFixed(2);
+        $('#DATableFoot tr th')[2].innerHTML = sumCA.toFixed(2);
+    }
+
+    $( '#DATable tr td[contenteditable="true"]').on ('change', function(event){
+        var col = this.cellIndex;
+        var row = this.parentElement.rowIndex;
+
+        var tmp = parseFloat(this.innerHTML);
+        if (isNaN(tmp) || (tmp < 0)) {
+                showMessage($('#warningMessageDA'), "Nonpositive values are not accepted!");
+                if(row > data.DAs.lengh + 2) {
+                    return;        
+                }
+                if(col == 0) {
+                    $( this ).html(data.DAs[row - 2].A.toFixed(2));
+                }
+                else if(col == 1) {
+                    $( this ).html(data.DAs[row - 2].C.toFixed(2));
+                }
+                $(this).trigger('focus');
+            }
+            else {
+                if(row <= data.DAs.length + 2) {
+                    if (col == 0) {
+                        data.DAs[row - 2].A = tmp;        
+                        let ca = data.DAs[row - 2].A *  data.DAs[row - 2].C; 
+                        this.nextElementSibling.nextElementSibling.innerHTML = ca.toFixed(2);
+                    } else if (col ==1) {
+                        data.DAs[row - 2].C = tmp;        
+                        let ca = data.DAs[row - 2].A *  data.DAs[row - 2].C; 
+                        this.nextElementSibling.innerHTML = ca.toFixed(2);
+                    }
+
+                setDATableFoot();
+                }
+            }
+    });
+    
     
     function setSFTable() {
         var tbl = document.getElementById('SFTableBody');
@@ -60,6 +112,77 @@ $(document).ready(function () {
         tft.rows[0].cells[0].innerHTML = distance.toFixed(2);
         tft.rows[0].cells[3].innerHTML = tc.toFixed(2);
     };
+
+    function setSFTableBody() {
+        var tbl = document.getElementById('SFTableBody');
+
+        for (let j = 0; j < data.Seelyes.length; j++) {
+            tbl.rows[j].cells[0].innerHTML = data.Seelyes[j].L.toFixed(2);
+            tbl.rows[j].cells[1].innerHTML = data.Seelyes[j].S.toFixed(3);
+            tbl.rows[j].cells[2].innerHTML = data.Seelyes[j].C.toFixed(2);
+            let t = TSeelye(data.Seelyes[j]);
+            tbl.rows[j].cells[3].innerHTML = t.toFixed(2);
+        };
+    }
+    
+    function setSFTableFoot() {
+        var tc = 0.0;
+        var distance = 0.0;
+        for (let j = 0; j < data.Seelyes.length; j++) {
+            let t = TSeelye(data.Seelyes[j]);
+            distance += data.Seelyes[j].L;
+            tc += t;
+        };
+
+        var tft = document.getElementById('SFTableFoot');
+        tft.rows[0].cells[0].innerHTML = distance.toFixed(2);
+        tft.rows[0].cells[3].innerHTML = tc.toFixed(2);
+    };
+
+    
+    
+    $( '#SFTable tr td[contenteditable="true"]').on ('change', function(event){
+        var col = this.cellIndex;
+        var row = this.parentElement.rowIndex;
+        var rowTop = this.parentElement.parentElement.children[0].rowIndex;
+
+        var tmp = parseFloat(this.innerHTML);
+        if (isNaN(tmp) || (tmp < 0)) {
+                showMessage($('#warningMessageSF'), "Nonpositive values are not accepted!");
+                if(row > data.Seelyes.lengh + rowTop) {
+                    return;        
+                }
+                if(col == 0) {
+                    $( this ).html(data.DAs[row - rowTop].L.toFixed(2));
+                }
+                else if(col == 1) {
+                    $( this ).html(data.DAs[row - rowTop].S.toFixed(2));
+                } else if(col == 2) {
+                    $( this ).html(data.DAs[row - rowTop].C.toFixed(2));
+                }
+                $(this).trigger('focus');
+            }
+            else {
+                if(row <= data.Seelyes.length + rowTop) {
+                    if (col == 0) {
+                        data.Seelyes[row - rowTop].L = tmp;        
+                        let t = TSeelye(data.Seelyes[row - rowTop]);
+                        $(this).next().next().next().html(t.toFixed(2));
+                    } else if (col ==1) {
+                        data.Seelyes[row - rowTop].S = tmp;        
+                        let t = TSeelye(data.Seelyes[row - rowTop]);
+                        $(this).next().next().html(t.toFixed(2));
+                    } else if (col == 2) {
+                        data.Seelyes[row - rowTop].C = tmp;        
+                        $(this).next().html(t.toFixed(2));
+                    }
+                    
+                    setSFTableFoot();
+                }
+            }
+    });
+    
+    
     
     function setCFTable() {
 
@@ -77,126 +200,6 @@ $(document).ready(function () {
         var tft = document.getElementById('CFTableFoot');
         tft.rows[0].cells[2].innerHTML = tc.toFixed(2);
     };
-    
-    function setDATablejQuery() {
-
-        $( "#DATable tr" ).each(function () {
-            //this.rowIndex == 0 for header name
-            //this.rowIndex == 1 for header unit
-            //this.rowIndex 2-6  for values
-            //this.rowIndex == 7 for footer sum
-            console.log(this.rowIndex);
-            if (this.rowIndex <= 1) {
-                return; // equivalent to continue; return false equivalent to break;
-            };
-            
-            if(this.rowIndex == 7) {  //footer th
-                $( "th", this ).each(function () {
-                    var i = 0;
-                    switch(this.cellIndex) {
-                        case 0:        // total drainage area
-                            let sum = 0.0;
-                            for (i = 0; i < data.DAs.length; i++) {
-                                sum += data.DAs[i].A;
-                            }
-                            $( this ).html(sum.toFixed(2)); 
-                            break;
-                        case 1: $( this ).html(''); break;
-                        case 2: 
-                            let ca = 0.0;
-                            for (i = 0; i < data.DAs.length; i++) {
-                                ca += data.DAs[i].A * data.DAs[i].C;
-                            }
-                            $( this ).html(ca.toFixed(2)); 
-                            break;
-                    };
-                });
-            };
-            
-            $( "td", this ).each(function () {
-                let row = this.parentElement.rowIndex - 2; //first 2 rows in table head
-                let col = this.cellIndex;
-                console.log('row:' + row + ' column:' + col);
-                if(row < data.DAs.length) {
-                    switch(col) {
-                        case 0: $( this ).html(data.DAs[row].A.toFixed(2)); break;
-                        case 1: $( this ).html(data.DAs[row].C.toFixed(2)); break;
-                        case 2: 
-                            let ca = data.DAs[row].A * data.DAs[row].C;
-                            $( this ).html(ca.toFixed(2)); 
-                            break;
-                    };
-                } else {
-                    $( this ).html('');
-                };
-            });
-        });
-        
-        var DAInputCells = $( '#DATable tr td[contenteditable="true"]');
-        var DAInputCellsRowTop = DAInputCells[0].parentElement.rowIndex;
-        var DAInputCellsRowBottom = DAInputCells[DAInputCells.length-1].parentElement.rowIndex;
-        
-        DAInputCells.keydown(function(event){
-            var idx = DAInputCells.index(this);
-            var row;
-            switch (event.keyCode){
-                case 38:    //up
-                    row = this.parentElement.rowIndex;
-                    if(row == DAInputCellsRowTop) {
-                        let prevRow = this.parentElement.parentElement.rows[DAInputCellsRowBottom-DAInputCellsRowTop];
-                        let cell = prevRow.cells[this.cellIndex];
-                        $(cell).trigger('focus');
-                    } else {
-                        let prevRow = this.parentElement.previousElementSibling;
-                        let cell = prevRow.cells[this.cellIndex];
-                        $(cell).trigger('focus');
-                    }
-                    
-                    break;
-                case 37:    //left
-                    if(idx > 0) {
-                        $(DAInputCells[idx-1]).trigger('focus');
-                    } else {
-                        $(DAInputCells[DAInputCells.length - 1]).trigger('focus');
-                    }
-                    break;
-                case 13:    //enter
-                case 40:    //down
-                    row = this.parentElement.rowIndex;
-                    if(row == DAInputCellsRowBottom) {
-                        let nextRow = this.parentElement.parentElement.rows[0];
-                        let cell = nextRow.cells[this.cellIndex];
-                        $(cell).trigger('focus');
-                    } else {
-                        let nextRow = this.parentElement.nextElementSibling;
-                        let cell = nextRow.cells[this.cellIndex];
-                        $(cell).trigger('focus');
-                    }
-                    
-                    if(event.keyCode == 13) {   // for Enter
-                        event.preventDefault();
-                    }
-                    break;
-                case 39:    //right
-                    if(idx < DAInputCells.length - 1) {
-                        //DAInputCells[idx+1].focus;
-                        $(DAInputCells[idx+1]).trigger('focus');
-                    } else {
-                        //DAInputCells[0].focus;
-                        $(DAInputCells[0]).trigger('focus');
-                    }
-                    break;
-            };
-        });
-        
-        DAInputCells.change(function(event){
-            var col = this.cellIndex;
-            var row = this.parentElement.rowIndex;
-            console.log('Change row ' + row + 'col ' + col + ' '+ this.innerHTML);
-        });
-        
-    };
-    
     
     function TSeelye(obj) {
         return 0.225 * Math.pow(obj.L, 0.42) * Math.pow(obj.S, -0.19) / obj.C;
