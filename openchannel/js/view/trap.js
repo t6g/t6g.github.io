@@ -143,37 +143,37 @@
                 var yMin = 0;
                 var yMax = trap.depth;
 
-                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+                var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
                 var x0 = 0.0;
                 var y0 = trap.depth;
-                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
-                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+                var x0s = ocvw.offsetLeft + (x0 - xMin) * scaleX;
+                var y0s = ocvw.h - ocvw.offsetBottom - (y0 - yMin) * scaleY;
 
                 var x1 = trap.depth * trap.z1;
                 var y1 = 0;
-                var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
-                var y1s = ocvw.h - oc.offsetBottom - (y1 - yMin) * scaleY;
+                var x1s = ocvw.offsetLeft + (x1 - xMin) * scaleX;
+                var y1s = ocvw.h - ocvw.offsetBottom - (y1 - yMin) * scaleY;
 
                 var x2 = trap.depth * trap.z1 + trap.b;
-                var x2s = oc.offsetLeft + (x2 - xMin) * scaleX;
+                var x2s = ocvw.offsetLeft + (x2 - xMin) * scaleX;
 
                 var x3 = trap.depth * (trap.z1 + trap.z2) + trap.b;
-                var x3s = oc.offsetLeft + (x3 - xMin) * scaleX;
+                var x3s = ocvw.offsetLeft + (x3 - xMin) * scaleX;
 
                 var xnl = (trap.depth - trap.dn) * trap.z1;
                 var xnr = trap.depth * trap.z1 + trap.b + trap.dn * trap.z2;
-                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
-                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
-                var yns = ocvw.h - oc.offsetBottom -(trap.dn - yMin) * scaleY;
+                var xnls = ocvw.offsetLeft + (xnl - xMin) * scaleX;
+                var xnrs = ocvw.offsetLeft + (xnr - xMin) * scaleX;
+                var yns = ocvw.h - ocvw.offsetBottom -(trap.dn - yMin) * scaleY;
 
 
                 var xcl = (trap.depth - trap.dc) * trap.z1;
                 var xcr = trap.depth * trap.z1 + trap.b + trap.dc * trap.z2;
-                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
-                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
-                var ycs = ocvw.h - oc.offsetBottom - (trap.dc - yMin) * scaleY;
+                var xcls = ocvw.offsetLeft + (xcl - xMin) * scaleX;
+                var xcrs = ocvw.offsetLeft + (xcr - xMin) * scaleX;
+                var ycs = ocvw.h - ocvw.offsetBottom - (trap.dc - yMin) * scaleY;
 
 
                 $('#pathChan').attr('d', 'M' + x0s + ' ' + y0s + ' L ' + x1s + ' ' + y1s + ' L ' + x2s + ' ' + y1s + ' L ' + x3s + ' ' + y0s);
@@ -182,6 +182,6 @@
 
                 $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
             
-                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chart');
             }
         });

@@ -127,34 +127,34 @@
                 var yMin = 0;
                 var yMax = para.cd;
 
-                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+                var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
                 var x0 = 0.0;
                 var y0 = para.cd;
-                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
-                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+                var x0s = ocvw.offsetLeft + (x0 - xMin) * scaleX;
+                var y0s = ocvw.h - ocvw.offsetBottom - (y0 - yMin) * scaleY;
 
                 var x1 = 0.5 * para.tw;
                 var y1 = -para.cd;
-                var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
-                var y1s = ocvw.h - oc.offsetBottom - (y1 - yMin) * scaleY;
+                var x1s = ocvw.offsetLeft + (x1 - xMin) * scaleX;
+                var y1s = ocvw.h - ocvw.offsetBottom - (y1 - yMin) * scaleY;
 
                 var x2 = para.tw;
-                var x2s = oc.offsetLeft + (x2 - xMin) * scaleX;
+                var x2s = ocvw.offsetLeft + (x2 - xMin) * scaleX;
 
                 var xnl = 0.5 * para.tw - 0.5 * para.tw * Math.sqrt(para.dn / para.cd);
                 var xnr = 0.5 * para.tw + 0.5 * para.tw * Math.sqrt(para.dn / para.cd);;
-                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
-                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
-                var yns = ocvw.h - oc.offsetBottom -(para.dn - yMin) * scaleY;
+                var xnls = ocvw.offsetLeft + (xnl - xMin) * scaleX;
+                var xnrs = ocvw.offsetLeft + (xnr - xMin) * scaleX;
+                var yns = ocvw.h - ocvw.offsetBottom -(para.dn - yMin) * scaleY;
 
 
                 var xcl = 0.5 * para.tw - 0.5 * para.tw * Math.sqrt(para.dc / para.cd);
                 var xcr = 0.5 * para.tw + 0.5 * para.tw * Math.sqrt(para.dc / para.cd);;
-                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
-                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
-                var ycs = ocvw.h - oc.offsetBottom - (para.dc - yMin) * scaleY;
+                var xcls = ocvw.offsetLeft + (xcl - xMin) * scaleX;
+                var xcrs = ocvw.offsetLeft + (xcr - xMin) * scaleX;
+                var ycs = ocvw.h - ocvw.offsetBottom - (para.dc - yMin) * scaleY;
 
                 $('#pathChan').attr('d', 'M' + x0s + ' ' + y0s + ' Q ' + x1s + ' ' + y1s + ' ' + x2s + ' ' + y0s);
 
@@ -162,7 +162,7 @@
 
                 $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
             
-                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chart');
             }
 
         });

@@ -238,18 +238,18 @@ function update(){
     var yMin = 0;
     var yMax = tria.depth;
 
-    var scaleX = (chart.clientWidth - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-    var scaleY = (chart.clientHeight - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+    var scaleX = (chart.clientWidth - oc.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+    var scaleY = (chart.clientHeight - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
     var x0 = 0.0;
     var y0 = tria.depth;
     var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
-    var y0s = chart.clientHeight - oc.offsetBottom - (y0 - yMin) * scaleY;
+    var y0s = chart.clientHeight - ocvw.offsetBottom - (y0 - yMin) * scaleY;
 
     var x1 = tria.depth * tria.z1;
     var y1 = 0;
     var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
-    var y1s = chart.clientHeight - oc.offsetBottom - (y1 - yMin) * scaleY;
+    var y1s = chart.clientHeight - ocvw.offsetBottom - (y1 - yMin) * scaleY;
 
     var x2 = tria.depth * (tria.z1 + tria.z2);
     var x2s = oc.offsetLeft + (x2 - xMin) * scaleX;
@@ -258,14 +258,14 @@ function update(){
     var xnr = tria.depth * tria.z1 + tria.dn * tria.z2;
     var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
     var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
-    var yns = chart.clientHeight - oc.offsetBottom -(tria.dn - yMin) * scaleY;
+    var yns = chart.clientHeight - ocvw.offsetBottom -(tria.dn - yMin) * scaleY;
 
 
     var xcl = (tria.depth - tria.dc) * tria.z1;
     var xcr = tria.depth * tria.z1 + tria.dc * tria.z2;
     var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
     var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
-    var ycs = chart.clientHeight - oc.offsetBottom - (tria.dc - yMin) * scaleY;
+    var ycs = chart.clientHeight - ocvw.offsetBottom - (tria.dc - yMin) * scaleY;
 
     
     document.getElementById('pathChan').setAttribute('d', 'M' + x0s + ' ' + y0s + 'L' + x1s + ' ' + y1s + 'L' + x2s + ' ' + y0s);
@@ -280,7 +280,7 @@ function update(){
     
     //draw grid lines;
     let x = 0;
-    let y = chart.clientHeight - oc.offsetBottom;
+    let y = chart.clientHeight - ocvw.offsetBottom;
     let xDraw = oc.offsetLeft;
     var xGrid = '';
     var text;
@@ -289,9 +289,9 @@ function update(){
     var idLabel;
     var i = 1;
     
-    while (xDraw <= chart.clientWidth - oc.offsetRight){
-        xGrid += 'M' + xDraw + ' ' + oc.offsetTop + 'L' + xDraw + ' ' + y;
-        yPos = chart.clientHeight - 0.65 * oc.offsetBottom;
+    while (xDraw <= chart.clientWidth - ocvw.offsetRight){
+        xGrid += 'M' + xDraw + ' ' + ocvw.offsetTop + 'L' + xDraw + ' ' + y;
+        yPos = chart.clientHeight - 0.65 * ocvw.offsetBottom;
         idLabel = 'xTick' + i;
         document.getElementById(idLabel).setAttribute('x', xDraw);
         document.getElementById(idLabel).setAttribute('y', yPos);
@@ -312,12 +312,12 @@ function update(){
     var yInc = niceIncrement(yMin, yMax);
     var yIncDraw = yInc * scaleY;
     
-    let yDraw = chart.clientHeight - oc.offsetBottom;
+    let yDraw = chart.clientHeight - ocvw.offsetBottom;
     var yGrid = '';
-    x = chart.clientWidth - oc.offsetRight;
+    x = chart.clientWidth - ocvw.offsetRight;
     y = 0;
     i = 1;
-    while (yDraw > oc.offsetTop){
+    while (yDraw > ocvw.offsetTop){
         yGrid += 'M' + oc.offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
         xPos = 0.70*oc.offsetLeft;
         idLabel = 'yTick' + i;
@@ -341,8 +341,8 @@ function update(){
 
     document.getElementById("pathGridX").setAttribute("d", yGrid);
     
-    xPos = oc.offsetLeft + 0.5 * (chart.clientWidth - oc.offsetLeft - oc.offsetRight);
-    yPos = chart.clientHeight - 0.25 * oc.offsetBottom;
+    xPos = oc.offsetLeft + 0.5 * (chart.clientWidth - oc.offsetLeft - ocvw.offsetRight);
+    yPos = chart.clientHeight - 0.25 * ocvw.offsetBottom;
     document.getElementById('xLabel').setAttribute("x", xPos);
     document.getElementById('xLabel').setAttribute("y", yPos);
 

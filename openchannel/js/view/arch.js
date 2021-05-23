@@ -211,8 +211,8 @@
     var yMin = 0;
     var yMax = arch.rise;
 
-                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+                var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
                 if(scaleX >= scaleY){
                     scaleX = scaleY;
@@ -222,7 +222,7 @@
                 }
                 
                 //displacement for x to move archle to the middle
-                var dxs = 0.5 * (-oc.offsetLeft + ocvw.w - oc.offsetRight);
+                var dxs = 0.5 * (-ocvw.offsetLeft + ocvw.w - ocvw.offsetRight);
 
     // draw arch 
     var Theta = arch.Theta;
@@ -232,17 +232,17 @@
     
     var xE = arch.XE;
     var yE = arch.YE;
-    var xEs = oc.offsetLeft + (xE - xMin) * scaleX + dxs;
-    var xEns = oc.offsetLeft + (-xE - xMin) * scaleX + dxs;
-    var yEs = ocvw.h - oc.offsetBottom - (yE - yMin) * scaleY;
+    var xEs = ocvw.offsetLeft + (xE - xMin) * scaleX + dxs;
+    var xEns = ocvw.offsetLeft + (-xE - xMin) * scaleX + dxs;
+    var yEs = ocvw.h - ocvw.offsetBottom - (yE - yMin) * scaleY;
     var rbxs = arch.rb * scaleX;
     var rbys = arch.rb * scaleY;
     
     var xG = arch.XG;
     var yG = arch.YG;
-    var xGs = oc.offsetLeft + (xG - xMin) * scaleX + dxs;
-    var xGns = oc.offsetLeft + (-xG - xMin) * scaleX + dxs;
-    var yGs = ocvw.h - oc.offsetBottom - (yG - yMin) * scaleY;
+    var xGs = ocvw.offsetLeft + (xG - xMin) * scaleX + dxs;
+    var xGns = ocvw.offsetLeft + (-xG - xMin) * scaleX + dxs;
+    var yGs = ocvw.h - ocvw.offsetBottom - (yG - yMin) * scaleY;
     var rcxs = arch.rc * scaleX;
     var rcys = arch.rc * scaleY;
     
@@ -252,16 +252,16 @@
     //normal water surface
     var xnr = arch.y2x(arch.dn, arch.rb, arch.rt, arch.rc, arch.rise);
     var xnl = -xnr;
-    var xnls = oc.offsetLeft + (xnl - xMin) * scaleX + dxs;
-    var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX + dxs;
-    var yns = ocvw.h - oc.offsetBottom -(arch.dn - yMin) * scaleY;
+    var xnls = ocvw.offsetLeft + (xnl - xMin) * scaleX + dxs;
+    var xnrs = ocvw.offsetLeft + (xnr - xMin) * scaleX + dxs;
+    var yns = ocvw.h - ocvw.offsetBottom -(arch.dn - yMin) * scaleY;
 
     //critical water surface
     var xcr = arch.y2x(arch.dc, arch.rb, arch.rt, arch.rc, arch.rise);
     var xcl = -xcr;
-    var xcls = oc.offsetLeft + (xcl - xMin) * scaleX + dxs;
-    var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX + dxs;
-    var ycs = ocvw.h - oc.offsetBottom - (arch.dc - yMin) * scaleY;
+    var xcls = ocvw.offsetLeft + (xcl - xMin) * scaleX + dxs;
+    var xcrs = ocvw.offsetLeft + (xcr - xMin) * scaleX + dxs;
+    var ycs = ocvw.h - ocvw.offsetBottom - (arch.dc - yMin) * scaleY;
 
                 $('#pathChan').attr('d', 'M ' + xEs + ' ' + yEs + 
                                                      ' A ' + rbxs + ' ' + rbys + ' ' + (2*th) + ' 0 1 ' + xEns + ' ' + yEs + 
@@ -273,7 +273,7 @@
 
                 $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
             
-                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chart');
 
     //draw and label rb
     var xB = arch.rb * Math.sin(0.5 * Theta);
@@ -281,15 +281,15 @@
     var xO = (arch.rb - 0.4 * arch.rise) * Math.sin(0.5 * Theta);
     var yO = arch.rb - (arch.rb - 0.4 * arch.rise) * Math.cos(0.5 * Theta);
 
-    var xBs = oc.offsetLeft + (xB - xMin) * scaleX + dxs;
-    var yBs = ocvw.h - oc.offsetBottom - (yB - yMin) * scaleY;
-    var xOs = oc.offsetLeft + (xO - xMin) * scaleX + dxs;
-    var yOs = ocvw.h - oc.offsetBottom - (yO - yMin) * scaleY;
+    var xBs = ocvw.offsetLeft + (xB - xMin) * scaleX + dxs;
+    var yBs = ocvw.h - ocvw.offsetBottom - (yB - yMin) * scaleY;
+    var xOs = ocvw.offsetLeft + (xO - xMin) * scaleX + dxs;
+    var yOs = ocvw.h - ocvw.offsetBottom - (yO - yMin) * scaleY;
  
     $('#pathRb').attr('d', 'M' + xOs + ' ' + yOs + 'L' + xBs + ' ' + yBs);
     
-    var RbLeft = oc.offsetLeft + (0.5 * (xB + xO) - xMin) * scaleX + dxs + 2;
-    var RbTop = ocvw.h - oc.offsetBottom - (0.5 * (yB + yO) - yMin) * scaleY - 10;
+    var RbLeft = ocvw.offsetLeft + (0.5 * (xB + xO) - xMin) * scaleX + dxs + 2;
+    var RbTop = ocvw.h - ocvw.offsetBottom - (0.5 * (yB + yO) - yMin) * scaleY - 10;
     $('#rbLabel').attr("x", RbLeft);
     $('#rbLabel').attr("y", RbTop);
 
@@ -298,15 +298,15 @@
     var yT = arch.rise - arch.rt + arch.rt * Math.cos(0.5 * Phi);
         xO = 0.6 * xT;
         yO = arch.rise - arch.rt + 0.6 * arch.rt * Math.cos(0.5 * Phi);
-    var xTs = oc.offsetLeft + (xT - xMin) * scaleX + dxs;
-    var yTs = ocvw.h - oc.offsetBottom - (yT - yMin) * scaleY;
-    var xOs = oc.offsetLeft + (xO - xMin) * scaleX + dxs;
-    var yOs = ocvw.h - oc.offsetBottom - (yO - yMin) * scaleY;
+    var xTs = ocvw.offsetLeft + (xT - xMin) * scaleX + dxs;
+    var yTs = ocvw.h - ocvw.offsetBottom - (yT - yMin) * scaleY;
+    var xOs = ocvw.offsetLeft + (xO - xMin) * scaleX + dxs;
+    var yOs = ocvw.h - ocvw.offsetBottom - (yO - yMin) * scaleY;
  
     $('#pathRt').attr('d', 'M' + xOs + ' ' + yOs + 'L' + xTs + ' ' + yTs);
 
-    var RtLeft = oc.offsetLeft + (0.5 * (xT + xO) - xMin) * scaleX + dxs ;
-    var RtTop = ocvw.h - oc.offsetBottom - (0.5 * (yT + yO) - yMin) * scaleY;
+    var RtLeft = ocvw.offsetLeft + (0.5 * (xT + xO) - xMin) * scaleX + dxs ;
+    var RtTop = ocvw.h - ocvw.offsetBottom - (0.5 * (yT + yO) - yMin) * scaleY;
 
     $('#rtLabel').attr("x", RtLeft);
     $('#rtLabel').attr("y", RtTop);
@@ -314,15 +314,15 @@
     //draw and label rc
     var xC = arch.XD + arch.rc * Math.sin(Math.PI / 4.0);
     var yC = arch.YD - arch.rc * Math.cos(Math.PI / 4.0);
-    var xCs = oc.offsetLeft + (xC - xMin) * scaleX + dxs;
-    var yCs = ocvw.h - oc.offsetBottom - (yC - yMin) * scaleY;
-    var xDs = oc.offsetLeft + (arch.XD - xMin) * scaleX + dxs;
-    var yDs = ocvw.h - oc.offsetBottom - (arch.YD - yMin) * scaleY;
+    var xCs = ocvw.offsetLeft + (xC - xMin) * scaleX + dxs;
+    var yCs = ocvw.h - ocvw.offsetBottom - (yC - yMin) * scaleY;
+    var xDs = ocvw.offsetLeft + (arch.XD - xMin) * scaleX + dxs;
+    var yDs = ocvw.h - ocvw.offsetBottom - (arch.YD - yMin) * scaleY;
 
     $('#pathRc').attr('d', 'M' + xDs + ' ' + yDs + 'L' + xCs + ' ' + yCs);
 
-    var RcLeft = oc.offsetLeft + (0.5 * (xC + arch.XD) - xMin) * scaleX + dxs ;
-    var RcTop = ocvw.h - oc.offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
+    var RcLeft = ocvw.offsetLeft + (0.5 * (xC + arch.XD) - xMin) * scaleX + dxs ;
+    var RcTop = ocvw.h - ocvw.offsetBottom - (0.5 * (yC + arch.YD) - yMin) * scaleY - 15;
     $('#rcLabel').attr("x", RcLeft);
     $('#rcLabel').attr("y", RcTop);            
             }

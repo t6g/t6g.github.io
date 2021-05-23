@@ -45,9 +45,9 @@ function init(isClosedConduit, isArch) {
     if(chart == null) return;
 
     document.getElementById('axesRect').setAttribute('x', oc.offsetLeft);
-    document.getElementById('axesRect').setAttribute('y', oc.offsetTop);
-    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - oc.offsetRight);
-    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - oc.offsetTop - oc.offsetBottom);
+    document.getElementById('axesRect').setAttribute('y', ocvw.offsetTop);
+    document.getElementById('axesRect').setAttribute('width', chart.clientWidth- oc.offsetLeft - ocvw.offsetRight);
+    document.getElementById('axesRect').setAttribute('height', chart.clientHeight - ocvw.offsetTop - ocvw.offsetBottom);
 
     var tmp = localStorage.getItem("oc.isLightMode");
     if (tmp !== null) oc.isLightMode = tmp ==="false" ? false : true;

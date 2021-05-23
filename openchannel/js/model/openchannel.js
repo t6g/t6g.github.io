@@ -26,10 +26,10 @@ var oc = {
     TolQ : 0.000001, //tolerance for flow rate, cfs or m^3/s
     MaxCount: 100,   //maximum number of iterations for Newton's Method
     
-    offsetLeft : 60,
-    offsetTop : 0,
-    offsetRight : 30,
-    offsetBottom : 60
+    //offsetLeft : 60,
+    //offsetTop : 0,
+    //offsetRight : 30,
+    //offsetBottom : 60
 };
 
 function in2ftm(valin){

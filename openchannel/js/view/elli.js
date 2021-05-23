@@ -177,8 +177,8 @@
                 var yMin = 0;
                 var yMax = 2 * elli.b;
 
-                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+                var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
                 if(scaleX >= scaleY){
                     scaleX = scaleY;
@@ -190,25 +190,25 @@
                 var rxs = elli.a * scaleX;
                 var rys = elli.b * scaleY;
 
-                var dxs = 0.5 * (-oc.offsetLeft + ocvw.w - oc.offsetRight) - rxs; //displacement for x to move ellile to the middle
+                var dxs = 0.5 * (-ocvw.offsetLeft + ocvw.w - ocvw.offsetRight) - rxs; //displacement for x to move ellile to the middle
 
                 var x0 = 0;
                 var y0 = elli.b;
-                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX + dxs;
-                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+                var x0s = ocvw.offsetLeft + (x0 - xMin) * scaleX + dxs;
+                var y0s = ocvw.h - ocvw.offsetBottom - (y0 - yMin) * scaleY;
 
                 var xnl = elli.a * (1.0 - Math.sin(elli.alphan));
                 var xnr = elli.a * (1.0 + Math.sin(elli.alphan));
-                var xnls = oc.offsetLeft + (xnl - xMin) * scaleX + dxs;
-                var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX + dxs;
-                var yns = ocvw.h - oc.offsetBottom -(elli.dn - yMin) * scaleY;
+                var xnls = ocvw.offsetLeft + (xnl - xMin) * scaleX + dxs;
+                var xnrs = ocvw.offsetLeft + (xnr - xMin) * scaleX + dxs;
+                var yns = ocvw.h - ocvw.offsetBottom -(elli.dn - yMin) * scaleY;
 
 
                 var xcl = elli.a * (1.0 - Math.sin(elli.alphac));
                 var xcr = elli.a * (1.0 + Math.sin(elli.alphac));
-                var xcls = oc.offsetLeft + (xcl - xMin) * scaleX + dxs;
-                var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX + dxs;
-                var ycs = ocvw.h - oc.offsetBottom - (elli.dc - yMin) * scaleY;
+                var xcls = ocvw.offsetLeft + (xcl - xMin) * scaleX + dxs;
+                var xcrs = ocvw.offsetLeft + (xcr - xMin) * scaleX + dxs;
+                var ycs = ocvw.h - ocvw.offsetBottom - (elli.dc - yMin) * scaleY;
 
                 $('#pathChan').attr('d', 'M' + x0s + ' ' + y0s + ' a ' + rxs + ' ' + rys + ' 0 1 0 ' + 2.0* rxs + ' 0 ' + ' a ' + rxs + ' ' + rys + ' 0 1 0 -' + 2.0* rxs + ' 0 ');
 
@@ -216,7 +216,7 @@
 
                 $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
             
-                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chart');
             }
 
         });

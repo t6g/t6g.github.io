@@ -10,9 +10,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<!--<script src="js/model/culvert.js"></script> -->
+    <script src="js/model/culvert.js"></script>
     <script src="js/view/culvert.js"></script>
+    <script src="js/view/view.js"></script>
     <script src="js/util/numericalTable.js"></script>
+    <script src="../ee/js/rainfall.js"></script>
+    <script src="../openchannel/js/util.js"></script>
+    <script src="../openchannel/js/model/openchannel.js"></script>
+    <script src="../openchannel/js/model/circ.js"></script>
 <body>
     <div class="container">
         <div>
@@ -97,7 +102,7 @@
 
             <div class="col-md-4 box">
                 <h5 style="text-align:center;">Concentrated Flow</h5>
-                <table class="table">
+                <table class="table" id="CFTable">
                     <thead>
                     <th>L</th>
                     <th>H</th>
@@ -115,42 +120,44 @@
                         <tr><th></th><th></th><th></th></tr>
                     </tfoot>
                 </table>
-                <span>
-                    <label for="tcInput" class="left">Time of concentration (minute):</label>
-                    <input id="tcInput" name="tcInput" type="number" min="5" max="60" value="5" step="1" style="text-align:right;float:right;">
-                </span>
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessageCF">message</span>
+                </div>
             </div>
         </div>
         <!-- row 2 -->
         <div class="row">
-            <div class="col-4 box">
+            <div class="col-md-4 box">
                 <h5 style="text-align:center;">Storm</h5>
-                <fieldset id="inputFieldset" align="center">
-                    <span>
-                        <label for="NOAAsite" class="left">Choose a site:</label>
-                        <select name="NOAAsite" id="NOAAsite" value="0" class="right">
-                            <option value="0">Chesterfield</option>
-                            <option value="1">Hopewell</option>
-                            <option value="2">Powhatan</option>
-                            <option value="3">Richmond WSO Airport</option>
-                            <option value="4">Richmond WB City</option>
-                        </select>
-                    </span>
-                </fieldset>
-                <table class="table">
+                <div class="mb-1">
+                    <label for="NOAAsite">Choose a site:</label>
+                    <select name="NOAAsite" id="NOAAsite" value="0"  style="text-align:left;float:right;">
+                        <option value="0">Chesterfield</option>
+                        <option value="1">Hopewell</option>
+                        <option value="2">Powhatan</option>
+                        <option value="3">Richmond WSO Airport</option>
+                        <option value="4">Richmond WB City</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="tcInput">Tc (minute):</label>
+                    <input id="tcInput" name="tcInput" type="number" min="5" max="60" value="5" step="1" style="text-align:right;float:right;">
+                </div>
+                <table class="table" id='qTable'>
                     <thead>
                         <tr><th>Interval</th><th>I</th><th>Q</th></tr>
                         <tr><td>(year)</td><td>(in/hour)</td><td>(cfs)</td></tr>
                     </thead>
-                    <tbody>
-                        <tr><td>2</td>  <td></td><td></td></tr>
+                    <tbody id='qTableBody'>
                         <tr><td>10</td> <td></td><td></td></tr>
+                        <tr><td>25</td> <td></td><td></td></tr>
                         <tr><td>50</td> <td></td><td></td></tr>
                         <tr><td>100</td><td></td><td></td></tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-4 box">
+            <div class="col-md-4 box">
                 <h5 style="text-align:center;">Roadway</h5>
                 <table class="table">
                     <thead>
@@ -160,7 +167,7 @@
                         <tr>
                             <td style="text-align:left;">BVC Elevation</td>
                             <td><input class="value" id="elevBVC" name="elevBVC" type="number" min="1" value="1" step="1"></td>
-                            <td></td>
+                            <td>ft</td>
                         </tr>
                         <tr>
                             <td style="text-align:left;">BVC Grade</td>
@@ -179,42 +186,52 @@
                         </tr>
                         <tr>
                             <td style="text-align:left;">Sag Elevation</td>
-                            <td></td>
-                            <td></td>
+                            <td id="elevSag"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">EVC Elevation</td>
+                            <td id="elevEVC"></td>
+                            <td>ft</td>
                         </tr>
                     </tbody>
                 </table>
 
             </div>
-            <div class="col-4 box">
+            <div class="col-md-4 box">
 
-                <h5 style="text-align:center;">Section Across Flow</h5>
-                <svg id="chart" viewBox="0 0 600 400">
+                <h5 style="text-align:center;">X-Section Across Flow @ Inlet</h5>
+                <svg id="chartProfile" viewBox="0 0 450 300">
 
-                    <rect id="axesRect" x="50" y="20" width="540" height="330" fill="none" stroke="black" />
+                    <rect id="axesRect" x="60" y="0" width="360" height="240" fill="none" stroke="black"/>
 
-                    <text id="xLabel" x="300" y="390" text-anchor="middle">Time of Concentration (minute)</text>
+                    <text id="xLabel" x="300" y="390" text-anchor="middle">Station (ft)</text>
 
-                    <text id="yLabel" text-anchor="middle" transform='translate(15, 200) rotate(-90)'>Rainfall Intensity (inch/hour)</text>
+                    <text id="yLabel" text-anchor="middle" transform='translate(15, 200) rotate(-90)'>Elevation (ft)</text>
 
                     <path id="pathGridX" d="M50 53 h540 M50 86 h540 M50 119 h540 M50 152 h540 M50 185 h540 M50 218 h540 M50 251 h540 M50 284 h540 M50 317 h540" stroke="black" stroke-width="0.1" fill="none" stroke-dasharray="4,4" />
 
                     <path id="pathGridY" d="M95 20 v330 M140 20 v330 M185 20 v330 M230 20 v330  M275 20 v330 M320 20 v330 M365 20 v330 M410 20 v330 M455 20 v330 M500 20 v330 M545 20 v330" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4" />
 
-                    <text id="xTick1" x="50" y="370" text-anchor="middle">0</text>
-                    <text id="xTick3" x="140" y="370" text-anchor="middle">10</text>
-                    <text id="xTick5" x="230" y="370" text-anchor="middle">20</text>
-                    <text id="xTick6" x="320" y="370" text-anchor="middle">30</text>
-                    <text id="xTick8" x="410" y="370" text-anchor="middle">40</text>
-                    <text id="xTicka" x="500" y="370" text-anchor="middle">50</text>
-                    <text id="xTickc" x="590" y="370" text-anchor="middle">60</text>
+                    <text id="xTick1" x="50"  y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick2" x="100" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick3" x="150" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick4" x="200" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick5" x="250" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick6" x="300" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick7" x="350" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick8" x="400" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick9" x="450" y="270" text-anchor="middle">&nbsp;</text>
 
-                    <text id="yTick1" x="30" y="20" text-anchor="middle" alignment-baseline="middle">10</text>
-                    <text id="yTick3" x="30" y="86" text-anchor="middle" alignment-baseline="middle">8</text>
-                    <text id="yTick5" x="30" y="152" text-anchor="middle" alignment-baseline="middle">6</text>
-                    <text id="yTick7" x="30" y="218" text-anchor="middle" alignment-baseline="middle">4</text>
-                    <text id="yTick9" x="30" y="284" text-anchor="middle" alignment-baseline="middle">2</text>
-                    <text id="yTickb" x="30" y="350" text-anchor="middle" alignment-baseline="middle">0</text>
+                    <text id="yTick1" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick2" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick3" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick4" x="30" y="200" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick5" x="30" y="250" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick6" x="30" y="300" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick7" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick8" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick9" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
 
                     <text id="lbl1y" x="520" y="50" text-anchor="left">1 y</text>
                     <text id="lbl2y" x="520" y="80" text-anchor="left" fill="blue">2 y</text>
@@ -223,8 +240,8 @@
 
                     <text id="lblTitle" x="250" y="40"></text>
 
-                    <path id="path01" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none" />
-                    <path id="path02" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none" />
+                    <path id="pathVC" d="M50 50 L100 150" stroke="black" stroke-width="3" fill="none" />
+                    <path id="pathCulvert" d="M175 200" stroke="black" stroke-width="1" fill="none" />
                     <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5" />
                     <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5" />
                 </svg>
@@ -232,7 +249,7 @@
         </div>
         <!-- row 3 -->
         <div class="row">
-            <div class="col-4 box">
+            <div class="col-md-4 box">
                 <h5 style="text-align:center;">Culvert</h5>
                 <table class="table">
                     <thead>
@@ -256,18 +273,18 @@
                         </tr>
                         <tr>
                             <td style="text-align:left;">Horizontal Distance</td>
-                            <td><input class="value" id="Horizontal distance" name="horizontalDistance" type="number" min="0" value="120" step="1"></td>
+                            <td><input class="value" id="distanceInOutlet" name="distanceInOutlet" type="number" min="0" value="120" step="1"></td>
                             <td>ft</td>
                         </tr>
                         <tr>
                             <td style="text-align:left;">Slope</td>
-                            <td></td>
+                            <td id='slopeBarrel'></td>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-4 box">
+            <div class="col-md-4 box">
                 <h5 style="text-align:center;">Barrel</h5>
                 <table class="table">
                     <thead>
@@ -323,11 +340,11 @@
                 </table>
 
             </div>
-            <div class="col-4 box">
+            <div class="col-md-4 box">
                 <h5 style="text-align:center;">Section Along Flow</h5>
-                <svg id="chart" viewBox="0 0 600 400">
+                <svg id="chart" viewBox="0 0 450 300">
 
-                    <rect id="axesRect" x="50" y="20" width="540" height="330" fill="none" stroke="black" />
+                    <rect id="axesRect" x="60" y="0" width="360" height="240" fill="none" stroke="black"/>
 
                     <text id="xLabel" x="300" y="390" text-anchor="middle">Time of Concentration (minute)</text>
 
@@ -359,7 +376,7 @@
 
                     <text id="lblTitle" x="250" y="40"></text>
 
-                    <path id="path01" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none" />
+                    <path id="pathVC" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none" />
                     <path id="path02" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none" />
                     <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5" />
                     <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5" />
@@ -385,7 +402,5 @@
         <!-- end of container -->
     </div>
 
-    <script src='js/util/numTable.js'></script>
-    <script src='js/view/culvert.js'></script>
     </body>
 </html>

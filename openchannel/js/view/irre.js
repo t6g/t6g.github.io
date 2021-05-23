@@ -289,31 +289,31 @@ $("#btnApp").click(function(){
     var yMin = irre.yBottom;
     var yMax = Math.max(irre.yLeft, irre.yRight);
 
-    var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-    var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+    var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+    var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
-    var x0s = oc.offsetLeft + (irre.geometry[0][0] - xMin) * scaleX;
-    var y0s = ocvw.h - oc.offsetBottom - (irre.geometry[0][1] - yMin) * scaleY;
+    var x0s = ocvw.offsetLeft + (irre.geometry[0][0] - xMin) * scaleX;
+    var y0s = ocvw.h - ocvw.offsetBottom - (irre.geometry[0][1] - yMin) * scaleY;
 
     var pathChan = 'M' + x0s + ' ' + y0s;
     for (let i = 1; i < irre.geometry.length; i++) {
-        let x1s = oc.offsetLeft + (irre.geometry[i][0] - xMin) * scaleX;
-        let y1s = ocvw.h - oc.offsetBottom - (irre.geometry[i][1] - yMin) * scaleY;
+        let x1s = ocvw.offsetLeft + (irre.geometry[i][0] - xMin) * scaleX;
+        let y1s = ocvw.h - ocvw.offsetBottom - (irre.geometry[i][1] - yMin) * scaleY;
         pathChan += ' L ' + x1s + ' ' + y1s;
     }
         
     var xnl = irre.d2xL(irre.dn);
     var xnr = irre.d2xR(irre.dn);
-    var xnls = oc.offsetLeft + (xnl - xMin) * scaleX;
-    var xnrs = oc.offsetLeft + (xnr - xMin) * scaleX;
-    var yns = ocvw.h - oc.offsetBottom -(irre.yBottom + irre.dn - yMin) * scaleY;
+    var xnls = ocvw.offsetLeft + (xnl - xMin) * scaleX;
+    var xnrs = ocvw.offsetLeft + (xnr - xMin) * scaleX;
+    var yns = ocvw.h - ocvw.offsetBottom -(irre.yBottom + irre.dn - yMin) * scaleY;
 
 
     var xcl = irre.d2xL(irre.dc);
     var xcr = irre.d2xR(irre.dc);;
-    var xcls = oc.offsetLeft + (xcl - xMin) * scaleX;
-    var xcrs = oc.offsetLeft + (xcr - xMin) * scaleX;
-    var ycs = ocvw.h - oc.offsetBottom - (irre.yBottom + irre.dc - yMin) * scaleY;
+    var xcls = ocvw.offsetLeft + (xcl - xMin) * scaleX;
+    var xcrs = ocvw.offsetLeft + (xcr - xMin) * scaleX;
+    var ycs = ocvw.h - ocvw.offsetBottom - (irre.yBottom + irre.dc - yMin) * scaleY;
 
 
                 $('#pathChan').attr('d', pathChan);
@@ -322,7 +322,7 @@ $("#btnApp").click(function(){
 
                 $('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
             
-                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chart');
             }
 
         });

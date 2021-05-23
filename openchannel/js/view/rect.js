@@ -112,22 +112,22 @@
                 var yMin = 0;
                 var yMax = rect.depth;
 
-                var scaleX = (ocvw.w - oc.offsetLeft - oc.offsetRight)/ (xMax - xMin);
-                var scaleY = (ocvw.h - oc.offsetTop - oc.offsetBottom) / (yMax - yMin);
+                var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
+                var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
 
                 var x0 = 0.0;
                 var y0 = rect.depth;
-                var x0s = oc.offsetLeft + (x0 - xMin) * scaleX;
-                var y0s = ocvw.h - oc.offsetBottom - (y0 - yMin) * scaleY;
+                var x0s = ocvw.offsetLeft + (x0 - xMin) * scaleX;
+                var y0s = ocvw.h - ocvw.offsetBottom - (y0 - yMin) * scaleY;
 
                 var x1 = rect.depth * rect.b;
                 var y1 = 0;
-                var x1s = oc.offsetLeft + (x1 - xMin) * scaleX;
-                var y1s = ocvw.h - oc.offsetBottom - (y1 - yMin) * scaleY;
+                var x1s = ocvw.offsetLeft + (x1 - xMin) * scaleX;
+                var y1s = ocvw.h - ocvw.offsetBottom - (y1 - yMin) * scaleY;
 
-                var yns = ocvw.h - oc.offsetBottom -(rect.dn - yMin) * scaleY;
+                var yns = ocvw.h - ocvw.offsetBottom -(rect.dn - yMin) * scaleY;
 
-                var ycs = ocvw.h - oc.offsetBottom - (rect.dc - yMin) * scaleY;
+                var ycs = ocvw.h - ocvw.offsetBottom - (rect.dc - yMin) * scaleY;
 
 
                 $('#pathChan').attr('d', 'M ' + x0s + ' ' + y0s + ' V ' + y1s + ' H' + x1s + ' V' + y0s);
@@ -136,7 +136,7 @@
 
                 $('#pathCrit').attr('d', 'M ' + x0s + ' ' + ycs + ' L ' + x1s + ' ' + ycs);
             
-                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY);
+                drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chart');
             }
 
         });
