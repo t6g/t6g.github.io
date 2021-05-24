@@ -310,7 +310,79 @@ jQuery(document).ready(function () {
         culvert.site =  parseInt($("#NOAAsite").val());
         updateStorm();
     });
+
+    $( "#elevBVC" ).on('change', function () {
+        var tmp = parseFloat(this.value);
+        if (isNaN(tmp)) {
+            alert('Input a number for BVC elevation');
+            return;
+        }
+        culvert.roadSag.BVCElevation = tmp;
+        updateChartProfile();
+    });
     
+    $( "#gradeBVC" ).on('change', function () {
+        var tmp = parseFloat(this.value);
+        if (isNaN(tmp)) {
+            alert('Input a number for BVC grade');
+            return;
+        }
+        if (tmp >= 0) {
+            alert('Input a negative number for BVC grade');
+            return;
+        }
+
+        culvert.roadSag.BVCGrade = tmp;
+        updateChartProfile();
+    });
+    
+    $( "#gradeEVC" ).on('change', function () {
+        var tmp = parseFloat(this.value);
+        if (isNaN(tmp)) {
+            alert('Input a number for EVC grade');
+            return;
+        }
+        if (tmp <= 0) {
+            alert('Input a positive number for BVC grade');
+            return;
+        }
+
+        culvert.roadSag.EVCGrade = tmp;
+        updateChartProfile();
+    });
+    
+    $( "#lengthVC" ).on('change', function () {
+        var tmp = parseFloat(this.value);
+        if (isNaN(tmp)) {
+            alert('Input a number for VC length');
+            return;
+        }
+        if (tmp <= 0) {
+            alert('Input a positive number for VC length');
+            return;
+        }
+
+        culvert.roadSag.VCLength = tmp;
+        updateChartProfile();
+    });
+    
+    /*
+    
+    //barrel
+    $( "#numPipe" ).val(culvert.barrel.amount);
+    
+    $( "#inletElevation" ).val(culvert.barrel.inletElevation.toFixed(2));
+
+    $( "#outletElevation" ).val(culvert.barrel.outletElevation.toFixed(2));
+
+    $( "#distanceInOutlet" ).val(culvert.barrel.distance.toFixed(2));
+
+    $( "#slopeBarrel" ).html(culvert.slopeBarrel.toFixed(4));
+    //updateStorm();
+
+    $( "#diameter" ).val(culvert.xSection.r * 2 * 12);
+
+    */
     
     
     function updateStorm(){
@@ -340,7 +412,7 @@ jQuery(document).ready(function () {
     };
 
     function updateChartProfile(){
-        var xOffset = 10;
+        var xOffset = 0;
         var elevEVC = culvert.EVCElevation;
         var dxLeft, dxRight, xRight, yTop;
         
@@ -356,39 +428,48 @@ jQuery(document).ready(function () {
 
         xRight = dxLeft + culvert.roadSag.VCLength + dxRight;
         
+        
         //drawing 
         var xMin = 0;
         var xMax = xRight;
         var yMin = culvert.barrel.outletElevation;
         var yMax = yTop;
 
-        var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xMax - xMin);
-        var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yMax - yMin);
+        var xInc = niceIncrement(xMin, xMax);
+        var xTickLeft = xInc * Math.floor(xMin/xInc);
+        var xTickRight = xInc * Math.ceil(xMax/xInc);
+
+        var yInc = niceIncrement(yMin, yMax);
+        var yTickBottom = yInc * Math.floor(yMin/yInc);
+        var yTickTop = yInc * Math.ceil(yMax/yInc);
+        
+        var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xTickRight - xTickLeft);
+        var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yTickTop - yTickBottom);
 
         var x0 = 0;
         var y0 = yTop;
-        var x0s = ocvw.offsetLeft + (x0 - xMin) * scaleX;
-        var y0s = ocvw.h - ocvw.offsetBottom - (y0 - yMin) * scaleY;
+        var x0s = ocvw.offsetLeft + (x0 - xTickLeft) * scaleX;
+        var y0s = ocvw.h - ocvw.offsetBottom - (y0 - yTickBottom) * scaleY;
 
         var x1 = dxLeft;
         var y1 = culvert.roadSag.BVCElevation;
-        var x1s = ocvw.offsetLeft + (x1 - xMin) * scaleX;
-        var y1s = ocvw.h - ocvw.offsetBottom - (y1 - yMin) * scaleY;
+        var x1s = ocvw.offsetLeft + (x1 - xTickLeft) * scaleX;
+        var y1s = ocvw.h - ocvw.offsetBottom - (y1 - yTickBottom) * scaleY;
 
         var x2 = x1 + 0.5 * culvert.roadSag.VCLength;
         var y2 = culvert.roadSag.BVCElevation + 0.5 * culvert.roadSag.VCLength * culvert.roadSag.BVCGrade;
-        var x2s = ocvw.offsetLeft + (x2 - xMin) * scaleX;
-        var y2s = ocvw.h - ocvw.offsetBottom - (y2 - yMin) * scaleY;
+        var x2s = ocvw.offsetLeft + (x2 - xTickLeft) * scaleX;
+        var y2s = ocvw.h - ocvw.offsetBottom - (y2 - yTickBottom) * scaleY;
 
         var x3 = dxLeft + culvert.roadSag.VCLength;
         var y3 = culvert.EVCElevation;
-        var x3s = ocvw.offsetLeft + (x3 - xMin) * scaleX;
-        var y3s = ocvw.h - ocvw.offsetBottom - (y3 - yMin) * scaleY;
+        var x3s = ocvw.offsetLeft + (x3 - xTickLeft) * scaleX;
+        var y3s = ocvw.h - ocvw.offsetBottom - (y3 - yTickBottom) * scaleY;
 
         var x4 = xRight;
         var y4 = yTop;
-        var x4s = ocvw.offsetLeft + (x4 - xMin) * scaleX;
-        var y4s = ocvw.h - ocvw.offsetBottom - (y4 - yMin) * scaleY;
+        var x4s = ocvw.offsetLeft + (x4 - xTickLeft) * scaleX;
+        var y4s = ocvw.h - ocvw.offsetBottom - (y4 - yTickBottom) * scaleY;
         
         var sVC = 'M ' + x0s + ' ' + y0s + ' L ' + x1s + ' ' + y1s + ' Q ' + x2s + ' ' + y2s + ' ' + x3s + ' ' + y3s + ' ' + ' L ' + x4s + ' ' + y4s;
         console.log(sVC);
@@ -401,7 +482,7 @@ jQuery(document).ready(function () {
 
         //var xc0 = x2;
         var yc0 = culvert.barrel.inletElevation - culvert.barrel.outletElevation + culvert.xSection.r;
-        var ycs = ocvw.h - ocvw.offsetBottom - (yc0 - yMin) * scaleY;
+        var ycs = ocvw.h - ocvw.offsetBottom - (yc0 - yTickBottom) * scaleY;
 
         var sRCP = 'M' + x2s + ' ' + y2s + ' a ' + rxs + ' ' + rys + ' 0 1 0 ' + 2.0* rxs + ' 0 '
                                          + ' a ' + rxs + ' ' + rys + ' 0 1 0 -' + 2.0* rxs + ' 0 '
@@ -424,7 +505,88 @@ jQuery(document).ready(function () {
 
         //$('#pathCrit').attr('d', 'M' + xcls + ' ' + ycs + 'L' + xcrs + ' ' + ycs);
 
-        drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chartProfile');
-    };    
+        //drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, 'chartProfile');
+        
+        var xIncDraw = xInc * scaleX;
+
+        //draw grid lines;
+        x = xTickLeft;
+        y = ocvw.h - ocvw.offsetBottom;
+        xDraw = ocvw.offsetLeft;
+        xGrid = '';
+        var text;
+        var xPos;
+        var yPos;
+        var idLabel;
+        var i = 1;
+
+        while (xDraw <= ocvw.w - ocvw.offsetRight){
+            xGrid += 'M' + xDraw + ' ' + ocvw.offsetTop + 'L' + xDraw + ' ' + y;
+            yPos = ocvw.h - 0.65 * ocvw.offsetBottom;
+            idLabel = 'xTick' + i;
+            $('#'+idLabel, '#chartProfile').attr('x', xDraw);
+            $('#'+idLabel, '#chartProfile').attr('y', yPos);
+            text = x.toString();
+            if(text.length > 10) {
+                text = x.toFixed(xInc.countDecimals());
+            }
+            $('#'+idLabel, '#chartProfile').text(text);
+            //document.getElementById(idLabel).childNodes[0].textContent = text;
+
+            xDraw += xIncDraw;
+            x += xInc;
+            i += 1;
+        }
+
+        for (; i < 10; i++){
+            idLabel = 'xTick' + i;
+            $('#'+idLabel, '#chartProfile').text(' ');
+            //document.getElementById(idLabel).childNodes[0].textContent = ' ';
+        }
+
+        $('#pathGridY', '#chartProfile').attr('d', xGrid);
+
+        //var yInc = niceIncrement(yMin, yMax);
+
+        var yIncDraw = yInc * scaleY;
+
+        let yDraw = ocvw.h - ocvw.offsetBottom;
+        var yGrid = '';
+        x = ocvw.w - ocvw.offsetRight;
+        y = yTickBottom;
+        i = 1;
+        while (yDraw > ocvw.offsetTop){
+            yGrid += 'M' + ocvw.offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
+            xPos = 0.70*ocvw.offsetLeft;
+            idLabel = 'yTick' + i;
+            text = y.toString();
+            if(text.length > 10) {
+                text = y.toFixed(yInc.countDecimals());
+            }
+            $('#'+idLabel, '#chartProfile').attr("x", xPos);
+            $('#'+idLabel, '#chartProfile').attr("y", yDraw);
+            //document.getElementById(idLabel).childNodes[0].textContent = text;
+            $('#'+idLabel, '#chartProfile').text(text);
+
+            yDraw -= yIncDraw;
+            y += yInc;
+            i += 1;
+        }
+
+        for (; i < 10; i++){
+            idLabel = 'yTick' + i;
+            //document.getElementById(idLabel).childNodes[0].textContent = ' ';
+            $('#'+idLabel, '#chartProfile').text(' ');
+        }
+
+        $("#pathGridX", '#chartProfile').attr("d", yGrid);
+
+        xPos = ocvw.offsetLeft + 0.5 * (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight);
+        yPos = ocvw.h - 0.25 * ocvw.offsetBottom;
+        $('#xLabel','#chartProfile').attr("x", xPos);
+        $('#xLabel','#chartProfile').attr("y", yPos);
+
+
+        };    
     
 });

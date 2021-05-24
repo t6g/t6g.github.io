@@ -57,6 +57,7 @@ function drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, chart){
     $('#pathGridY', '#'+chart).attr('d', xGrid);
 
     var yInc = niceIncrement(yMin, yMax);
+    
     var yIncDraw = yInc * scaleY;
 
     let yDraw = ocvw.h - ocvw.offsetBottom;
