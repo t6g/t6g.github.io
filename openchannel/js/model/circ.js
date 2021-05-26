@@ -24,6 +24,16 @@ class CircularChannel extends OpenChannel {
     get ac() {
         return (this.thetac - Math.sin(this.thetac)) * this.r * this.r / 2.0;
     }
+    get dhc() {
+        let thetac = this.thetac;
+        return (thetac - Math.sin(thetac)) * this.r / 4.0 / Math.sin(thetac/2.0);
+    }
+    get hc() {
+        let thetac = this.thetac;
+        let dhc = (thetac - Math.sin(thetac)) * this.r / 4.0 / Math.sin(thetac/2.0);
+        let dc = this.r * (1.0 - Math.cos(thetac/2.0));
+        return dc + dhc / 2.0;
+    }
     get pc() {
         return this.thetac * this.r;
     }
@@ -31,7 +41,8 @@ class CircularChannel extends OpenChannel {
         return Math.sqrt(oc.g * this.ac / 2.0 / this.r / Math.sin(this.thetac/2.0));
     }
     get dc() {
-        let A, dAdy, dAdtheta, ddAdydtheta, f = 10.0, df;
+        return this.Q2Dc(this.Qn);
+/*        let A, dAdy, dAdtheta, ddAdydtheta, f = 10.0, df;
         let deltatheta = 10.0;
         let count = 0;
         let Q = this.Qn;
@@ -59,7 +70,7 @@ class CircularChannel extends OpenChannel {
         }
 
         return this.r * (1.0 - Math.cos(thetai / 2.0));
-    }
+*/    }
 
     static get thetaMax() {return 5.27810713;}
     
@@ -81,8 +92,9 @@ class CircularChannel extends OpenChannel {
     
     Q2Dn(Q) {
         if (Q >= this.Qmax) {
-            alert('Q is reduced to Qmax!');
-            return this.ymax;
+            //alert('Q is reduced to Qmax!');
+            //return this.ymax;
+            return 2.0 * this.r;
         }
 
         let A, P, dAdtheta, dPdtheta = this.r, f = 10.0, df;
@@ -128,6 +140,35 @@ class CircularChannel extends OpenChannel {
             if (count > oc.MaxCount) break;
         }
             
+        return this.r * (1.0 - Math.cos(thetai / 2.0));
+    }
+    Q2Dc(Q){
+        let A, dAdy, dAdtheta, ddAdydtheta, f = 10.0, df;
+        let deltatheta = 10.0;
+        let count = 0;
+        //use French 1985 Table 2.1 Equation to estimate yc
+        let yi = Math.min(1.01 * Math.pow(2.0 * this.r, -0.26) * Math.pow(Q * Q / oc.g, 0.25), 0.85 * 2 * this.r);
+
+        let thetai = 2.0 * Math.acos(1.0 - yi / this.r);
+
+        while (Math.abs(deltatheta) > oc.TolA && Math.abs(f) > oc.TolQ)
+        {
+            A = (thetai - Math.sin(thetai)) * this.r * this.r / 2.0;
+            dAdy = 2.0 * this.r * Math.sin(thetai / 2.0);
+            f = oc.g * A * A * A - Q * Q * dAdy;
+            dAdtheta = 0.5 * (1.0 - Math.cos(thetai)) * this.r * this.r;
+            ddAdydtheta = this.r * Math.cos(thetai / 2.0);
+            df = 3.0 * oc.g * A * A * dAdtheta - Q * Q * ddAdydtheta;
+            deltatheta = f / df;
+            thetai -= deltatheta;
+            if (thetai >= 2.0 * Math.PI) thetai = 2.0 * Math.PI;
+
+            if(thetai < 0.0) thetai = 0.0;
+
+            count++;
+            if (count > oc.MaxCount) break;
+        }
+
         return this.r * (1.0 - Math.cos(thetai / 2.0));
     }
 }
