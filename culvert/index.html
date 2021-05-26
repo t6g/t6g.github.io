@@ -196,12 +196,16 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessageVC">message</span>
+                </div>
 
             </div>
             <div class="col-md-4 box">
 
-                <h5 style="text-align:center;">X-Section Across Flow @ Inlet</h5>
-                <svg id="chartProfile" viewBox="0 0 450 300">
+                <h5 style="text-align:center;">X-Section @ Inlet</h5>
+                <svg id="chartXSection" viewBox="0 0 450 300">
 
                     <rect id="axesRect" x="60" y="0" width="360" height="240" fill="none" stroke="black"/>
 
@@ -283,6 +287,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessageBarrel1">message</span>
+                </div>
             </div>
             <div class="col-md-4 box">
                 <h5 style="text-align:center;">Barrel</h5>
@@ -341,14 +349,14 @@
 
             </div>
             <div class="col-md-4 box">
-                <h5 style="text-align:center;">Section Along Flow</h5>
-                <svg id="chart" viewBox="0 0 450 300">
+                <h5 style="text-align:center;">Profile</h5>
+                <svg id="chartProfile" viewBox="0 0 450 300">
 
                     <rect id="axesRect" x="60" y="0" width="360" height="240" fill="none" stroke="black"/>
 
-                    <text id="xLabel" x="300" y="390" text-anchor="middle">Time of Concentration (minute)</text>
+                    <text id="xLabel" x="300" y="390" text-anchor="middle">Station (ft)</text>
 
-                    <text id="yLabel" text-anchor="middle" transform='translate(15, 200) rotate(-90)'>Rainfall Intensity (inch/hour)</text>
+                    <text id="yLabel" text-anchor="middle" transform='translate(15, 125) rotate(-90)'>Elevation (ft)</text>
 
                     <path id="pathGridX" d="M50 53 h540 M50 86 h540 M50 119 h540 M50 152 h540 M50 185 h540 M50 218 h540 M50 251 h540 M50 284 h540 M50 317 h540" stroke="black" stroke-width="0.1" fill="none" stroke-dasharray="4,4" />
 
@@ -376,8 +384,8 @@
 
                     <text id="lblTitle" x="250" y="40"></text>
 
-                    <path id="pathVC" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none" />
-                    <path id="path02" d="M175 200 L125 200" stroke="blue" stroke-width="1" fill="none" />
+                    <path id="pathPipe" d="M50 50 L100 150" stroke="black" stroke-width="1" fill="none" />
+                    <path id="pathEmbankment" d="M175 200 L125 200" stroke="brown" stroke-width="1" fill="none" />
                     <path id="path10" d="M220 250 L180 250" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5" />
                     <path id="path100" d="M220 250 L180 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5" />
                 </svg>
@@ -385,16 +393,16 @@
         </div>
         <!-- row 4 -->
         <div class="row">
-            <table class="table">
+            <table class="table" id="calcTable">
                 <thead>
-                    <tr><th>Interval</th><th>I</th><th>Q</th></tr>
-                    <tr><td>(year)</td><td>(in/hour)</td><td>(cfs)</td></tr>
+                    <tr><th>Interval</th><th>I</th><th>Q</th><th>d<sub>n</sub></th><th>d<sub>c</sub></th><th>H<sub>c</sub></th><th>Q/(AD<sup>0.5</sup>)</th><th>h<sub>wi1</sub></th><th>h<sub>wi2</sub></th></tr>
+                    <tr><td>(year)</td><td>(in/hour)</td><td>(cfs)</td><td>ft</td><td>ft</td><td>ft</td><td></td><td>ft</td><td>ft</td></tr>
                 </thead>
-                <tbody>
-                    <tr><td>2</td>  <td></td><td></td></tr>
-                    <tr><td>10</td> <td></td><td></td></tr>
-                    <tr><td>50</td> <td></td><td></td></tr>
-                    <tr><td>100</td><td></td><td></td></tr>
+                <tbody id='calcTableBody'>
+                    <tr><td>10</td> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>25</td> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>50</td> <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>100</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                 </tbody>
             </table>
 
