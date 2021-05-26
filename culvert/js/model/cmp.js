@@ -2,7 +2,7 @@
 'use strict'
 
 class CMP {
-    constructor(r, inletElevation, outletElevation, distance, mN, tailwaterElevation, inletType, Ke) {
+    constructor(r, inletElevation, outletElevation, distance, mN, tailwaterElevation, inletType, Ke, fitType) {
         this.r = r;
         this.inletElevation = inletElevation;
         this.outletElevation = outletElevation;
@@ -14,8 +14,9 @@ class CMP {
                                             mN, 0.5);
         this.inletType = inletType;
         this.KMcY = inletConsts[inletType];
-        this.Ke = Ke;
+        this.fitType = fitType;
         this.fit = hy5CircConsts[5];
+        this.Ke = Ke;
         this.calc = [
             {'Q':  50, 'Dn': 0, 'Dc': 0, 'Hc': 0, 'QAD5':0, 'hwi1':0, 'hwi2':0, 'hwi3':0, 'hwip':0, 'hwo':0}, 
             {'Q': 100, 'Dn': 0, 'Dc': 0, 'Hc': 0, 'QAD5':0, 'hwi1':0, 'hwi2':0, 'hwi3':0, 'hwip':0, 'hwo':0}, 
@@ -36,7 +37,7 @@ class CMP {
 
     get slope(){
         return (this.inletElevation - this.outletElevation ) / this.distance; 
-    }
+    };
 };
 
 // Table A.1. Constants for Inlet Control Equations for Charts in Appendix G
@@ -82,7 +83,7 @@ var inletConsts = [
 var hy5CircConsts = [
  {'Ke': 0.9, 'SR': 0.5, 'A':0.187321, 'B': 0.567710, 'C': -0.156544, 'D': 0.0447052, 'E': -0.003436020, 'F': 8.96610E-05}, //Thin Edge Projecting
  {'Ke': 0.7, 'SR':-0.7, 'A':0.107137, 'B': 0.757789, 'C': -0.361462, 'D': 0.1233932, 'E': -0.016064220, 'F': 0.000767390}, //Mitered to Conform to Slope
- {'Ke': 0.5, 'SR': 0.5, 'A':0.167433, 'B': 0.538595, 'C': -0.149374, 'D': 0.0391543, 'E': -0.003439740, 'F': 0.000115882}, //Square Edge with Headwall (Steel/Aluminum/Corrugated PE)
+ {'Ke': 0.5, 'SR': 0.5, 'A':0.167433, 'B': 0.538595, 'C': -0.149374, 'D': 0.0391543, 'E': -0.003439740, 'F': 0.000115882}, //Square Edge with Headwall Steel/Aluminum/Corrugated PE)
  {'Ke': 0.2, 'SR': 0.5, 'A':0.108786, 'B': 0.662381, 'C': -0.233801, 'D': 0.0579585, 'E': -0.005578900, 'F': 0.000205052}, //Grooved End Projecting
  {'Ke': 0.2, 'SR': 0.5, 'A':0.114099, 'B': 0.653562, 'C': -0.233615, 'D': 0.0597723, 'E': -0.006163380, 'F': 0.000242832}, //Grooved End in Headwall
  {'Ke': 0.2, 'SR': 0.5, 'A':0.063343, 'B': 0.766512, 'C': -0.316097, 'D': 0.0876701, 'E': -0.009836951, 'F': 0.000416760}, //Beveled Edge (1:1)

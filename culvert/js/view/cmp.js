@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
 
-    const cmp = new CMP(3, 100, 98, 200, 0.024, 0, 6, 0.2);
+    const cmp = new CMP(3, 100, 98, 200, 0.024, 0, 6, 0.2, 5);
                        
     $( "#inletElevation" ).val(cmp.inletElevation.toFixed(2));
 
@@ -15,6 +15,25 @@ jQuery(document).ready(function () {
     $( "#manningsN" ).val(cmp.circ.mN);
    
     $( "#inletType" ).val(cmp.inletType);
+
+    $( "#fitType" ).val(cmp.fitType);
+
+    $("#inletType").on('change', function () {
+        cmp.inletType =  $("#inletType").val();
+        cmp.KMcY = inletConsts[cmp.inletType];
+        Calculate();
+        updateTable();
+        updateGraph();
+    });
+
+    
+    $("#fitType").on('change', function () {
+        cmp.fitType =  $("#fitType").val();
+        cmp.fit = hy5CircConsts[cmp.fitType];
+        Calculate();
+        updateTable();
+        updateGraph();
+    });
 
     var xMin = 0;
     var xMax = 15;
