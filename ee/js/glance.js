@@ -32,6 +32,7 @@ jQuery(document).ready(function(){
     
     var glance = {};
     
+    $("#mynav").load("nav.html");
 
     let tmp = localStorage.getItem('FirstGlance'); 
     if (tmp) {
