@@ -89,7 +89,17 @@ class CircularChannel extends OpenChannel {
     get isClosedConduit() {
         return true;
     }
-    
+    d2A(d) {
+        if(d <= 0){
+            return 0.0;
+        } else if(d >= 2 * this.r) {
+            return 2 * Math.PI * this.r * this.r;
+        } else {
+            let theta = 2.0 * Math.acos(1.0 - d / this.r);  
+            let a = (theta - Math.sin(theta)) * this.r * this.r / 2.0
+            return a;
+        };
+    };
     Q2Dn(Q) {
         if (Q >= this.Qmax) {
             //alert('Q is reduced to Qmax!');
