@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Curvert Calculator - RCP/CMP - Under Development</title>
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../openchannel/js/model/openchannel.js"></script>
+    <script src="../openchannel/js/model/circ.js"></script>
+    <script src="js/model/drainagearea.js"></script>
+    <script src="js/model/circularculvert.js"></script>
+    <script src="js/view/view.js"></script>
+    <script src="js/util/file.js"></script>
+    <script src="js/util/numericalTable.js"></script>
+    <script src="../ee/js/rainfall.js"></script>
+    <script src="../openchannel/js/util.js"></script>
+    <script src="../ee/js/rainfall.js"></script>
+<body>
+    <div class="container">
+        <div>
+            <!-- navigation bar -->
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">GT</a>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#toggleMobileMenu"
+                        aria-controls="toggleMobileMenu"
+                        aria-expanded="false"
+                        aria-lable="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li><a class="nav-link" href="#">Menu1</a></li>
+                        <li><a class="nav-link" href="#">Menu2</a></li>
+                        <li><a class="nav-link" href="#">Menu3</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            File
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#" id="download">Download</a></li>
+            <li><a class="dropdown-item" href="#" id="upload">Upload</a></li>
+          </ul>
+        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <h3 class="text-center">Culvert (RCP/CMP) Calculator - in development</h3>
+        <div class="text-center mt-3"><input type='file' name='selectedFile' id="selectFile" hidden/></div>
+    <!-- row 1 -->
+        <div class="row">
+
+            <div class="col-md-6 box">
+                <h5 style="text-align:center;">Profile</h5>
+                <svg id="chartProfile" viewBox="0 0 600 400">
+
+                    <rect id="axesRect" x="60" y="0" width="510" height="340" fill="none" stroke="black"/>
+
+                    <text id="xLabel" x="300" y="390" text-anchor="middle">Station (ft)</text>
+
+                    <text id="yLabel" text-anchor="middle" transform='translate(15, 125) rotate(-90)'>Elevation (ft)</text>
+
+                    <path id="pathGridX" d="M50 53 h540 M50 86 h540 M50 119 h540 M50 152 h540 M50 185 h540 M50 218 h540 M50 251 h540 M50 284 h540 M50 317 h540" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4" />
+
+                    <path id="pathGridXP" d="M50 53" stroke="black" stroke-width="1" fill="none"/>
+
+                    <path id="pathGridY" d="M95 20 v330 M140 20 v330 M185 20 v330 M230 20 v330  M275 20 v330 M320 20 v330 M365 20 v330 M410 20 v330 M455 20 v330 M500 20 v330 M545 20 v330" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4" />
+
+                    <text id="xTick1" x="50" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick2" x="140" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick3" x="140" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick4" x="140" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick5" x="230" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick6" x="320" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick7" x="140" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick8" x="410" y="370" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick9" x="500" y="370" text-anchor="middle">&nbsp;</text>
+
+                    <text id="yTick1" x="30" y="20" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick2" x="30" y="20" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick3" x="30" y="20" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick4" x="30" y="20" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick5" x="30" y="86" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick6" x="30" y="152" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick7" x="30" y="218" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick8" x="30" y="284" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick9" x="30" y="350" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+
+                    <text id="lbl2y" x="520" y="50" text-anchor="left" fill="green">2 y</text>
+                    <text id="lbl10y" x="520" y="80" text-anchor="left" fill="blue">10 y</text>
+                    <text id="lbl100y" x="520" y="110" text-anchor="left" fill="red">100 y</text>
+
+                    <text id="lblTitle" x="250" y="40"></text>
+
+                    <path id="pathPipe" d="M50 50 L100 150" stroke="black" stroke-width="2" fill="none" />
+                    <path id="pathEmbankment" d="M175 200 L125 200" stroke="black" stroke-width="2" fill="none" />
+
+                    <path id="path2" d="M60 150 L80 150" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5" />
+                    <path id="path10" d="M60 200 L80 200" stroke="blue" stroke-width="1" fill="none" stroke-dasharray="5,5" />
+                    <path id="path100" d="M60 250 L80 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5" />
+
+                    <path id="path2Right" d="M60 150 L80 150" stroke="green" stroke-width="1" fill="none" stroke-dasharray="5,5" />
+                    <path id="path10Right" d="M60 200 L80 200" stroke="blue" stroke-width="1" fill="none" stroke-dasharray="5,5" />
+                    <path id="path100Right" d="M60 250 L80 250" stroke="red" stroke-width="1" fill="none" stroke-dasharray="5,5" />
+                
+                </svg>
+            </div>
+            
+            <div class="col-md-6 box">
+                <h5 style="text-align:center;">Performance Curve</h5>
+                <svg id="chartPerformance" viewBox="0 0 600 400">
+
+                    <rect id="axesRect" x="60" y="0" width="510" height="340" fill="none" stroke="black"/>
+
+                    <text id="xLabel" x="300" y="390" text-anchor="middle">Q/DA5</text>
+
+                    <text id="yLabel" text-anchor="middle" transform='translate(15, 125) rotate(-90)'>Depth (ft)</text>
+
+                    <path id="pathGridX" d="M0 0" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4" />
+
+                    <path id="pathGridY" d="M0 0" stroke="black" stroke-width="0.2" fill="none" stroke-dasharray="4,4" />
+
+                    <text id="xTick1" x="50"  y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick2" x="100" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick3" x="150" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick4" x="200" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick5" x="250" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick6" x="300" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick7" x="350" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick8" x="400" y="270" text-anchor="middle">&nbsp;</text>
+                    <text id="xTick9" x="450" y="270" text-anchor="middle">&nbsp;</text>
+
+                    <text id="yTick1" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick2" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick3" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick4" x="30" y="200" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick5" x="30" y="250" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick6" x="30" y="300" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick7" x="30" y="50"  text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick8" x="30" y="100" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+                    <text id="yTick9" x="30" y="150" text-anchor="middle" alignment-baseline="middle">&nbsp;</text>
+
+                    <text id="hwi1" x="80" y="30"  text-anchor="left" fill="blue">inlet control: unsubmerged</text>
+                    <text id="hwi3" x="80" y="60" text-anchor="left" fill="green"> inlet control: submerged</text>
+                    <text id="hwo"  x="80" y="90" text-anchor="left" fill="red">outlet control</text>
+                    <text id="hw"  x="80" y="120" text-anchor="left" fill="black">Performance</text>
+
+                    <path id="pathhwi1" d="M0 0" stroke="blue" stroke-width="1" fill="none" />
+                    <path id="pathhwi3" d="M0 0" stroke="green"  stroke-width="1" fill="none" />
+                    <path id="pathhwo"  d="M0 0" stroke="red"   stroke-width="1" fill="none" />
+                    <path id="pathhw"  d="M0 0" stroke="black"   stroke-width="2" fill="none" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="row">
+                        <div class="col-md-4 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:left;">Area</td>
+                            <td><input class="value" id="area" name="area" type="number" min="0.1" value="1" step="1"></td>
+                            <td>acre</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">C</td>
+                            <td><input class="value" id="cInput" name="cInput" type="number" min="0.2" value="0.95" step="0.01"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Tc</td>
+                            <td><input class="value" id="tcInput" name="tcInput" type="number" min="5" value="60.0" step="0.1"></td>
+                            <td>minute</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Site</td>
+                            <td>
+                                <select name="NOAAsite" id="NOAAsite" value="0" style="text-align:left;">
+                                    <option value="0">Chesterfield</option>
+                                    <option value="1">Hopewell</option>
+                                    <option value="2">Powhatan</option>
+                                    <option value="3">Richmond WSO Airport</option>
+                                    <option value="4">Richmond WB City</option>
+                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;"># of Barrels</td>
+                            <td><input class="value" id="numBarrel" name="numBarrel" type="number" min="1" value="1" step="1"></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:left;">Material</td>
+                            <td><select name="material" id="material" value="0">
+                                <option value="0">RCP</option>
+                                <option value="1">CMP</option>
+                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Diameter</td>
+                            <td><input class="value" id="diameter" name="diameter" type="number" min="6" value="15" step="1"></td>
+                            <td>in</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Manning's N</td>
+                            <td><input class="value" id="manningsN" name="manningsN" type="number" min="0.001" value="0.013" step="0.001"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Inlet Type</td>
+                            <td><select name="inletType" id="inletType" value="0">
+<!--                                <option value="0">Square edge with headwall</option>
+                                <option value="1">Grooved edge with headwall</option>
+                                <option value="2">Grooved edge projecting</option>
+                                <option value="3">Beveled ring, 45° bevels</option>
+                                <option value="4">Beveled ring, 33.7° bevels</option>
+-->                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Ke</td>
+                            <td id='ke'></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 box">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:left;">Inlet Elevation</td>
+                            <td><input class="value" id="inletElevation" name="inletElevation" type="number" min="0" value="82" step="1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Outlet Elevation</td>
+                            <td><input class="value" id="outletElevation" name="outletElevation" type="number" min="0" value="81" step="1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Outlet Distance</td>
+                            <td><input class="value" id="distanceInOutlet" name="distanceInOutlet" type="number" min="0" value="120" step="1"></td>
+                            <td>ft</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Slope</td>
+                            <td id='slopeBarrel'></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;">Sag Elevation</td>
+                            <td><input class="value" id="sagElevation" name="sagElevation" type="number" min="0" value="120" step="1"></td>
+                            <td>ft</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+                <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessage">message</span>
+                </div>
+        </div>
+        <!-- row 2 -->
+        <div class="row">
+            <table class="table" id="calcTable1">
+                <thead>
+                    <tr>
+                        <th>Interval</th><th>Rainfall</th><th>Q</th><th>T<sub>w</sub></th><th>Q/N</th><th>d<sub>n</sub></th><th>d<sub>c</sub></th><th>H<sub>wi</sub></th><th>H<sub>wo</sub></th><th>EL<sub>h</sub></th><th>V<sub>o</sub></th></tr>
+                    <tr>
+                        <td>year</td><td>in/h</td><td>cfs</td><td>ft</td><td>cfs</td><td>ft</td><td>ft</td><td>ft</td><td>ft</td><td>ft</td><td>ft/s</td></tr>
+                </thead>
+                <tbody id='calcTableBody1'>
+                    <tr><td>  2</td><td></td><td></td><td contenteditable="true"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td> 10</td><td></td><td></td><td contenteditable="true"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>100</td><td></td><td></td><td contenteditable="true"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+
+        </div>
+        <!-- row 2 -->
+        <div class="row">
+                <h5 style="text-align:center;">Performance Curve</h5>
+            <div class="mb-3">
+              <label for="tailwaterDepth" class="form-label">Tailwater Depth (ft)</label>
+              <input class="value" id="tailwaterDepth" name="tailwaterDepth" type="number" min="0" value="1" step="0.5">
+            </div>
+            <table class="table" id="calcTable">
+                <thead>
+                    <tr><th>Q</th><th>Q/(AD<sup>0.5</sup>)</th><th>d<sub>n</sub></th><th>d<sub>c</sub></th><th>h<sub>wi,u</sub></th><th>h<sub>wi,s</sub></th><th>h<sub>wi</sub></th><th>h<sub>wo</sub></th></tr>
+                    <tr><td>(cfs)</td><td></td><td>ft</td><td>ft</td><td>ft</td><td>ft</td><td>ft</td><td>ft</td></tr>
+                </thead>
+                <tbody id='calcTableBody'>
+                    <tr><td></td><td>0.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>1.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>1.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>2.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>2.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>3.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>3.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>4.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>4.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>5.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>5.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>6.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>6.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>7.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>7.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>8.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>8.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>9.0</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td>9.5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+
+        </div>
+        <!-- end of container -->
+    </div>
+    <script src="js/view/circularculvert.js"></script>
+    </body>
+</html>

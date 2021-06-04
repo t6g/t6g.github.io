@@ -1,6 +1,6 @@
 var ocvw = {
-    w: 450,
-    h: 300,
+    w: 600,
+    h: 400,
     offsetLeft : 60,
     offsetTop : 0,
     offsetRight : 30,
