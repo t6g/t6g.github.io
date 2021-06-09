@@ -13,6 +13,15 @@
             <div id="mynav"></div>
             <h4 class="text-center">Subdivision Plan Design/Review Checklist - Cover Sheet</h4>
             <p class="text-center">Environmental Engineering Department, Chesterfield VA</p>
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-primary" id="btnReset">Reset</button>
+                <button type="button" class="btn btn-outline-primary" id="btnSave">Save</button>
+                <button type="button" class="btn btn-outline-primary" id="btnDownload">Download</button>
+                <button type="button" class="btn btn-outline-primary" id="btnUpload">Upload</button>
+            </div>
+            
+            <div class="text-center mt-3"><input type='file' name='selectedFile' id="selectFile" hidden/></div>
+
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -54,36 +63,36 @@
                                 <td><label for="streetlight">2. Include one additional overall project section sheet showing entrance streetlight location, as per thestreetlight policy.</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="tentativecondition"></td>
-                                <td><input type="radio" name="tentativecondition"></td>
-                                <td><input type="radio" name="tentativecondition"></td>
-                                <td><label for="streetlight">3. Copy of tentative approval letter included with plan submission.</label></td>
+                                <td><input type="radio" name="zoningcondition"></td>
+                                <td><input type="radio" name="zoningcondition"></td>
+                                <td><input type="radio" name="zoningcondition"></td>
+                                <td><label for="zoningcondition">3. Copy of the Board of Supervisors meeting minutes with zoning approval or a copy of ChesterfieldPlanning Commission final approval letter included with plan submission.</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="zoningcondition"></td>
-                                <td><input type="radio" name="zoningcondition"></td>
-                                <td><input type="radio" name="zoningcondition"></td>
-                                <td><label for="zoningcondition">4. Copy of the Board of Supervisors meeting minutes with zoning approval or a copy of ChesterfieldPlanning Commission final approval letter included with plan submission.</label></td>
+                                <td><input type="radio" name="tentativecondition" value="0"></td>
+                                <td><input type="radio" name="tentativecondition" value="1"></td>
+                                <td><input type="radio" name="tentativecondition" value="2"></td>
+                                <td><label for="streetlight">4. Copy of tentative approval letter included with plan submission.</label></td>
                             </tr>
-                            <tr>
+                            <tr class="NoTentative">
                                 <td><input type="radio" name="roadname"></td>
                                 <td><input type="radio" name="roadname"></td>
                                 <td><input type="radio" name="roadname"></td>
                                 <td><label for="roadname">5. Current PlanRVA road name approval letter.</label></td>
                             </tr>
-                            <tr>
+                            <tr class="NoTentative">
                                 <td><input type="radio" name="coedeqwetland"></td>
                                 <td><input type="radio" name="coedeqwetland"></td>
                                 <td><input type="radio" name="coedeqwetland"></td>
                                 <td><label for="coedeqwetland">6. COE/DEQ wetlands confirmation.</label></td>
                             </tr>
-                            <tr>
+                            <tr class="NoTentative">
                                 <td><input type="radio" name="rpad"></td>
                                 <td><input type="radio" name="rpad"></td>
                                 <td><input type="radio" name="rpad"></td>
                                 <td><label for="rpad">7. Copy of confirmed RPAD from Water Quality.</label></td>
                             </tr>
-                            <tr>
+                            <tr class="NoTentative">
                                 <td><input type="radio" name="embellishment"></td>
                                 <td><input type="radio" name="embellishment"></td>
                                 <td><input type="radio" name="embellishment"></td>
@@ -216,6 +225,17 @@
         <script>
             jQuery(document).ready(function(){
                 $("#mynav").load("nav.html");
+                
+                $("input[name='tentativecondition']").on("change", function(){
+                    console.log('change level: ' + this.value);
+
+                    if(this.value === "0")
+                    {
+                        $(".NoTentative").hide();
+                    } else {
+                        $(".NoTentative").show();
+                    };
+                });
             });
         </script>
         
