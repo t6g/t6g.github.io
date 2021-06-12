@@ -2,7 +2,7 @@
 
 // calculate increment for x, y axis grids/labels
 function niceIncrement(Min, Max){
-    var maxTicks = 7;
+    var maxTicks = 8;
     var niceRange = niceNum(Max - Min, false);
     var increment = niceNum(niceRange/(maxTicks - 1), true);
     return increment;

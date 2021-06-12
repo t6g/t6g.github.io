@@ -22,11 +22,36 @@
                                   'Pavlovskii',
                                   0.01, 0.05, 4);
             
-            let tmp = localStorage.getItem('irre');
-            if (tmp) {
-                Object.assign(irre, JSON.parse(tmp));
-            }
+            //let tmp = localStorage.getItem('irre');
+            //if (tmp) {
+            //    Object.assign(irre, JSON.parse(tmp));
+            //}
+            $.getJSON('test.json', function(data) {
+                $.each(data.items, function(key, val) {
+                   alert(val.fname);
+                   alert(val.lname);
+                })});
             
+            
+            var data = jQuery.getJSON( "irregulardata.json", function() { console.log( "success" ); })
+                .done(function() { 
+                    console.log( "second success" ); 
+                    jQuery.each(data.items, function(i, item){
+                        console.log(i);
+                        console.log(item);
+                    })
+                                 })
+                .fail(function() { console.log( "error" ); })
+                .always(function() { console.log( "complete" ); });
+ 
+            // Perform other work here ...
+
+            
+            // Set another completion function for the request above
+            data.always(function() {
+              console.log( "second complete" );
+            });
+
             var zbottom = irre.yBottom;
             
             $("#selectN").val(irre.nMethod);
