@@ -1,14 +1,7 @@
 jQuery(document).ready(function () {
-
-    //constructor(material, d, mN, inletType, inletElevation, outletElevation, distance, tailwaterDepth, numBarrel, sagElevation) {
-    //const culvert = new CMP(0, 36, 0.012, 1, 188.3, 187.16, 67.59, 187.91, 2, 191.55);
-    //const culvert = new CMP(0, 54, 0.012, 1, 183.07, 182.47, 79.92, 185.48, 3, 189.66);
     $("#mynav").load("nav.html");
             
-
-    
     const culvert = new CircularCulvert(0, 36, 0.012, 1, 191.37, 189.85, 68.67, 3.0, 1, 195.92);
-    const da = new DrainageArea(1.2, 0.5, 10, 1);
     
     const strRCPOptions = "<option value='0'>Square edge with headwall</option>"
                         + "<option value='1'>Grooved edge with headwall</option>"
@@ -21,25 +14,17 @@ jQuery(document).ready(function () {
                         + "<option value='3'>Beveled ring, 45° bevels</option>"
                         + "<option value='4'>Beveled ring, 33.7° bevels</option>";
     
-    const TwCalc = [0.0, 0.0, 0.0, 3.5, 4.0];
-    var hw2 = 0, hw10 = 0, hw100 = 0;
+    var its = [2, 10, 100];  // storm intervals, 2, 10, 100-year
+    var Qts = [10, 20, 30];  //Q total for three intervals
+    var tws = [1, 1.5, 2];   //tail water depths
+    var hws = [0, 0, 0];     //headwater results
 
     const crossing = {
-        culvert, da, TwCalc
+        culvert, Qts, tws
     };
-
-    
-    $("#area").val(da.A.toFixed(2));
-    
-    $("#cInput").val(da.C.toFixed(2));
-    
-    $("#tcInput").val(da.Tc.toFixed(2));
-
-    $("#NOAAsite").val(da.site);
     
     $("#material").val(culvert.material);
-    
-    
+        
     if(culvert.material === 0) {//RCP
         $("#inletType").html(strRCPOptions);
     } else if(culvert.material === 1) {//CMP
@@ -88,7 +73,6 @@ jQuery(document).ready(function () {
     var scaleX = (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight)/ (xTickRight - xTickLeft);
     var scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yTickTop - yTickBottom);
 
-    Performance();
     updateTable1();
     updateChartProfile();
     
@@ -127,77 +111,6 @@ jQuery(document).ready(function () {
         download('c.json', JSON.stringify(crossing));
     });
     
-    $("#area").on("change", function(){
-        var tmp = parseFloat(this.value);
-        if (isNaN(tmp)) {
-            showMessage($('#warningMessage'), "Input a number for drainage area!");
-            $("#area").val(da.A.toFixed(2));
-            $(this).trigger('focus');
-        } else if (tmp <= 0) {
-            showMessage($('#warningMessage'), "Input a positive number for drainage area!");
-            $("#area").val(da.A.toFixed(2));
-            $(this).trigger('focus');
-        }
-        else {
-            da.A = tmp;
-            updateTable1();
-            Performance();
-            updateChartProfile();
-        };
-    });    
-    
-    $("#cInput").on("change", function(){
-        var tmp = parseFloat(this.value);
-        if (isNaN(tmp)) {
-            showMessage($('#warningMessage'), "Input a number for rational runoff coefficient!");
-            $("#cInput").val(da.C.toFixed(3));
-            $(this).trigger('focus');
-        } else if (tmp <= 0 ) {
-            showMessage($('#warningMessage'), "Input a positive number for rational runoff coefficient!");
-            $("#cInput").val(da.C.toFixed(3));
-            $(this).trigger('focus');
-        } else if (tmp >= 1 ) {
-            showMessage($('#warningMessage'), "Input a rational runoff coefficient less than 1!");
-            $("#cInput").val(da.C.toFixed(3));
-            $(this).trigger('focus');
-        }
-        else {
-            da.C = tmp;
-            updateTable1();
-            Performance();
-            updateChartProfile();
-        };
-    });    
-    
-    $("#tcInput").on("change", function(){
-        var tmp = parseFloat(this.value);
-        if (isNaN(tmp)) {
-            showMessage($('#warningMessage'), "Input a number for time of concentration!");
-            $("#tcInput").val(da.Tc.toFixed(3));
-            $(this).trigger('focus');
-        } else if (tmp < 5 ) {
-            showMessage($('#warningMessage'), "Input a minimum 5 minute time of concentration!");
-            $("#cInput").val(da.C.toFixed(3));
-            $(this).trigger('focus');
-        } else {
-            if (tmp > 60 ) {
-                showMessage($('#warningMessage'), "Time of concentration is expected to be less than 60 minute!");
-            }
-            
-            da.Tc = tmp;
-            updateTable1();
-            Performance();
-            updateChartProfile();
-        };
-    });    
-    
-    $("#NOAAsite").on('change', function () {
-        da.site =  $("#NOAAsite").val();
-        updateTable1();
-        Performance();
-        updateChartProfile();
-    });
-    
     $("#material").on('change', function () {
         culvert.material =  $("#material").val();
         
@@ -228,7 +141,6 @@ jQuery(document).ready(function () {
             $("#manningsN").val(culvert.mN);
         }
 
-        Performance();
         updateTable1();
         updateChartProfile();
     });
@@ -349,231 +261,68 @@ jQuery(document).ready(function () {
 
     $( '#calcTableBody1 tr td[contenteditable="true"]').on ('change', function(event){
         var row = this.parentElement.rowIndex;
+        var col = this.cellIndex;
 
         var tmp = parseFloat(this.innerHTML);
 
         if (isNaN(tmp) || (tmp < 0)) {
-            showMessage($('#warningMessage'), "Input a number for tailwater!");
-            $( this ).html(TwCalc[row - 2].toFixed(2));
+            if(col == 1) { //Q
+                showMessage($('#warningMessage'), "Input a number for flow rate!");
+                $( this ).html(Qts[row - 2].toFixed(2));
+            } else if (col == 2) { // tailwater
+                showMessage($('#warningMessage'), "Input a number for tailwater depth!");
+                $( this ).html(tws[row - 2].toFixed(2));
+            }
             $(this).trigger('focus');
         }
-        else {
-            if (tmp <= 0) {
-                showMessage($('#warningMessage'), "Tailwater is normally above outlet elevation!");
-            };
-            TwCalc[row - 2] = tmp;
-            let Q = 0;
-            switch(row){
-                case 2: Q = da.Q2; break;
-                case 3: Q = da.Q10; break;
-                case 4: Q = da.Q100; break;
+        else if (tmp <= 0) {
+                if(col == 1) { //Q
+                    showMessage($('#warningMessage'), "Input a positive flow rate!");
+                    $( this ).html(Qts[row - 2].toFixed(2));
+                } else if (col == 2){
+                    showMessage($('#warningMessage'), "Input a positive tailwater depth!");
+                    $( this ).html(tws[row - 2].toFixed(2));
+                };
+        } else {
+            if (col == 1) {
+                Qts[row - 2] = tmp;
+            } else if (col == 2){
+                tws[row - 2] = tmp;
             }
-            let dc = culvert.Q2Dc(Q);
-            if(tmp > (dc/2 + culvert.r)){
-                //Performance();
-                updateTable1();
-            };
+            updateTable1();
             updateChartProfile();
         };
     });
 
-        $("#tailwaterDepth").on("change", function(){
-        var tmp = parseFloat(this.value);
-        if (isNaN(tmp)) {
-            showMessage($('#warningMessage'), "Input a number for tailwater depth!");
-            $("#tailwaterDepth").val(culvert.tailwaterDepth);
-            $(this).trigger('focus');
-        } else {
-            if(tailwaterDepth < 0){
-                showMessage($('#warningMessage'), "Tailwater is normally above outlet elevation!");
-            };
-            culvert.tailwaterDepth = tmp;
-            Performance();
-            //updateTable1();
-            //updateChartProfile();
-        };
-    });
 
-    function Performance(){
-
-        var tbl = document.getElementById('calcTableBody');
-
-        yMax = 8 * culvert.r;
-        yInc = niceIncrement(yMin, yMax);
-        yTickBottom = yInc * Math.floor(yMin/yInc);
-        yTickTop = yInc * Math.ceil(yMax/yInc);
-        scaleY = (ocvw.h - ocvw.offsetTop - ocvw.offsetBottom) / (yTickTop - yTickBottom);
-
-        var xs, s1, s3, s5, s6;
-
-        var i = 0;
-        for (let QAD05 = 0.5; QAD05 < 10; QAD05 += 0.5) {
-            let Qb = QAD05 * culvert.A * Math.sqrt(culvert.D); ;
-            let Qt = Qb * culvert.numBarrel;
-            let dn = culvert.Q2Dn(Qb);
-            let dc = culvert.Q2Dc(Qb);
-            let hwi1 = culvert.hwiUnsubmerged(Qb);
-            let hwi3 = culvert.hwiSubmerged(Qb);
-            let hwi = culvert.hwi(Qb);
-            let hwo = culvert.hwo(Qb, culvert.tailwaterDepth);
-            
-            tbl.rows[i].cells[0].innerHTML = Qt.toFixed(1);
-            tbl.rows[i].cells[2].innerHTML = dn.toFixed(2);
-            tbl.rows[i].cells[3].innerHTML = dc.toFixed(2);
-            tbl.rows[i].cells[4].innerHTML = hwi1.toFixed(2);
-            tbl.rows[i].cells[5].innerHTML = hwi3.toFixed(2);
-            tbl.rows[i].cells[6].innerHTML = hwi.toFixed(2);
-            tbl.rows[i].cells[7].innerHTML = hwo.toFixed(2);
-        
-            xs = ToX(QAD05);
-            if( i == 0) {
-                s1 = 'M ' + xs + ' ' + ToY(hwi1);
-                s3 = 'M ' + xs + ' ' + ToY(hwi3);
-                s5 = 'M ' + xs + ' ' + ToY(hwo);
-                s6 = 'M ' + xs + ' ' + ToY(Math.max(hwi, hwo));
-            } else {
-                s1 += ' L ' + xs + ' ' + ToY(hwi1);
-                s3 += ' L ' + xs + ' ' + ToY(hwi3);
-                s5 += ' L ' + xs + ' ' + ToY(hwo);
-                s6 += ' L ' + xs + ' ' + ToY(Math.max(hwi, hwo));
-            };
-            i++;
-        };
-
-        $('#pathhwi1', '#chartPerformance').attr('d', s1);
-        $('#pathhwi3', '#chartPerformance').attr('d', s3);
-        $('#pathhwo' , '#chartPerformance').attr('d', s5);
-        $('#pathhw' , '#chartPerformance').attr('d', s6);
-        
-        drawXAxisPerformance();
-        drawYAxisPerformance();
-    };
-    
     function updateTable1() {
 
         var tbl = document.getElementById('calcTableBody1');
+        
         for (let i = 0; i < tbl.rows.length; i++) {
 
-            let trfi = 0;
-            let Qt = 0;
-            
-            switch(i) {
-                case 0: trfi = da.i2; Qt = da.Q2; break;
-                case 1: trfi = da.i10; Qt = da.Q10; break
-                case 2: trfi = da.i100; Qt = da.Q100; break;
-            }
-            let Qb = Qt/culvert.numBarrel;
+            let Qb = Qts[i]/culvert.numBarrel;
             
             let hwi = culvert.hwi(Qb);
-            let hwo = culvert.hwo(Qb, TwCalc[i]);
+            let hwo = culvert.hwo(Qb, tws[i]);
             let elev = 0;
 
-            switch(i) {
-                case 0: 
-                    hw2 = hwi > hwo ? hwi : hwo; 
-                    elev = hw2 + culvert.inletElevation; 
-                    break;
-                case 1: 
-                    hw10 = hwi > hwo ? hwi : hwo; 
-                    elev = hw10 + culvert.inletElevation; 
-                    break
-                case 2: 
-                    hw100 = hwi > hwo ? hwi : hwo; 
-                    elev = hw100 + culvert.inletElevation; 
-                    break;
-            }
+            hws[i] = hwi > hwo ? hwi : hwo; 
+            elev = hws[i] + culvert.inletElevation; 
             
-            tbl.rows[i].cells[1].innerHTML = trfi.toFixed(2);
-            tbl.rows[i].cells[2].innerHTML = Qt.toFixed(2);
-            tbl.rows[i].cells[3].innerHTML = TwCalc[i].toFixed(2);
-            tbl.rows[i].cells[4].innerHTML = Qb.toFixed(2);
-            tbl.rows[i].cells[5].innerHTML = culvert.Q2Dn(Qb).toFixed(2);
-            tbl.rows[i].cells[6].innerHTML = culvert.Q2Dc(Qb).toFixed(2);
-            tbl.rows[i].cells[7].innerHTML = hwi.toFixed(2);
-            tbl.rows[i].cells[8].innerHTML = hwo.toFixed(2);
-            tbl.rows[i].cells[9].innerHTML = elev.toFixed(2);
-            tbl.rows[i].cells[10].innerHTML = culvert.vo(Qb, TwCalc[i]).toFixed(2);
-            
-
+            tbl.rows[i].cells[0].innerHTML = its[i];
+            tbl.rows[i].cells[1].innerHTML = Qts[i].toFixed(2);
+            tbl.rows[i].cells[2].innerHTML = tws[i].toFixed(2);
+            tbl.rows[i].cells[3].innerHTML = Qb.toFixed(2);
+            tbl.rows[i].cells[4].innerHTML = culvert.Q2Dn(Qb).toFixed(2);
+            tbl.rows[i].cells[5].innerHTML = culvert.Q2Dc(Qb).toFixed(2);
+            tbl.rows[i].cells[6].innerHTML = hwi.toFixed(2);
+            tbl.rows[i].cells[7].innerHTML = hwo.toFixed(2);
+            tbl.rows[i].cells[8].innerHTML = elev.toFixed(2);
+            tbl.rows[i].cells[9].innerHTML = culvert.vo(Qb, tws[i]).toFixed(2);
         };
     };
 
-    function drawXAxisPerformance(){
-        var xIncDraw = xInc * scaleX;
-
-        var x = xTickLeft;
-        var y = ocvw.h - ocvw.offsetBottom;
-        xDraw = ocvw.offsetLeft;
-        xGrid = '';
-        var text;
-        var xPos;
-        var yPos;
-        var idLabel;
-        var i = 1;
-
-        while (xDraw <= ocvw.w - ocvw.offsetRight){
-            xGrid += 'M' + xDraw + ' ' + ocvw.offsetTop + 'L' + xDraw + ' ' + y;
-            yPos = ocvw.h - 0.65 * ocvw.offsetBottom;
-            idLabel = 'xTick' + i;
-            $('#'+idLabel, '#chartPerformance').attr('x', xDraw);
-            $('#'+idLabel, '#chartPerformance').attr('y', yPos);
-            text = x.toString();
-            if(text.length > 10) {
-                text = x.toFixed(xInc.countDecimals());
-            }
-            $('#'+idLabel, '#chartPerformance').text(text);
-
-            xDraw += xIncDraw;
-            x += xInc;
-            i += 1;
-        }
-
-        for (; i < 10; i++){
-            idLabel = 'xTick' + i;
-            $('#'+idLabel, '#chartPerformance').text(' ');
-        }
-
-        $('#pathGridY', '#chartPerformance').attr('d', xGrid);
-    }
-    
-    function drawYAxisPerformance(){
-        var yIncDraw = yInc * scaleY;
-
-        let yDraw = ocvw.h - ocvw.offsetBottom;
-        var yGrid = '';
-        x = ocvw.w - ocvw.offsetRight;
-        y = yTickBottom;
-        i = 1;
-        while (yDraw > ocvw.offsetTop){
-            yGrid += 'M' + ocvw.offsetLeft + ' ' + yDraw + 'L' + x + ' ' + yDraw;
-            xPos = 0.70*ocvw.offsetLeft;
-            idLabel = 'yTick' + i;
-            text = y.toString();
-            if(text.length > 10) {
-                text = y.toFixed(yInc.countDecimals());
-            }
-            $('#'+idLabel, '#chartPerformance').attr("x", xPos);
-            $('#'+idLabel, '#chartPerformance').attr("y", yDraw);
-            $('#'+idLabel, '#chartPerformance').text(text);
-
-            yDraw -= yIncDraw;
-            y += yInc;
-            i += 1;
-        }
-
-        for (; i < 10; i++){
-            idLabel = 'yTick' + i;
-            $('#'+idLabel, '#chartPerformance').text(' ');
-        }
-
-        $("#pathGridX", '#chartPerformance').attr("d", yGrid);
-
-        xPos = ocvw.offsetLeft + 0.5 * (ocvw.w - ocvw.offsetLeft - ocvw.offsetRight);
-        yPos = ocvw.h - 0.25 * ocvw.offsetBottom;
-        $('#xLabel', '#chartPerformance').attr("x", xPos);
-        $('#xLabel', '#chartPerformance').attr("y", yPos);        
-    }
-      
     function updateChartProfile(){
         var xOffset = 20;
         //var yTop = getyTop();
@@ -721,9 +470,9 @@ jQuery(document).ready(function () {
     };    
     
     function updateProfileLeft(xOffset, scaleXLocal){
-        var yshw2 = ocvw.h - ocvw.offsetBottom - (hw2 + culvert.rise)* scaleY;
-        var yshw10 = ocvw.h - ocvw.offsetBottom - (hw10 + culvert.rise)* scaleY;
-        var yshw100 = ocvw.h - ocvw.offsetBottom - (hw100 + culvert.rise)* scaleY;
+        var yshw2 = ocvw.h - ocvw.offsetBottom - (hws[0] + culvert.rise)* scaleY;
+        var yshw10 = ocvw.h - ocvw.offsetBottom - (hws[1] + culvert.rise)* scaleY;
+        var yshw100 = ocvw.h - ocvw.offsetBottom - (hws[2] + culvert.rise)* scaleY;
         var dxhw = ocvw.offsetLeft + xOffset * scaleXLocal;
         var spath2 = 'M ' + ocvw.offsetLeft + ' ' + yshw2 + ' H ' + dxhw;
         var spath10 = 'M ' + ocvw.offsetLeft + ' ' + yshw10 + ' H ' + dxhw;
@@ -735,9 +484,9 @@ jQuery(document).ready(function () {
     };
 
     function updateProfileRight(xOffset, scaleXLocal){
-        var yshw2 = ocvw.h - ocvw.offsetBottom - TwCalc[0] * scaleY;
-        var yshw10 = ocvw.h - ocvw.offsetBottom - TwCalc[1] * scaleY;
-        var yshw100 = ocvw.h - ocvw.offsetBottom - TwCalc[2] * scaleY;
+        var yshw2 = ocvw.h - ocvw.offsetBottom - tws[0] * scaleY;
+        var yshw10 = ocvw.h - ocvw.offsetBottom - tws[1] * scaleY;
+        var yshw100 = ocvw.h - ocvw.offsetBottom - tws[2] * scaleY;
         
         var xRight = ocvw.w - ocvw.offsetRight;
         

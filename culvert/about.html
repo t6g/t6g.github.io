@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <title>Culvert Calculator</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="js/rainfall.js"></script>
+    <body>
+        <div class="container">
+            <div id="mynav"></div>
+            <h3 class="text-center">Culvert Calculator</h3>
+
+        <div class="row" >
+            <div class="col-lg-6">
+                <h4>Introduction</h4>    
+                <p> Culvert Calculator is a web application for culvert calculation following FHWA HDS5 (Hydraulic design of highway culverts, 3rd Edition). </p>
+                <h4>Unsubmerged Inlet Control Equations</h4>    
+                <p>For \(\frac{K_uQ}{AD^{0.5}}\leq 3.5\) (1.93 SI):</p>
+                <p>
+                    \begin{equation}
+                        \frac{HW_i}{D} = \frac{H_c}{D} + K\left(\frac{K_uQ}{AD^{0.5}}\right)^M + K_sS
+                        \label{eq:unsubmerged1}
+                    \end{equation}
+                </p>
+                where
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr><td>\(HW_i\)</td><td>Headwater depth above inlet control section invert, ft</td></tr>
+                        <tr><td>\(D\)</td><td>Interior height of culvert barrel, ft</td></tr>
+                        <tr><td>\(H_c\)</td><td>Specific head at critical depth (\(d_c + v_c^2/2g\)), ft</td></tr>
+                        <tr><td>\(Q\)</td><td>Discharge, cfs</td></tr>
+                        <tr><td>\(A\)</td><td>Full cross sectional area of culvert barrel, sf</td></tr>
+                        <tr><td>\(S\)</td><td>Culvert barrel slope, ft/ft</td></tr>
+                        <tr><td>\(K, M, c, Y\)</td><td>Constants</td></tr>
+                        <tr><td>\(K_u\)</td><td>1.0 for US Customary, 1.811 for SI</td></tr>
+                        <tr><td>\(K_S\)</td><td>Slope correction, -0.5 (mitered inlets 0.7)</td></tr>
+                    </tbody>
+                </table>
+                or (see Table A.1.)
+                <p>
+                    \begin{equation}
+                        \frac{HW_i}{D} = K\left(\frac{K_uQ}{AD^{0.5}}\right)^M
+                        \label{eq:unsubmerged2}
+                    \end{equation}
+                </p>
+                <h4>Submerged Inlet Control Equations</h4>    
+                <p>For \(\frac{K_uQ}{AD^{0.5}}\geq 4.0\) (2.21 SI):</p>
+                <p>
+                    \begin{equation}
+                        \frac{HW_i}{D} = c\left(\frac{K_uQ}{AD^{0.5}}\right)^2 + Y + K_sS
+                        \label{eq:submerged}
+                    \end{equation}
+                </p>
+                
+                <p>For \(3.5 \leq \frac{K_uQ}{AD^{0.5}}\geq 4.0\), a line between these two points is used to calculate \(HW_i\)</p>
+                
+            </div> <!--column 1 -->
+            <div class="col-lg-6">
+                <h4>Outlet Control Equations</h4>    
+                <p>
+                    \begin{equation}
+                        HW_o = \left(1 + K_e + \frac{K_{uc}n^2L}{R^{1.33}}\right)\frac{v^2}{2g} + H_o - LS
+                        \label{eq:outlet}
+                    \end{equation}
+                </p>
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr><td>\(HW_o\)</td><td>Headwater depth above inlet invert under outlet control, ft</td></tr>
+                        <tr><td>\(K_e\)</td><td>Entrance loss coefficient</td></tr>
+                        <tr><td>\(K_{uc}\)</td><td>\(2gK_{um}^{-2}\), 29.16 US customary, 19.63 SI</td></tr>
+                        <tr><td>\(K_{um}\)</td><td>\(K_{u}\) in Manning's equation, 1.486 US customary, 1 SI</td></tr>
+                        <tr><td>\(v\)</td><td>\(\frac{Q}{A}\), fps</td></tr>
+                        <tr><td>\(H_o\)</td><td>Maximum of tailwater depth and \((d_c + D)/2\), ft</td></tr>
+                        <tr><td>\(n\)</td><td>Manning's roughness coefficient</td></tr>
+                        <tr><td>\(L\)</td><td>Barrel length, ft</td></tr>
+                        <tr><td>\(R\)</td><td>Hydraulic radius under full flow condition</td></tr>
+                    </tbody>
+                </table>
+                <p>\(HW\) is the maximum of \(HW_i\) and \(HW_o\).</p>
+            </div>
+        </div> <!--container--> 
+        <script>
+            $("#mynav").load("nav.html");
+            window.MathJax = {
+              tex: {
+                tags: 'ams'
+              }
+            };        
+            </script>
+    </body>
+</html>
