@@ -59,6 +59,55 @@ jQuery(document).ready(function(){
     
     setUI();
 
+    $('input[type=radio]').change(function(e){
+        switch(e.target.name){
+            case 'contour': site.contour = this.value; break;
+            case 'daMap': site.daMap = this.value; break;
+            case 'riprapChannel': site.riprapChannel = this.value; break;
+            case 'fpsChannel': site.fpsChannel = this.value; break;
+            case 'roofWater': site.roofWater = this.value; break;
+            case 'endWall': site.endWall = this.value; break;
+            case 'benchmark': site.benchmark = this.value; break;
+            case 'fp100': site.fp100 = this.value; break;
+            case 'floodproof': site.floodproof = this.value; break;
+            case 'calculations': site.calculations = this.value; break;
+            case 'hgl': site.hgl = this.value; break;
+            case 'profileDrainage': site.profileDrainage = this.value; break;
+            case 'structureNumber': site.structureNumber = this.value; break;
+            case 'invert': site.invert = this.value; break;
+            case 'lengthThroat': site.lengthThroat = this.value; break;
+            case 'inletShaping': site.inletShaping = this.value; break;
+            case 'precastTee': site.precastTee = this.value; break;
+            case 'detailIS1': site.detailIS1 = this.value; break;
+            case 'detailInlet': site.detailInlet = this.value; break;
+            case 'st1': site.st1 = this.value; break;
+            case 'sl1': site.sl1 = this.value; break;
+            case 'bootConnector': site.bootConnector = this.value; break;
+            case 'paveDitch': site.paveDitch = this.value; break;
+            case 'pipeDitch': site.pipeDitch = this.value; break;
+            case 'topCurb': site.topCurb = this.value; break;
+            case 'dryGutter': site.dryGutter = this.value; break;
+            case 'symbolDryGutter': site.symbolDryGutter = this.value; break;
+            case 'backslope': site.backslope = this.value; break;
+            case 'ffElevation': site.ffElevation = this.value; break;
+            case 'drainageEasement': site.drainageEasement = this.value; break;
+            case 'dbpg': site.dbpg = this.value; break;
+            case 'onsiteDE': site.onsiteDE = this.value; break;
+            case 'easementSheet': site.easementSheet = this.value; break;
+            case 'roadName': site.roadName = this.value; break;
+            case 'phase': site.phase = this.value; break;
+            case 'mc3A': site.mc3A = this.value; break;
+            case 'stipple': site.stipple = this.value; break;
+            case 'xsectionPave': site.xsectionPave = this.value; break;
+            case 'radiusCurb': site.radiusCurb = this.value; break;
+            case 'carwash': site.carwash = this.value; break;
+            case 'oilSpill': site.oilSpill = this.value; break;
+            case 'fullPump': site.fullPump = this.value; break;
+            case 'pool2SanitarySewer': site.pool2SanitarySewer = this.value; break;
+            case 'privateUtility': site.privateUtility = this.value; break;
+        };
+    });
+    
     function setUI(){
         switch(site.contour){
             case "yes": 
