@@ -1,5 +1,6 @@
 jQuery(document).ready(function(){
     const defaultSite = {
+        isVSMP2b: false,
         projectName: "Gateway Apartment Homes",
         swppp: "na",
         zoning: "na", 
@@ -51,6 +52,17 @@ jQuery(document).ready(function(){
     
     $('input[type=radio]').change(function(e){
         switch(e.target.name){
+            case 'isVSMP2b':
+                site.isVSMP2b = this.value;
+                if(this.value){
+                    $("#listVSMP2b").show();
+                    $("#listVSMP2c").hide();
+                }
+                else {
+                    $("#listVSMP2b").hide();
+                    $("#listVSMP2c").show();
+                }
+                break;
             case 'swppp': 
                 site.swppp = this.value;
                 break;
@@ -65,8 +77,7 @@ jQuery(document).ready(function(){
                 break;
         };
     });
-    
-                                     
+  
     $("#btnReset").click(function() {
         Object.assign(site, defaultSite);
         setUI();
@@ -179,7 +190,17 @@ jQuery(document).ready(function(){
     });
     
     function setUI(){
-
+        
+        if(site.isVSMP2b) {
+            $("#isVSMP2bYes").prop('checked', true);
+            $("#listVSMP2b").show();
+            $("#listVSMP2c").hide();
+        } else {
+            $("#isVSMP2bNo").prop('checked', true);
+            $("#listVSMP2b").hide();
+            $("#listVSMP2c").show();
+        };
+        
         switch(site.swppp){
             case "yes": 
                 $("#SWPPPYes").prop('checked', true);
