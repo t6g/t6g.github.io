@@ -152,12 +152,11 @@
                                 <td><input type="radio" name="manufacturedBMP2b" value="na" id="manufacturedBMP2bNA"></td>
                                 <td><label for="manufacturedBMP2b">H.  Details and specifications for manufactured BMPs.</label></td>
                             </tr>
-                        </tbody>
                             <tr>
                                 <td><input type="radio" name="bmpIncrementalDA2b" value="yes" id="bmpIncrementalDA2bYes"></td>
                                 <td><input type="radio" name="bmpIncrementalDA2b" value="no" id="bmpIncrementalDA2bNo"></td>
                                 <td><input type="radio" name="bmpIncrementalDA2b" value="na" id="bmpIncrementalDA2bNA"></td>
-                                <td><label for="bootConnetor">I.  Incremental drainage areas to each BMP and the land cover types within each BMP drainage area.</label></td>
+                                <td><label for="bmpIncrementalDA2b">I.  Incremental drainage areas to each BMP and the land cover types within each BMP drainage area.</label></td>
                             </tr>
                             <tr>
                                 <td><input type="radio" name="bmpMapDA" value="yes" id="bmpMapDAYes"></td>
@@ -246,6 +245,10 @@
                             <td><label for="rpaSheets">10.  The limits of the RPA must be shown on the grading plan sheets, the erosion control plan sheets, and the Chesapeake Bay Compliance sheet(s)/Stormwater compliance sheet(s)</label></td>
                         </tr>
                     </table>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
                 </div>
             </div>
             <div class="col">
@@ -288,7 +291,7 @@
                             <td><input type="radio" name="endwallSection" value="yes" id="endwallSectionYes"></td>
                             <td><input type="radio" name="endwallSection" value="no" id="endwallSectionNo"></td>
                             <td><input type="radio" name="endwallSection" value="na" id="endwallSectionNA"></td>
-                            <td><label for="fullPump">16.  A standard ES-1 endsection or endwall is required for all pipes 30 inches or greater in diameter entering and exiting the SWM/BMP facility.</label></td>
+                            <td><label for="endwallSection">16.  A standard ES-1 endsection or endwall is required for all pipes 30 inches or greater in diameter entering and exiting the SWM/BMP facility.</label></td>
                         </tr>
                         <tr>
                             <td><input type="radio" name="swmEasement" value="yes" id="swmEasementYes"></td>
@@ -304,7 +307,7 @@
                         </tr>
                         <tr>
                             <td><input type="radio" name="meteboundBMP" value="yes" id="meteboundBMPYes"></td>
-                            <td><input type="radio" name="meteboundBMP" value="no" id="meteboundBMPBNo"></td>
+                            <td><input type="radio" name="meteboundBMP" value="no" id="meteboundBMPNo"></td>
                             <td><input type="radio" name="meteboundBMP" value="na" id="meteboundBMPNA"></td>
                             <td><label for="meteboundBMP">19.  Metes and bounds must be provided on the plan sheet for SWM/BMP easements and access easements.</label></td>
                         </tr>
@@ -322,7 +325,7 @@
                         </tr>
                         <tr>
                             <td><input type="radio" name="safetyBenchandFence" value="yes" id="safetyBenchandFenceYes"></td>
-                            <td><input type="radio" name="safetyBenchandFence" value="no" id="safetyBenchandFenceBNo"></td>
+                            <td><input type="radio" name="safetyBenchandFence" value="no" id="safetyBenchandFenceNo"></td>
                             <td><input type="radio" name="safetyBenchandFence" value="na" id="safetyBenchandFenceNA"></td>
                             <td><label for="safetyBenchandFence">22.  All SWM/BMP facilities which are more than 4 feet in depth or more than 1 acre-foot in surface area must provide both a safety bench and an aquatic bench, or be enclosed within a 6-foot high perimeter fence.  A vegetative barrier may be substituted for the fence, however a performance bond must be provided for the cost and installation of the plant materials.  A gate must also be provided which aligns with the 20-foot access easement.</label></td>
                         </tr>
@@ -439,7 +442,7 @@
                             <td><input type="radio" name="bmp8ftDepth" value="yes" id="bmp8ftDepthYes"></td>
                             <td><input type="radio" name="bmp8ftDepth" value="no"  id="bmp8ftDepthNo"></td>
                             <td><input type="radio" name="bmp8ftDepth" value="na"  id="bmp8ftDepthNA"></td>
-                            <td><label for="bmpSideSlope">41.  SWM/BMP facilities which are greater than 8 feet in depth must have a surface area of at least 1 acre.  Water quality volumes for CBPA compliance applies only to those areas which are less than 8 feet in depth.</label></td>
+                            <td><label for="bmp8ftDepth">41.  SWM/BMP facilities which are greater than 8 feet in depth must have a surface area of at least 1 acre.  Water quality volumes for CBPA compliance applies only to those areas which are less than 8 feet in depth.</label></td>
                         </tr>
                         <tr>
                             <td><input type="radio" name="bmpConversion" value="yes" id="bmpConversionYes"></td>
@@ -490,7 +493,16 @@
                 </table>
             </div> <!-- column 2  -->
         </div>   <!--   row     -->
-
+            <div>
+                <h6 class="text-center">Standard Comments</h6>
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
+                </div>
+                <ol id="generatedComments">
+                    
+                </ol>
+            </div>
     </div>     <!-- container -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Optional JavaScript; choose one of the two! -->

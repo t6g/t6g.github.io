@@ -37,6 +37,7 @@
 
             <div class="row">
                 <div class="col-lg-6">
+                    <h6>Standard comments:</h6>
                     <ul>
                         <li><label class="checkbox-inline"><input type="checkbox" id="applicantResposibility">It is the responsibility of the applicant to comply with and/or acquire all applicable federal and/or state permits in relation to environmental features including, but not limited to, wetlands, surface water, ground water, and air quality.  Final approval of these plans will not relieve you of your responsibilities.</label></li>
                         <li><label class="checkbox-inline"><input type="checkbox" id="developerResponsibility">The responsibility for achieving and maintaining satisfactory lot drainage will be that of the developer up through a period of one year after State acceptance of the subdivision roads.</label></li>
@@ -48,37 +49,40 @@
                     <h6>Prior to Plan Approval:</h6>
                     <ul>
                         <li><label class="checkbox-inline"><input type="checkbox" id="roadNameLetter">Plan RVA for road name approval letter.</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">signed notifications sent via certified mail (return receipt requested) from the adjacent owners (includes an 8.5” x 11” copy of the plan of the proposed construction activity) </label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="adjacentNotification">signed notifications sent via certified mail (return receipt requested) from the adjacent owners (includes an 8.5” x 11” copy of the plan of the proposed construction activity) </label></li>
                     </ul>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
+                    
                 </div> <!-- col-lg-6-->
                 <div class="col-lg-6">
                     <h6>Prior to a Land Disturbance Permit issuance:</h6>
                     <ul>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">Current VSMP coverage letter</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">Plan full approval</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">Wetlands documentation from COE/DEQ</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">VSMP registration statement and fee</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">DB-PG of all offsite easements</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">VDOT land use permit</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">SWPPP booklet in a 3-ring binder</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">4 sets of full-size plans for stamped approval, and 1 reduced size plan 11"x17" for SWPPP</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">a copy of the AutoCAD files submitted to Carole Cliborne of the Environmental Engineering Department. The files must be saved as a .dwg or .dxf in AutoCAD version 2009 or earlier and referenced directly to the Virginia State Plane Coordinate System, South Zone in the NAD83 Datum. The files may be submitted on a CD, DVD, or via email and must be clearly labeled with the subdivision name and section, subdivision plan number, engineering firm and preparer’s name, and phone number. The file must contain the following, each clearly labelled in separate layers:
+                        <li><label class="checkbox-inline"><input type="checkbox" id="vsmpCoverage">Current VSMP coverage letter</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="planApproval">Plan full approval</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="wetlandDocument">Wetlands documentation from COE/DEQ</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="vsmpRegistration">VSMP registration statement and fee</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="dbpgOffsite">DB-PG of all offsite easements</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="vdotLandUse">VDOT land use permit</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="swpppBooklet">SWPPP booklet in a 3-ring binder</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="planSets">4 sets of full-size plans for stamped approval, and 1 reduced size plan 11"x17" for SWPPP</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="autoCADFile">a copy of the AutoCAD files submitted to Carole Cliborne of the Environmental Engineering Department. The files must be saved as a .dwg or .dxf in AutoCAD version 2009 or earlier and referenced directly to the Virginia State Plane Coordinate System, South Zone in the NAD83 Datum. The files may be submitted on a CD, DVD, or via email and must be clearly labeled with the subdivision name and section, subdivision plan number, engineering firm and preparer’s name, and phone number. The file must contain the following, each clearly labelled in separate layers:
                             <ul>
                                 <li>edges of roads to include curb and gutter, </li>
-               <li>edges of sidewalks, and </li>
-               <li>all of storm sewer and inlets; </li>
+                               <li>edges of sidewalks, and </li>
+                               <li>all of storm sewer and inlets; </li>
                             </ul>
-</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">flagging around sensitive areas (buffer, WOUS, wetland, offsite property, etc.) along with the installation of safety fence along the RPA
-</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">Pipe barrels and risers for the sediment basins must be on site.
-</label></li>
+                        </label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="flagWetland">flagging around sensitive areas (buffer, WOUS, wetland, offsite property, etc.) along with the installation of safety fence along the RPA.</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="pipeRiser">Pipe barrels and risers for the sediment basins must be on site.</label></li>
                     </ul>
 
                     <h6>Prior to Plat Recordation:</h6>
                     <ul>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="roadNameLetter">a SWM/BMP maintenance fee of $250 per lot</label></li>
-                        <li><label class="checkbox-inline"><input type="checkbox" id="streetlights">Notification by VDOT that improvements to the State road(s) into which this project intersects, have been satisfactorily completed, must be received by the Environmental Engineering Department (TC#9)</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="bmpMaintenanceFee">a SWM/BMP maintenance fee of $250 per lot</label></li>
+                        <li><label class="checkbox-inline"><input type="checkbox" id="vdotNotification">Notification by VDOT that improvements to the State road(s) into which this project intersects, have been satisfactorily completed, must be received by the Environmental Engineering Department</label></li>
                     </ul>
                 </div>
             </div>  <!--row-->
@@ -88,7 +92,27 @@
                     <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
                     <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
                 </div>
+                <h6 id="inputComment" style="display:none;">Input Comments:</h6>
+                <ol id="generatedCommentsInput">
+                    
+                </ol>
+                
+                <h6 id="standardComment" style="display:none;">Standard Comments:</h6>
+                <ol id="generatedCommentsStandard">
+                    
+                </ol>
+                
+                <h6 id="approvalComment" style="display:none;">Prior to plan approval:</h6>
+                <ol id="generatedCommentsApproval">
+                    
+                </ol>
+                
+                <h6 id="ldpComment" style="display:none;">Prior to a land disturbance issuance:</h6>
                 <ol id="generatedComments">
+                    
+                </ol>
+                <h6 id="platComment" style="display:none;">Prior to Plat Recordation:</h6>
+                <ol id="generatedCommentsPlat">
                     
                 </ol>
             </div>
@@ -105,11 +129,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
         -->
-        <script>
-            jQuery(document).ready(function(){
-                $("#mynav").load("nav.html");
-            });
-        </script>
+        <script src="js/subdivision/admin.js"></script>
         
         <!--<script src="js/glance.js"></script>-->
     </body>

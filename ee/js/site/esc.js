@@ -19,7 +19,7 @@ jQuery(document).ready(function(){
         detailTrap: "na",
         SAFTrap: "na",
         SFBreak: "na",
-        detailInlet: "na",
+        //detailInlet: "na",
         escRegulation: "na",
         escHandbook: "na",
         escSymbol: "na",
@@ -98,7 +98,7 @@ jQuery(document).ready(function(){
             case 'detailTrap': site.detailTrap = this.value; break;
             case 'SAFTrap': site.SAFTrap = this.value; break;
             case 'SFBreak': site.SFBreak = this.value; break;
-            case 'detailInlet': site.detailInlet = this.value; break;
+            //case 'detailInlet': site.detailInlet = this.value; break;
             case 'escRegulation': site.escRegulation = this.value; break;
             case 'escHandbook': site.escHandbook = this.value; break;
             case 'escSymbol': site.escSymbol = this.value; break;
@@ -877,11 +877,263 @@ jQuery(document).ready(function(){
                 $("#rpaLimitNA").prop('checked', true);
                 break;
         };
-
-
-
-        
-
     };
     
+
+    $("#btnGenerate").click(function() {
+        var list = $("#generatedComments");
+        if(list == null) {
+            return;
+        }
+        
+        var lines = $('#comments').val().split('\n');
+        for(var i = 0;i < lines.length;i++){
+            if(lines[i].length > 0){
+                list.append('<li>' + lines[i] + '</li>');
+            }
+        }        
+        
+        if(site.twoPhase == 'no'){
+            list.append('<li>' + $("label[for='twoPhase']").text() + '</li>');
+        }
+
+        if(site.inletProtection1 == 'no'){
+            list.append('<li>' + $("label[for='inletProtection1']").text() + '</li>');
+        }
+
+        if(site.inletProtection2 == 'no'){
+            list.append('<li>' + $("label[for='inletProtection2']").text() + '</li>');
+        }
+
+        if(site.timbering == 'no'){
+            list.append('<li>' + $("label[for='timbering']").text() + '</li>');
+        }
+
+        if(site.sequence == 'no'){
+            list.append('<li>' + $("label[for='sequence']").text() + '</li>');
+        }
+
+        if(site.notifyEE == 'no'){
+            list.append('<li>' + $("label[for='notifyEE']").text() + '</li>');
+        }
+
+        if(site.benchmark == 'no'){
+            list.append('<li>' + $("label[for='benchmark']").text() + '</li>');
+        }
+
+        if(site.rld == 'no'){
+            list.append('<li>' + $("label[for='rld']").text() + '</li>');
+        }
+
+        if(site.crld == 'no'){
+            list.append('<li>' + $("label[for='crld']").text() + '</li>');
+        }
+
+        if(site.stepSequence == 'no'){
+            list.append('<li>' + $("label[for='stepSequence']").text() + '</li>');
+        }
+
+
+        if(site.trapinPlace == 'no'){
+            list.append('<li>' + $("label[for='trapinPlace']").text() + '</li>');
+        }
+
+        if(site.escLegend == 'no'){
+            list.append('<li>' + $("label[for='escLegend']").text() + '</li>');
+        }
+
+        if(site.constructionEntrance == 'no'){
+            list.append('<li>' + $("label[for='constructionEntrance']").text() + '</li>');
+        }
+
+        if(site.escDA == 'no'){
+            list.append('<li>' + $("label[for='escDA']").text() + '</li>');
+        }
+
+        if(site.sedimentBasin == 'no'){
+            list.append('<li>' + $("label[for='sedimentBasin']").text() + '</li>');
+        }
+
+        if(site.infoTrap == 'no'){
+            list.append('<li>' + $("label[for='infoTrap']").text() + '</li>');
+        }
+
+        if(site.lengthWidthTrap == 'no'){
+            list.append('<li>' + $("label[for='lengthWidthTrap']").text() + '</li>');
+        }
+
+        if(site.detailTrap == 'no'){
+            list.append('<li>' + $("label[for='detailTrap']").text() + '</li>');
+        }
+
+        if(site.SAFTrap == 'no'){
+            list.append('<li>' + $("label[for='SAFTrap']").text() + '</li>');
+        }
+
+        if(site.SFBreak == 'no'){
+            list.append('<li>' + $("label[for='SFBreak']").text() + '</li>');
+        }
+
+/*        if(site.detailInlet == 'no'){
+            list.append('<li>' + $("label[for='detailInlet']").text() + '</li>');
+        }
+*/
+        if(site.escRegulation == 'no'){
+            list.append('<li>' + $("label[for='escRegulation']").text() + '</li>');
+        }
+
+        if(site.escHandbook == 'no'){
+            list.append('<li>' + $("label[for='escHandbook']").text() + '</li>');
+        }
+
+        if(site.escSymbol == 'no'){
+            list.append('<li>' + $("label[for='escSymbol']").text() + '</li>');
+        }
+
+        if(site.escDetail == 'no'){
+            list.append('<li>' + $("label[for='escDetail']").text() + '</li>');
+        }
+
+        if(site.escMaintainance == 'no'){
+            list.append('<li>' + $("label[for='escMaintainance']").text() + '</li>');
+        }
+
+        if(site.toESC == 'no'){
+            list.append('<li>' + $("label[for='toESC']").text() + '</li>');
+        }
+
+        if(site.moreESC == 'no'){
+            list.append('<li>' + $("label[for='moreESC']").text() + '</li>');
+        }
+
+        if(site.escMS1 == 'no'){
+            list.append('<li>' + $("label[for='escMS1']").text() + '</li>');
+        }
+
+        if(site.grassTable == 'no'){
+            list.append('<li>' + $("label[for='grassTable']").text() + '</li>');
+        }
+
+        if(site.ldLimit == 'no'){
+            list.append('<li>' + $("label[for='ldLimit']").text() + '</li>');
+        }
+
+        if(site.drainageEasement == 'no'){
+            list.append('<li>' + $("label[for='drainageEasement']").text() + '</li>');
+        }
+
+        if(site.culvertDownstream == 'no'){
+            list.append('<li>' + $("label[for='culvertDownstream']").text() + '</li>');
+        }
+
+        if(site.rationalI == 'no'){
+            list.append('<li>' + $("label[for='rationalI']").text() + '</li>');
+        }
+
+        if(site.criticalDuration == 'no'){
+            list.append('<li>' + $("label[for='criticalDuration']").text() + '</li>');
+        }
+
+        if(site.tempSlopeDrain == 'no'){
+            list.append('<li>' + $("label[for='tempSlopeDrain']").text() + '</li>');
+        }
+
+        if(site.inletProtection == 'no'){
+            list.append('<li>' + $("label[for='inletProtection']").text() + '</li>');
+        }
+
+        if(site.curbInletProtection == 'no'){
+            list.append('<li>' + $("label[for='curbInletProtection']").text() + '</li>');
+        }
+
+        if(site.grateInletProtection == 'no'){
+            list.append('<li>' + $("label[for='grateInletProtection']").text() + '</li>');
+        }
+
+        if(site.ms16 == 'no'){
+            list.append('<li>' + $("label[for='ms16']").text() + '</li>');
+        }
+
+        if(site.trenchDetail == 'no'){
+            list.append('<li>' + $("label[for='trenchDetail']").text() + '</li>');
+        }
+
+        if(site.offsiteUtility == 'no'){
+            list.append('<li>' + $("label[for='offsiteUtility']").text() + '</li>');
+        }
+
+        if(site.stockpile == 'no'){
+            list.append('<li>' + $("label[for='stockpile']").text() + '</li>');
+        }
+
+        if(site.blanket == 'no'){
+            list.append('<li>' + $("label[for='blanket']").text() + '</li>');
+        }
+
+        if(site.benchSlope == 'no'){
+            list.append('<li>' + $("label[for='benchSlope']").text() + '</li>');
+        }
+        if(site.numberSTB == 'no'){
+            list.append('<li>' + $("label[for='numberSTB']").text() + '</li>');
+        }
+        if(site.conversionBMP == 'no'){
+            list.append('<li>' + $("label[for='conversionBMP']").text() + '</li>');
+        }
+        if(site.moreNotes == 'no'){
+            list.append('<li>' + $("label[for='moreNotes']").text() + '</li>');
+        }
+        if(site.offsiteEasement == 'no'){
+            list.append('<li>' + $("label[for='offsiteEasement']").text() + '</li>');
+        }
+        if(site.quitclaim == 'no'){
+            list.append('<li>' + $("label[for='quitclaim']").text() + '</li>');
+        }
+        if(site.performanceBond == 'no'){
+            list.append('<li>' + $("label[for='performanceBond']").text() + '</li>');
+        }
+        if(site.onsiteDE == 'no'){
+            list.append('<li>' + $("label[for='onsiteDE']").text() + '</li>');
+        }
+        if(site.bmpBond == 'no'){
+            list.append('<li>' + $("label[for='bmpBond']").text() + '</li>');
+        }
+        if(site.bmpCertify == 'no'){
+            list.append('<li>' + $("label[for='bmpCertify']").text() + '</li>');
+        }
+        if(site.bmpCertDoc == 'no'){
+            list.append('<li>' + $("label[for='bmpCertDoc']").text() + '</li>');
+        }
+        if(site.asbuiltSurvey == 'no'){
+            list.append('<li>' + $("label[for='asbuiltSurvey']").text() + '</li>');
+        }
+        if(site.certForm == 'no'){
+            list.append('<li>' + $("label[for='certForm']").text() + '</li>');
+        }
+        if(site.certVolume == 'no'){
+            list.append('<li>' + $("label[for='certVolume']").text() + '</li>');
+        }
+        if(site.certPhoto == 'no'){
+            list.append('<li>' + $("label[for='certPhoto']").text() + '</li>');
+        }
+        if(site.certStamp == 'no'){
+            list.append('<li>' + $("label[for='certStamp']").text() + '</li>');
+        }
+        if(site.vdotLandUsePermit == 'no'){
+            list.append('<li>' + $("label[for='vdotLandUsePermit']").text() + '</li>');
+        }
+        if(site.truckEnterSign == 'no'){
+            list.append('<li>' + $("label[for='truckEnterSign']").text() + '</li>');
+        }
+        if(site.pipeRiser == 'no'){
+            list.append('<li>' + $("label[for='pipeRiser']").text() + '</li>');
+        }
+        if(site.rpaLimit == 'no'){
+            list.append('<li>' + $("label[for='rpaLimit']").text() + '</li>');
+        }
+    });
+           
+    $("#btnClear").click(function() {
+        $("#generatedComments").empty();
+    });
+
 });

@@ -169,7 +169,7 @@
                                 <td><input type="radio" name="bootConnector" value="yes" id="bootConnectorYes"></td>
                                 <td><input type="radio" name="bootConnector" value="no" id="bootConnectorNo"></td>
                                 <td><input type="radio" name="bootConnector" value="na" id="bootConnectorNA"></td>
-                                <td><label for="bootConnetor">23. Boot connectors must be specified in the tabular drainage description for all plastic pipes that tie into a concrete structure.</label></td>
+                                <td><label for="bootConnector">23. Boot connectors must be specified in the tabular drainage description for all plastic pipes that tie into a concrete structure.</label></td>
                             </tr>
                             <tr>
                                 <td><input type="radio" name="paveDitch" value="yes" id="paveDitchYes"></td>
@@ -306,8 +306,23 @@
                         </tr>
                     </tbody>
                 </table>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
             </div> <!-- column 2  -->
         </div>   <!--   row     -->
+            <div>
+                <h6 class="text-center">Standard Comments</h6>
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
+                </div>
+                <ol id="generatedComments">
+                    
+                </ol>
+            </div>
+
 
     </div>     <!-- container -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

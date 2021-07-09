@@ -8,6 +8,7 @@ jQuery(document).ready(function(){
         endWall: "na",
         benchmark: "na",
         fp100: "na",
+        mff: "na",
         floodproof: "na",
         calculations: "na",
         hgl: "na",
@@ -41,7 +42,7 @@ jQuery(document).ready(function(){
         radiusCurb: "na",
         carwash: "na",
         oilSpill: "na",
-        fullPump: "na",
+        fuelPump: "na",
         pool2SanitarySewer: "na",
         privateUtility: "na"
     };
@@ -69,6 +70,7 @@ jQuery(document).ready(function(){
             case 'endWall': site.endWall = this.value; break;
             case 'benchmark': site.benchmark = this.value; break;
             case 'fp100': site.fp100 = this.value; break;
+            case 'mff': site.mff = this.value; break;
             case 'floodproof': site.floodproof = this.value; break;
             case 'calculations': site.calculations = this.value; break;
             case 'hgl': site.hgl = this.value; break;
@@ -102,7 +104,7 @@ jQuery(document).ready(function(){
             case 'radiusCurb': site.radiusCurb = this.value; break;
             case 'carwash': site.carwash = this.value; break;
             case 'oilSpill': site.oilSpill = this.value; break;
-            case 'fullPump': site.fullPump = this.value; break;
+            case 'fuelPump': site.fuelPump = this.value; break;
             case 'pool2SanitarySewer': site.pool2SanitarySewer = this.value; break;
             case 'privateUtility': site.privateUtility = this.value; break;
         };
@@ -205,8 +207,6 @@ jQuery(document).ready(function(){
                 $("#fp100NA").prop('checked', true);
                 break;
         };
-        
-        
         
        switch(site.mff){
             case "yes": 
@@ -617,15 +617,15 @@ jQuery(document).ready(function(){
                 break;
         };
 
-        switch(site.fullPump){
+        switch(site.fuelPump){
             case "yes": 
-                $("#fullPumpYes").prop('checked', true);
+                $("#fuelPumpYes").prop('checked', true);
                 break;
             case "no": 
-                $("#fullPumpNo").prop('checked', true);
+                $("#fuelPumpNo").prop('checked', true);
                 break;
             case "na": 
-                $("#fullPumpNA").prop('checked', true);
+                $("#fuelPumpNA").prop('checked', true);
                 break;
         };
 
@@ -654,5 +654,203 @@ jQuery(document).ready(function(){
         };
 
     };
+
+    $("#btnGenerate").click(function() {
+        var list = $("#generatedComments");
+        if(list == null) {
+            return;
+        }
+        
+        var lines = $('#comments').val().split('\n');
+        for(var i = 0;i < lines.length;i++){
+            if(lines[i].length > 0){
+                list.append('<li>' + lines[i] + '</li>');
+            }
+        }        
+        
+        if(site.contour == 'no'){
+            list.append('<li>' + $("label[for='contour']").text() + '</li>');
+        }
+
+        if(site.daMap == 'no'){
+            list.append('<li>' + $("label[for='daMap']").text() + '</li>');
+        }
+
+        if(site.riprapChannel == 'no'){
+            list.append('<li>' + $("label[for='riprapChannel']").text() + '</li>');
+        }
+
+        if(site.fpsChannel == 'no'){
+            list.append('<li>' + $("label[for='fpsChannel']").text() + '</li>');
+        }
+
+        if(site.roofWater == 'no'){
+            list.append('<li>' + $("label[for='roofWater']").text() + '</li>');
+        }
+
+        if(site.endWall == 'no'){
+            list.append('<li>' + $("label[for='endWall']").text() + '</li>');
+        }
+
+        if(site.benchmark == 'no'){
+            list.append('<li>' + $("label[for='benchmark']").text() + '</li>');
+        }
+
+        if(site.fp100 == 'no'){
+            list.append('<li>' + $("label[for='fp100']").text() + '</li>');
+        }
+
+        if(site.mff == 'no'){
+            list.append('<li>' + $("label[for='mff']").text() + '</li>');
+        }
+
+        if(site.floodproof == 'no'){
+            list.append('<li>' + $("label[for='floodproof']").text() + '</li>');
+        }
+
+        if(site.calculations == 'no'){
+            list.append('<li>' + $("label[for='calculations']").text() + '</li>');
+        }
+
+        if(site.hgl == 'no'){
+            list.append('<li>' + $("label[for='hgl']").text() + '</li>');
+        }
+
+        if(site.profileDrainage == 'no'){
+            list.append('<li>' + $("label[for='profileDrainage']").text() + '</li>');
+        }
+
+        if(site.structureNumber == 'no'){
+            list.append('<li>' + $("label[for='structureNumber']").text() + '</li>');
+        }
+
+        if(site.invert == 'no'){
+            list.append('<li>' + $("label[for='invert']").text() + '</li>');
+        }
+
+        if(site.lengthThroat == 'no'){
+            list.append('<li>' + $("label[for='lengthThroat']").text() + '</li>');
+        }
+
+        if(site.inletShaping == 'no'){
+            list.append('<li>' + $("label[for='inletShaping']").text() + '</li>');
+        }
+
+        if(site.precastTee == 'no'){
+            list.append('<li>' + $("label[for='precastTee']").text() + '</li>');
+        }
+
+        if(site.detailIS1 == 'no'){
+            list.append('<li>' + $("label[for='detailIS1']").text() + '</li>');
+        }
+
+        if(site.detailInlet == 'no'){
+            list.append('<li>' + $("label[for='detailInlet']").text() + '</li>');
+        }
+
+        if(site.st1 == 'no'){
+            list.append('<li>' + $("label[for='st1']").text() + '</li>');
+        }
+
+        if(site.sl1 == 'no'){
+            list.append('<li>' + $("label[for='sl1']").text() + '</li>');
+        }
+
+        if(site.bootConnector == 'no'){
+            list.append('<li>' + $("label[for='bootConnector']").text() + '</li>');
+        }
+
+        if(site.paveDitch == 'no'){
+            list.append('<li>' + $("label[for='paveDitch']").text() + '</li>');
+        }
+
+        if(site.pipeDitch == 'no'){
+            list.append('<li>' + $("label[for='pipeDitch']").text() + '</li>');
+        }
+
+        if(site.topCurb == 'no'){
+            list.append('<li>' + $("label[for='topCurb']").text() + '</li>');
+        }
+
+        if(site.dryGutter == 'no'){
+            list.append('<li>' + $("label[for='dryGutter']").text() + '</li>');
+        }
+
+        if(site.symbolDryGutter == 'no'){
+            list.append('<li>' + $("label[for='symbolDryGutter']").text() + '</li>');
+        }
+
+        if(site.backslope == 'no'){
+            list.append('<li>' + $("label[for='backslope']").text() + '</li>');
+        }
+
+        if(site.ffElevation == 'no'){
+            list.append('<li>' + $("label[for='ffElevation']").text() + '</li>');
+        }
+
+        if(site.drainageEasement == 'no'){
+            list.append('<li>' + $("label[for='drainageEasement']").text() + '</li>');
+        }
+
+        if(site.dbpg == 'no'){
+            list.append('<li>' + $("label[for='dbpg']").text() + '</li>');
+        }
+
+        if(site.onsiteDE == 'no'){
+            list.append('<li>' + $("label[for='onsiteDE']").text() + '</li>');
+        }
+
+        if(site.easementSheet == 'no'){
+            list.append('<li>' + $("label[for='easementSheet']").text() + '</li>');
+        }
+
+        if(site.roadName == 'no'){
+            list.append('<li>' + $("label[for='roadName']").text() + '</li>');
+        }
+
+        if(site.phase == 'no'){
+            list.append('<li>' + $("label[for='phase']").text() + '</li>');
+        }
+
+        if(site.mc3A == 'no'){
+            list.append('<li>' + $("label[for='mc3A']").text() + '</li>');
+        }
+
+        if(site.stipple == 'no'){
+            list.append('<li>' + $("label[for='stipple']").text() + '</li>');
+        }
+
+        if(site.xsectionPave == 'no'){
+            list.append('<li>' + $("label[for='xsectionPave']").text() + '</li>');
+        }
+
+        if(site.radiusCurb == 'no'){
+            list.append('<li>' + $("label[for='radiusCurb']").text() + '</li>');
+        }
+
+        if(site.carwash == 'no'){
+            list.append('<li>' + $("label[for='carwash']").text() + '</li>');
+        }
+
+        if(site.oilSpill == 'no'){
+            list.append('<li>' + $("label[for='oilSpill']").text() + '</li>');
+        }
+
+        if(site.fuelPump == 'no'){
+            list.append('<li>' + $("label[for='fuelPump']").text() + '</li>');
+        }
+
+        if(site.pool2SanitarySewer == 'no'){
+            list.append('<li>' + $("label[for='pool2SanitarySewer']").text() + '</li>');
+        }
+
+        if(site.privateUtility == 'no'){
+            list.append('<li>' + $("label[for='privateUtility']").text() + '</li>');
+        }
+    });
+           
+    $("#btnClear").click(function() {
+        $("#generatedComments").empty();
+    });
     
 });

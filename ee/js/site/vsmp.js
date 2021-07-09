@@ -1047,5 +1047,286 @@ jQuery(document).ready(function(){
                 break;
         };
     };
+    $("#btnGenerate").click(function() {
+        var list = $("#generatedComments");
+        if(list == null) {
+            return;
+        }
+        
+        var lines = $('#comments').val().split('\n');
+        for(var i = 0;i < lines.length;i++){
+            if(lines[i].length > 0){
+                list.append('<li>' + lines[i] + '</li>');
+            }
+        }        
+        
+        if(site.noteVSMP == 'no'){
+            list.append('<li>' + $("label[for='noteVSMP']").text() + '</li>');
+        }
+
+        if(site.rpad == 'no'){
+            list.append('<li>' + $("label[for='rpad']").text() + '</li>');
+        }
+
+        if(site.sheetVSMP == 'no'){
+            list.append('<li>' + $("label[for='sheetVSMP']").text() + '</li>');
+        }
+
+        if(site.tableCBPAMS4 == 'no'){
+            list.append('<li>' + $("label[for='tableCBPAMS4']").text() + '</li>');
+        }
+
+        if(site.planBMP == 'no'){
+            list.append('<li>' + $("label[for='planBMP']").text() + '</li>');
+        }
+
+        if(site.profileBMP == 'no'){
+            list.append('<li>' + $("label[for='profileBMP']").text() + '</li>');
+        }
+
+        if(site.manufacturedBMP == 'no'){
+            list.append('<li>' + $("label[for='manufacturedBMP']").text() + '</li>');
+        }
+
+        if(site.rparmaLimit == 'no'){
+            list.append('<li>' + $("label[for='rparmaLimit']").text() + '</li>');
+        }
+
+        if(site.areaRMA == 'no'){
+            list.append('<li>' + $("label[for='areaRMA']").text() + '</li>');
+        }
+
+        if(site.imperviousCalculation == 'no'){
+            list.append('<li>' + $("label[for='imperviousCalculation']").text() + '</li>');
+        }
+
+
+        if(site.bmpIncrementalDA == 'no'){
+            list.append('<li>' + $("label[for='bmpIncrementalDA']").text() + '</li>');
+        }
+
+        if(site.bmpEasement == 'no'){
+            list.append('<li>' + $("label[for='bmpEasement']").text() + '</li>');
+        }
+
+        if(site.sheet2bCompliance == 'no'){
+            list.append('<li>' + $("label[for='sheet2bCompliance']").text() + '</li>');
+        }
+
+        if(site.tableComplianceOutfall == 'no'){
+            list.append('<li>' + $("label[for='tableComplianceOutfall']").text() + '</li>');
+        }
+
+        if(site.vrrmSpreadsheet == 'no'){
+            list.append('<li>' + $("label[for='vrrmSpreadsheet']").text() + '</li>');
+        }
+
+        if(site.ebOutfall == 'no'){
+            list.append('<li>' + $("label[for='ebOutfall']").text() + '</li>');
+        }
+
+        if(site.landCover == 'no'){
+            list.append('<li>' + $("label[for='landCover']").text() + '</li>');
+        }
+
+        if(site.foEasement == 'no'){
+            list.append('<li>' + $("label[for='foEasement']").text() + '</li>');
+        }
+
+        if(site.planBMP2b == 'no'){
+            list.append('<li>' + $("label[for='planBMP2b']").text() + '</li>');
+        }
+
+        if(site.profileBMP2b == 'no'){
+            list.append('<li>' + $("label[for='profileBMP2b']").text() + '</li>');
+        }
+
+        if(site.manufacturedBMP2b == 'no'){
+            list.append('<li>' + $("label[for='manufacturedBMP2b']").text() + '</li>');
+        }
+
+        if(site.bmpIncrementalDA2b == 'no'){
+            list.append('<li>' + $("label[for='bmpIncrementalDA2b']").text() + '</li>');
+        }
+
+        if(site.bmpMapDA == 'no'){
+            list.append('<li>' + $("label[for='bmpMapDA']").text() + '</li>');
+        }
+
+        if(site.DAEB1010 == 'no'){
+            list.append('<li>' + $("label[for='DAEB1010']").text() + '</li>');
+        }
+
+        if(site.DA1Percent == 'no'){
+            list.append('<li>' + $("label[for='DA1Percent']").text() + '</li>');
+        }
+
+        if(site.QPeak1Percent == 'no'){
+            list.append('<li>' + $("label[for='QPeak1Percent']").text() + '</li>');
+        }
+
+        if(site.floodplain2b == 'no'){
+            list.append('<li>' + $("label[for='floodplain2b']").text() + '</li>');
+        }
+
     
+        if(site.channelFloodCalculation == 'no'){
+            list.append('<li>' + $("label[for='channelFloodCalculation']").text() + '</li>');
+        }
+
+        if(site.bmpEasement2b == 'no'){
+            list.append('<li>' + $("label[for='bmpEasement2b']").text() + '</li>');
+        }
+
+        if(site.preventCompaction == 'no'){
+            list.append('<li>' + $("label[for='preventCompaction']").text() + '</li>');
+        }
+
+        if(site.deqSpecification == 'no'){
+            list.append('<li>' + $("label[for='deqSpecification']").text() + '</li>');
+        }
+
+        if(site.default2c == 'no'){
+            list.append('<li>' + $("label[for='default2c']").text() + '</li>');
+        }
+
+        if(site.rpaLimit == 'no'){
+            list.append('<li>' + $("label[for='rpaLimit']").text() + '</li>');
+        }
+
+        if(site.wetlandLetter == 'no'){
+            list.append('<li>' + $("label[for='wetlandLetter']").text() + '</li>');
+        }
+
+        if(site.rpaLineType == 'no'){
+            list.append('<li>' + $("label[for='rpaLineType']").text() + '</li>');
+        }
+
+        if(site.rpaSheets == 'no'){
+            list.append('<li>' + $("label[for='rpaSheets']").text() + '</li>');
+        }
+
+        if(site.rpaSign == 'no'){
+            list.append('<li>' + $("label[for='rpaSign']").text() + '</li>');
+        }
+
+        if(site.oosfRPA == 'no'){
+            list.append('<li>' + $("label[for='oosfRPA']").text() + '</li>');
+        }
+
+        if(site.vehicularSafety == 'no'){
+            list.append('<li>' + $("label[for='vehicularSafety']").text() + '</li>');
+        }
+
+        if(site.rpaReestablish == 'no'){
+            list.append('<li>' + $("label[for='rpaReestablish']").text() + '</li>');
+        }
+        if(site.bmpInflow == 'no'){
+            list.append('<li>' + $("label[for='bmpInflow']").text() + '</li>');
+        }
+
+        if(site.endwallSection == 'no'){
+            list.append('<li>' + $("label[for='endwallSection']").text() + '</li>');
+        }
+
+        if(site.swmEasement == 'no'){
+            list.append('<li>' + $("label[for='swmEasement']").text() + '</li>');
+        }
+
+        if(site.accessEasement == 'no'){
+            list.append('<li>' + $("label[for='accessEasement']").text() + '</li>');
+        }
+
+        if(site.meteboundBMP == 'no'){
+            list.append('<li>' + $("label[for='meteboundBMP']").text() + '</li>');
+        }
+        if(site.accessRamp == 'no'){
+            list.append('<li>' + $("label[for='accessRamp']").text() + '</li>');
+        }
+        if(site.safetyBenchorFence == 'no'){
+            list.append('<li>' + $("label[for='safetyBenchorFence']").text() + '</li>');
+        }
+        if(site.safetyBenchandFence == 'no'){
+            list.append('<li>' + $("label[for='safetyBenchandFence']").text() + '</li>');
+        }
+        if(site.vpys == 'no'){
+            list.append('<li>' + $("label[for='vpys']").text() + '</li>');
+        }
+        if(site.profileBMPDetail == 'no'){
+            list.append('<li>' + $("label[for='profileBMPDetail']").text() + '</li>');
+        }
+        if(site.storageVolume == 'no'){
+            list.append('<li>' + $("label[for='storageVolume']").text() + '</li>');
+        }
+        if(site.damTopwidth == 'no'){
+            list.append('<li>' + $("label[for='damTopwidth']").text() + '</li>');
+        }
+        if(site.wse == 'no'){
+            list.append('<li>' + $("label[for='wse']").text() + '</li>');
+        }
+        if(site.shallowMarsh == 'no'){
+            list.append('<li>' + $("label[for='shallowMarsh']").text() + '</li>');
+        }
+        if(site.perforationRiser == 'no'){
+            list.append('<li>' + $("label[for='perforationRiser']").text() + '</li>');
+        }
+        if(site.freeboard == 'no'){
+            list.append('<li>' + $("label[for='freeboard']").text() + '</li>');
+        }
+        if(site.emergencySpillway == 'no'){
+            list.append('<li>' + $("label[for='emergencySpillway']").text() + '</li>');
+        }
+        if(site.oringRCP == 'no'){
+            list.append('<li>' + $("label[for='oringRCP']").text() + '</li>');
+        }
+        if(site.trashRackAntiVortex == 'no'){
+            list.append('<li>' + $("label[for='trashRackAntiVortex']").text() + '</li>');
+        }
+        if(site.clayCore == 'no'){
+            list.append('<li>' + $("label[for='clayCore']").text() + '</li>');
+        }
+        if(site.gateValve == 'no'){
+            list.append('<li>' + $("label[for='gateValve']").text() + '</li>');
+        }
+        if(site.lwRatio == 'no'){
+            list.append('<li>' + $("label[for='lwRatio']").text() + '</li>');
+        }
+        if(site.outletProtection == 'no'){
+            list.append('<li>' + $("label[for='outletProtection']").text() + '</li>');
+        }
+        if(site.lowFlow == 'no'){
+            list.append('<li>' + $("label[for='lowFlow']").text() + '</li>');
+        }
+        if(site.bmpSideSlope == 'no'){
+            list.append('<li>' + $("label[for='bmpSideSlope']").text() + '</li>');
+        }
+        if(site.bmp8ftDepth == 'no'){
+            list.append('<li>' + $("label[for='bmp8ftDepth']").text() + '</li>');
+        }
+        if(site.bmpConversion == 'no'){
+            list.append('<li>' + $("label[for='bmpConversion']").text() + '</li>');
+        }
+        if(site.boringInfiltration == 'no'){
+            list.append('<li>' + $("label[for='boringInfiltration']").text() + '</li>');
+        }
+        if(site.observationInfiltration == 'no'){
+            list.append('<li>' + $("label[for='observationInfiltration']").text() + '</li>');
+        }
+        if(site.observeBMP == 'no'){
+            list.append('<li>' + $("label[for='observeBMP']").text() + '</li>');
+        }
+        if(site.bmpMaintenanceFee == 'no'){
+            list.append('<li>' + $("label[for='bmpMaintenanceFee']").text() + '</li>');
+        }
+        if(site.dcr == 'no'){
+            list.append('<li>' + $("label[for='dcr']").text() + '</li>');
+        }
+        if(site.damFailure == 'no'){
+            list.append('<li>' + $("label[for='damFailure']").text() + '</li>');
+        }
+    });
+           
+    $("#btnClear").click(function() {
+        $("#generatedComments").empty();
+    });
 });

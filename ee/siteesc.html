@@ -155,21 +155,11 @@
                                 <td><input type="radio" name="escHandbook" value="na" id="escHandbookNA"></td>
                                 <td><label for="escHandbook">20.  All erosion and sediment control measures, Std.  &amp; Spec.  numbers, details, and notes must be cross-referenced and must correlate with the 1992 edition of the Virginia Erosion and Sediment Control Handbook and Minimum Standards.</label></td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col">
-                <table class="table">
-                    <thead>
-                        <tr><th>YES</th><th>NO</th><th>NA</th><th>Description</th></tr>
-                    </thead>
-                    <tbody>
                             <tr>
                                 <td><input type="radio" name="escSymbol" value="yes" id="escSymbolYes"></td>
                                 <td><input type="radio" name="escSymbol" value="no" id="escSymbolNo"></td>
                                 <td><input type="radio" name="escSymbol" value="na" id="escSymbolNA"></td>
-                                <td><label for="bootConnetor">21.  Standard symbols must be used to represent erosion control measures on the plan.  Please refer to the first page of the practice found in Chapter III of the Virginia Erosion and Sediment Control Handbook.	</label></td>
+                                <td><label for="escSymbol">21.  Standard symbols must be used to represent erosion control measures on the plan.  Please refer to the first page of the practice found in Chapter III of the Virginia Erosion and Sediment Control Handbook.	</label></td>
                             </tr>
                             <tr>
                                 <td><input type="radio" name="escDetail" value="yes" id="escDetailYes"></td>
@@ -195,7 +185,21 @@
                                 <td><input type="radio" name="moreESC" value="no" id="moreESCNo"></td>
                                 <td><input type="radio" name="moreESC" value="na" id="moreESCNA"></td>
                                 <td><label for="moreESC">25.  The following note must be added to the erosion control plan: "The contractor is responsible for the installation of any additional erosion control measures necessary to prevent erosion and sedimentation as determined by the Environmental Engineering Department."	</label></td>
-                            </tr>
+                            </tr>                        </tbody>
+                    </table>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
+                </div>
+            </div>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr><th>YES</th><th>NO</th><th>NA</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+
                             <tr>
                                 <td><input type="radio" name="escMS1" value="yes" id="escMS1Yes"></td>
                                 <td><input type="radio" name="escMS1" value="no" id="escMS1No"></td>
@@ -290,7 +294,7 @@
                             <td><input type="radio" name="blanket" value="yes" id="blanketYes"></td>
                             <td><input type="radio" name="blanket" value="no" id="blanketNo"></td>
                             <td><input type="radio" name="blanket" value="na" id="blanketNA"></td>
-                            <td><label for="fullPump">41.  Blanket and matting must be specified on all Exposed slopes 3:1 or steeper that are 5 feet or greater in height.	</label></td>
+                            <td><label for="blanket">41.  Blanket and matting must be specified on all Exposed slopes 3:1 or steeper that are 5 feet or greater in height.	</label></td>
                         </tr>
                         <tr>
                             <td><input type="radio" name="benchSlope" value="yes" id="benchSlopeYes"></td>
@@ -424,6 +428,17 @@
                 </table>
             </div> <!-- column 2  -->
         </div>   <!--   row     -->
+            <div>
+                <h6 class="text-center">Standard Comments</h6>
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
+                </div>
+                <ol id="generatedComments">
+                    
+                </ol>
+            </div>
+
 
     </div>     <!-- container -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
