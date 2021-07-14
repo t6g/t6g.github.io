@@ -12,14 +12,8 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="js/rainfall.js"></script>
     <body>
-        <header>
-            <nav>
-                  <a href="#calculator">Calcalutor</a>
-                  <a href="#rainfallTable">Table</a>
-                  <a href="#idfGraph">Curve</a>
-                  <a href="#moreInfo">More</a>
-            </nav>            
-        </header>
+        <div class="container">
+            <div id="mynav"></div>
         <section id="calculator">
             <h3 style="text-align:center;">Rainfall Intensity Calculator</h3>
             <p style="text-align:center;">for Rational method at Chesterfield VA</p>
@@ -268,10 +262,11 @@
             <iframe src="https://www.google.com/maps/d/embed?mid=19Ju3sP96C5uRpm3sp8meTs5MYyA1r_df&hl=en" width="640" height="480" id="map"></iframe>
         </div>
         </section>
-
+        </div> <!--container-->
     </body>
     <script>
         $( document ).ready(function() {
+            $("#mynav").load("nav.html");
             updateRFIOutput();
             updateTable();
             updateGraph();
