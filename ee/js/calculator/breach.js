@@ -2,10 +2,10 @@ jQuery(document).ready(function () {
     const g = 32.17;
     
     const defaultBreach = {
-        Vw: 296.41,
-        Hw: 21,
-        As: 20.0,
-        C:  20,
+        Vw: 5.5, //296.41,
+        Hw: 6, //21,
+        As: 0.93,
+        C:  8,
         Zu: 3,
         Zd: 3
     };
