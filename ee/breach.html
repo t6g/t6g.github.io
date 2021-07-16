@@ -8,150 +8,188 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <link href="css/styles.css">
-        <title>Erosion and Sediment Control Sureity Calculator--Chesterfield VA</title>
-        <style>
-            td {
-                text-align: right;
-            }
-        </style>
+        <title>Dam Breach Calculator</title>
     </head>
     <body>
         <div class="container">
             <div id="mynav"></div>
             
             <h4 class="text-center">Dam Breach Calculator</h4>
-            <p class="text-center">Environmental Engineering Department, Chesterfield VA</p>
+            
+        <div class="row">
+
+            <div class="col-md-6 box">
+                <img src="img/overtopbreach.png" alt="overtop breach sketch" class="img-fluid">
+            </div>
+            
+            <div class="col-md-6 box">
+                <img src="img/pipebreach.png" alt="pipe breach sketch"  class="img-fluid">
+            </div>
+        </div>
             
             <div class="row">
-                <div class="col-md-4 box">
-                <table class="table">
+                <div class="col-md-6 box">
+                    <table class="table">
                     <tbody>
                         <tr>
-                            <td style="text-align:left;">Storage Volume</td>
-                            <td><input class="value" id="volume" name="volume" type="number" min="0.001" value="1296.41" step="1"></td>
+                            <td>Storage Volume (Vw)</td>
+                            <td><input class="value" id="Vw" name="Vw" type="number" min="0.001" value="1296.41" step="1"></td>
                             <td>acre-ft</td>
                         </tr>
                         <tr>
-                            <td style="text-align:left;">Depth</td>
-                            <td><input class="value" id="depth" name="depth" type="number" min="1" value="21" step="0.5"></td>
+                            <td style="text-align:left;">Depth (Hw)</td>
+                            <td><input class="value" id="Hw" name="Hw" type="number" min="1" value="21" step="0.5"></td>
                             <td>ft</td>
                         </tr>
                         <tr>
-                            <td style="text-align:left;">BFF</td>
-                            <td id="tdBFF"></td>
+                            <td style="text-align:left;">Surface Area (As)</td>
+                            <td><input class="value" id="As" name="As" type="number" min="0.001" value="20" step="0.5"></td>
+                            <td>acre</td>
+                        </tr>
+                        <tr>
+                            <td>Breach Formation Factor (BFF)</td>
+                            <td id="BFF"></td>
                             <td>acre-ft<sup>2</sup></td>
                         </tr>
                         <tr>
-                            <td style="text-align:left;">Storage Intensity</td>
-                            <td id="tdSI"></td>
+                            <td>Storage Intensity (SI) </td>
+                            <td id="SI"></td>
                             <td>acre</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="col-md-4 box">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;">Width Top (C)</td>
-                            <td><input class="value" id="widthTop" name="widthTop" type="number" min="1" value="20" step="1"></td>
-                            <td>ft</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Slope Upstream (Zu)</td>
-                            <td><input class="value" id="slopeUpstream" name="slopeUpstream" type="number" min="1" value="3" step="1"></td>
-                            <td>h:v</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Slope Downstream (Zd)</td>
-                            <td><input class="value" id="slopeDownstream" name="slopeDownstream" type="number" min="1" value="3" step="1"></td>
-                            <td>h:v</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Average Width (Wavg)</td>
-                            <td id="tdWavg"></td>
-                            <td>ft</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-4 box">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;">Inlet Elevation</td>
-                            <td><input class="value" id="inletElevation" name="inletElevation" type="number" min="0" value="82" step="1"></td>
-                            <td>ft</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Outlet Elevation</td>
-                            <td><input class="value" id="outletElevation" name="outletElevation" type="number" min="0" value="81" step="1"></td>
-                            <td>ft</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Outlet Distance</td>
-                            <td><input class="value" id="distanceInOutlet" name="distanceInOutlet" type="number" min="0" value="120" step="1"></td>
-                            <td>ft</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Slope</td>
-                            <td id='slopeBarrel'></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:left;">Sag Elevation</td>
-                            <td><input class="value" id="sagElevation" name="sagElevation" type="number" min="0" value="120" step="1"></td>
-                            <td>ft</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                </div>  <!-- left box -->
+                <div class="col-md-6 box">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Width Top (C)</td>
+                                <td><input class="value" id="widthTop" name="widthTop" type="number" min="1" value="20" step="1"></td>
+                                <td>ft</td>
+                            </tr>
+                            <tr>
+                                <td>Slope Upstream (Zu)</td>
+                                <td><input class="value" id="Zu" name="Zu" type="number" min="1" value="3" step="1"></td>
+                                <td>h:v</td>
+                            </tr>
+                            <tr>
+                                <td>Slope Downstream (Zd)</td>
+                                <td><input class="value" id="Zd" name="Zd" type="number" min="1" value="3" step="1"></td>
+                                <td>h:v</td>
+                            </tr>
+                            <tr>
+                                <td>Average Width (Wavg)</td>
+                                <td id="Wavg"></td>
+                                <td>ft</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- right box -->
+            </div>  <!--row 1 -->
             
-                    <div class="row">
-<!--                <div class="col-md-8 box">  -->
+            <div class="row">
                 <table class="table">
-                    Volume Eroded, Ver (yd<sup>3</sup>)
                     <thead>
-                        <th>Method</th> <th>Variable</th> <th>Formula</th><th>\(V_{er}\) (yd<sup>3</sup>)</th><th>\(B_{avg}\) (ft)</th>
+                        <th>Method</th> <th>Variable</th><th>\(V_{er}\) (yd<sup>3</sup>)</th><th>\(B_{avg}\) (ft)</th><th>\(T_f\) (h)</th><th>\(Z_b\) (H:V)</th> <th>\(Q_p\) (cfs)</th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="text-align:left;" rowspan="2">MacDonald et al (1984)</td>
-                            <td style="text-align:left;">Best fit all data</td>
-                            <td style="text-align:left;">\(V_{er} = 3.264BFF^{0.77}\)</td>
-                            <td id="tdVerBestFit"></td>
+                            <td rowspan="2">MacDonald et al (1984)</td>
+                            <td>Best fit all data</td>
+                            <td id="VerBestFit"></td>
+                            <td id="BavgBestFit"></td>
+                            <td id="TfBestFit"></td>
+                            <td rowspan="2">0.5</td>
+
+                        </tr>
+                        <tr>
+                            <td>Rockfill</td>
+                            <td id="VerRockfill"></td>
+                            <td id="BavgRockfill"></td>
+                            <td id="TfRockfill"></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Washington (2007)</td>
+                            <td>Cohesionless</td>
+                            <td id="VerCohesionless"></td>
+                            <td id="BavgCohesionless"></td>
+                            <td id="TfCohesionless"></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td style="text-align:left;">Rockfill</td>
-                            <td style="text-align:left;">\(V_{er} = 0.714BFF^{0.852}\)</td>
-                            <td style="text-align:left;"></td>
-                            <td id="tdVerRockfill"></td>
+                            <td>Cohesive</td>
+                            <td id="VerCohesive"></td>
+                            <td id="BavgCohesive"></td>
+                            <td id="TfCohesive"></td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td style="text-align:left;" rowspan="2">Washington (2007)</td>
-                            <td style="text-align:left;">Cohesionless</td>
-                            <td style="text-align:left;">\(V_{er} = 3.75BFF^{0.77}\)</td>
-                            <td id="tdVerCohesionless"></td>
+                            <td rowspan="2">Froehlich (2008)</td>
+                            <td>Piping</td>
                             <td></td>
+                            <td id="BavgPiping"></td>
+                            <td id="TfFroehlich" rowspan="2"></td>
+                            <td>0.7</td>
+                            <td id="QpPiping"></td>
                         </tr>
                         <tr>
-                            <td style="text-align:left;">Cohesive</td>
-                            <td style="text-align:left;">\(V_{er} = 2.5BFF^{0.77}\)</td>
+                            <td>Overtopping</td>
                             <td></td>
-                            <td id="tdVerCohesive"></td>
-                            <td></td>
+                            <td id="BavgOvertopping"></td>
+                            <td>1.0</td>
+                            <td id="QpOvertopping"></td>
                         </tr>
                     </tbody>
                 </table>
-<!-->            </div>  -->
-                </div>
-        <div class="alert alert-warning" role="alert"  style='display:none;'>
+                <table class="table">
+                    <thead>
+                        <th>Method</th> <th>Variable</th><th>\(V_{er}\) (yd<sup>3</sup>)</th><th>\(B_{avg}\) (ft)</th><th>\(T_f\) (h)</th><th>\(Q_p\) (cfs)</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2">MacDonald et al (1984)</td>
+                            <td>Best fit all data</td>
+                            <td>\(3.264BFF^{0.77}\)</td>
+                            <td rowspan="4">\(\frac{V_{er}}{H_wW_{avg}}\)</td>
+                            <td rowspan="2">\(0.016V_{er}^{0.364}\)</td>
+                        </tr>
+                        <tr>
+                            <td>Rockfill</td>
+                            <td>\(0.714BFF^{0.852}\)</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Washington (2007)</td>
+                            <td>Cohesionless</td>
+                            <td>\(3.750 BFF^{0.77}\)</td>
+                            <td>\(0.020V_{er}^{0.36}\)</td>
+                        </tr>
+                        <tr>
+                            <td>Cohesive</td>
+                            <td>\(2.500 BFF^{0.77}\)</td>
+                            <td>\(0.036V_{er}^{0.36}\)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Froehlich (2008)</td>
+                            <td>Piping</td>
+                            <td></td>
+                            <td>\(8.239V_w^{0.32}H_w^{0.04}\)</td>
+                            <td rowspan="2">\(3.664\sqrt{\frac{V_w}{gH_w^2}}\)</td>
+                            <td>\(C_pD^2\sqrt{2g(H_w-\frac{D}{2})}\)</td>
+                        </tr>
+                        <tr>
+                            <td>Overtopping</td>
+                            <td></td>
+                            <td>\(1.3\times 8.239V_w^{0.32}H_w^{0.04}\)</td>
+                            <td>\(3.1B_{avg}H_w^{1.5}\left(\frac{\gamma}{\gamma + T_f\sqrt{H_w}}\right)^3\)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>  <!-- row 2 -->
+            <div class="alert alert-warning" role="alert"  style='display:none;'>
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     <span id="warningMessage">message</span>
-                </div>
-        </div>
+            </div>
             <div class="text-center">
                 <button type="button" class="btn btn-outline-primary" id="btnSave">Save</button>
             </div>
