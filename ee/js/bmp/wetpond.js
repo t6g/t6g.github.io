@@ -1,7 +1,7 @@
 jQuery(document).ready(function(){
     $("#mynav").load("nav.html");
 
-    const defaultBioret = {
+    const defaultWetpond = {
         tv1: "na",
         cell1: "na",
         lwratio1: "na",
@@ -67,6 +67,7 @@ jQuery(document).ready(function(){
         nonerosive: "na",
         schedule: "na", 
         pondingPlant: "na",
+        species: "na",
         plantArea: "na", 
         turfCoverLevel1: "na", 
         turfCoverTree: "na", 
@@ -81,11 +82,11 @@ jQuery(document).ready(function(){
     
     $("#mynav").load("nav.html");
 
-    let tmp = localStorage.getItem('Bioretention'); 
+    let tmp = localStorage.getItem('Wetpondention'); 
     if (tmp) {
         Object.assign(site, JSON.parse(tmp));
     } else {
-        Object.assign(site, defaultBioret);
+        Object.assign(site, defaultWetpond);
     }
     
     setUI();
@@ -179,6 +180,7 @@ jQuery(document).ready(function(){
             case 'nonerosive': site.nonerosive = this.value; break;
             case 'schedule': site.schedule = this.value; break; 
             case 'pondingPlant': site.pondingPlant = this.value; break; 
+            case 'species': site.species = this.value; break; 
             case 'plantArea': site.plantArea = this.value; break; 
             case 'turfCoverLevel1': site.turfCoverLevel1 = this.value; break;
             case 'turfCoverTree': site.turfCoverTree = this.value; break;
@@ -1049,6 +1051,18 @@ jQuery(document).ready(function(){
                 break;
         };
         
+        switch (site.species) {
+            case "yes":
+                $("#speciesYes").prop('checked', true);
+                break;
+            case "no":
+                $("#speciesNo").prop('checked', true);
+                break;
+            case "na":
+                $("#speciesNA").prop('checked', true);
+                break;
+        };
+        
         switch (site.plantArea) {
             case "yes":
                 $("#plantAreaYes").prop('checked', true);
@@ -1302,19 +1316,6 @@ jQuery(document).ready(function(){
             list.append('<li>' + $("label[for='upstreamStabilize']").text() + '</li>');
         }
 
-        if(site.intervalCD == 'no'){
-            list.append('<li>' + $("label[for='intervalCD']").text() + '</li>');
-        }
-
-        
-        if(site.materialSpec == 'no'){
-            list.append('<li>' + $("label[for='materialSpec']").text() + '</li>');
-        }
-
-        if(site.upstreamStabilize == 'no'){
-            list.append('<li>' + $("label[for='upstreamStabilize']").text() + '</li>');
-        }
-
         if(site.areaPretreatment == 'no'){
             list.append('<li>' + $("label[for='areaPretreatment']").text() + '</li>');
         }
@@ -1325,22 +1326,6 @@ jQuery(document).ready(function(){
 
         if(site.conversionSB == 'no'){
             list.append('<li>' + $("label[for='conversionSB']").text() + '</li>');
-        }
-
-        if(site.setbackBuilding == 'no'){
-            list.append('<li>' + $("label[for='setbackBuilding']").text() + '</li>');
-        }
-
-        if(site.setbackSeptic == 'no'){
-            list.append('<li>' + $("label[for='setbackSeptic']").text() + '</li>');
-        }
-
-        if(site.setbackWell == 'no'){
-            list.append('<li>' + $("label[for='setbackWell']").text() + '</li>');
-        }
-
-        if(site.setbackUtility == 'no'){
-            list.append('<li>' + $("label[for='setbackUtility']").text() + '</li>');
         }
 
         if(site.setbackPL == 'no'){
@@ -1363,45 +1348,22 @@ jQuery(document).ready(function(){
             list.append('<li>' + $("label[for='pretreatmentFirst']").text() + '</li>');
         }
 
-        if(site.slopeCDA == 'no'){
-            list.append('<li>' + $("label[for='slopeCDA']").text() + '</li>');
-        }
-
-        if(site.floodplain == 'no'){
-            list.append('<li>' + $("label[for='floodplain']").text() + '</li>');
-        }
         if(site.outsideWetland == 'no'){
             list.append('<li>' + $("label[for='outsideWetland']").text() + '</li>');
         }
         if(site.goose == 'no'){
             list.append('<li>' + $("label[for='goose']").text() + '</li>');
         }
+
+        if(site.materialSpec == 'no'){
+            list.append('<li>' + $("label[for='materialSpec']").text() + '</li>');
+        }
+
         if(site.slopeLongitudinal == 'no'){
             list.append('<li>' + $("label[for='slopeLongitudinal']").text() + '</li>');
         }
         if(site.dropWetland == 'no'){
             list.append('<li>' + $("label[for='dropWetland']").text() + '</li>');
-        }
-        if(site.maxDepthWetland == 'no'){
-            list.append('<li>' + $("label[for='maxDepthWetland']").text() + '</li>');
-        }
-        if(site.tv1ftWetland == 'no'){
-            list.append('<li>' + $("label[for='tv1ftWetland']").text() + '</li>');
-        }
-        if(site.slopeSide == 'no'){
-            list.append('<li>' + $("label[for='slopeSide']").text() + '</li>');
-        }
-        if(site.max5ftNWSE == 'no'){
-            list.append('<li>' + $("label[for='max5ftNWSE']").text() + '</li>');
-        }
-        if(site.calcTV == 'no'){
-            list.append('<li>' + $("label[for='calcTV']").text() + '</li>');
-        }
-        if(site.routing == 'no'){
-            list.append('<li>' + $("label[for='routing']").text() + '</li>');
-        }
-        if(site.tvStore == 'no'){
-            list.append('<li>' + $("label[for='tvStore']").text() + '</li>');
         }
         if(site.topWidthDam == 'no'){
             list.append('<li>' + $("label[for='topWidthDam']").text() + '</li>');
@@ -1412,8 +1374,20 @@ jQuery(document).ready(function(){
         if(site.volumeLabel == 'no'){
             list.append('<li>' + $("label[for='volumeLabel']").text() + '</li>');
         }
-        if(site.halfEDVolume == 'no'){
-            list.append('<li>' + $("label[for='halfEDVolume']").text() + '</li>');
+        if(site.maxDepthWetland == 'no'){
+            list.append('<li>' + $("label[for='maxDepthWetland']").text() + '</li>');
+        }
+        if(site.slopeSide == 'no'){
+            list.append('<li>' + $("label[for='slopeSide']").text() + '</li>');
+        }
+        if(site.tv1ftWetland == 'no'){
+            list.append('<li>' + $("label[for='tv1ftWetland']").text() + '</li>');
+        }
+        if(site.max5ftNWSE == 'no'){
+            list.append('<li>' + $("label[for='max5ftNWSE']").text() + '</li>');
+        }
+        if(site.calcTV == 'no'){
+            list.append('<li>' + $("label[for='calcTV']").text() + '</li>');
         }
         if(site.routing == 'no'){
             list.append('<li>' + $("label[for='routing']").text() + '</li>');
@@ -1421,17 +1395,26 @@ jQuery(document).ready(function(){
         if(site.calcOverflow == 'no'){
             list.append('<li>' + $("label[for='calcOverflow']").text() + '</li>');
         }
+        if(site.nonerosive == 'no'){
+            list.append('<li>' + $("label[for='nonerosive']").text() + '</li>');
+        }
         if(site.waterBalance == 'no'){
             list.append('<li>' + $("label[for='waterBalance']").text() + '</li>');
         }
-        if(site.nonerosive == 'no'){
-            list.append('<li>' + $("label[for='nonerosive']").text() + '</li>');
+        if(site.tvStore == 'no'){
+            list.append('<li>' + $("label[for='tvStore']").text() + '</li>');
+        }
+        if(site.halfEDVolume == 'no'){
+            list.append('<li>' + $("label[for='halfEDVolume']").text() + '</li>');
         }
         if(site.schedule == 'no'){
             list.append('<li>' + $("label[for='schedule']").text() + '</li>');
         }
         if(site.pondingPlant == 'no'){
             list.append('<li>' + $("label[for='pondingPlant']").text() + '</li>');
+        }
+        if(site.species == 'no'){
+            list.append('<li>' + $("label[for='species']").text() + '</li>');
         }
         if(site.plantArea == 'no'){
             list.append('<li>' + $("label[for='plantArea']").text() + '</li>');
@@ -1445,11 +1428,11 @@ jQuery(document).ready(function(){
         if(site.noIrrigation == 'no'){
             list.append('<li>' + $("label[for='noIrrigation']").text() + '</li>');
         }
-        if(site.plantBench == 'no'){
-            list.append('<li>' + $("label[for='plantBench']").text() + '</li>');
-        }
         if(site.nativePlant == 'no'){
             list.append('<li>' + $("label[for='nativePlant']").text() + '</li>');
+        }
+        if(site.plantBench == 'no'){
+            list.append('<li>' + $("label[for='plantBench']").text() + '</li>');
         }
         if(site.woodyVeg == 'no'){
             list.append('<li>' + $("label[for='woodyVeg']").text() + '</li>');

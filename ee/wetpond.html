@@ -52,11 +52,11 @@
                                 <td><label for="lwratio1">c. Length to width ratio >= 2:1.</label></td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="flowpath1" value="yes" id="flowpath1Yes"></td>
-                                <td><input type="radio" name="flowpath1" value="no" id="flowpath1No"></td>
-                                <td><input type="radio" name="flowpath1" value="na" id="flowpath1NA"></td>
+                                <td><input type="radio" name="flowPath1" value="yes" id="flowPath1Yes"></td>
+                                <td><input type="radio" name="flowPath1" value="no" id="flowPath1No"></td>
+                                <td><input type="radio" name="flowPath1" value="na" id="flowPath1NA"></td>
                                 <td></td>
-                                <td><label for="flowpath1">d. Shortest flow path/ overall length >=0.5.</label></td>
+                                <td><label for="flowPath1">d. Shortest flow path/ overall length >=0.5.</label></td>
                             </tr>
                             <tr class="level1">
                                 <td><input type="radio" name="aquaticBench" value="yes" id="aquaticBenchYes"></td>
@@ -198,7 +198,7 @@
                             <td><input type="radio" name="outfall10y" value="no" id="outfall10yNo"></td>
                             <td><input type="radio" name="outfall10y" value="na" id="outfall10yNA"></td>
                             <td>7.</td>
-                            <td><label for="outfall10y">8. outfall is stable for 10-year design storm.</label></td>
+                            <td><label for="outfall10y">outfall is stable for 10-year design storm.</label></td>
                         </tr>
                         <tr>
                             <td><input type="radio" name="cellsFormed" value="yes" id="cellsFormedYes"></td>
@@ -229,9 +229,9 @@
                             <td><label for="pondIrrigation">If pond is to be used for irrigation additional runoff reduction can be used</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="drainPipe" value="yes" id="drainPipe"></td>
-                            <td><input type="radio" name="drainPipe" value="no" id="drainPipe"></td>
-                            <td><input type="radio" name="drainPipe" value="na" id="drainPipe"></td>
+                            <td><input type="radio" name="drainPipe" value="yes" id="drainPipeYes"></td>
+                            <td><input type="radio" name="drainPipe" value="no" id="drainPipeNo"></td>
+                            <td><input type="radio" name="drainPipe" value="na" id="drainPipeNA"></td>
                             <td>12.</td>
                             <td><label for="drainPipe">Drain pipe provided.</label></td>
                         </tr>
@@ -251,6 +251,10 @@
                         </tr>                            
                         </tbody>
                     </table>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
                 </div>
             </div>
             <div class="col">
@@ -333,9 +337,9 @@
                             <td><label for="outsideWetland">12. Located outside of existing wetlands and streams.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="goose"></td>
-                            <td><input type="radio" name="goose"></td>
-                            <td><input type="radio" name="goose"></td>
+                            <td><input type="radio" name="goose" value="yes" id="gooseYes"></td>
+                            <td><input type="radio" name="goose" value="no" id="gooseNo"></td>
+                            <td><input type="radio" name="goose" value="na" id="gooseNA"></td>
                             <td><label for="goose">13. Goose protection provided.</label></td>
                         </tr>
                         <tr><td></td><td></td><td></td><th>Profile and Cross-section</th></tr>
@@ -430,7 +434,7 @@
                             <td><input type="radio" name="waterBalance" value="na" id="waterBalanceNA"></td>
                             <td><label for="waterBalance">5. Water Balance Calculation showing it will draw down more than 2 feet after 30-day summer drought.</label></td>
                         </tr>
-                        <tr class="level1">
+                        <tr>
                             <td><input type="radio" name="tvStore" value="yes" id="tvStoreYes"></td>
                             <td><input type="radio" name="tvStore" value="no" id="tvStoreNo"></td>
                             <td><input type="radio" name="tvStore" value="na" id="tvStoreNA"></td>
@@ -440,7 +444,7 @@
                             <td><input type="radio" name="halfEDVolume" value="yes" id="halfEDVolumeYes"></td>
                             <td><input type="radio" name="halfEDVolume" value="no" id="halfEDVolumeNo"></td>
                             <td><input type="radio" name="halfEDVolume" value="na" id="halfEDVolumeNA"></td>
-                            <td><label for="halfEDVolume">6. Up to 50% may be provided in ED above the permanent pool (Level 2).</label></td>
+                            <td><label for="halfEDVolume">7. Up to 50% may be provided in ED above the permanent pool (Level 2).</label></td>
                         </tr>
                         <tr><td></td><td></td><td></td><th>Landscaping</th></tr>
                         <tr>
@@ -489,6 +493,16 @@
                 </table>
             </div> <!-- column 2  -->
        </div>   <!--   row     -->
+            <div>
+                <h6 class="text-center">Standard Comments</h6>
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
+                </div>
+                <ol id="generatedComments">
+                    
+                </ol>
+            </div>
     </div>     <!-- container -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Optional JavaScript; choose one of the two! -->
