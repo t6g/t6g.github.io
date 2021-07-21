@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <title>SWM/BMP Checklist - 10 Dry Swale</title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="mynav"></div>
+            <h4 class="text-center">SWM/BMP Checklist - 10 Dry Swale</h4>
+
+        <div class="row">
+            <div class="col">
+                <div>
+
+                    <table class="table">
+                        <thead>
+                            <tr><th>YES</th><th>NO</th><th>NA</th><th></th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td></td><td></td><td></td><td></td><th>Design</th></tr>
+                            <tr><td></td><td></td><td></td>
+                                <td>1.</td>
+                                <td>
+                                    <label class="radio-inline">Design level: 
+                                                                <input type="radio" name="level" value="1" id="level1"> 1</label>
+                                    <label class="radio-inline"><input type="radio" name="level" value="2" id="level2" checked> 2</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="tv1" value="yes" id="tv1Yes"></td>
+                                <td><input type="radio" name="tv1" value="no"  id="tv1No"></td>
+                                <td><input type="radio" name="tv1" value="na"  id="tv1NA"></td>
+                                <td></td>
+                                <td><label for="tv1">a. Tv = Rv(A)/12</label></td>
+                            </tr>
+                            <tr class="level1">
+                                <td><input type="radio" name="surfaceArea1" value="yes" id="surfaceArea1Yes"></td>
+                                <td><input type="radio" name="surfaceArea1" value="no"  id="surfaceArea1No"></td>
+                                <td><input type="radio" name="surfaceArea1" value="na"  id="surfaceArea1NA"></td>
+                                <td></td>
+                                <td><label for="surfaceArea1">b. Surface area = (Tv - volume reduced by upstream BMP)/Storage Depth.</label></td>
+                            </tr>
+                            <tr class="level1">
+                                <td><input type="radio" name="maxSlope1" value="yes" id="maxSlope1Yes"></td>
+                                <td><input type="radio" name="maxSlope1" value="no"  id="maxSlope1No"></td>
+                                <td><input type="radio" name="maxSlope1" value="na"  id="maxSlope1NA"></td>
+                                <td></td>
+                                <td><label for="maxSlope1">c. Effective slope maximum of 2%.</label></td>
+                            </tr>
+                            <tr class="level1">
+                                <td><input type="radio" name="underdrain1" value="yes" id="underdrain1Yes"></td>
+                                <td><input type="radio" name="underdrain1" value="no"  id="underdrain1No"></td>
+                                <td><input type="radio" name="underdrain1" value="na"  id="underdrain1NA"></td>
+                                <td></td>
+                                <td><label for="underdrain1">d. Underdrain used (can remove if infiltration rate is 0.5 in/hr or greater).</label></td>
+                            </tr>
+                            <tr class="level1">
+                                <td><input type="radio" name="mediaDepth1" value="yes" id="mediaDepth1Yes"></td>
+                                <td><input type="radio" name="mediaDepth1" value="no" id="mediaDepth1No"></td>
+                                <td><input type="radio" name="mediaDepth1" value="na" id="mediaDepth1NA"></td>
+                                <td></td>
+                                <td><label for="mediaDepth1">e. Media depth between 18 and 36 inches.</label></td>
+                            </tr>
+                            <tr class="level1">
+                                <td><input type="radio" name="online" value="yes" id="onlineYes"></td>
+                                <td><input type="radio" name="online" value="no" id="onlineNo"></td>
+                                <td><input type="radio" name="online" value="na" id="onlineNA"></td>
+                                <td></td>
+                                <td><label for="online">f. On-line design.</label></td>
+                            </tr>
+                            <tr class="level1">
+                                <td><input type="radio" name="pretreatment1" value="yes" id="pretreatment1Yes"></td>
+                                <td><input type="radio" name="pretreatment1" value="no" id="pretreatment1No"></td>
+                                <td><input type="radio" name="pretreatment1" value="na" id="pretreatment1NA"></td>
+                                <td></td>
+                                <td><label for="pretreatment1">g. Pretreatment cell, grass filter strip, gravel diaphragm, or gravel flow spreader.</label></td>
+                            </tr>
+                            <tr class="level2">
+                                <td><input type="radio" name="surfaceArea2" value="yes" id="surfaceArea2Yes"></td>
+                                <td><input type="radio" name="surfaceArea2" value="no" id="surfaceArea2No"></td>
+                                <td><input type="radio" name="surfaceArea2" value="na" id="surfaceArea2NA"></td>
+                                <td></td>
+                                <td><label for="surfaceArea2">b. Surface area = (1.1Tv - volume reduced by upstream BMP)/Storage Depth.</label></td>
+                            </tr>
+                            <tr class="level2">
+                                <td><input type="radio" name="maxSlope2" value="yes" id="maxSlope2Yes"></td>
+                                <td><input type="radio" name="maxSlope2" value="no" id="maxSlope2No"></td>
+                                <td><input type="radio" name="maxSlope2" value="na" id="maxSlope2NA"></td>
+                                <td></td>
+                                <td><label for="maxSlope2">c. Effective slope maximum of 1%.</label></td>
+                            </tr>
+                            <tr class="level2">
+                                <td><input type="radio" name="underdrain2" value="yes" id="underdrain2Yes"></td>
+                                <td><input type="radio" name="underdrain2" value="no" id="underdrain2No"></td>
+                                <td><input type="radio" name="underdrain2" value="na" id="underdrain2NA"></td>
+                                <td></td>
+                                <td><label for="underdrain2">d. Underdrain used (can remove if infiltration rate is 0.5 in/hr or greater).</label></td>
+                            </tr>
+                            <tr class="level2">
+                                <td><input type="radio" name="mediaDepth2" value="yes" id="mediaDepth2Yes"></td>
+                                <td><input type="radio" name="mediaDepth2" value="no" id="mediaDepth2No"></td>
+                                <td><input type="radio" name="mediaDepth2" value="na" id="mediaDepth2NA"></td>
+                                <td></td>
+                                <td><label for="mediaDepth2">e. Media depth between 24 and 36 inches.</label></td>
+                            </tr>
+                            <tr class="level2">
+                                <td><input type="radio" name="twoCell" value="yes" id="twoCellYes"></td>
+                                <td><input type="radio" name="twoCell" value="no" id="twoCellNo"></td>
+                                <td><input type="radio" name="twoCell" value="na" id="twoCellNA"></td>
+                                <td></td>
+                                <td><label for="twoCell">f. Off-line or multi-cell design.</label></td>
+                            </tr>
+                            <tr class="level2">
+                                <td><input type="radio" name="pretreatment2" value="yes" id="pretreatment2Yes"></td>
+                                <td><input type="radio" name="pretreatment2" value="no" id="pretreatment2No"></td>
+                                <td><input type="radio" name="pretreatment2" value="na" id="pretreatment2NA"></td>
+                                <td></td>
+                                <td><label for="pretreatment2">g. Pretreatment cell, grass filter strip, gravel diaphragm, or gravel flow spreader.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="outsideFill" value="yes" id="outsideFillYes"></td>
+                                <td><input type="radio" name="outsideFill" value="no" id="outsideFillNo"></td>
+                                <td><input type="radio" name="outsideFill" value="na" id="outsideFillNA"></td>
+                                <td>2.</td>
+                                <td><label for="outsideFill">Located outside of fill soils or previously disturbed/graded soils.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="slope1Percent" value="yes" id="slopePercentYes"></td>
+                                <td><input type="radio" name="slope1Percent" value="no" id="slopePercentNo"></td>
+                                <td><input type="radio" name="slope1Percent" value="na" id="slopePercentNA"></td>
+                                <td>3.</td>
+                                <td><label for="slope1Percent">Slopes greater than 0.5%.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="offline" value="yes" id="offlineYes"></td>
+                                <td><input type="radio" name="offline" value="no" id="offlineNo"></td>
+                                <td><input type="radio" name="offline" value="na" id="offlineNA"></td>
+                                <td>4</td>
+                                <td><label for="offline">Off-line if possible</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="overflow" value="yes" id="overflowYes"></td>
+                                <td><input type="radio" name="overflow" value="no" id="overflowNo"></td>
+                                <td><input type="radio" name="overflow" value="na" id="overflowNA"></td>
+                                <td>5</td>
+                                <td><label for="overflow"> Overflow structures provided if required.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="bypass" value="yes" id="bypassYes"></td>
+                                <td><input type="radio" name="bypass" value="no" id="bypassNo"></td>
+                                <td><input type="radio" name="bypass" value="na" id="bypassNA"></td>
+                                <td>6</td>
+                                <td><label for="bypass">Includes methods to convey larger storms.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="maxDA" value="yes" id="maxDAYes"></td>
+                                <td><input type="radio" name="maxDA" value="no" id="maxDANo"></td>
+                                <td><input type="radio" name="maxDA" value="na" id="maxDANA"></td>
+                                <td>7</td>
+                                <td><label for="maxDA">Drainage area less than 5 acres.</label></td>
+                            </tr>
+                            <tr><td></td><td></td><td></td><td>8</td><td>Pretreatment:</td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="pretreatmentCell" value="yes" id="pretreatmentCellYes"></td>
+                                <td><input type="radio" name="pretreatmentCell" value="no" id="pretreatmentCellNo"></td>
+                                <td><input type="radio" name="pretreatmentCell" value="na" id="pretreatmentCellNA"></td>
+                                <td></td>
+                                <td><label for="pretreatmentCell">a. Initial sediment forebay (channel flow): located at piped inlets or curb cuts with storage volume of at least 15% of Tv and 2:1 length-to-width ratio.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="filterStrip" value="yes" id="filterStripYes"></td>
+                                <td><input type="radio" name="filterStrip" value="no" id="filterStripNo"></td>
+                                <td><input type="radio" name="filterStrip" value="na" id="filterStripNA"></td>
+                                <td></td>
+                                <td><label for="filterStrip">b. Grass filter strips (sheet flow): 5:1 slope or flatter and minimum of 5'.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="diaphragm" value="yes" id="diaphragmYes"></td>
+                                <td><input type="radio" name="diaphragm" value="no" id="diaphragmNo"></td>
+                                <td><input type="radio" name="diaphragm" value="na" id="diaphragmNA"></td>
+                                <td></td>
+                                <td><label for="diaphragm">c. Gravel or stone diaphragms (sheet flow): perpendicular to flow path and 2 to 4” drop.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="spreader" value="yes" id="spreaderYes"></td>
+                                <td><input type="radio" name="spreader" value="no" id="spreaderNo"></td>
+                                <td><input type="radio" name="spreader" value="na" id="spreaderNA"></td>
+                                <td></td>
+                                <td><label for="spreader">d. Pea gravel flow spreader (concentrated flow): 2 to 4 inch drop that extends the entire width of the opening and creates level stone weir at bottom of basin.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="checkDam" value="yes" id="checkDamYes"></td>
+                                <td><input type="radio" name="checkDam" value="no" id="checkDamNo"></td>
+                                <td><input type="radio" name="checkDam" value="na" id="checkDamNA"></td>
+                                <td></td>
+                                <td><label for="checkDam">e. Check dams (channel flow): used with drainage areas less than an acre.</label></td>
+                            </tr>
+                            
+                            <tr><td></td><td></td><td></td><td>9</td><td>Check Dams:</td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="maxHeightCD" value="yes" id="maxHeightCDYes"></td>
+                                <td><input type="radio" name="maxHeightCD" value="no" id="maxHeightCDNo"></td>
+                                <td><input type="radio" name="maxHeightCD" value="na" id="maxHeightCDNA"></td>
+                                <td></td>
+                                <td><label for="maxHeightCD">a. Maximum height of 12 inches.</label></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="radio" name="soilPlugCD" value="yes" id="soilPlugCDYes"></td>
+                                <td><input type="radio" name="soilPlugCD" value="no" id="soilPlugCDNo"></td>
+                                <td><input type="radio" name="soilPlugCD" value="na" id="soilPlugCDNA"></td>
+                                <td></td>
+                                <td><label for="soilPlugCD">b. Soil plugs provided for slopes greater than 4% or 12-inch check dams.</label></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="radio" name="toeArmoringCD" value="yes" id="toeArmoringCDYes"></td>
+                                <td><input type="radio" name="toeArmoringCD" value="no" id="toeArmoringCDNo"></td>
+                                <td><input type="radio" name="toeArmoringCD" value="na" id="toeArmoringCDNA"></td>
+                                <td></td>
+                                <td><label for="toeArmoringCD">c. Armoring at downstream toe of check dam to prevent erosion.</label></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="radio" name="anchorSideCD" value="yes" id="anchorSideCDYes"></td>
+                                <td><input type="radio" name="anchorSideCD" value="no" id="anchorSideCDNo"></td>
+                                <td><input type="radio" name="anchorSideCD" value="na" id="anchorSideCDNA"></td>
+                                <td></td>
+                                <td><label for="anchorSideCD">d. Anchored into side slopes.</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="weir10yCD" value="yes" id="weir10yCDYes"></td>
+                                <td><input type="radio" name="weir10yCD" value="no" id="weir10yCDNo"></td>
+                                <td><input type="radio" name="weir10yCD" value="na" id="weir10yCDNA"></td>
+                                <td></td>
+                                <td><label for="weir10yCD">e. Center weir sized to pass the 10-year flow.</label></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="radio" name="weepHoleCD" value="yes" id="weepHoleCDYes"></td>
+                                <td><input type="radio" name="weepHoleCD" value="no" id="weepHoleCDNo"></td>
+                                <td><input type="radio" name="weepHoleCD" value="na" id="weepHoleCDNA"></td>
+                                <td></td>
+                                <td><label for="weepHoleCD">f. Weep hole for dewatering between storms.</label></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="radio" name="materialCD" value="yes" id="materialCDYes"></td>
+                                <td><input type="radio" name="materialCD" value="no" id="materialCDNo"></td>
+                                <td><input type="radio" name="materialCD" value="na" id="materialCDNA"></td>
+                                <td></td>
+                                <td><label for="materialCD">g. Composed of wood, concrete, stone, or other non-erodible material.</label></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><input type="radio" name="intervalCD" value="yes" id="intervalCDYes"></td>
+                                <td><input type="radio" name="intervalCD" value="no" id="intervalCDNo"></td>
+                                <td><input type="radio" name="intervalCD" value="na" id="intervalCDNA"></td>
+                                <td></td>
+                                <td><label for="intervalCD">h. 25-40 feet between check dams.</label></td>
+                            </tr>
+                            
+                                <tr><td></td><td></td><td></td><td></td><th>Plan</th></tr>
+                        <tr>
+                            <td><input type="radio" name="materialSpec" value="yes" id="materialSpecYes"></td>
+                            <td><input type="radio" name="materialSpec" value="no" id="materialSpecNo"></td>
+                            <td><input type="radio" name="materialSpec" value="na" id="materialSpecNA"></td>
+                            <td>1</td>
+                            <td><label for="materialSpec">Details and material specifications provided.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="constructionNarrative" value="yes" id="constructionNarrativeYes"></td>
+                            <td><input type="radio" name="constructionNarrative" value="no" id="constructionNarrativeNo"></td>
+                            <td><input type="radio" name="constructionNarrative" value="na" id="constructionNarrativeNA"></td>
+                            <td>2</td>
+                            <td><label for="constructionNarrative">construction narrative provided.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="upstreamStabilize" value="yes" id="upstreamStabilizeYes"></td>
+                            <td><input type="radio" name="upstreamStabilize" value="no" id="upstreamStabilizeNo"></td>
+                            <td><input type="radio" name="upstreamStabilize" value="na" id="upstreamStabilizeNA"></td>
+                            <td>3</td>
+                            <td><label for="upstreamStabilize">construction narrative provides note that upstream area must be stabilized prior to construction.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="areaPretreatment" value="yes" id="areaPretreatmentYes"></td>
+                            <td><input type="radio" name="areaPretreatment" value="no" id="areaPretreatmentNo"></td>
+                            <td><input type="radio" name="areaPretreatment" value="na" id="areaPretreatmentNA"></td>
+                            <td>4</td>
+                            <td><label for="areaPretreatment">Areas of pretreatment are labeled.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="outsideLOD" value="yes" id="outsideLODYes"></td>
+                            <td><input type="radio" name="outsideLOD" value="no" id="outsideLODNo"></td>
+                            <td><input type="radio" name="outsideLOD" value="na" id="outsideLODNA"></td>
+                            <td>5</td>
+                            <td><label for="outsideLOD">Located outside of limits of disturbance.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="trap" value="yes" id="trapYes"></td>
+                            <td><input type="radio" name="trap" value="no" id="trapNo"></td>
+                            <td><input type="radio" name="trap" value="na" id="trapNA"></td>
+                            <td>6</td>
+                            <td><label for="trap">If used as a sediment trap or basin the bottom of temporary feature must be at least 1' above the post-construction installation and an underdrain is required.</label></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr><th>YES</th><th>NO</th><th>NA</th><th></th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="radio" name="waterTable" value="yes" id="waterTableYes"></td>
+                            <td><input type="radio" name="waterTable" value="no" id="waterTableNo"></td>
+                            <td><input type="radio" name="waterTable" value="na" id="waterTableNA"></td>
+                            <td>7</td>
+                            <td><label for="waterTable">2' provided from bottom of practice to seasonal high water table or bedrock.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="soilBoring" value="yes" id="soilBoringYes"></td>
+                            <td><input type="radio" name="soilBoring" value="no" id="soilBoringNo"></td>
+                            <td><input type="radio" name="soilBoring" value="na" id="soilBoringNA"></td>
+                            <td>8</td>
+                            <td><label for="soilBoring">Soil boring locations shown. One soil boring per 1000 sf.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="intervalBoring" value="yes" id="intervalBoringYes"></td>
+                            <td><input type="radio" name="intervalBoring" value="no" id="intervalBoringNo"></td>
+                            <td><input type="radio" name="intervalBoring" value="na" id="intervalBoringNA"></td>
+                            <td>9</td>
+                            <td><label for="intervalBoring">One soil boring per 200 linear feet.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="wellObsPlan" value="yes" id="wellObsPlanYes"></td>
+                            <td><input type="radio" name="wellObsPlan" value="no" id="wellObsPlanNo"></td>
+                            <td><input type="radio" name="wellObsPlan" value="na" id="wellObsPlanNA"></td>
+                            <td>10</td>
+                            <td><label for="wellObsPlan">Observational wells if used are installed every 50' and shown.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="mediaSupply" value="yes" id="mediaSupplyYes"></td>
+                            <td><input type="radio" name="mediaSupply" value="no" id="mediaSupplyNo"></td>
+                            <td><input type="radio" name="mediaSupply" value="na" id="mediaSupplyNA"></td>
+                            <td>11</td>
+                            <td><label for="mediaSupply">Specifies media to be supplied by vender and tested with P-index between 10 and 30 or between 7 and 21 mg/kg of P in soil media.</label></td>
+                        </tr>
+                        <tr><td></td><td></td><td></td><td></td><th>Profile and Cross-section</th></tr>
+                        <tr>
+                            <td><input type="radio" name="depthMedia" value="yes" id="depthMediaYes"></td>
+                            <td><input type="radio" name="depthMedia" value="no" id="depthMediaNo"></td>
+                            <td><input type="radio" name="depthMedia" value="na" id="depthMediaNA"></td>
+                            <td>1</td>
+                            <td><label for="depthMedia">media depth.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="underdrainSlope" value="yes" id="underdrainSlopeYes"></td>
+                            <td><input type="radio" name="underdrainSlope" value="no" id="underdrainSlopeNo"></td>
+                            <td><input type="radio" name="underdrainSlope" value="na" id="underdrainSlopeNA"></td>
+                            <td>2</td>
+                            <td><label for="underdrainSlope">Longitudinal slopes of underdrains are labeled.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="surfaceCover" value="yes" id="surfaceCoverYes"></td>
+                            <td><input type="radio" name="surfaceCover" value="no" id="surfaceCoverNo"></td>
+                            <td><input type="radio" name="surfaceCover" value="na" id="surfaceCoverNA"></td>
+                            <td>3</td>
+                            <td><label for="surfaceCover">Surface cover of turf or river stone.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="filterFabric" value="yes" id="filterFabricYes"></td>
+                            <td><input type="radio" name="filterFabric" value="no" id="filterFabricNo"></td>
+                            <td><input type="radio" name="filterFabric" value="na" id="filterFabricNA"></td>
+                            <td>4</td>
+                            <td><label for="filterFabric">Non-woven filter fabric specified with flow rate greater than 110 G/min/sf (sides only for level 2 design).</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="chokerStone" value="yes" id="chokerStoneYes"></td>
+                            <td><input type="radio" name="chokerStone" value="no" id="chokerStoneNo"></td>
+                            <td><input type="radio" name="chokerStone" value="na" id="chokerStoneNA"></td>
+                            <td>5</td>
+                            <td><label for="chokerStone">2 to 4 inch layer of sand over a 2-inch layer of choker stone (typ. #8) over the underdrain stone.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="underdrainEncased" value="yes" id="underdrainEncasedYes"></td>
+                            <td><input type="radio" name="underdrainEncased" value="no" id="underdrainEncasedNo"></td>
+                            <td><input type="radio" name="underdrainEncased" value="na" id="underdrainEncasedNA"></td>
+                            <td>6</td>
+                            <td><label for="underdrainEncased">Underdrain shows 12” stone sump below invert for level 2 design.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="slopeSide" value="yes" id="slopeSideYes"></td>
+                            <td><input type="radio" name="slopeSide" value="no" id="slopeSideNo"></td>
+                            <td><input type="radio" name="slopeSide" value="na" id="slopeSideNA"></td>
+                            <td>7</td>
+                            <td><label for="slopeSide">Side slopes are 3:1 or greater.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="bottomWidthSwale" value="yes" id="bottomWidthSwaleYes"></td>
+                            <td><input type="radio" name="bottomWidthSwale" value="no" id="bottomWidthSwaleNo"></td>
+                            <td><input type="radio" name="bottomWidthSwale" value="na" id="bottomWidthSwaleNA"></td>
+                            <td>8</td>
+                            <td><label for="bottomWidthSwale">Bottom width between 4 and 8 feet.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="reservoirLayer" value="yes" id="reservoirLayerYes"></td>
+                            <td><input type="radio" name="reservoirLayer" value="no" id="reservoirLayerNo"></td>
+                            <td><input type="radio" name="reservoirLayer" value="na" id="reservoirLayerNA"></td>
+                            <td>9</td>
+                            <td><label for="reservoirLayer">9. Reservoir layer of 9 to 18” of #57 stone double-washed.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="wellObsProfile" value="yes" id="wellObsProfileYes"></td>
+                            <td><input type="radio" name="wellObsProfile" value="no" id="wellObsProfileNo"></td>
+                            <td><input type="radio" name="wellObsProfile" value="na" id="wellObsProfileNA"></td>
+                            <td>10</td>
+                            <td><label for="wellObsProfile">Observation well locations shown.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="topWidthDam" value="yes" id="topWidthDamYes"></td>
+                            <td><input type="radio" name="topWidthDam" value="no" id="topWidthDamNo"></td>
+                            <td><input type="radio" name="topWidthDam" value="na" id="topWidthDamNA"></td>
+                            <td>11</td>
+                            <td><label for="topWidthDam">Top and width of embankment labeled.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="elevationLabel" value="yes" id="elevationLabelYes"></td>
+                            <td><input type="radio" name="elevationLabel" value="no" id="elevationLabelNo"></td>
+                            <td><input type="radio" name="elevationLabel" value="na" id="elevationLabelNA"></td>
+                            <td>12</td>
+                            <td><label for="elevationLabel">Elevation of sections labeled.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="volumeLabel" value="yes" id="volumeLabelYes"></td>
+                            <td><input type="radio" name="volumeLabel" value="no" id="volumeLabelNo"></td>
+                            <td><input type="radio" name="volumeLabel" value="na" id="volumeLabelNA"></td>
+                            <td>13</td>
+                            <td><label for="volumeLabel">Storm elevations and volumes labeled .</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="underdrainDiameter" value="yes" id="underdrainDiameterYes"></td>
+                            <td><input type="radio" name="underdrainDiameter" value="no" id="underdrainDiameterNo"></td>
+                            <td><input type="radio" name="underdrainDiameter" value="na" id="underdrainDiameterNA"></td>
+                            <td>14</td>
+                            <td><label for="underdrainDiameter">Underdrain diameter is at least 6 inches.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="pondingDepthProfile" value="yes" id="pondingDepthProfileYes"></td>
+                            <td><input type="radio" name="pondingDepthProfile" value="no" id="pondingDepthProfileNo"></td>
+                            <td><input type="radio" name="pondingDepthProfile" value="na" id="pondingDepthProfileNA"></td>
+                            <td>15</td>
+                            <td><label for="volumeLabel">Ponding depth shown.</label></td>
+                        </tr>
+                        <tr><td></td><td></td><td></td><td></td><th>Calculations</th></tr>
+                        <tr>
+                            <td><input type="radio" name="calcSA" value="yes" id="calcSAYes"></td>
+                            <td><input type="radio" name="calcSA" value="no" id="calcSANo"></td>
+                            <td><input type="radio" name="calcSA" value="na" id="calcSANA"></td>
+                            <td>1</td>
+                            <td><label for="calcSA">Surface Area calculations.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="routing" value="yes" id="routingYes"></td>
+                            <td><input type="radio" name="routing" value="no" id="routingNo"></td>
+                            <td><input type="radio" name="routing" value="na" id="routingNA"></td>
+                            <td>2</td>
+                            <td><label for="routing">Routing Calculations for Tv, Channel and flood protection	.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="calcOverflow" value="yes" id="calcOverflowYes"></td>
+                            <td><input type="radio" name="calcOverflow" value="no" id="calcOverflowNo"></td>
+                            <td><input type="radio" name="calcOverflow" value="na" id="calcOverflowNA"></td>
+                            <td>3</td>
+                            <td><label for="calcOverflow">Sizing of overflow.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="infiltrationRate" value="yes" id="infiltrationRateYes"></td>
+                            <td><input type="radio" name="infiltrationRate" value="no" id="infiltrationRateNo"></td>
+                            <td><input type="radio" name="infiltrationRate" value="na" id="infiltrationRateNA"></td>
+                            <td>4</td>
+                            <td><label for="infiltrationRate">Design infiltration rate 50% of measured rate.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="nonerosive" value="yes" id="nonerosiveYes"></td>
+                            <td><input type="radio" name="nonerosive" value="no" id="nonerosiveNo"></td>
+                            <td><input type="radio" name="nonerosive" value="na" id="nonerosiveNA"></td>
+                            <td>5</td>
+                            <td><label for="nonerosive">2-year and 10-year storm are non-erosive.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="shortCircuit" value="yes" id="shortCircuitYes"></td>
+                            <td><input type="radio" name="shortCircuit" value="no" id="shortCircuitNo"></td>
+                            <td><input type="radio" name="shortCircuit" value="na" id="shortCircuitNA"></td>
+                            <td>6</td>
+                            <td><label for="shortCircuit">Inlets that do not meet short circuiting requirements do not carry more than 20% of design flows.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="tvDraindown" value="yes" id="tvDraindownYes"></td>
+                            <td><input type="radio" name="tvDraindown" value="no" id="tvDraindownNo"></td>
+                            <td><input type="radio" name="tvDraindown" value="na" id="tvDraindownNA"></td>
+                            <td>7</td>
+                            <td><label for="tvDraindown">Tv draws down within 6 hours.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="rainfall1in" value="yes" id="rainfall1inYes"></td>
+                            <td><input type="radio" name="rainfall1in" value="no" id="rainfall1inNo"></td>
+                            <td><input type="radio" name="rainfall1in" value="na" id="rainfall1inNA"></td>
+                            <td>8</td>
+                            <td><label for="rainfall1in">1-inch rainfall does not exceed 3 ft/s.</label></td>
+                        </tr>
+                        <tr><td></td><td></td><td></td><td></td><th>Landscaping</th></tr>
+                        <tr>
+                            <td><input type="radio" name="noIrrigation" value="yes" id="noIrrigationYes"></td>
+                            <td><input type="radio" name="noIrrigation" value="no" id="noIrrigationNo"></td>
+                            <td><input type="radio" name="noIrrigation" value="na" id="noIrrigationNA"></td>
+                            <td>1</td>
+                            <td><label for="noIrrigation">Should not be irrigated.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="nativePlant" value="yes" id="nativePlantYes"></td>
+                            <td><input type="radio" name="nativePlant" value="no" id="nativePlantNo"></td>
+                            <td><input type="radio" name="nativePlant" value="na" id="nativePlantNA"></td>
+                            <td>2</td>
+                            <td><label for="nativePlant">Uses native plants.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="plantSequence" value="yes" id="plantSequenceYes"></td>
+                            <td><input type="radio" name="plantSequence" value="no" id="plantSequenceNo"></td>
+                            <td><input type="radio" name="plantSequence" value="na" id="plantSequenceNA"></td>
+                            <td>3</td>
+                            <td><label for="plantSequence">Planting sequence and notes provided.</label></td>
+                        </tr>
+                        <tr class="level1">
+                            <td><input type="radio" name="turfCoverLevel1" value="yes" id="turfCoverLevel1Yes"></td>
+                            <td><input type="radio" name="turfCoverLevel1" value="no" id="turfCoverLevel1No"></td>
+                            <td><input type="radio" name="turfCoverLevel1" value="na" id="turfCoverLevel1NA"></td>
+                            <td>4</td>
+                            <td><label for="turfCoverLevel1">Level 1 uses turf cover.</label></td>
+                        </tr>
+                        <tr class="lavel2">
+                            <td><input type="radio" name="turfCoverTree" value="yes" id="turfCoverTreeYes"></td>
+                            <td><input type="radio" name="turfCoverTree" value="no" id="turfCoverTreeNo"></td>
+                            <td><input type="radio" name="turfCoverTree" value="na" id="turfCoverTreeNA"></td>
+                            <td>4</td>
+                            <td><label for="turfCoverTree">Level two uses turf cover with trees and shrubs.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="grassWithstand" value="yes" id="grassWithstandYes"></td>
+                            <td><input type="radio" name="grassWithstand" value="no" id="grassWithstandNo"></td>
+                            <td><input type="radio" name="grassWithstand" value="na" id="grassWithstandNA"></td>
+                            <td>5</td>
+                            <td><label for="grassWithstand">Grasses can withstand wet and dry periods and velocities within the facility.</label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="grassSalt" value="yes" id="grassSaltYes"></td>
+                            <td><input type="radio" name="grassSalt" value="no" id="grassSaltNo"></td>
+                            <td><input type="radio" name="grassSalt" value="na" id="grassSaltNA"></td>
+                            <td>6</td>
+                            <td><label for="grassWithstand">Salt tolerant grasses used along roads.</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <div>
+                          <label for="comments" class="form-label">Comments</label>
+                          <textarea class="form-control" id="comments" rows="4"></textarea>
+                    </div>          
+            </div> <!-- column 2  -->
+       </div>   <!--   row     -->
+            <div>
+                <h6 class="text-center">Standard Comments</h6>
+                <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" id="btnGenerate">Generate</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnClear">Clear</button>
+                </div>
+                <ol id="generatedComments">
+                    
+                </ol>
+            </div>
+
+    </div>     <!-- container -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    -->
+    <script src="js/bmp/dryswale.js"></script>
+        
+  </body>
+</html>

@@ -12,15 +12,6 @@
         <div class="container">
             <div id="mynav"></div>
             <h4 class="text-center">SWM/BMP Checklist - 14 Wet Pond</h4>
-            <p class="text-center">Environmental Engineering Department, Chesterfield VA</p>
-            <div class="text-center">
-                <button type="button" class="btn btn-outline-primary" id="btnReset">Reset</button>
-                <button type="button" class="btn btn-outline-primary" id="btnSave">Save</button>
-                <button type="button" class="btn btn-outline-primary" id="btnDownload">Download</button>
-                <button type="button" class="btn btn-outline-primary" id="btnUpload">Upload</button>
-            </div>
-            
-            <div class="text-center mt-3"><input type='file' name='selectedFile' id="selectFile" hidden/></div>
 
         <div class="row">
             <div class="col">
@@ -40,223 +31,223 @@
                                 </td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="tv1"></td>
-                                <td><input type="radio" name="tv1"></td>
-                                <td><input type="radio" name="tv1"></td>
+                                <td><input type="radio" name="tv1" value="yes" id="tv1Yes"></td>
+                                <td><input type="radio" name="tv1" value="no" id="tv1No"></td>
+                                <td><input type="radio" name="tv1" value="na" id="tv1NA"></td>
                                 <td></td>
                                 <td><label for="tv1">a. Tv = Rv(A)/12 – volume reduced by upstream BMP</label></td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="cell1"></td>
-                                <td><input type="radio" name="cell1"></td>
-                                <td><input type="radio" name="cell1"></td>
+                                <td><input type="radio" name="cell1" value="yes" id="cell1Yes"></td>
+                                <td><input type="radio" name="cell1" value="no" id="cell1No"></td>
+                                <td><input type="radio" name="cell1" value="na" id="cell1NA"></td>
                                 <td></td>
                                 <td><label for="cell1">b. One cell design with forebay.</label></td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="lwratio1"></td>
-                                <td><input type="radio" name="lwratio1"></td>
-                                <td><input type="radio" name="lwratio1"></td>
+                                <td><input type="radio" name="lwratio1" value="yes" id="lwratio1Yes"></td>
+                                <td><input type="radio" name="lwratio1" value="no" id="lwratio1No"></td>
+                                <td><input type="radio" name="lwratio1" value="na" id="lwratio1NA"></td>
                                 <td></td>
                                 <td><label for="lwratio1">c. Length to width ratio >= 2:1.</label></td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="flowpath1"></td>
-                                <td><input type="radio" name="flowpath1"></td>
-                                <td><input type="radio" name="flowpath1"></td>
+                                <td><input type="radio" name="flowpath1" value="yes" id="flowpath1Yes"></td>
+                                <td><input type="radio" name="flowpath1" value="no" id="flowpath1No"></td>
+                                <td><input type="radio" name="flowpath1" value="na" id="flowpath1NA"></td>
                                 <td></td>
                                 <td><label for="flowpath1">d. Shortest flow path/ overall length >=0.5.</label></td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="aquaticbench"></td>
-                                <td><input type="radio" name="aquaticbench"></td>
-                                <td><input type="radio" name="aquaticbench"></td>
+                                <td><input type="radio" name="aquaticBench" value="yes" id="aquaticBenchYes"></td>
+                                <td><input type="radio" name="aquaticBench" value="no" id="aquaticBenchNo"></td>
+                                <td><input type="radio" name="aquaticBench" value="na" id="aquaticBenchNA"></td>
                                 <td></td>
-                                <td><label for="aquaticbench">e. Standard aquatic benches.</label></td>
+                                <td><label for="aquaticBench">e. Standard aquatic benches.</label></td>
                             </tr>
                             <tr class="level1">
-                                <td><input type="radio" name="turf"></td>
-                                <td><input type="radio" name="turf"></td>
-                                <td><input type="radio" name="turf"></td>
+                                <td><input type="radio" name="turf" value="yes" id="turfYes"></td>
+                                <td><input type="radio" name="turf" value="no" id="turfNo"></td>
+                                <td><input type="radio" name="turf" value="na" id="turfNA"></td>
                                 <td></td>
                                 <td><label for="turf">f. Turf in pond buffers.</label></td>
                             </tr>
                             <tr class="level2">
-                                <td><input type="radio" name="tv2"></td>
-                                <td><input type="radio" name="tv2"></td>
-                                <td><input type="radio" name="tv2"></td>
+                                <td><input type="radio" name="tv2" value="yes" id="tv2Yes"></td>
+                                <td><input type="radio" name="tv2" value="no" id="tv2No"></td>
+                                <td><input type="radio" name="tv2" value="na" id="tv2NA"></td>
                                 <td></td>
-                                <td><label for="tv2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. Tv = 1.5Rv(A)/12 – volume reduced by upstream BMP</label></td>
+                                <td><label for="tv2">a. Tv = 1.5Rv(A)/12 – volume reduced by upstream BMP</label></td>
                             </tr>
                             <tr class="level2">
-                                <td><input type="radio" name="cell2"></td>
-                                <td><input type="radio" name="cell2"></td>
-                                <td><input type="radio" name="cell2"></td>
+                                <td><input type="radio" name="cell2" value="yes" id="cell2Yes"></td>
+                                <td><input type="radio" name="cell2" value="no" id="cell2No"></td>
+                                <td><input type="radio" name="cell2" value="na" id="cell2NA"></td>
                                 <td></td>
-                                <td><label for="cell2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. Wet ED (24 hr) and/or a Multi-Cell (at least three cells: forebay, upper shelf wetland, primary pool).</label></td>
+                                <td><label for="cell2">b. Wet ED (24 hr) and/or a Multi-Cell (at least three cells: forebay, upper shelf wetland, primary pool).</label></td>
                             </tr>
                             <tr class="level2">
-                                <td><input type="radio" name="lwratio2"></td>
-                                <td><input type="radio" name="lwratio2"></td>
-                                <td><input type="radio" name="lwratio2"></td>
+                                <td><input type="radio" name="lwratio2" value="yes" id="lwratio2Yes"></td>
+                                <td><input type="radio" name="lwratio2" value="no" id="lwratio2No"></td>
+                                <td><input type="radio" name="lwratio2" value="na" id="lwratio2NA"></td>
                                 <td></td>
-                                <td><label for="lwratio2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. Length to width ration >=3:1.</label></td>
+                                <td><label for="lwratio2">c. Length to width ration >=3:1.</label></td>
                             </tr>
                             <tr class="level2">
-                                <td><input type="radio" name="flowpath2"></td>
-                                <td><input type="radio" name="flowpath2"></td>
-                                <td><input type="radio" name="flowpath2"></td>
+                                <td><input type="radio" name="flowpath2" value="yes" id="flowpath2Yes"></td>
+                                <td><input type="radio" name="flowpath2" value="no" id="flowpath2No"></td>
+                                <td><input type="radio" name="flowpath2" value="na" id="flowpath2NA"></td>
                                 <td></td>
-                                <td><label for="flowpath2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d. Shortest flow path/ overall length >=0.8.</label></td>
+                                <td><label for="flowpath2">d. Shortest flow path/ overall length >=0.8.</label></td>
                             </tr>
                             <tr class="level2">
-                                <td><input type="radio" name="wetland"></td>
-                                <td><input type="radio" name="wetland"></td>
-                                <td><input type="radio" name="wetland"></td>
+                                <td><input type="radio" name="wetland" value="yes" id="wetlandYes"></td>
+                                <td><input type="radio" name="wetland" value="no" id="wetlandNo"></td>
+                                <td><input type="radio" name="wetland" value="na" id="wetlandNA"></td>
                                 <td></td>
-                                <td><label for="wetland">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e. Wetlands at least 10% of pond area</label></td>
+                                <td><label for="wetland">e. Wetlands at least 10% of pond area</label></td>
                             </tr>
                             <tr class="level2">
-                                <td><input type="radio" name="aerator"></td>
-                                <td><input type="radio" name="aerator"></td>
-                                <td><input type="radio" name="aerator"></td>
+                                <td><input type="radio" name="aerator" value="yes" id="aeratorYes"></td>
+                                <td><input type="radio" name="aerator" value="no" id="aeratorNo"></td>
+                                <td><input type="radio" name="aerator" value="na" id="aeratorNA"></td>
                                 <td></td>
-                                <td><label for="aerator">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f. Aeration provided.</label></td>
+                                <td><label for="aerator">f. Aeration provided.</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="overflow"></td>
-                                <td><input type="radio" name="overflow"></td>
-                                <td><input type="radio" name="overflow"></td>
+                                <td><input type="radio" name="overflow" value="yes" id="overflowYes"></td>
+                                <td><input type="radio" name="overflow" value="no" id="overflowNo"></td>
+                                <td><input type="radio" name="overflow" value="na" id="overflowNA"></td>
                                 <td>2.</td>
                                 <td><label for="overflow">Overflow structures provided if required.</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="overflow1"></td>
-                                <td><input type="radio" name="overflow1"></td>
-                                <td><input type="radio" name="overflow1"></td>
+                                <td><input type="radio" name="largeStorm" value="yes" id="largeStormYes"></td>
+                                <td><input type="radio" name="largeStorm" value="no" id="largeStormNo"></td>
+                                <td><input type="radio" name="largeStorm" value="na" id="largeStormNA"></td>
                                 <td>3.</td>
-                                <td><label for="overflow1">Includes methods to convey larger storms</label></td>
+                                <td><label for="largeStorm">Includes methods to convey larger storms</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="aquaticBench1"></td>
-                                <td><input type="radio" name="aquaticBench1"></td>
-                                <td><input type="radio" name="aquaticBench1"></td>
+                                <td><input type="radio" name="safetyBench" value="yes" id="safetyBenchYes"></td>
+                                <td><input type="radio" name="safetyBench" value="no" id="safetyBenchNo"></td>
+                                <td><input type="radio" name="safetyBench" value="na" id="safetyBenchNA"></td>
                                 <td>4.</td>
-                                <td><label for="aquaticBench1">Pool areas greater than 4' in depth contain safety and aquatic bench</label></td>
+                                <td><label for="safetyBench">Pool areas greater than 4' in depth contain safety and aquatic bench</label></td>
                             </tr>
                             <tr><td></td><td></td><td></td><td>5.</td><td>Pretreatment forebay:</td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="pretreatment1"></td>
-                                <td><input type="radio" name="pretreatment1"></td>
-                                <td><input type="radio" name="pretreatment1"></td>
+                                <td><input type="radio" name="minorInflow" value="yes" id="minorInflowYes"></td>
+                                <td><input type="radio" name="minorInflow" value="no" id="minorInflowNo"></td>
+                                <td><input type="radio" name="minorInflow" value="na" id="minorInflowNA"></td>
                                 <td></td>
-                                <td><label for="pretreatment1">a. Minor inflows consistent with pretreatment from bioretention specification (No. 9)</label></td>
+                                <td><label for="minorInflow">a. Minor inflows consistent with pretreatment from bioretention specification (No. 9)</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="pretreatment2"></td>
-                                <td><input type="radio" name="pretreatment2"></td>
-                                <td><input type="radio" name="pretreatment2"></td>
+                                <td><input type="radio" name="majorInflow" value="yes" id="majorInflowYes"></td>
+                                <td><input type="radio" name="majorInflow" value="no" id="majorInflowNo"></td>
+                                <td><input type="radio" name="majorInflow" value="na" id="majorInflowNA"></td>
                                 <td></td>
-                                <td><label for="pretreatment2">b. Any inlet conveying runoff from at least 10% of the contributing drainage area </label></td>
+                                <td><label for="majorInflow">b. Any inlet conveying runoff from at least 10% of the contributing drainage area </label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="pretreatment3"></td>
-                                <td><input type="radio" name="pretreatment3"></td>
-                                <td><input type="radio" name="pretreatment3"></td>
+                                <td><input type="radio" name="separateCell" value="yes" id="separateCellYes"></td>
+                                <td><input type="radio" name="separateCell" value="no" id="separateCellNo"></td>
+                                <td><input type="radio" name="separateCell" value="na" id="separateCellNA"></td>
                                 <td></td>
-                                <td><label for="pretreatment3">c. Separate cell formed by an acceptable barrier (earthen berm, concrete weir, gabion baskets, etc.) </label></td>
+                                <td><label for="separateCell">c. Separate cell formed by an acceptable barrier (earthen berm, concrete weir, gabion baskets, etc.) </label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="pretreatment4"></td>
-                                <td><input type="radio" name="pretreatment4"></td>
-                                <td><input type="radio" name="pretreatment4"></td>
+                                <td><input type="radio" name="min4ftForebay" value="yes" id="min4ftForebayYes"></td>
+                                <td><input type="radio" name="min4ftForebay" value="no" id="min4ftForebayNo"></td>
+                                <td><input type="radio" name="min4ftForebay" value="na" id="min4ftForebayNA"></td>
                                 <td></td>
-                                <td><label for="pretreatment4">d. Forebay at  least 4' deep.</label></td>
+                                <td><label for="min4ftForebay">d. Forebay at  least 4' deep.</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="aquaticBench2"></td>
-                                <td><input type="radio" name="aquaticBench2"></td>
-                                <td><input type="radio" name="aquaticBench2"></td>
+                                <td><input type="radio" name="aBenchForebay" value="yes" id="aBenchForebayYes"></td>
+                                <td><input type="radio" name="aBenchForebay" value="no" id="aBenchForebayNo"></td>
+                                <td><input type="radio" name="aBenchForebay" value="na" id="aBenchForebayNA"></td>
                                 <td></td>
-                                <td><label for="aquaticBench2">e. Equipped with variable width aquatic bench. </label></td>
+                                <td><label for="aBenchForebay">e. Equipped with variable width aquatic bench. </label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="volumeForebay"></td>
-                                <td><input type="radio" name="volumeForebay"></td>
-                                <td><input type="radio" name="volumeForebay"></td>
+                                <td><input type="radio" name="volumeForebay" value="yes" id="volumeForebayYes"></td>
+                                <td><input type="radio" name="volumeForebay" value="no" id="volumeForebayNo"></td>
+                                <td><input type="radio" name="volumeForebay" value="na" id="volumeForebayNA"></td>
                                 <td></td>
                                 <td><label for="volumeForebay">f. Total volumes for all forebays is at least 15% of the treatment volume.</label></td>
                             </tr>
                             <tr>
-                                <td><input type="radio" name="rodMeter"></td>
-                                <td><input type="radio" name="rodMeter"></td>
-                                <td><input type="radio" name="rodMeter"></td>
+                                <td><input type="radio" name="rodMeter" value="yes" id="rodMeterYes"></td>
+                                <td><input type="radio" name="rodMeter" value="no" id="rodMeterNo"></td>
+                                <td><input type="radio" name="rodMeter" value="na" id="rodMeterNA"></td>
                                 <td></td>
                                 <td><label for="rodMeter">g. Equipped with metered rod.</label></td>
                             </tr>
                         <tr>
-                            <td><input type="radio" name="subdivision"></td>
-                            <td><input type="radio" name="subdivision"></td>
-                            <td><input type="radio" name="subdivision"></td>
+                            <td><input type="radio" name="clayLiner" value="yes" id="clayLinerYes"></td>
+                            <td><input type="radio" name="clayLiner" value="no" id="clayLinerNo"></td>
+                            <td><input type="radio" name="clayLiner" value="na" id="clayLinerNA"></td>
                             <td>6.</td>
-                            <td><label for="subdivision">Impermeable clay liner of at least 12” with 12” soil layer compacted on top provided if no soil borings or permeable soils.</label></td>
+                            <td><label for="clayLiner">Impermeable clay liner of at least 12” with 12” soil layer compacted on top provided if no soil borings or permeable soils.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="district"></td>
-                            <td><input type="radio" name="district"></td>
-                            <td><input type="radio" name="district"></td>
+                            <td><input type="radio" name="outfall10y" value="yes" id="outfall10yYes"></td>
+                            <td><input type="radio" name="outfall10y" value="no" id="outfall10yNo"></td>
+                            <td><input type="radio" name="outfall10y" value="na" id="outfall10yNA"></td>
                             <td>7.</td>
-                            <td><label for="district">8. outfall is stable for 10-year design storm.</label></td>
+                            <td><label for="outfall10y">8. outfall is stable for 10-year design storm.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="zoning"></td>
-                            <td><input type="radio" name="zoning"></td>
-                            <td><input type="radio" name="zoning"></td>
+                            <td><input type="radio" name="cellsFormed" value="yes" id="cellsFormedYes"></td>
+                            <td><input type="radio" name="cellsFormed" value="no" id="cellsFormedNo"></td>
+                            <td><input type="radio" name="cellsFormed" value="na" id="cellsFormedNA"></td>
                             <td>8.</td>
-                            <td><label for="zoning">Cells formed by sand berms, back-filled coir fiber logs, or forested peninsulas.</label></td>
+                            <td><label for="cellsFormed">Cells formed by sand berms, back-filled coir fiber logs, or forested peninsulas.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="tentative"></td>
-                            <td><input type="radio" name="tentative"></td>
-                            <td><input type="radio" name="tentative"></td>
+                            <td><input type="radio" name="rangeCDA" value="yes" id="rangeCDAYes"></td>
+                            <td><input type="radio" name="rangeCDA" value="no" id="rangeCDANo"></td>
+                            <td><input type="radio" name="rangeCDA" value="na" id="rangeCDANA"></td>
                             <td>9.</td>
-                            <td><label for="tentative">CDA between 10 and 25 acres recommended.</label></td>
+                            <td><label for="rangeCDA">CDA between 10 and 25 acres recommended.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="developer"></td>
-                            <td><input type="radio" name="developer"></td>
-                            <td><input type="radio" name="developer"></td>
+                            <td><input type="radio" name="constructedWetland" value="yes" id="constructedWetlandYes"></td>
+                            <td><input type="radio" name="constructedWetland" value="no" id="constructedWetlandNo"></td>
+                            <td><input type="radio" name="constructedWetland" value="na" id="constructedWetlandNA"></td>
                             <td>10.</td>
-                            <td><label for="developer">Wetlands designed using spec No. 13 – Constructed Wetlands.</label></td>
+                            <td><label for="constructedWetland">Wetlands designed using spec No. 13 – Constructed Wetlands.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="engineer"></td>
-                            <td><input type="radio" name="engineer"></td>
-                            <td><input type="radio" name="engineer"></td>
+                            <td><input type="radio" name="pondIrrigation" value="yes" id="pondIrrigationYes"></td>
+                            <td><input type="radio" name="pondIrrigation" value="no" id="pondIrrigationNo"></td>
+                            <td><input type="radio" name="pondIrrigation" value="na" id="pondIrrigationNA"></td>
                             <td>11.</td>
-                            <td><label for="engineer">If pond is to be used for irrigation additional runoff reduction can be used</label></td>
+                            <td><label for="pondIrrigation">If pond is to be used for irrigation additional runoff reduction can be used</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="sketch"></td>
-                            <td><input type="radio" name="sketch"></td>
-                            <td><input type="radio" name="sketch"></td>
+                            <td><input type="radio" name="drainPipe" value="yes" id="drainPipe"></td>
+                            <td><input type="radio" name="drainPipe" value="no" id="drainPipe"></td>
+                            <td><input type="radio" name="drainPipe" value="na" id="drainPipe"></td>
                             <td>12.</td>
-                            <td><label for="sketch">Drain pipe provided.</label></td>
+                            <td><label for="drainPipe">Drain pipe provided.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="constructionnotes"></td>
-                            <td><input type="radio" name="constructionnotes"></td>
-                            <td><input type="radio" name="constructionnotes"></td>
+                            <td><input type="radio" name="damSafety" value="yes" id="damSafetyYes"></td>
+                            <td><input type="radio" name="damSafety" value="no" id="damSafetyNo"></td>
+                            <td><input type="radio" name="damSafety" value="na" id="damSafetyNA"></td>
                             <td>13.</td>
-                            <td><label for="constructionnotes">Sizing is below dam safety requirements or a permit is required</label></td>
+                            <td><label for="damSafety">Sizing is below dam safety requirements or a permit is required</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="vsmp"></td>
-                            <td><input type="radio" name="vsmp"></td>
-                            <td><input type="radio" name="vsmp"></td>
+                            <td><input type="radio" name="shade" value="yes" id="shadeYes"></td>
+                            <td><input type="radio" name="shade" value="no" id="shadeNo"></td>
+                            <td><input type="radio" name="shade" value="na" id="shadeNA"></td>
                             <td>14.</td>
-                            <td><label for="vsmp">Shaded and provide shorter extended detention times to help minimize thermal pollution.</label></td>
+                            <td><label for="shade">Shaded and provide shorter extended detention times to help minimize thermal pollution.</label></td>
                         </tr>                            
                         </tbody>
                     </table>
@@ -270,229 +261,229 @@
                     <tbody>
                         <tr><td></td><td></td><td></td><th>Plan</th></tr>
                         <tr>
-                            <td><input type="radio" name="sheetindex"></td>
-                            <td><input type="radio" name="sheetindex"></td>
-                            <td><input type="radio" name="sheetindex"></td>
-                            <td><label for="sheetindex">1. Soil depth and type.</label></td>
+                            <td><input type="radio" name="soilDepth" value="yes" id="soilDepthYes"></td>
+                            <td><input type="radio" name="soilDepth" value="no" id="soilDepthNo"></td>
+                            <td><input type="radio" name="soilDepth" value="na" id="soilDepthNA"></td>
+                            <td><label for="soilDepth">1. Soil depth and type.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="propertyid"></td>
-                            <td><input type="radio" name="propertyid"></td>
-                            <td><input type="radio" name="propertyid"></td>
-                            <td><label for="propertyid">2. construction narrative provided.</label></td>
+                            <td><input type="radio" name="constructionNarrative" value="yes" id="constructionNarrativeYes"></td>
+                            <td><input type="radio" name="constructionNarrative" value="no" id="constructionNarrativeNo"></td>
+                            <td><input type="radio" name="constructionNarrative" value="na" id="constructionNarrativeNA"></td>
+                            <td><label for="constructionNarrative">2. construction narrative provided.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="latitudelongitude"></td>
-                            <td><input type="radio" name="latitudelongitude"></td>
-                            <td><input type="radio" name="latitudelongitude"></td>
-                            <td><label for="latitudelongitude">3. construction narrative provides note that upstream area must be stabilized prior to construction.</label></td>
+                            <td><input type="radio" name="upstreamStabilize" value="yes" id="upstreamStabilizeYes"></td>
+                            <td><input type="radio" name="upstreamStabilize" value="no" id="upstreamStabilizeNo"></td>
+                            <td><input type="radio" name="upstreamStabilize" value="na" id="upstreamStabilizeNA"></td>
+                            <td><label for="upstreamStabilize">3. construction narrative provides note that upstream area must be stabilized prior to construction.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="receivingwaters"></td>
-                            <td><input type="radio" name="receivingwaters"></td>
-                            <td><input type="radio" name="receivingwaters"></td>
-                            <td><label for="receivingwaters">4. Areas of pretreatment and pond cells are labeled.</label></td>
+                            <td><input type="radio" name="areaPretreatment" value="yes" id="areaPretreatmentYes"></td>
+                            <td><input type="radio" name="areaPretreatment" value="no" id="areaPretreatmentNo"></td>
+                            <td><input type="radio" name="areaPretreatment" value="na" id="areaPretreatmentNA"></td>
+                            <td><label for="areaPretreatment">4. Areas of pretreatment and pond cells are labeled.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="vahu6"></td>
-                            <td><input type="radio" name="vahu6"></td>
-                            <td><input type="radio" name="vahu6"></td>
-                            <td><label for="vahu6">5. During construction of wetlands contributing drainage areas are diverted around practice.</label></td>
+                            <td><input type="radio" name="wetlandDivert" value="yes" id="wetlandDivertYes"></td>
+                            <td><input type="radio" name="wetlandDivert" value="no" id="wetlandDivertNo"></td>
+                            <td><input type="radio" name="wetlandDivert" value="na" id="wetlandDivertNA"></td>
+                            <td><label for="wetlandDivert">5. During construction of wetlands contributing drainage areas are diverted around practice.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">6. If used as a sediment trap or basin notes are provided for facility to be de-watered, dredged,     and regraded to design dimensions</label></td>
+                            <td><input type="radio" name="conversionSB" value="yes" id="conversionSBYes"></td>
+                            <td><input type="radio" name="conversionSB" value="no" id="conversionSBNo"></td>
+                            <td><input type="radio" name="conversionSB" value="na" id="conversionSBNA"></td>
+                            <td><label for="conversionSB">6. If used as a sediment trap or basin notes are provided for facility to be de-watered, dredged, and regraded to design dimensions</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">7. 20' from property lines.</label></td>
+                            <td><input type="radio" name="setbackPL" value="yes" id="setbackPLYes"></td>
+                            <td><input type="radio" name="setbackPL" value="no" id="setbackPLNo"></td>
+                            <td><input type="radio" name="setbackPL" value="na" id="setbackPLNA"></td>
+                            <td><label for="setbackPL">7. 20' from property lines.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">8. 100' down-gradient of private wells and septic systems.</label></td>
+                            <td><input type="radio" name="setbackWell" value="yes" id="setbackWellYes" ></td>
+                            <td><input type="radio" name="setbackWell" value="no" id="setbackWellNo" ></td>
+                            <td><input type="radio" name="setbackWell" value="na" id="setbackWellNA" ></td>
+                            <td><label for="setbackWell">8. 100' down-gradient of private wells and septic systems.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">9. 25' away from building foundations.</label></td>
+                            <td><input type="radio" name="setbackBuilding" value="yes" id="setbackBuildingYes"></td>
+                            <td><input type="radio" name="setbackBuilding" value="no" id="setbackBuildingNo"></td>
+                            <td><input type="radio" name="setbackBuilding" value="na" id="setbackBuildingNA"></td>
+                            <td><label for="setbackBuilding">9. 25' away from building foundations.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">10. Soil boring locations shown (at least one in embankment, near outlet, and two within wet pond treatment area).</label></td>
+                            <td><input type="radio" name="soilBoring" value="yes" id="soilBoringYes"></td>
+                            <td><input type="radio" name="soilBoring" value="no" id="soilBoringNo"></td>
+                            <td><input type="radio" name="soilBoring" value="na" id="soilBoringNA"></td>
+                            <td><label for="soilBoring">10. Soil boring locations shown (at least one in embankment, near outlet, and two within wet pond treatment area).</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">11. Pretreatment is sequenced to be constructed prior to the main feature of the basin.</label></td>
+                            <td><input type="radio" name="pretreatmentFirst" value="yes" id="pretreatmentFirstYes"></td>
+                            <td><input type="radio" name="pretreatmentFirst" value="no" id="pretreatmentFirstNo"></td>
+                            <td><input type="radio" name="pretreatmentFirst" value="na" id="pretreatmentFirstNA"></td>
+                            <td><label for="pretreatmentFirst">11. Pretreatment is sequenced to be constructed prior to the main feature of the basin.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">12. Located outside of existing wetlands and streams.</label></td>
+                            <td><input type="radio" name="outsideWetland" value="yes" id="outsideWetlandYes"></td>
+                            <td><input type="radio" name="outsideWetland" value="no" id="outsideWetlandNo"></td>
+                            <td><input type="radio" name="outsideWetland" value="na" id="outsideWetlandNA"></td>
+                            <td><label for="outsideWetland">12. Located outside of existing wetlands and streams.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">13. Goose protection provided.</label></td>
+                            <td><input type="radio" name="goose"></td>
+                            <td><input type="radio" name="goose"></td>
+                            <td><input type="radio" name="goose"></td>
+                            <td><label for="goose">13. Goose protection provided.</label></td>
                         </tr>
                         <tr><td></td><td></td><td></td><th>Profile and Cross-section</th></tr>
                         <tr>
-                            <td><input type="radio" name="sheetindex"></td>
-                            <td><input type="radio" name="sheetindex"></td>
-                            <td><input type="radio" name="sheetindex"></td>
-                            <td><label for="sheetindex">1. Details and material specifications provided.</label></td>
+                            <td><input type="radio" name="materialSpec" value="yes" id="materialSpecYes"></td>
+                            <td><input type="radio" name="materialSpec" value="no" id="materialSpecNo"></td>
+                            <td><input type="radio" name="materialSpec" value="na" id="materialSpecNA"></td>
+                            <td><label for="materialSpec">1. Details and material specifications provided.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="propertyid"></td>
-                            <td><input type="radio" name="propertyid"></td>
-                            <td><input type="radio" name="propertyid"></td>
-                            <td><label for="propertyid">2. Longitudinal slopes are 0.5 to 1%.</label></td>
+                            <td><input type="radio" name="slopeLongitudinal" value="yes" id="slopeLongitudinalYes"></td>
+                            <td><input type="radio" name="slopeLongitudinal" value="no" id="slopeLongitudinalNo"></td>
+                            <td><input type="radio" name="slopeLongitudinal" value="na" id="slopeLongitudinalNA"></td>
+                            <td><label for="slopeLongitudinal">2. Longitudinal slopes are 0.5 to 1%.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="latitudelongitude"></td>
-                            <td><input type="radio" name="latitudelongitude"></td>
-                            <td><input type="radio" name="latitudelongitude"></td>
-                            <td><label for="latitudelongitude">3. Maximum elevation drop between wetland cells of 1' or less.</label></td>
+                            <td><input type="radio" name="dropWetland" value="yes" id="dropWetlandYes"></td>
+                            <td><input type="radio" name="dropWetland" value="no" id="dropWetlandNo"></td>
+                            <td><input type="radio" name="dropWetland" value="na" id="dropWetlandNA"></td>
+                            <td><label for="dropWetland">3. Maximum elevation drop between wetland cells of 1' or less.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="receivingwaters"></td>
-                            <td><input type="radio" name="receivingwaters"></td>
-                            <td><input type="radio" name="receivingwaters"></td>
-                            <td><label for="receivingwaters">4. Top and width of embankment labeled.</label></td>
+                            <td><input type="radio" name="topWidthDam" value="yes" id="topWidthDamYes"></td>
+                            <td><input type="radio" name="topWidthDam" value="no" id="topWidthDamNo"></td>
+                            <td><input type="radio" name="topWidthDam" value="na" id="topWidthDamNA"></td>
+                            <td><label for="topWidthDam">4. Top and width of embankment labeled.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="vahu6"></td>
-                            <td><input type="radio" name="vahu6"></td>
-                            <td><input type="radio" name="vahu6"></td>
-                            <td><label for="vahu6">5. Elevation of sections labeled.</label></td>
+                            <td><input type="radio" name="elevationLabel" value="yes" id="elevationLabelYes"></td>
+                            <td><input type="radio" name="elevationLabel" value="no" id="elevationLabelNo"></td>
+                            <td><input type="radio" name="elevationLabel" value="na" id="elevationLabelNA"></td>
+                            <td><label for="elevationLabel">5. Elevation of sections labeled.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">6. Storm elevations and volumes labeled.</label></td>
+                            <td><input type="radio" name="volumeLabel" value="yes" id="volumeLabelYes"></td>
+                            <td><input type="radio" name="volumeLabel" value="no" id="volumeLabelNo"></td>
+                            <td><input type="radio" name="volumeLabel" value="na" id="volumeLabelNA"></td>
+                            <td><label for="volumeLabel">6. Storm elevations and volumes labeled.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">7. Maximum depth of 4' in the wetland pool during maximum storm design.</label></td>
+                            <td><input type="radio" name="maxDepthWetland" value="yes" id="maxDepthWetlandYes"></td>
+                            <td><input type="radio" name="maxDepthWetland" value="no" id="maxDepthWetlandNo"></td>
+                            <td><input type="radio" name="maxDepthWetland" value="na" id="maxDepthWetlandNA"></td>
+                            <td><label for="maxDepthWetland">7. Maximum depth of 4' in the wetland pool during maximum storm design.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">8. Side slopes are 3:1 or greater.</label></td>
+                            <td><input type="radio" name="slopeSide" value="yes" id="slopeSideYes"></td>
+                            <td><input type="radio" name="slopeSide" value="no" id="slopeSideNo"></td>
+                            <td><input type="radio" name="slopeSide" value="na" id="slopeSideNA"></td>
+                            <td><label for="slopeSide">8. Side slopes are 3:1 or greater.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">9. TV is not more than 12” above wetland cell.</label></td>
+                            <td><input type="radio" name="tv1ftWetland" value="yes" id="tv1ftWetlandYes"></td>
+                            <td><input type="radio" name="tv1ftWetland" value="no" id="tv1ftWetlandNo"></td>
+                            <td><input type="radio" name="tv1ftWetland" value="na" id="tv1ftWetlandNA"></td>
+                            <td><label for="tv1ftWetland">9. TV is not more than 12” above wetland cell.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">10. Maximum ED and channel protection detention levels of 5' above normal pool.</label></td>
+                            <td><input type="radio" name="max5ftNWSE" value="yes" id="max5ftNWSEYes"></td>
+                            <td><input type="radio" name="max5ftNWSE" value="no" id="max5ftNWSENo"></td>
+                            <td><input type="radio" name="max5ftNWSE" value="na" id="max5ftNWSENA"></td>
+                            <td><label for="max5ftNWSE">10. Maximum ED and channel protection detention levels of 5' above normal pool.</label></td>
                         </tr>
                         <tr><td></td><td></td><td></td><th>Calculations</th></tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">1. Treatment Volume calculations.</label></td>
+                            <td><input type="radio" name="calcTV" value="yes" id="calcTVYes"></td>
+                            <td><input type="radio" name="calcTV" value="no" id="calcTVNo"></td>
+                            <td><input type="radio" name="calcTV" value="na" id="calcTVNA"></td>
+                            <td><label for="calcTV">1. Treatment Volume calculations.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">2. Routing Calculations for Tv, Channel and flood protection	.</label></td>
+                            <td><input type="radio" name="routing" value="yes" id="routingYes"></td>
+                            <td><input type="radio" name="routing" value="no" id="routingNo"></td>
+                            <td><input type="radio" name="routing" value="na" id="routingNA"></td>
+                            <td><label for="routing">2. Routing Calculations for Tv, Channel and flood protection	.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">3. Sizing of overflow.</label></td>
+                            <td><input type="radio" name="calcOverflow" value="yes" id="calcOverflowYes"></td>
+                            <td><input type="radio" name="calcOverflow" value="no" id="calcOverflowNo"></td>
+                            <td><input type="radio" name="calcOverflow" value="na" id="calcOverflowNA"></td>
+                            <td><label for="calcOverflow">3. Sizing of overflow.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">4. 2-year and 10-year storm are non-erosive.</label></td>
+                            <td><input type="radio" name="nonerosive" value="yes" id="nonerosiveYes"></td>
+                            <td><input type="radio" name="nonerosive" value="no" id="nonerosiveNo"></td>
+                            <td><input type="radio" name="nonerosive" value="na" id="nonerosiveNA"></td>
+                            <td><label for="nonerosive">4. 2-year and 10-year storm are non-erosive.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">5. Water Balance Calculation showing it will draw down more than 2 feet after 30-day summer drought.</label></td>
+                            <td><input type="radio" name="waterBalance" value="yes" id="waterBalanceYes"></td>
+                            <td><input type="radio" name="waterBalance" value="no" id="waterBalanceNo"></td>
+                            <td><input type="radio" name="waterBalance" value="na" id="waterBalanceNA"></td>
+                            <td><label for="waterBalance">5. Water Balance Calculation showing it will draw down more than 2 feet after 30-day summer drought.</label></td>
                         </tr>
                         <tr class="level1">
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">6. Tv can be stored in the Entire water volume below the normal pool.</label></td>
+                            <td><input type="radio" name="tvStore" value="yes" id="tvStoreYes"></td>
+                            <td><input type="radio" name="tvStore" value="no" id="tvStoreNo"></td>
+                            <td><input type="radio" name="tvStore" value="na" id="tvStoreNA"></td>
+                            <td><label for="tvStore">6. Tv can be stored in the Entire water volume below the normal pool.</label></td>
                         </tr>
                         <tr class="level2">
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">6. Up to 50% may be provided in ED above the permanent pool (Level 2).</label></td>
+                            <td><input type="radio" name="halfEDVolume" value="yes" id="halfEDVolumeYes"></td>
+                            <td><input type="radio" name="halfEDVolume" value="no" id="halfEDVolumeNo"></td>
+                            <td><input type="radio" name="halfEDVolume" value="na" id="halfEDVolumeNA"></td>
+                            <td><label for="halfEDVolume">6. Up to 50% may be provided in ED above the permanent pool (Level 2).</label></td>
                         </tr>
                         <tr><td></td><td></td><td></td><th>Landscaping</th></tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">1. Outline a schedule for care, maintenance, and reinforcement of vegetation.</label></td>
+                            <td><input type="radio" name="schedule" value="yes" id="scheduleYes"></td>
+                            <td><input type="radio" name="schedule" value="no" id="scheduleNo"></td>
+                            <td><input type="radio" name="schedule" value="na" id="scheduleNA"></td>
+                            <td><label for="schedule">1. Outline a schedule for care, maintenance, and reinforcement of vegetation.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">2. Planting plan can accommodate ponding depths.</label></td>
+                            <td><input type="radio" name="pondingPlant" value="yes" id="pondingPlantYes"></td>
+                            <td><input type="radio" name="pondingPlant" value="no" id="pondingPlantNo"></td>
+                            <td><input type="radio" name="pondingPlant" value="na" id="pondingPlantNA"></td>
+                            <td><label for="pondingPlant">2. Planting plan can accommodate ponding depths.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">3. Identifies emergent, perennial, shrub, and tree species.</label></td>
+                            <td><input type="radio" name="species" value="yes" id="speciesYes"></td>
+                            <td><input type="radio" name="species" value="no" id="speciesNo"></td>
+                            <td><input type="radio" name="species" value="na" id="speciesNA"></td>
+                            <td><label for="species">3. Identifies emergent, perennial, shrub, and tree species.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">4. Delineation of planting areas.</label></td>
+                            <td><input type="radio" name="plantArea" value="yes" id="plantAreaYes"></td>
+                            <td><input type="radio" name="plantArea" value="no" id="plantAreaNo"></td>
+                            <td><input type="radio" name="plantArea" value="na" id="plantAreaNA"></td>
+                            <td><label for="plantArea">4. Delineation of planting areas.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">5. Uses native plants.</label></td>
+                            <td><input type="radio" name="nativePlant" value="yes" id="nativePlantYes"></td>
+                            <td><input type="radio" name="nativePlant" value="no" id="nativePlantNo"></td>
+                            <td><input type="radio" name="nativePlant" value="na" id="nativePlantNA"></td>
+                            <td><label for="nativePlant">5. Uses native plants.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">6. safety and aquatic bench plantings hinder or prevent access to the pool.</label></td>
+                            <td><input type="radio" name="plantBench" value="yes" id="plantBenchYes"></td>
+                            <td><input type="radio" name="plantBench" value="no" id="plantBenchNo"></td>
+                            <td><input type="radio" name="plantBench" value="na" id="plantBenchNA"></td>
+                            <td><label for="plantBench">6. safety and aquatic bench plantings hinder or prevent access to the pool.</label></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><input type="radio" name="fema"></td>
-                            <td><label for="fema">7. Woody vegetation not planted within 15' of toe of embankment and 25' of principal spillway structure.</label></td>
+                            <td><input type="radio" name="woodyVeg" value="yes" id="woodyVegYes"></td>
+                            <td><input type="radio" name="woodyVeg" value="no" id="woodyVegNo"></td>
+                            <td><input type="radio" name="woodyVeg" value="na" id="woodyVegNA"></td>
+                            <td><label for="woodyVeg">7. Woody vegetation not planted within 15' of toe of embankment and 25' of principal spillway structure.</label></td>
                         </tr>                    
                     </tbody>
                 </table>
@@ -510,7 +501,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     -->
-    <script src="js/wetpond.js"></script>
+    <script src="js/bmp/wetpond.js"></script>
         
   </body>
 </html>
