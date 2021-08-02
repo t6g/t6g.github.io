@@ -1,66 +1,152 @@
-<!-- navbar -->
-<div id="mynav">
-    <nav class="navbar navbar-expand-md navbar-light">
-        <a href="https://t6g.github.io/index.html" class="navbar-brand"><span>GT</span></a>
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#toggleMobileMenu"
-                aria-controls="toggleMobileMenu"
-                aria-expanded="false"
-                aria-lable="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="toggleMobileMenu">
-            <ul class="navbar-nav ms-auto">
-                <li><a class="nav-link" href="glance.html">First Glance</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarSubdivision" role="button" data-bs-toggle="dropdown" aria-expanded="false">Subdivision</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarSubdivision">
-                        <li><a class="dropdown-item" href="subadmin.html">Adminstrative</a></li>
-                        <li><a class="dropdown-item" href="subcover.html">Cover</a></li>
-                        <li><a class="dropdown-item" href="subplan.html">Plan</a></li>
-                        <li><a class="dropdown-item" href="subprofile.html">Profile</a></li>
-                        <li><a class="dropdown-item" href="subdetail.html">Details</a></li>
-                        <li><a class="dropdown-item" href="subtopo.html">Topography</a></li>
-                        <li><a class="dropdown-item" href="subhydraulics.html">Hydrology</a></li>
-                        <li><a class="dropdown-item" href="subhydraulics.html">Hydraulics</a></li>
-                        <li><a class="dropdown-item" href="subesc.html">E&amp;SC</a></li>
-                        <li><a class="dropdown-item" href="subvsmp.html">VSMP</a></li>
-                        <li><a class="dropdown-item" href="">SWMBMP</a></li>
-                        <li><a class="dropdown-item" href="">USCRW</a></li>
+<nav class="navbar navbar-expand-md navbar-light">
+    <a href="index.html" class="navbar-brand"><span>GT</span></a>
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#toggleMobileMenu"
+            aria-controls="toggleMobileMenu"
+            aria-expanded="false"
+            aria-lable="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="toggleMobileMenu">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarOpenChannel" role="button" data-bs-toggle="dropdown" aria-expanded="false">Open Channel</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarOpenChannel">
+                    <li><a class="dropdown-item" href="../openchannel/tria.html">Triangular</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/rect.html">Rectangular</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/trap.html">Trapezoidal</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/para.html">Parabolic</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/circ.html">Circular</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/elli.html">Elliptical</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/arch.html">Arch</a></li>
+                    <li><a class="dropdown-item" href="../openchannel/index.html">About</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Culvert</a>
+                <ul class="dropdown-menu shadow">
+                        <li class="dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Circular</a>
+                            <ul class="dropdown-menu dropdown-submenu shadow">
+                                <li><a class="dropdown-item" href="../culvert/circ0.html">Given Q</a></li>
+                                <li><a class="dropdown-item" href="../culvert/circ.html">Given DA</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Box</a></li>
+                        <li><a class="dropdown-item" href="#">Arch</a></li>
+                        <li><a class="dropdown-item" href="../culvert/about.html">About</a></li>
+                </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">EE</a>
+                <ul class="dropdown-menu shadow">
+                        <li class="dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Subdivision</a>
+                            <ul class="dropdown-menu dropdown-submenu shadow">
+                                <li><a class="dropdown-item" href="glance.html">First Glance</a></li>
+                                <li><a class="dropdown-item" href="subadmin.html">Adminstrative</a></li>
+                                <li><a class="dropdown-item" href="subcover.html">Cover</a></li>
+                                <li><a class="dropdown-item" href="subplan.html">Plan</a></li>
+                                <li><a class="dropdown-item" href="subprofile.html">Profile</a></li>
+                                <li><a class="dropdown-item" href="subdetail.html">Details</a></li>
+                                <li><a class="dropdown-item" href="subtopo.html">Topography</a></li>
+                                <li><a class="dropdown-item" href="subhydraulics.html">Hydrology</a></li>
+                                <li><a class="dropdown-item" href="subhydraulics.html">Hydraulics</a></li>
+                                <li><a class="dropdown-item" href="subesc.html">E&amp;SC</a></li>
+                                <li><a class="dropdown-item" href="subvsmp.html">VSMP</a></li>
+                                <li><a class="dropdown-item" href="">SWMBMP</a></li>
+                                <li><a class="dropdown-item" href="">USCRW</a></li>
+                            </ul>
+                        </li>
+                    
+                        <li class="dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Site</a>
+                            <ul class="dropdown-menu dropdown-submenu shadow">
+                                <li><a class="dropdown-item" href="sitecover.html">Adminstrative/Cover</a></li>
+                                <li><a class="dropdown-item" href="sitegrade.html">Grading/Drainage</a></li>
+                                <li><a class="dropdown-item" href="siteesc.html">E&amp;SC</a></li>
+                                <li><a class="dropdown-item" href="sitevsmp.html">VSMP</a></li>
+                                <li><a class="dropdown-item" href="siteuscw.html">USCW</a></li>
+                            </ul>
+                        </li>
+                    
+                        <li class="dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">SWM/BMP</a>
+                            <ul class="dropdown-menu dropdown-submenu shadow">
+                                <li><a class="dropdown-item" href="bioretention.html">9 Bioretention</a></li>
+                                <li><a class="dropdown-item" href="dryswale.html">10 Dry Swale</a></li>
+                                <li><a class="dropdown-item" href="wetpond.html">14 Wet Pond</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropend">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Calculator</a>
+                            <ul class="dropdown-menu dropdown-submenu shadow">
+                                <li><a class="dropdown-item" href="rainfall.html">Rainfall Intensity</a></li>
+                                <li><a class="dropdown-item" href="escsuretyEE.html">ESC Bond</a></li>
+                                <li><a class="dropdown-item" href="breach.html">Dam Breach</a></li>
+                            </ul>
+                        </li>
+                    
+                        <li><a class="dropdown-item" href="index.html">About</a></li>
+                </ul>
+            </li>
+            <li><a class="nav-link" href="https://cxtfit.github.io">CXTFIT/Excel</a></li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarAbout">
+                    <li><a class="dropdown-item" href="resume.html">Resume</a></li>
+                    <li><a class="dropdown-item" href="pubs.html">Publications</a></li>
+                    <li><a class="dropdown-item" href="index.html">About</a></li>
+                </ul>
+            </li>
+<!--                    <li><a class="nav-link" href="resume.html">Resume</a></li>
+                    <li><a class="nav-link" href="pubs.html">Publications</a></li>
+-->
+        </ul>
+<!--                    
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Multilevel</a>
+            <ul class="dropdown-menu shadow">
+              <li><a class="dropdown-item" href="#">Gallery</a></li>
+              <li><a class="dropdown-item" href="blog.html">Blog</a></li>
+              <li class="dropstart">
+                <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Submenu Left</a>
+                <ul class="dropdown-menu shadow">
+                  <li><a class="dropdown-item" href=""> Third level 1</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 2</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 3</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 4</a></li>
+                  <li><a class="dropdown-item" href=""> Third level 5</a></li>
+                </ul>
+              </li>
+              <li class="dropend">
+                <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">Submenu Right</a>
+                <ul class="dropdown-menu shadow">
+                  <li><a class="dropdown-item" href=""> Second level 1</a></li>
+                  <li><a class="dropdown-item" href=""> Second level 2</a></li>
+                  <li><a class="dropdown-item" href=""> Second level 3</a></li>
+                  <li class="dropend">
+                    <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Let's go deeper!</a>
+                    <ul class="dropdown-menu dropdown-submenu shadow">
+                      <li><a class="dropdown-item" href=""> Third level 1</a></li>
+                      <li><a class="dropdown-item" href=""> Third level 2</a></li>
+                      <li><a class="dropdown-item" href=""> Third level 3</a></li>
+                      <li><a class="dropdown-item" href=""> Third level 4</a></li>
+                      <li><a class="dropdown-item" href=""> Third level 5</a></li>
                     </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarSite" role="button" data-bs-toggle="dropdown" aria-expanded="false">Site</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarSite">
-                        <li><a class="dropdown-item" href="sitecover.html">Adminstrative/Cover</a></li>
-                        <li><a class="dropdown-item" href="sitegrade.html">Grading/Drainage</a></li>
-                        <li><a class="dropdown-item" href="siteesc.html">E&amp;SC</a></li>
-                        <li><a class="dropdown-item" href="sitevsmp.html">VSMP</a></li>
-                        <li><a class="dropdown-item" href="siteuscw.html">USCW</a></li>
-                        <li><a class="dropdown-item" href="#">Upload</a></li>
-                        <li><a class="dropdown-item" href="#">Download</a></li>                       
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SWM/BMP</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="bioretention.html">9 Bioretention</a></li>
-                        <li><a class="dropdown-item" href="dryswale.html">10 Dry Swale</a></li>
-                        <li><a class="dropdown-item" href="wetpond.html">14 Wet Pond</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Calculators</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="rainfall.html">Rainfall Intensity</a></li>
-                        <li><a class="dropdown-item" href="escsuretyEE.html">ESC Bond</a></li>
-                        <li><a class="dropdown-item" href="breach.html">Dam Breach</a></li>
-                    </ul>
-                </li>
-                <li><a class="nav-link" href="index.html">About</a></li>
+                  </li>
+                  <li><a class="dropdown-item" href=""> Third level 5</a></li>
+                </ul>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-        </div>
-    </nav>
-</div>
+          </li>
+                    
+-->            </div>
+        </nav>
