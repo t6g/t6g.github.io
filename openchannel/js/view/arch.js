@@ -6,7 +6,7 @@
                 updateChart();
             });
 
-            $("#output").load("output.html", function(){
+            $("#output").load("output1.html", function(){
                 setValues();
             });
 

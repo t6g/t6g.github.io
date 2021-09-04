@@ -42,7 +42,10 @@ function drawGrid(xMin, xMax, yMin, yMax, scaleX, scaleY, chart){
         if(text.length > 10) {
             text = x.toFixed(xInc.countDecimals());
         }
-        document.getElementById(idLabel).childNodes[0].textContent = text;
+        
+        if(i < 10) {
+            document.getElementById(idLabel).childNodes[0].textContent = text;
+        }
 
         xDraw += xIncDraw;
         x += xInc;

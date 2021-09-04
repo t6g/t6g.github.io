@@ -6,10 +6,10 @@
                 updateChart();
             });
 
-            $("#output").load("output.html", function(){
+            $("#output").load("output1.html", function(){
                 setValues();
             });
-
+            
             const circ = new CircularChannel(24, 0.01, 0.05, 0.5);
 
             let tmp = localStorage.getItem('circ');
