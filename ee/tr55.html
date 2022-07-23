@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <link href="css/styles.css">
+        <title>TR55 Calculator</title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="mynav"></div>
+            
+            <h4 class="text-center">TR55 Calculator</h4>
+            
+            <div class="row">
+                <div class="col-md-6 box">
+                    <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Drainage area</td>
+                            <td><input class="value" id="DA" name="DA" type="number" min="0.0" value="0.26" step="0.1"></td>
+                            <td>acre</td>
+                        </tr>
+                        <tr>
+                            <td>CN</td>
+                            <td><input class="value" id="CN" name="CN" type="number" min="0" value="80" step="0.1"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Time of Concentration (Tc)</td>
+                            <td><input class="value" id="Tc" name="Tc" type="number" min="5" value="20" step="1"></td>
+                            <td>minute</td>
+                        </tr>
+                        <tr>
+                            <td>S (=1000/CN-10)</td>
+                            <td id="S"></td>
+                            <td>in</td>
+                        </tr>
+                        <tr>
+                            <td>Ia (=0.2S)</td>
+                            <td id="Ia"></td>
+                            <td>in</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <table class="table">
+                    <tbody>
+                    <thead>
+                        <th></th> <th>1-year</th><th>2-year</th><th>10-year</th><th>100-year</th>
+                    </thead>
+                        <tr>
+                            <td>P (in)</td>
+                            <td><input class="value" id="p1" name="p1" type="number" min="1.0" value="2.77" step="0.1"></td>
+                            <td><input class="value" id="p2" name="p2" type="number" min="1.0" value="3.33" step="0.1"></td>
+                            <td><input class="value" id="p10" name="p10" type="number" min="1.0" value="5.05" step="0.1"></td>
+                            <td><input class="value" id="p100" name="p100" type="number" min="1.0" value="8.32" step="0.1"></td>
+                        </tr>
+                        <tr>
+                            <td>Q (in)</td>
+                            <td id="Q1"></td>
+                            <td id="Q2"></td>
+                            <td id="Q10"></td>
+                            <td id="Q100"></td>
+                        </tr>
+                        <tr>
+                            <td>Ia/P</td>
+                            <td id="Iap1"></td>
+                            <td id="Iap2"></td>
+                            <td id="Iap10"></td>
+                            <td id="Iap100"></td>
+                        </tr>
+                        <tr>
+                            <td>qu</td>
+                            <td id="qu1"></td>
+                            <td id="qu2"></td>
+                            <td id="qu10"></td>
+                            <td id="qu100"></td>
+                        </tr>
+                        <tr>
+                            <td>qp</td>
+                            <td id="qp1"></td>
+                            <td id="qp2"></td>
+                            <td id="qp10"></td>
+                            <td id="qp100"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>  <!-- left box -->
+<!--
+                <div class="col-md-6 box">
+                <table class="table">
+                    <thead>
+                        <th>\(I_a/P\)</th> <th>\(C_0\)</th><th>\(C_1\)</th><th>\(C_2\)</th><th>\(q_u\)</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>0.10</td><td>2.55323</td><td>-0.61512</td><td>-0.16403</td><td id="qu10"></td></tr>
+                        <tr><td>0.30</td><td>2.46532</td><td>-0.62257</td><td>-0.11657</td><td id="qu30"></td></tr>
+                        <tr><td>0.35</td><td>2.41896</td><td>-0.61594</td><td>-0.08820</td><td id="qu35"></td></tr>
+                        <tr><td>0.40</td><td>2.36409</td><td>-0.59857</td><td>-0.05621</td><td id="qu40"></td></tr>
+                        <tr><td>0.45</td><td>2.29238</td><td>-0.57005</td><td>-0.02281</td><td id="qu45"></td></tr>
+                        <tr><td>0.50</td><td>2.20282</td><td>-0.51599</td><td>-0.01259</td><td id="qu50"></td></tr>
+                    </tbody>
+                </table>
+                    <p>\(Q_a = \frac{A_{mt}Rv_{mt} + A_{im}Rv_{im}}{A_{mt} + A_{im}}\)</p>
+                    <p>\(Tv = (A_{mt}Rv_{mt} + A_{im}Rv_{im}) 43,560/12\)</p>
+                    <p>\(CN = \frac{1000}{10+5P + 10Qa - 10\sqrt{Q_a^2+1.25Q_aP}}\)</p>
+                    <p>\(log(q_u) = C_0 + C_1log(T_c) + C_2[log(T_c)]^2\)</p>
+                    <p>\(q_{pTv} = q_u A Q_a\)</p>
+
+                </div> --> <!-- right box -->
+            </div>  <!--row 1 -->
+            
+            <div class="alert alert-warning" role="alert"  style='display:none;'>
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span id="warningMessage">message</span>
+            </div>
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-primary" id="btnSave">Save</button>
+            </div>
+        </div>     <!-- container -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+        -->
+        <script src="../culvert/js/util/numericalTable.js"></script>
+        <script src="js/calculator/tr55.js"></script>
+
+    </body>
+</html>
